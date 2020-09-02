@@ -31,7 +31,7 @@ class Testsdt(TestCase):
 
     def test_hmetad_individual(self):
         """Test hmetad_individual function"""
-        results = hmetad_individual(data, draws=1000, chains=1)
+        results = hmetad_individual(data, chains=1, tune=500, draws=500)
 
 
 if __name__ == '__main__':
