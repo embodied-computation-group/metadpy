@@ -1,14 +1,14 @@
 .. image:: https://img.shields.io/badge/License-GPL%20v3-blue.svg
   :target: https://github.com/LegrandNico/metadPy/blob/master/LICENSE
 
-.. image:: https://badge.fury.io/py/systole.svg
-    :target: https://badge.fury.io/py/systole
+.. image:: https://badge.fury.io/py/metadPy.svg
+    :target: https://badge.fury.io/py/metadPy
 
-.. image:: https://travis-ci.org/embodied-computation-group/systole.svg?branch=master
-   :target: https://travis-ci.org/embodied-computation-group/systole
+.. image:: https://travis-ci.org/LegrandNico/metadPy.svg?branch=master
+   :target: https://travis-ci.org/LegandNico/metadPy
 
-.. image:: https://codecov.io/gh/embodied-computation-group/systole/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/embodied-computation-group/systole
+.. image:: https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/LegrandNico/metadPy
 
 metadPy
 =======
@@ -35,6 +35,7 @@ The following packages are required:
 * Pandas (>=0.24)
 * Matplotlib (>=3.0.2)
 * Seaborn (>=0.9.0)
+* PyMC3 (>=3.8)
 
 References
 ==========
