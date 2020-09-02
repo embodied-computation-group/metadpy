@@ -11,19 +11,19 @@ DESCRIPTION = """Hierarchical meta-d' model"""
 DISTNAME = 'metadPy'
 MAINTAINER = 'Nicolas Legrand'
 MAINTAINER_EMAIL = 'nicolas.legrand@cfin.au.dk'
-VERSION = '0.0.1a'
+VERSION = '0.0.1'
 
 INSTALL_REQUIRES = [
     'numpy>=1.18.1',
     'scipy>=1.3',
     'pandas>=0.24',
     'matplotlib>=3.1.3',
+    'pymc3>=3.8',
     'seaborn>=0.10.0',
 ]
 
 PACKAGES = [
     'metadPy',
-    'metadPy.models'
 ]
 
 try:

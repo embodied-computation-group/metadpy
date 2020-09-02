@@ -1,13 +1,64 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-from scipy.stats import norm
 import numpy as np
+import pandas as pd
+from scipy.stats import norm
 from scipy.optimize import Bounds, LinearConstraint, minimize, SR1
 
 
+def scores(data=None, signal='signal', responses='responses'):
+    """Extract hits, misses, false alarms and correct rejection from `signal`
+    and `responses`.
+
+    Parameters
+    ----------
+    data :  :py:class:`pandas.DataFrame` or None
+        Dataframe containing one `signal` and one `response` column.
+    signal : str, 1d array-like or list
+        If a string is provided, should be the name of the column used as
+        `signal`. If a list or an array is provided, should contain the boolean
+        vectors for `signal`.
+    responses : str or 1d array-like
+        If a string is provided, should be the name of the column used as
+        `responses`. If a list or an array is provided, should contain the
+        boolean vector for `responses`.
+
+    Returns
+    -------
+    hits, misses, fas, crs : floats
+        Return the number of hits, misees, false alarms and correct rejections.
+
+    Notes
+    -----
+    If a :py:class:`pandas.DataFrame` is provided, the function will search for
+    a `signal`and a `responses` column by default. Other columns names ca be
+    provided.
+    """
+    # Formatting checks
+    if data is None:
+        if isinstance(signal, (np.ndarray, np.generic)) and \
+           isinstance(responses, (np.ndarray, np.generic)) and \
+           (len(signal) == len(responses)) and \
+           np.all([s in [0, 1] for s in signal]) and\
+           np.all([s in [0, 1] for s in responses]):
+
+            data = pd.DataFrame({'signal': signal, 'responses': responses})
+        else:
+            raise ValueError(('If no data is provided, `signal` and',
+                              ' `responses` should be two boolean vectors',
+                              ' with equal lengths.'))
+
+    # Extract hits, misses, false alarm and correct rejection
+    hit = sum(data['signal'] & data['responses'])
+    misses = sum(data['signal'] & ~data['responses'])
+    fa = sum(~data['signal'] & data['responses'])
+    cr = sum(~data['signal'] & ~data['responses'])
+
+    return hit, misses, fa, cr
+
+
 def rates(hits, misses, fas, crs):
-    """Compute d-prime measure given hits, misses, false alarms, and
-    correct rejections.
+    """Hit and false alarm rates.
 
     Parameters
     ----------
@@ -22,11 +73,16 @@ def rates(hits, misses, fas, crs):
 
     Returns
     -------
+    hit_rate, fa_rate : float
+        Hit and false alarm rate.
 
+    References
+    ----------
+    Adapted from: https://lindeloev.net/calculating-d-in-python-and-php/
     """
-    # Floors an ceilings are replaced by half hits and half FA's
-    half_hit = 0.5 * (hits + misses)
-    half_fa = 0.5 * (fas + crs)
+    # Floors an ceilings are replaced with half inverse hits and fa
+    half_hit = 0.5 / (hits + misses)
+    half_fa = 0.5 / (fas + crs)
 
     # Calculate hit_rate and avoid d' infinity
     hit_rate = hits / (hits + misses)
@@ -42,10 +98,7 @@ def rates(hits, misses, fas, crs):
     if fa_rate == 0:
         fa_rate = half_fa
 
-    # Return d'
-    d = dprime(hit_rate, fa_rate)
-
-    return d
+    return hit_rate, fa_rate
 
 
 def dprime(hit_rate, fa_rate):
@@ -83,138 +136,8 @@ def criterion(hit_rate, fa_rate):
     -------
     dprime : float
         The d' value.
-
-    Notes
-    -----
-    The criterion is a measure of .
     """
     return - .5 * (norm.ppf(hit_rate) + norm.ppf(fa_rate))
-
-
-def trials2counts(stimID, response, rating, nRatings, padCells=False,
-                  padAmount=None):
-    '''Response count.
-
-    Given data from an experiment where an observer discriminates between two
-    stimulus alternatives on every trial and provides confidence ratings,
-    converts trial by trial experimental information for N trials into response
-    counts.
-
-    Parameters
-    ----------
-    stimID : list or 1d array-like
-
-    response : list or 1d array-like
-
-    rating : list or 1d array-like
-
-    nRatings : int
-        Total of available subjective ratings available for the subject. e.g.
-        if subject can rate confidence on a scale of 1-4, then nRatings = 4.
-    padCells : boolean
-        If *True*, each response count in the output has the value of padAmount
-        added to it. Padding cells is desirable if trial counts of 0 interfere
-        with model fitting. If False, trial counts are not manipulated and 0s
-        may be present in the response count output. Default value for padCells
-        is 0.
-    padAmount : float
-        The value to add to each response count if padCells is set to 1.
-        Default value is 1/(2*nRatings)
-
-    Returns
-    -------
-    nR_S1, nR_S2 : list
-        Vectors containing the total number of responses in each response
-        category, conditional on presentation of S1 and S2.
-
-    Notes
-    -----
-    All trials where stimID is not 0 or 1, response is not 0 or 1, or
-    rating is not in the range [1, nRatings], are omitted from the response
-    count.
-
-    If nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was presented, the
-    subject had the following response counts:
-        responded S1, rating=3 : 100 times
-        responded S1, rating=2 : 50 times
-        responded S1, rating=1 : 20 times
-        responded S2, rating=1 : 10 times
-        responded S2, rating=2 : 5 times
-        responded S2, rating=3 : 1 time
-
-    The ordering of response / rating counts for S2 should be the same as it
-    is for S1. e.g. if nR_S2 = [3 7 8 12 27 89], then when stimulus S2 was
-    presented, the subject had the following response counts:
-        responded S1, rating=3 : 3 times
-        responded S1, rating=2 : 7 times
-        responded S1, rating=1 : 8 times
-        responded S2, rating=1 : 12 times
-        responded S2, rating=2 : 27 times
-        responded S2, rating=3 : 89 times
-
-    Examples
-    --------
-    >>> stimID =    [0, 1, 0, 0, 1, 1, 1, 1]
-    >>> response =  [0, 1, 1, 1, 0, 0, 1, 1]
-    >>> rating =    [1, 2, 3, 4, 4, 3, 2, 1]
-    >>> nRatings = 4
-
-    >>> nR_S1, nR_S2 = trials2counts(stimID, response, rating, nRatings,0)
-    >>> print(nR_S1, nR_S2)
-
-    Reference
-    ---------
-    This function was adapted from Alan Lee version of trials2counts.m by
-    Maniscalco & Lau (2012) with minor changes.
-    '''
-    # Check for valid inputs
-    if not (len(stimID) == len(response)) and (len(stimID) == len(rating)):
-        raise('Input vectors must have the same lengths')
-
-    tempstim, tempresp, tempratg = [], [], []
-
-    for s, rp, rt in zip(stimID, response, rating):
-        if ((s == 0 or s == 1) and (rp == 0 or rp == 1) and (rt >= 1 and rt <= nRatings)):
-            tempstim.append(s)
-            tempresp.append(rp)
-            tempratg.append(rt)
-    stimID = tempstim
-    response = tempresp
-    rating = tempratg
-
-    if padAmount is None:
-        padAmount = 1/(2*nRatings)
-
-    nR_S1, nR_S2 = [], []
-
-    # S1 responses
-    for r in range(nRatings, 0, -1):
-        cs1, cs2 = 0, 0
-        for s, rp, rt in zip(stimID, response, rating):
-            if s == 0 and rp == 0 and rt == r:
-                cs1 += 1
-            if s == 1 and rp == 0 and rt == r:
-                cs2 += 1
-        nR_S1.append(cs1)
-        nR_S2.append(cs2)
-
-    # S2 responses
-    for r in range(1, nRatings+1, 1):
-        cs1, cs2 = 0, 0
-        for s, rp, rt in zip(stimID, response, rating):
-            if s == 0 and rp == 1 and rt == r:
-                cs1 += 1
-            if s == 1 and rp == 1 and rt == r:
-                cs2 += 1
-        nR_S1.append(cs1)
-        nR_S2.append(cs2)
-
-    # pad response counts to avoid zeros
-    if padCells:
-        nR_S1 = [n+padAmount for n in nR_S1]
-        nR_S2 = [n+padAmount for n in nR_S2]
-
-    return nR_S1, nR_S2
 
 
 def fit_meta_d_logL(parameters, inputObj):
@@ -225,10 +148,6 @@ def fit_meta_d_logL(parameters, inputObj):
     parameters : list
         parameters[0] = meta d'
         parameters[1:end] = type-2 criteria locations
-
-    Returns
-    -------
-
     """
     meta_d1 = parameters[0]
     t2c1 = parameters[1:]
@@ -290,37 +209,38 @@ def fit_meta_d_logL(parameters, inputObj):
 
 
 def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
-    """Estimate meta-d'.
+    """Estimate meta-d' using maximum likelihood estimation.
+
+    Adapted from the transcription of fit_meta_d_MLE.m (Maniscalco & Lau, 2012)
+    by Alan Lee (http://www.columbia.edu/~bsm2105/type2sdt/).
 
     Parameters
     ----------
     nR_S1, nR_S2 : list or 1d array-like
         These are vectors containing the total number of responses in
-        each response category, conditional on presentation of S1 and S2.
+        each response category, conditional on presentation of S1 and S2. If
+        nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was presented, the
+        subject had the following response counts:
+            * responded `'S1'`, rating=`3` : 100 times
+            * responded `'S1'`, rating=`2` : 50 times
+            * responded `'S1'`, rating=`1` : 20 times
+            * responded `'S2'`, rating=`1` : 10 times
+            * responded `'S2'`, rating=`2` : 5 times
+            * responded `'S2'`, rating=`3` : 1 time
 
-        e.g. if nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was
-        presented, the subject had the following response counts:
-            responded S1, rating=3 : 100 times
-            responded S1, rating=2 : 50 times
-            responded S1, rating=1 : 20 times
-            responded S2, rating=1 : 10 times
-            responded S2, rating=2 : 5 times
-            responded S2, rating=3 : 1 time
-
-        The ordering of response / rating counts for S2 should be the same as it
-        is for S1. e.g. if nR_S2 = [3 7 8 12 27 89], then when stimulus S2 was
-        presented, the subject had the following response counts:
-            responded S1, rating=3 : 3 times
-            responded S1, rating=2 : 7 times
-            responded S1, rating=1 : 8 times
-            responded S2, rating=1 : 12 times
-            responded S2, rating=2 : 27 times
-            responded S2, rating=3 : 89 times
+        The ordering of response / rating counts for S2 should be the same as
+        it is for S1. e.g. if nR_S2 = [3 7 8 12 27 89], then when stimulus S2
+        was presented, the subject had the following response counts:
+            * responded `'S1'`, rating=`3` : 3 times
+            * responded `'S1'`, rating=`2` : 7 times
+            * responded `'S1'`, rating=`1` : 8 times
+            * responded `'S2'`, rating=`1` : 12 times
+            * responded `'S2'`, rating=`2` : 27 times
+            * responded `'S2'`, rating=`3` : 89 times
 
     Returns
     -------
     fit : dict
-
         In the following, let S1 and S2 represent the distributions of evidence
         generated by stimulus classes S1 and S2.
 
@@ -338,7 +258,6 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
                         using parameters specified in sd(S1) units.
 
         fit.logL = log likelihood of the data fit
-
         fit.est_HR2_rS1 = estimated (from meta-d' fit) type 2 hit rates for S1 responses
         fit.obs_HR2_rS1 = actual type 2 hit rates for S1 responses
         fit.est_FAR2_rS1 = estimated type 2 false alarm rates for S1 responses
@@ -363,16 +282,12 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     (1) Add a small adjustment factor, e.g. adj_f = 1/(length(nR_S1), to each
     input vector:
 
-    adj_f = 1/length(nR_S1);
-    nR_S1_adj = nR_S1 + adj_f;
-    nR_S2_adj = nR_S2 + adj_f;
+        adj_f = 1/length(nR_S1)
+        nR_S1_adj = nR_S1 + adj_f
+        nR_S2_adj = nR_S2 + adj_f
 
     This is a generalization of the correction for similar estimation issues of
-    type 1 d' as recommended in
-
-    Hautus, M. J. (1995). Corrections for extreme proportions and their biasing
-        effects on estimated values of d'. Behavior Research Methods, Instruments,
-        & Computers, 27, 46-51.
+    type 1 d' as recommended in [#]_
 
     When using this correction method, it is recommended to add the adjustment
     factor to ALL data for all subjects, even for those subjects whose data is
@@ -381,8 +296,8 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
 
     (2) Collapse across rating categories.
 
-    e.g. if your data set has 4 possible confidence ratings such that length(nR_S1)==8,
-    defining new input vectors
+    e.g. if your data set has 4 possible confidence ratings such that
+    len(nR_S1)==8, defining new input vectors
 
     nR_S1_new = [sum(nR_S1(1:2)), sum(nR_S1(3:4)), sum(nR_S1(5:6)), sum(nR_S1(7:8))];
     nR_S2_new = [sum(nR_S2(1:2)), sum(nR_S2(3:4)), sum(nR_S2(5:6)), sum(nR_S2(7:8))];
@@ -418,7 +333,9 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
 
     References
     ---------
-    Adapted from the transcription of fit_meta_d_MLE.m (Maniscalco & Lau, 2012) by Alan Lee.
+    ..[#] Hautus, M. J. (1995). Corrections for extreme proportions and their
+    biasing effects on estimated values of d'. Behavior Research Methods,
+    Instruments, & Computers, 27, 46-51.
     """
     if (len(nR_S1) % 2) != 0:
         raise('input arrays must have an even number of elements')
