@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import unittest
 import pytest
-from metadPy.sdt import scores, rates, dprime, criterion, trials2counts
+from metadPy.sdt import scores, rates, dprime, criterion
 from unittest import TestCase
 
 data = pd.DataFrame({
