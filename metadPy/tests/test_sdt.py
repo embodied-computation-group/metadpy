@@ -36,15 +36,6 @@ class Testsdt(TestCase):
         """Test criterion function"""
         assert .294 == -round(criterion(0.8, 0.4), 3)
 
-    def test_trials2counts(self):
-        """Test trials2counts function"""
-        nR_S1, nR_S2 = trials2counts(stimID=[0, 1, 0, 0, 1, 1, 1, 1],
-                                     response=[0, 1, 1, 1, 0, 0, 1, 1],
-                                     rating=[1, 2, 3, 4, 4, 3, 2, 1],
-                                     nRatings=4)
-        assert nR_S1 == [0, 0, 0, 1, 0, 0, 1, 1]
-        assert nR_S2 == [1, 1, 0, 0, 1, 2, 0, 0]
-
 
 if __name__ == '__main__':
     unittest.main(argv=['first-arg-is-ignored'], exit=False)
