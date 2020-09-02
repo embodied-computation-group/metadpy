@@ -140,6 +140,73 @@ def criterion(hit_rate, fa_rate):
     return - .5 * (norm.ppf(hit_rate) + norm.ppf(fa_rate))
 
 
+def fit_meta_d_logL(parameters, inputObj):
+    """Returns negative log-likelihood of parameters given experimental data.
+
+    Parameters
+    ----------
+    parameters : list
+        parameters[0] = meta d'
+        parameters[1:end] = type-2 criteria locations
+    """
+    meta_d1 = parameters[0]
+    t2c1 = parameters[1:]
+    nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv = \
+        inputObj
+
+    # define mean and SD of S1 and S2 distributions
+    S1mu = -meta_d1/2
+    S1sd = 1
+    S2mu = meta_d1/2
+    S2sd = S1sd/s
+
+    # adjust so that the type 1 criterion is set at 0
+    # (this is just to work with optimization toolbox constraints...
+    #  to simplify defining the upper and lower bounds of type 2 criteria)
+    S1mu = S1mu - eval(constant_criterion)
+    S2mu = S2mu - eval(constant_criterion)
+
+    t1c1 = 0
+
+    # set up MLE analysis
+    # get type 2 response counts
+    # S1 responses
+    nC_rS1 = [nR_S1[i] for i in range(nRatings)]
+    nI_rS1 = [nR_S2[i] for i in range(nRatings)]
+    # S2 responses
+    nC_rS2 = [nR_S2[i+nRatings] for i in range(nRatings)]
+    nI_rS2 = [nR_S1[i+nRatings] for i in range(nRatings)]
+
+    # get type 2 probabilities
+    C_area_rS1 = fncdf(t1c1, S1mu, S1sd)
+    I_area_rS1 = fncdf(t1c1, S2mu, S2sd)
+
+    C_area_rS2 = 1-fncdf(t1c1, S2mu, S2sd)
+    I_area_rS2 = 1-fncdf(t1c1, S1mu, S1sd)
+
+    t2c1x = [-np.inf]
+    t2c1x.extend(t2c1[0:(nRatings-1)])
+    t2c1x.append(t1c1)
+    t2c1x.extend(t2c1[(nRatings-1):])
+    t2c1x.append(np.inf)
+
+    prC_rS1 = [(fncdf(t2c1x[i+1], S1mu, S1sd) - fncdf(t2c1x[i], S1mu, S1sd)) / C_area_rS1 for i in range(nRatings)]
+    prI_rS1 = [(fncdf(t2c1x[i+1], S2mu, S2sd) - fncdf(t2c1x[i], S2mu, S2sd)) / I_area_rS1 for i in range(nRatings)]
+
+    prC_rS2 = [((1-fncdf(t2c1x[nRatings+i], S2mu, S2sd)) - (1-fncdf(t2c1x[nRatings+i+1],S2mu,S2sd))) / C_area_rS2 for i in range(nRatings)]
+    prI_rS2 = [((1-fncdf(t2c1x[nRatings+i], S1mu, S1sd)) - (1-fncdf(t2c1x[nRatings+i+1],S1mu,S1sd))) / I_area_rS2 for i in range(nRatings)]
+
+    # calculate logL
+    logL = np.sum([
+            nC_rS1[i]*np.log(prC_rS1[i]) \
+            + nI_rS1[i]*np.log(prI_rS1[i]) \
+            + nC_rS2[i]*np.log(prC_rS2[i]) \
+            + nI_rS2[i]*np.log(prI_rS2[i]) for i in range(nRatings)])
+
+    if np.isinf(logL) or np.isnan(logL):
+        logL =-1e+300  # returning "-inf" may cause optimize.minimize() to fail
+    return -logL
+
 def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
