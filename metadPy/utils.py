@@ -1,5 +1,6 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+import numpy as np
 
 def trials2counts(stimID, response, rating, nRatings, padCells=False,
                   padAmount=None):
@@ -126,3 +127,92 @@ def trials2counts(stimID, response, rating, nRatings, padCells=False,
         nR_S2 = [n+padAmount for n in nR_S2]
 
     return nR_S1, nR_S2
+
+
+def discreteRatings(ratings, nbins=4):
+    """Convert continuous ratings to dscrete bins
+
+    Resample if quantiles are equal at high or low end to ensure proper
+    assignment of binned confidence
+
+    Parameters
+    ----------
+    ratings : list or 1d array-like
+        Ratings on a continuous scale.
+    nbins : int
+        The number of discrete ratings to resample. Defaut set to `4`.
+
+    Returns
+    -------
+    discreteRatings : 1d array-like
+        New rating array only containing integers between 1 and `nbins`.
+    out : dict
+        Dictionnary containing logs of the discrization process:
+            * `'confbins'`: list or 1d array-like - If the ratings were
+                reampled, a list containing the new ratings and the new low or
+                hg threshold, appened before or after the rating, respectively.
+                Else, only returns the ratings.
+            * `'rebin'`: boolean - If True, the ratings were resampled due to
+                larger numbers of highs or low ratings.
+            * `'binCount'` : int - Number of bins
+
+    Examples
+    --------
+    >>> from metadPy.utils import discreteRatings
+    >>> ratings = np.array([
+    >>>     96, 98, 95, 90, 32, 58, 77,  6, 78, 78, 62, 60, 38, 12,
+    >>>     63, 18, 15, 13, 49, 26,  2, 38, 60, 23, 25, 39, 22, 33,
+    >>>     32, 27, 40, 13, 35, 16, 35, 73, 50,  3, 40, 0, 34, 47,
+    >>>     52,  0,  0,  0, 25,  1, 16, 37, 59, 20, 25, 23, 45, 22,
+    >>>     28, 62, 61, 69, 20, 75, 10, 18, 61, 27, 63, 22, 54, 30,
+    >>>     36, 66, 14,  2, 53, 58, 88, 23, 77, 54])
+    >>> discreteRatings, out = discreteRatings(ratings)
+    (array([4, 4, 4, 4, 2, 3, 4, 1, 4, 4, 4, 4, 3, 1, 4, 1, 1, 1, 3, 2, 1, 3,
+        4, 2, 2, 3, 2, 2, 2, 2, 3, 1, 3, 1, 3, 4, 3, 1, 3, 1, 2, 3, 3, 1,
+        1, 1, 2, 1, 1, 3, 3, 2, 2, 2, 3, 2, 2, 4, 4, 4, 2, 4, 1, 1, 4, 2,
+        4, 2, 3, 2, 3, 4, 1, 1, 3, 3, 4, 2, 4, 3]),
+    {'confBins': array([ 0., 20., 35., 60., 98.]), 'rebin': 0, 'binCount': 21})
+    """
+    out, temp = {}, []
+    confBins = np.quantile(ratings, np.linspace(0, 1, nbins+1))
+    if (confBins[0] == confBins[1]) & (confBins[nbins-1] == confBins[nbins]):
+        raise ValueError('Bad bins!')
+    elif confBins[nbins-1] == confBins[nbins]:
+        print('Lots of high confidence ratings')
+        # Exclude high confidence trials and re-estimate
+        hiConf = confBins[-1]
+        confBins = np.quantile(ratings[ratings != hiConf],
+                               np.linspace(0, 1, nbins))
+        for b in range(len(confBins)-1):
+            temp.append(
+                (ratings >= confBins[b]) & (ratings <= confBins[b+1]))
+        temp.append(ratings == hiConf)
+
+        out['confBins'] = [confBins, hiConf]
+        out['rebin'] = 1
+    elif confBins[0] == confBins[1]:
+        print('Lots of low confidence ratings')
+        # Exclude low confidence trials and re-estimate
+        lowConf = confBins[1]
+        temp.append(ratings == lowConf)
+        confBins = np.quantile(ratings[ratings != lowConf],
+                               np.linspace(0, 1, nbins))
+        for b in range(1, len(confBins)):
+            temp.append(
+                (ratings >= confBins[b-1]) & (ratings <= confBins[b]))
+        out['confBins'] = [lowConf, confBins]
+        out['rebin'] = 1
+    else:
+        for b in range(len(confBins)-1):
+            temp.append(
+                (ratings >= confBins[b]) & (ratings <= confBins[b+1]))
+        out['confBins'] = confBins
+        out['rebin'] = 0
+
+    discreteRatings = np.zeros(len(ratings), dtype='int')
+    for b in range(nbins):
+        discreteRatings[temp[b]] = b
+    discreteRatings += 1
+    out['binCount'] = sum(temp[b])
+
+    return discreteRatings, out
