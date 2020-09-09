@@ -1,6 +1,8 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import numpy as np
+from scipy.stats import norm
+
 
 def trials2counts(stimID, response, rating, nRatings, padCells=False,
                   padAmount=None):
@@ -216,3 +218,85 @@ def discreteRatings(ratings, nbins=4):
     out['binCount'] = sum(temp[b])
 
     return discreteRatings, out
+
+
+def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500):
+    """ Simulate nR_S1 and nR_S2 response counts.
+
+        Parameters
+        ----------
+        d : float
+            Type 1 dprime.
+        metad : float
+            Type 2 sensitivity in units of type 1 dprime.
+        c : float
+            Type 1 criterion.
+        nRatings : int
+            Number of ratings.
+        nTrials : int
+            Number of trials to simulate, assumes equal S/N.
+
+        Returns
+        -------
+        nR_S1, nR_S2 : 1d array-like
+            nR_S1 and nR_S2 response counts.
+
+        Examples
+        --------
+
+        References
+        ----------
+        Adapted from the Matlab `cpc_metad_sim` function from:
+        https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
+    """
+    # Specify the confidence criterions based on the number of ratings
+    c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
+    c2 = c + np.linspace(0.5, 1.5, (nRatings - 1))
+
+    # Calc type 1 response counts
+    H = round((1-norm.cdf(c, d/2))*(nTrials/2))
+    FA = round((1-norm.cdf(c, -d/2))*(nTrials/2))
+    CR = round(norm.cdf(c, -d/2)*(nTrials/2))
+    M = round(norm.cdf(c, d/2)*(nTrials/2))
+
+    # Calc type 2 probabilities
+    S1mu = -metad/2
+    S2mu = metad/2
+
+    # Normalising constants
+    C_area_rS1 = norm.cdf(c, S1mu)
+    I_area_rS1 = norm.cdf(c, S2mu)
+    C_area_rS2 = 1-norm.cdf(c, S2mu)
+    I_area_rS2 = 1-norm.cdf(c, S1mu)
+
+    t2c1x = np.hstack((-np.inf, c1, c, c2, np.inf))
+
+    prC_rS1, prI_rS1, prC_rS2, prI_rS2 = [], [], [], []
+    for i in range(nRatings):
+        prC_rS1.append((norm.cdf(t2c1x[i+1], S1mu) -
+                       norm.cdf(t2c1x[i], S1mu))/C_area_rS1)
+        prI_rS1.append((norm.cdf(t2c1x[i+1], S2mu) -
+                       norm.cdf(t2c1x[i], S2mu))/I_area_rS1)
+        prC_rS2.append(((1-norm.cdf(t2c1x[nRatings+i], S2mu)) -
+                       (1-norm.cdf(t2c1x[nRatings+i+1], S2mu)))/C_area_rS2)
+        prI_rS2.append(((1-norm.cdf(t2c1x[nRatings+i], S1mu)) -
+                       (1-norm.cdf(t2c1x[nRatings+i+1], S1mu)))/I_area_rS2)
+
+    # Ensure vectors sum to 1 to avoid problems with mnrnd
+    prC_rS1 = prC_rS1/sum(prC_rS1)
+    prI_rS1 = prI_rS1/sum(prI_rS1)
+    prC_rS2 = prC_rS2/sum(prC_rS2)
+    prI_rS2 = prI_rS2/sum(prI_rS2)
+
+    # Sample 4 response classes from multinomial distirbution (normalised
+    # within each response class)
+    nC_rS1 = np.random.multinomial(CR, prC_rS1)
+    nI_rS1 = np.random.multinomial(M, prI_rS1)
+    nC_rS2 = np.random.multinomial(H, prC_rS2)
+    nI_rS2 = np.random.multinomial(FA, prI_rS2)
+
+    # Add to data vectors
+    nR_S1 = np.hstack((nC_rS1, nI_rS2))
+    nR_S2 = np.hstack((nI_rS1, nC_rS2))
+
+    return nR_S1, nR_S2
