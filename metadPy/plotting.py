@@ -44,4 +44,4 @@ def plot_confidence(nR_S1, nR_S2):
     sns.despine()
     plt.tight_layout()
 
-    return fig, ax
+    return ax

@@ -24,7 +24,7 @@ class Testsdt(TestCase):
         """Test trials2counts function"""
         nR_S1, nR_S2 = responseSimulation(d=1, metad=2, c=0, nRatings=4,
                                           nTrials=500)
-        fig, ax = plot_confidence(nR_S1, nR_S2)
+        ax = plot_confidence(nR_S1, nR_S2)
         assert isinstance(ax, matplotlib.axes.Axes)
 
 
