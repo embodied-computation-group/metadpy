@@ -300,3 +300,100 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500):
     nR_S2 = np.hstack((nI_rS1, nC_rS2))
 
     return nR_S1, nR_S2
+
+
+def type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500):
+    """Type 2 SDT simulation with variable noise.
+
+    Parameters
+    ----------
+    d : float
+        Type 1 dprime.
+    noise : float or list
+        Standard deviation of noise to be added to type 1 internal response for
+        type 2 judgment. If noise is a 1 x 2 vector then this will simulate
+        response-conditional type 2 data where
+        `noise = [sigma_rS1, sigma_rS2]`.
+    c : float
+        Type 1 criterion.
+    c1 : float
+        Type 2 criteria for S1 response.
+    c2 : float
+        Type 2 criteria for S2 response.
+    nRatings : int
+        Number of ratings.
+    nTrials : int
+        Number of trials to simulate.
+
+    Returns
+    -------
+    nR_S1, nR_S2 : 1d array-like
+        nR_S1 and nR_S2 response counts.
+
+    Examples
+    --------
+
+    """
+    # Specify the confidence criterions based on the number of ratings
+    c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
+    c2 = c + np.linspace(0.5, 1.5, (nRatings - 1))
+
+    if isinstance(noise, list):
+        rc = 1
+        sigma1 = noise[0]
+        sigma2 = noise[1]
+    else:
+        rc = 0
+        sigma = noise
+
+    S1mu = -d/2
+    S2mu = d/2
+
+    # Initialise response arrays
+    nC_rS1 = np.zeros(len(c1)+1)
+    nI_rS1 = np.zeros(len(c1)+1)
+    nC_rS2 = np.zeros(len(c2)+1)
+    nI_rS2 = np.zeros(len(c2)+1)
+
+    for t in range(nTrials):
+
+        s = round(np.random.rand())
+
+        # Type 1 SDT model
+        x = np.random.normal(S2mu, 1) if s == 1 else np.random.normal(S1mu, 1)
+
+        # Add type 2 noise to signal
+        if rc:  # add response-conditional noise
+            if x < c:
+                x2 = np.random.normal(x, sigma1) if sigma1 > 0 else x
+            else:
+                x2 = np.random.normal(x, sigma2) if sigma2 > 0 else x
+        else:
+            x2 = np.random.normal(x, sigma) if sigma > 0 else x
+
+        # Generate confidence ratings
+        if (s == 0) & (x < c):  # stimulus S1 and response S1
+            i = np.where(np.hstack((c1, c)) >= x2)[0]
+            if len(i) > 0:
+                nC_rS1[i.min()] += 1
+
+        elif (s == 0) & (x >= c):  # stimulus S1 and response S2
+            i = np.where(np.hstack((c, c2)) <= x2)[0]
+            if len(i) > 0:
+                nI_rS2[i.max()] += 1
+
+        elif (s == 1) & (x < c):  # stimulus S2 and response S1
+            i = np.where(np.hstack((c1, c)) >= x2)[0]
+            if len(i) > 0:
+                nI_rS1[i.min()] += 1
+
+        elif (s == 1) & (x >= c):  # stimulus S2 and response S2
+            i = np.where(np.hstack((c, c2)) <= x2)[0]
+            if len(i) > 0:
+                nC_rS2[i.max()] += 1
+
+    # Add to data vectors
+    nR_S1 = np.hstack((nC_rS1, nI_rS2))
+    nR_S2 = np.hstack((nI_rS1, nC_rS2))
+
+    return nR_S1, nR_S2

@@ -3,7 +3,8 @@
 import unittest
 import pytest
 import numpy as np
-from metadPy.utils import trials2counts, discreteRatings, responseSimulation
+from metadPy.utils import trials2counts, discreteRatings, responseSimulation,\
+    type2_SDT_simuation
 from unittest import TestCase
 
 ratings = np.array([
@@ -51,6 +52,12 @@ class Testsdt(TestCase):
             d=1, metad=2, c=0, nRatings=4, nTrials=500)
         assert len(nR_S1) == len(nR_S2) == 8
         assert sum(nR_S1) == sum(nR_S2) == 250
+
+    def test_type2_SDT_simuation(self):
+        """Test responseSimulation function"""
+        nR_S1, nR_S2 = type2_SDT_simuation(
+            d=1, noise=.2, c=0, nRatings=4, nTrials=500)
+        assert len(nR_S1) == len(nR_S2) == 8
 
 
 if __name__ == '__main__':
