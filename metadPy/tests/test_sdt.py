@@ -15,6 +15,7 @@ data = pd.DataFrame({
 nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
 nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
 
+
 class Testsdt(TestCase):
 
     def test_scores(self):
@@ -28,6 +29,8 @@ class Testsdt(TestCase):
     def test_rates(self):
         """Test rates function"""
         assert (0.8, 0.4) == rates(20, 5, 10, 15)
+        rates(0, 5, 0, 15)
+        rates(5, 5, 5, 5)
 
     def test_dprime(self):
         """Test d prime function"""
@@ -42,6 +45,12 @@ class Testsdt(TestCase):
         fit = fit_meta_d_MLE(nR_S1, nR_S2)
         assert round(fit['meta_da'], 3) == 1.654
         fit['t2ca_rS1']
+        with pytest.raises(Warning):
+            fit = fit_meta_d_MLE(np.zeros(8), nR_S2)
+        with pytest.raises(ValueError):
+            fit = fit_meta_d_MLE(np.zeros(7), nR_S2)
+        with pytest.raises(ValueError):
+            fit = fit_meta_d_MLE(nR_S1[:1], nR_S2)
 
 
 if __name__ == '__main__':

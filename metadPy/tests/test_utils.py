@@ -27,9 +27,20 @@ class Testsdt(TestCase):
                                      nRatings=4)
         assert nR_S1 == [0, 0, 0, 1, 0, 0, 1, 1]
         assert nR_S2 == [1, 1, 0, 0, 1, 2, 0, 0]
+        with pytest.raises(ValueError):
+            nR_S1, nR_S2 = trials2counts(stimID=[0, 1, 0, 0, 1, 1, 1, 1],
+                                         response=[0, 1, 1, 1, 0, 1, 1],
+                                         rating=[1, 2, 3, 4, 4, 3, 2],
+                                         nRatings=4)
+        nR_S1, nR_S2 = trials2counts(stimID=[0, 1, 0, 0, 1, 1, 1, 1],
+                                     response=[0, 1, 1, 1, 0, 0, 1, 1],
+                                     rating=[1, 2, 3, 4, 4, 3, 2, 1],
+                                     nRatings=4, padCells=True)
 
     def test_discreteRatings(self):
         """Test trials2counts function"""
+        with pytest.raises(ValueError):
+            discreteRatings([1, 1, 1, 1, 1], nbins=4)
         responseConf, out = discreteRatings(ratings, nbins=4)
         unique, counts = np.unique(responseConf, return_counts=True)
         assert np.all(counts == np.array([19, 20, 20, 21]))
@@ -58,6 +69,8 @@ class Testsdt(TestCase):
         nR_S1, nR_S2 = type2_SDT_simuation(
             d=1, noise=.2, c=0, nRatings=4, nTrials=500)
         assert len(nR_S1) == len(nR_S2) == 8
+        nR_S1, nR_S2 = type2_SDT_simuation(
+            d=1, noise=[.2, .8], c=0, nRatings=4, nTrials=500)
 
 
 if __name__ == '__main__':

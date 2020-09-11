@@ -190,22 +190,31 @@ def fit_meta_d_logL(parameters, inputObj):
     t2c1x.extend(t2c1[(nRatings-1):])
     t2c1x.append(np.inf)
 
-    prC_rS1 = [(fncdf(t2c1x[i+1], S1mu, S1sd) - fncdf(t2c1x[i], S1mu, S1sd)) / C_area_rS1 for i in range(nRatings)]
-    prI_rS1 = [(fncdf(t2c1x[i+1], S2mu, S2sd) - fncdf(t2c1x[i], S2mu, S2sd)) / I_area_rS1 for i in range(nRatings)]
+    prC_rS1 = [(fncdf(t2c1x[i+1], S1mu, S1sd) -
+               fncdf(t2c1x[i], S1mu, S1sd)) / C_area_rS1
+               for i in range(nRatings)]
+    prI_rS1 = [(fncdf(t2c1x[i+1], S2mu, S2sd) -
+               fncdf(t2c1x[i], S2mu, S2sd)) / I_area_rS1
+               for i in range(nRatings)]
 
-    prC_rS2 = [((1-fncdf(t2c1x[nRatings+i], S2mu, S2sd)) - (1-fncdf(t2c1x[nRatings+i+1],S2mu,S2sd))) / C_area_rS2 for i in range(nRatings)]
-    prI_rS2 = [((1-fncdf(t2c1x[nRatings+i], S1mu, S1sd)) - (1-fncdf(t2c1x[nRatings+i+1],S1mu,S1sd))) / I_area_rS2 for i in range(nRatings)]
+    prC_rS2 = [((1-fncdf(t2c1x[nRatings+i], S2mu, S2sd)) -
+               (1-fncdf(t2c1x[nRatings+i+1], S2mu, S2sd))) / C_area_rS2
+               for i in range(nRatings)]
+    prI_rS2 = [((1-fncdf(t2c1x[nRatings+i], S1mu, S1sd)) -
+               (1-fncdf(t2c1x[nRatings+i+1], S1mu, S1sd))) / I_area_rS2
+               for i in range(nRatings)]
 
     # calculate logL
     logL = np.sum([
-            nC_rS1[i]*np.log(prC_rS1[i]) \
-            + nI_rS1[i]*np.log(prI_rS1[i]) \
-            + nC_rS2[i]*np.log(prC_rS2[i]) \
+            nC_rS1[i]*np.log(prC_rS1[i])
+            + nI_rS1[i]*np.log(prI_rS1[i])
+            + nC_rS2[i]*np.log(prC_rS2[i])
             + nI_rS2[i]*np.log(prI_rS2[i]) for i in range(nRatings)])
 
     if np.isinf(logL) or np.isnan(logL):
-        logL =-1e+300  # returning "-inf" may cause optimize.minimize() to fail
+        logL = -1e+300  # returning -inf may cause optimize.minimize() to fail
     return -logL
+
 
 def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
@@ -348,9 +357,9 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     Instruments, & Computers, 27, 46-51.
     """
     if (len(nR_S1) % 2) != 0:
-        raise('input arrays must have an even number of elements')
+        raise ValueError('input arrays must have an even number of elements')
     if len(nR_S1) != len(nR_S2):
-        raise('input arrays must have the same number of elements')
+        raise ValueError('input arrays must have the same number of elements')
     if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
         raise Warning(
             f'Your inputs nR_S1: {nR_S1},  nR_S2: {nR_S2} contain',

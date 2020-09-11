@@ -16,11 +16,11 @@ def trials2counts(stimID, response, rating, nRatings, padCells=False,
     Parameters
     ----------
     stimID : list or 1d array-like
-
+        Stimuli ID.
     response : list or 1d array-like
-
+        Responses.
     rating : list or 1d array-like
-
+        Ratings.
     nRatings : int
         Total of available subjective ratings available for the subject. e.g.
         if subject can rate confidence on a scale of 1-4, then nRatings = 4.
@@ -81,8 +81,9 @@ def trials2counts(stimID, response, rating, nRatings, padCells=False,
     Maniscalco & Lau (2012) with minor changes.
     '''
     # Check for valid inputs
-    if not (len(stimID) == len(response)) and (len(stimID) == len(rating)):
-        raise('Input vectors must have the same lengths')
+    if ((len(stimID) == len(response)) and
+       (len(stimID) == len(rating))) is False:
+        raise ValueError('Input vectors must have the same length')
 
     tempstim, tempresp, tempratg = [], [], []
 
