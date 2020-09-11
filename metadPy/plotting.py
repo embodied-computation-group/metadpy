@@ -37,7 +37,7 @@ def plot_confidence(nR_S1, nR_S2, ax=None):
            width=.4, ec="k", label='Correct')
     ax.bar(x=np.arange(1.2, nRratings+.5), height=I_prop_data, color='#b55d60',
            width=.4, ec="k", label='Incorrect')
-    ax.set_ylabel('P$_{(Confidence|Precision, Accuracy)}$')
+    ax.set_ylabel('P$_{(Confidence=y|Outcome)}$')
     ax.set_xlabel('Confidence rating')
     ax.set_xticks(range(1, nRratings+1))
 
