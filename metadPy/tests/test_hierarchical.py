@@ -1,15 +1,14 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import pandas as pd
 import numpy as np
 import unittest
 import pytest
-from metadPy.hierarchical import preprocess, hmetad_individual
+from metadPy.hierarchical import preprocess, hmetad
+from metadPy.utils import ratings2df
 from unittest import TestCase
 
 nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
 nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
-data = preprocess(nR_S1, nR_S2)
 
 class Testsdt(TestCase):
 
@@ -29,9 +28,15 @@ class Testsdt(TestCase):
         assert data['N'] == 200
         assert data['S'] == 200
 
-    def test_hmetad_individual(self):
-        """Test hmetad_individual function"""
-        results = hmetad_individual(data, chains=1, tune=500, draws=500)
+    def test_hmetad(self):
+        """Test hmetad function"""
+        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
+        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
+        data = ratings2df(nR_S1, nR_S2)
+        results = hmetad(
+            data, stimuli='Stimuli', accuracy='Accuracy',
+            confidence='Confidence', nRatings=4)
+
 
 
 if __name__ == '__main__':

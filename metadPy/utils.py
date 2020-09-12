@@ -17,8 +17,8 @@ def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
     Parameters
     ----------
     stimuli : list, 1d array-like or string
-        Stimuli ID. If a dataframe is provided, should be the name of the
-        column containing the stimuli ID.
+        Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
+        the column containing the stimuli ID.
     accuracy : list, 1d array-like or string
         Response accuracy (0 or 1). If a dataframe is provided, should be the
         name of the column containing the response accuracy.
@@ -88,9 +88,9 @@ def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
     '''
     if data is not None:
         if isinstance(data, pd.DataFrame):
-            stimuli = data[stimuli]
-            confidence = data[confidence]
-            accuracy = data[accuracy]
+            stimuli = data[stimuli].to_numpy()
+            confidence = data[confidence].to_numpy()
+            accuracy = data[accuracy].to_numpy()
         else:
             raise ValueError('`Data` should be a DataFrame')
 
@@ -450,21 +450,21 @@ def ratings2df(nR_S1, nR_S2):
     for i in range(nRatings):
         if nR_S1[i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': '1', 'Accuracy': 1,
+                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 1,
                  'Confidence': [i+1]})]*nR_S1[i]))
         if nR_S2[i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': '2', 'Accuracy': 1,
+                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 1,
                  'Confidence': [i+1]})]*nR_S2[i]))
         if nR_S1[nRatings+i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': '1', 'Accuracy': 0,
+                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 0,
                  'Confidence': [i+1]})]*nR_S1[nRatings+i]))
         if nR_S2[nRatings+i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': '2', 'Accuracy': 0,
+                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 0,
                  'Confidence': [i+1]})]*nR_S2[nRatings+i]))
+    df.sample(frac=1).reset_index(drop=True)  # Shuffles rows before returning
     df['nTrial'] = np.arange(len(df))  # Add a column for trials
 
-    # Shuffles rows before returning
-    return df.sample(frac=1).reset_index(drop=True)
+    return df
