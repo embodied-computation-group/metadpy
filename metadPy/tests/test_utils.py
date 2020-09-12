@@ -3,6 +3,7 @@
 import unittest
 import pytest
 import numpy as np
+import pandas as pd
 from metadPy.utils import trials2counts, discreteRatings, responseSimulation,\
     type2_SDT_simuation, ratings2df
 from unittest import TestCase
@@ -21,20 +22,27 @@ class Testsdt(TestCase):
 
     def test_trials2counts(self):
         """Test trials2counts function"""
-        nR_S1, nR_S2 = trials2counts(stimID=[0, 1, 0, 0, 1, 1, 1, 1],
-                                     response=[0, 1, 1, 1, 0, 0, 1, 1],
-                                     rating=[1, 2, 3, 4, 4, 3, 2, 1],
-                                     nRatings=4)
+        df = pd.DataFrame({'stimuli': [0, 1, 0, 0, 1, 1, 1, 1],
+                           'accuracy': [0, 1, 1, 1, 0, 0, 1, 1],
+                           'confidence': [1, 2, 3, 4, 4, 3, 2, 1],
+                           'nRatings': 4})
+        nR_S1, nR_S2 = trials2counts(
+            data=df, stimuli='stimuli', accuracy='accuracy',
+            confidence='confidence', nRatings=4)
         assert nR_S1 == [0, 0, 0, 1, 0, 0, 1, 1]
         assert nR_S2 == [1, 1, 0, 0, 1, 2, 0, 0]
         with pytest.raises(ValueError):
-            nR_S1, nR_S2 = trials2counts(stimID=[0, 1, 0, 0, 1, 1, 1, 1],
-                                         response=[0, 1, 1, 1, 0, 1, 1],
-                                         rating=[1, 2, 3, 4, 4, 3, 2],
+            nR_S1, nR_S2 = trials2counts(
+                data='error', stimuli='stimuli',
+                accuracy='accuracy', confidence='confidence', nRatings=4)
+        with pytest.raises(ValueError):
+            nR_S1, nR_S2 = trials2counts(stimuli=[0, 1, 0, 0, 1, 1, 1, 1],
+                                         accuracy=[0, 1, 1, 1, 0, 1, 1],
+                                         confidence=[1, 2, 3, 4, 4, 3, 2],
                                          nRatings=4)
-        nR_S1, nR_S2 = trials2counts(stimID=[0, 1, 0, 0, 1, 1, 1, 1],
-                                     response=[0, 1, 1, 1, 0, 0, 1, 1],
-                                     rating=[1, 2, 3, 4, 4, 3, 2, 1],
+        nR_S1, nR_S2 = trials2counts(stimuli=[0, 1, 0, 0, 1, 1, 1, 1],
+                                     accuracy=[0, 1, 1, 1, 0, 0, 1, 1],
+                                     confidence=[1, 2, 3, 4, 4, 3, 2, 1],
                                      nRatings=4, padCells=True)
 
     def test_discreteRatings(self):
