@@ -56,7 +56,7 @@ class Testsdt(TestCase):
     def test_roc_auc(self):
         """Test roc_auc function"""
         rocauc = roc_auc(nR_S1, nR_S2)
-        assert round(rocauc, 3) == 0.559
+        assert round(rocauc, 3) == 0.508
 
 
 if __name__ == '__main__':
