@@ -537,3 +537,48 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     fit['obs_FAR2_rS2'] = obs_FAR2_rS2
 
     return fit
+
+
+def roc_auc(nR_S1, nR_S2):
+    """ Function to calculate the area under the type 2 ROC curve.
+
+    Parameters
+    ----------
+    nR_S1 : 1d array-like
+        Confience ratings (stimuli 1).
+    nR_S2 : 1d array-like
+        Confidence ratings (stimuli 2).
+
+    Returns
+    -------
+    rocauc : float
+        Area under the type 2 ROC curve.
+
+    Examples
+    --------
+    """
+    nRatings = int(len(nR_S1)/2)
+
+    flip_nR_S1 = np.flip(nR_S1)
+    flip_nR_S2 = np.flip(nR_S2)
+
+    S1_H2, S2_H2, S1_FA2, S2_FA2 = [], [], [], []
+    for c in range(nRatings):
+        S1_H2.append(nR_S1[c] + 0.5)
+        S2_H2.append(flip_nR_S2[c] + 0.5)
+        S1_FA2.append(flip_nR_S1[c] + 0.5)
+        S2_FA2.append(nR_S2[c] + 0.5)
+
+    H2 = S1_H2 + S2_H2
+    FA2 = S1_FA2 + S2_FA2
+
+    H2 /= sum(H2)
+    FA2 /= sum(FA2)
+    cum_H2 = np.hstack((0, np.cumsum(H2)))
+    cum_FA2 = np.hstack((0, np.cumsum(FA2)))
+
+    k = []
+    for c in range(nRatings):
+        k.append((cum_H2[c+1] - cum_FA2[c])**2 - (cum_H2[c] - cum_FA2[c+1])**2)
+
+    return 0.5 + 0.25 * sum(k)

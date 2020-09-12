@@ -4,7 +4,8 @@ import pandas as pd
 import numpy as np
 import unittest
 import pytest
-from metadPy.sdt import scores, rates, dprime, criterion, fit_meta_d_MLE
+from metadPy.sdt import scores, rates, dprime, criterion, fit_meta_d_MLE, \
+    roc_auc
 from unittest import TestCase
 
 data = pd.DataFrame({
@@ -51,6 +52,11 @@ class Testsdt(TestCase):
             fit = fit_meta_d_MLE(np.zeros(7), nR_S2)
         with pytest.raises(ValueError):
             fit = fit_meta_d_MLE(nR_S1[:1], nR_S2)
+
+    def test_roc_auc(self):
+        """Test roc_auc function"""
+        rocauc = roc_auc(nR_S1, nR_S2)
+        assert round(rocauc, 3) == 0.559
 
 
 if __name__ == '__main__':
