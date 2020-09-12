@@ -73,6 +73,7 @@ def plot_roc(nR_S1, nR_S2, ax=None):
     I_nR_rS2 = nR_S1[nRatings:]
     I_nR_rS1 = np.flip(nR_S2[:nRatings])
     I_nR = I_nR_rS2 + I_nR_rS1
+
     # Find correct observed ratings
     C_nR_rS2 = nR_S2[nRatings:]
     C_nR_rS1 = np.flip(nR_S1[:nRatings])
@@ -95,11 +96,12 @@ def plot_roc(nR_S1, nR_S2, ax=None):
     if ax is None:
         fig, ax = plt.subplots(1, 1, figsize=(5, 5))
 
+    ax.plot([0, 1], [0, 1], '--', color='gray')
+    ax.fill_between(x=obs_FAR2, y1=obs_HR2, color='lightgray', alpha=.5)
     ax.plot(obs_FAR2, obs_HR2, 'ko-', linewidth=1.5, markersize=12,
             label='Observed')
-    ax.plot([0, 1], [0, 1], '--', color='gray')
     ax.set_title('Type 2 ROC curve')
-    ax.set_ylabel('Type 2 P(CORRECT)')
-    ax.set_xlabel('Type 2 P(INCORRECT)')
+    ax.set_ylabel('Type 2 P(correct)')
+    ax.set_xlabel('Type 2 P(incorrect)')
 
     return ax
