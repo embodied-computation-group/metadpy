@@ -4,7 +4,7 @@ import unittest
 import pytest
 import numpy as np
 from metadPy.utils import trials2counts, discreteRatings, responseSimulation,\
-    type2_SDT_simuation
+    type2_SDT_simuation, ratings2df
 from unittest import TestCase
 
 ratings = np.array([
@@ -71,6 +71,14 @@ class Testsdt(TestCase):
         assert len(nR_S1) == len(nR_S2) == 8
         nR_S1, nR_S2 = type2_SDT_simuation(
             d=1, noise=[.2, .8], c=0, nRatings=4, nTrials=500)
+
+    def test_ratings2df(self):
+        """Test ratings2df function"""
+        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
+        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
+        df = ratings2df(nR_S1, nR_S2)
+        assert len(df) == sum(nR_S2)*2
+        assert df.Accuracy.sum() == (sum(nR_S1[:4])+sum(nR_S2[:4]))
 
 
 if __name__ == '__main__':

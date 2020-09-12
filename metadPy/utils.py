@@ -1,6 +1,7 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import numpy as np
+import pandas as pd
 from scipy.stats import norm
 
 
@@ -225,34 +226,38 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500,
                        as_df=False):
     """ Simulate nR_S1 and nR_S2 response counts.
 
-        Parameters
-        ----------
-        d : float
-            Type 1 dprime.
-        metad : float
-            Type 2 sensitivity in units of type 1 dprime.
-        c : float
-            Type 1 criterion.
-        nRatings : int
-            Number of ratings.
-        nTrials : int
-            Number of trials to simulate, assumes equal S/N.
+    Parameters
+    ----------
+    d : float
+        Type 1 dprime.
+    metad : float
+        Type 2 sensitivity in units of type 1 dprime.
+    c : float
+        Type 1 criterion.
+    nRatings : int
+        Number of ratings.
+    nTrials : int
+        Number of trials to simulate, assumes equal S/N.
 
-        Returns
-        -------
-        If `as_df is False`:
-            nR_S1, nR_S2 : 1d array-like
-                nR_S1 and nR_S2 response counts.
-        If `as_df is True`:
-            df : :py:class:`pandas.DataFrame`
-                A DataFrame (nRows==`nTrials`) containing the responses and
-                confidence rating for one participant given the provided
-                parameters.
+    Returns
+    -------
+    If `as_df is False`:
+        nR_S1, nR_S2 : 1d array-like
+            nR_S1 and nR_S2 response counts.
+    If `as_df is True`:
+        df : :py:class:`pandas.DataFrame`
+            A DataFrame (nRows==`nTrials`) containing the responses and
+            confidence rating for one participant given the provided
+            parameters.
 
-        References
-        ----------
-        Adapted from the Matlab `cpc_metad_sim` function from:
-        https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
+    References
+    ----------
+    Adapted from the Matlab `cpc_metad_sim` function from:
+    https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
+
+    See also
+    --------
+    ratings2df
     """
     # Specify the confidence criterions based on the number of ratings
     c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
@@ -305,7 +310,7 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500,
     nR_S2 = np.hstack((nI_rS1, nC_rS2))
 
     if as_df is True:
-        return nR_to_df(nR_S1, nR_S2)
+        return ratings2df(nR_S1, nR_S2)
     else:
         return nR_S1, nR_S2
 
@@ -405,3 +410,48 @@ def type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500):
     nR_S2 = np.hstack((nI_rS1, nC_rS2))
 
     return nR_S1, nR_S2
+
+
+def ratings2df(nR_S1, nR_S2):
+    """Convert response count to dataframe.
+
+    Parameters
+    ----------
+    nR_S1 : 1d array-like, list or string
+        Confience ratings (stimuli 1, correct and incorrect).
+    nR_S2 : 1d array-like, list or string
+        Confience ratings (stimuli 2, correct and incorrect).
+
+    Returns
+    -------
+    df : :py:class:`pandas.DataFrame`
+         A DataFrame (nRows==`nTrials`) containing the responses and
+         confidence rating for one participant given `nR_s1` and `nR_S2`.
+
+    See also
+    --------
+    responseSimulation
+    """
+    df = pd.DataFrame([])
+    nRatings = int(len(nR_S1)/2)
+    for i in range(nRatings):
+        if nR_S1[i]:
+            df = df.append(pd.concat(
+                [pd.DataFrame({'Stimuli': '1', 'Accuracy': 1,
+                 'Confidence': [i+1]})]*nR_S1[i]))
+        if nR_S2[i]:
+            df = df.append(pd.concat(
+                [pd.DataFrame({'Stimuli': '2', 'Accuracy': 1,
+                 'Confidence': [i+1]})]*nR_S2[i]))
+        if nR_S1[nRatings+i]:
+            df = df.append(pd.concat(
+                [pd.DataFrame({'Stimuli': '1', 'Accuracy': 0,
+                 'Confidence': [i+1]})]*nR_S1[nRatings+i]))
+        if nR_S2[nRatings+i]:
+            df = df.append(pd.concat(
+                [pd.DataFrame({'Stimuli': '2', 'Accuracy': 0,
+                 'Confidence': [i+1]})]*nR_S2[nRatings+i]))
+    df['nTrial'] = np.arange(len(df))  # Add a column for trials
+
+    # Shuffles rows before returning
+    return df.sample(frac=1).reset_index(drop=True)
