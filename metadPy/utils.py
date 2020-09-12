@@ -221,7 +221,8 @@ def discreteRatings(ratings, nbins=4):
     return discreteRatings, out
 
 
-def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500):
+def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500,
+                       as_df=False):
     """ Simulate nR_S1 and nR_S2 response counts.
 
         Parameters
@@ -239,11 +240,14 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500):
 
         Returns
         -------
-        nR_S1, nR_S2 : 1d array-like
-            nR_S1 and nR_S2 response counts.
-
-        Examples
-        --------
+        If `as_df is False`:
+            nR_S1, nR_S2 : 1d array-like
+                nR_S1 and nR_S2 response counts.
+        If `as_df is True`:
+            df : :py:class:`pandas.DataFrame`
+                A DataFrame (nRows==`nTrials`) containing the responses and
+                confidence rating for one participant given the provided
+                parameters.
 
         References
         ----------
@@ -300,7 +304,10 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500):
     nR_S1 = np.hstack((nC_rS1, nI_rS2))
     nR_S2 = np.hstack((nI_rS1, nC_rS2))
 
-    return nR_S1, nR_S2
+    if as_df is True:
+        return nR_to_df(nR_S1, nR_S2)
+    else:
+        return nR_S1, nR_S2
 
 
 def type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500):
