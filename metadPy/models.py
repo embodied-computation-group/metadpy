@@ -32,11 +32,10 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
 
     References
     ----------
-    .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
-    metacognitive efficiency from confidence ratings, Neuroscience of
+    .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
+    of metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
     """
-    print('Initializing hmetad model - Single subject...')
     nRatings = data['nratings']
     with Model() as model:
 
@@ -134,7 +133,6 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
         Multinomial('H_counts', H, nC_rS2, shape=nRatings,
                     observed=data['counts'][nRatings*3:nRatings*4])
 
-    print('Sampling...')
     with model:
         trace = sample(draws, chains=chains, progressbar=True,
                        trace=[meta_d, cS1, cS2], tune=tune)

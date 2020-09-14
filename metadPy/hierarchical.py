@@ -2,6 +2,7 @@
 
 from metadPy.sdt import dprime, criterion
 from metadPy.utils import discreteRatings, trials2counts
+from metadPy.models import hmetad_subjectLevel
 import numpy as np
 
 
@@ -73,7 +74,6 @@ def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
 
     data = preprocess(np.asarray(nR_S1), np.asarray(nR_S2))
 
-    from models import hmetad_subjectLevel
     traces = hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000)
 
     return traces
