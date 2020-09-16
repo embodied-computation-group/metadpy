@@ -1,4 +1,8 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
+"""
+This is an internal function. The subject level modeling shoul be called using
+the metadPy.hierarchical.metad function instead.
+"""
 
 import theano.tensor as tt
 from pymc3 import Model, Normal, Binomial, Multinomial, Bound, Deterministic, \
@@ -37,7 +41,7 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
     """
     nRatings = data['nratings']
-    with Model() as model:
+    with Model():
 
         # Type 1 priors
         c1 = Normal('c1', mu=0.0, tau=2, shape=1)
@@ -133,7 +137,6 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
         Multinomial('H_counts', H, nC_rS2, shape=nRatings,
                     observed=data['counts'][nRatings*3:nRatings*4])
 
-    with model:
         trace = sample(draws, chains=chains, progressbar=True,
                        trace=[meta_d, cS1, cS2], tune=tune)
 
