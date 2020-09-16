@@ -10,6 +10,13 @@
 .. image:: https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/LegrandNico/metadPy
 
+================
+
+.. figure::  https://github.com/LegrandNico/metadPy/raw/master/source/images/logo.png
+  :align:   center
+
+================
+
 metadPy
 =======
 
