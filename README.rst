@@ -12,8 +12,7 @@
 
 ================
 
-.. figure::  https://github.com/LegrandNico/metadPy/blob/master/images/logo.png
-  :align:   center
+.. image::  https://github.com/LegrandNico/metadPy/blob/master/images/logo.png
 
 ================
 
