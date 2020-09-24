@@ -464,7 +464,8 @@ def ratings2df(nR_S1, nR_S2):
             df = df.append(pd.concat(
                 [pd.DataFrame({'Stimuli': 1, 'Accuracy': 0,
                  'Confidence': [i+1]})]*nR_S2[nRatings+i]))
-    df.sample(frac=1).reset_index(drop=True)  # Shuffles rows before returning
+    # Shuffles rows before returning
+    df = df.sample(frac=1).reset_index(drop=True)
     df['nTrial'] = np.arange(len(df))  # Add a column for trials
 
     return df
