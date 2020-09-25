@@ -46,8 +46,7 @@ class Testsdt(TestCase):
         fit = fit_meta_d_MLE(nR_S1, nR_S2)
         assert round(fit['meta_da'], 3) == 1.654
         fit['t2ca_rS1']
-        with pytest.raises(Warning):
-            fit = fit_meta_d_MLE(np.zeros(8), nR_S2)
+        fit = fit_meta_d_MLE(np.zeros(8), nR_S2)
         with pytest.raises(ValueError):
             fit = fit_meta_d_MLE(np.zeros(7), nR_S2)
         with pytest.raises(ValueError):
