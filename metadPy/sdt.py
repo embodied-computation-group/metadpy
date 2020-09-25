@@ -29,7 +29,6 @@ def scores(data=None, signal='signal', responses='responses'):
         Return the number of hits, misees, false alarms and correct rejections.
 
     Notes
-    -----
     If a :py:class:`pandas.DataFrame` is provided, the function will search for
     a `signal`and a `responses` column by default. Other columns names ca be
     provided.
@@ -361,7 +360,8 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     if len(nR_S1) != len(nR_S2):
         raise ValueError('input arrays must have the same number of elements')
     if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
-        raise Warning(
+        import warnings
+        warnings.warn(
             f'Your inputs nR_S1: {nR_S1},  nR_S2: {nR_S2} contain',
             ' zeros! This may interfere with proper estimation of meta-d''.',
             ' See `help fit_meta_d_MLE` for more information.')

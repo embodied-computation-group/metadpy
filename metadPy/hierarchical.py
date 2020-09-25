@@ -9,7 +9,7 @@ import numpy as np
 
 def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
            confidence=None, nRatings=None, within=None, between=None,
-           subject=None, nbins=4):
+           subject=None, nbins=4, chains=3, tune=1000, draws=1000):
     """Estimate parameters of the Hierarchical Bayesian meta-d'
 
     Parameters
@@ -43,6 +43,12 @@ def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
         If a continuous rating scale was using, `nbins` define the number of
         discrete ratings when converting using
         :py:func:`metadPy.utils.discreteRatings`. The default value is `4`.
+    chains : int
+        The number of chains to sample. Defaults to `3`.
+    tune : int
+        Number of iterations to tune. Defaults to `1000`.
+    draws : int
+        The number of samples to draw. Defaults to `1000`.
 
     Returns
     -------
@@ -63,23 +69,67 @@ def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
     metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
     """
+    modelScript = os.path.dirname(__file__) + '/models/'
+    sys.path.append(modelScript)
+
     # If a continuous rating scale was used (if N unique ratings > nRatings)
     # transform confidence to discrete ratings
     if data[confidence].nunique() > nRatings:
         data[confidence] = discreteRatings(data[confidence].to_numpy(),
                                            nbins=nbins)
 
-    nR_S1, nR_S2 = trials2counts(
-        data=data, stimuli=stimuli, accuracy=accuracy, confidence=confidence,
-        nRatings=nRatings)
+    ###############
+    # Subject level
+    if (within is None) & (between is None) & (subject is None):
 
-    data = preprocess(np.asarray(nR_S1), np.asarray(nR_S2))
+        nR_S1, nR_S2 = trials2counts(
+            data=data, stimuli=stimuli, accuracy=accuracy,
+            confidence=confidence, nRatings=nRatings)
 
-    if (within is None) & (between is None):
-        modelScript = os.path.dirname(__file__) + '/models/'
-        sys.path.insert(0, modelScript)
+        pymcData = preprocess(np.asarray(nR_S1), np.asarray(nR_S2))
+
         from subjectLevel import hmetad_subjectLevel
-        traces = hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000)
+        traces = hmetad_subjectLevel(pymcData, chains=3, tune=1000, draws=1000)
+
+    #############
+    # Group level
+    if (within is None) & (between is None) & (subject is not None):
+
+        pymcData = {'nSubj': data[subject].nunique(),
+                    'subID': np.arange(data[subject].nunique(), dtype='int'),
+                    'hits': [], 'falsealarms': [], 's': [], 'n': [],
+                    'counts': [], 'nRatings': nRatings, 'Tol': 1e-05, 'cr': [],
+                    'm': []}
+
+        for sub in data[subject].unique():
+            nR_S1, nR_S2 = trials2counts(
+                data=data[data[subject] == sub], stimuli=stimuli,
+                accuracy=accuracy, confidence=confidence, nRatings=nRatings)
+
+            this_data = preprocess(nR_S1, nR_S2)
+            pymcData['s'].append(this_data['S'])
+            pymcData['n'].append(this_data['N'])
+            pymcData['m'].append(this_data['M'])
+            pymcData['cr'].append(this_data['CR'])
+            pymcData['counts'].append(this_data['counts'])
+            pymcData['hits'].append(this_data['H'])
+            pymcData['falsealarms'].append(this_data['FA'])
+
+        pymcData['s'] = np.array(pymcData['s'], dtype='int')
+        pymcData['n'] = np.array(pymcData['n'], dtype='int')
+        pymcData['m'] = np.array(pymcData['m'], dtype='int')
+        pymcData['cr'] = np.array(pymcData['cr'], dtype='int')
+        pymcData['counts'] = np.array(pymcData['counts'], dtype='int')
+        pymcData['hits'] = np.array(pymcData['hits'], dtype='int')
+        pymcData['falsealarms'] = np.array(pymcData['falsealarms'],
+                                           dtype='int')
+        pymcData['nRatings'] = 4
+        pymcData['nSubj'] = data[subject].nunique()
+        pymcData['subID'] = np.arange(20, dtype='int')
+        pymcData['Tol'] = 1e-05
+
+        from groupLevel import hmetad_groupLevel
+        traces = hmetad_groupLevel(pymcData, chains=3, tune=1000, draws=1000)
 
     return traces
 
@@ -110,6 +160,11 @@ def preprocess(nR_S1, nR_S2):
     --------
     hmetad_individual
     """
+    if isinstance(nR_S1, list):
+        nR_S1 = np.array(nR_S1)
+    if isinstance(nR_S2, list):
+        nR_S2 = np.array(nR_S2)
+
     Tol = 1e-05
     nratings = int(len(nR_S1)/2)
 
