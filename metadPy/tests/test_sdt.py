@@ -13,8 +13,6 @@ data = pd.DataFrame({
                               np.zeros(10), np.zeros(15))).astype(bool),
     'responses': np.concatenate((np.ones(20), np.zeros(5),
                                  np.ones(10), np.zeros(15))).astype(bool)})
-nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
-nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
 
 
 class Testsdt(TestCase):
@@ -43,10 +41,11 @@ class Testsdt(TestCase):
 
     def test_fit_meta_d_MLE(self):
         """Test fit_meta_d_MLE function"""
+        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
+        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         fit = fit_meta_d_MLE(nR_S1, nR_S2)
         assert round(fit['meta_da'], 3) == 1.654
         fit['t2ca_rS1']
-        fit = fit_meta_d_MLE(np.zeros(8), nR_S2)
         with pytest.raises(ValueError):
             fit = fit_meta_d_MLE(np.zeros(7), nR_S2)
         with pytest.raises(ValueError):
@@ -54,6 +53,8 @@ class Testsdt(TestCase):
 
     def test_roc_auc(self):
         """Test roc_auc function"""
+        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
+        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         rocauc = roc_auc(nR_S1, nR_S2)
         assert round(rocauc, 3) == 0.508
 

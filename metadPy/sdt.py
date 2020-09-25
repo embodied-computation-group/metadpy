@@ -362,9 +362,9 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
         import warnings
         warnings.warn(
-            f'Your inputs nR_S1: {nR_S1},  nR_S2: {nR_S2} contain',
-            ' zeros! This may interfere with proper estimation of meta-d''.',
-            ' See `help fit_meta_d_MLE` for more information.')
+            (f'Your inputs nR_S1: contain'
+             ' zeros! This may interfere with proper estimation of meta-d''.'
+             ' See `help fit_meta_d_MLE` for more information.'))
 
     nRatings = int(len(nR_S1) / 2)  # number of ratings in the experiment
     nCriteria = int(2*nRatings - 1)  # number criteria to be fitted
