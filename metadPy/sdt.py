@@ -215,12 +215,13 @@ def fit_meta_d_logL(parameters, inputObj):
     return -logL
 
 
-def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
+def fit_meta_d_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
+                   fncdf=norm.cdf, fninv=norm.ppf, verbose=1):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
     This function is adapted from the transcription of fit_meta_d_MLE.m
     (Maniscalco & Lau, 2012) by Alan Lee
-    (http://www.columbia.edu/~bsm2105/type2sdt/) with minor changes.
+    (http://www.columbia.edu/~bsm2105/type2sdt/).
 
     Parameters
     ----------
@@ -245,6 +246,24 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
             * responded `'S2'`, rating=`1` : 12 times
             * responded `'S2'`, rating=`2` : 27 times
             * responded `'S2'`, rating=`3` : 89 times
+    padding : boolean
+        If `True`, a small value will be added to the counts to avoid problems
+        during fit.
+    collapse : int or None
+        If an integer `N` is provided, will collpase ratings to avoid zeros by
+        summing every `N` consecutive ratings. Default set to `None`.
+    fncdf : func
+        A function handle for the CDF of the type 1 distribution. If not
+        specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.
+    fninv : func
+        A function handle for the inverse CDF of the type 1 distribution. If
+        not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.
+    verbose : {0, 1, 2}
+        Level of algorithm’s verbosity:
+            * 0 (default) : work silently.
+            * 1 : display a termination report.
+            * 2 : display progress during iterations.
+            * 3 : display progress during iterations (more complete report).
 
     Returns
     -------
@@ -263,11 +282,9 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
                 RMS units.
             * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
                 RMS units.
-
             * `'S1units'` : contains same parameters in sd(S1) units. These may
                 be of use since the data-fitting is conducted using parameters
                 specified in sd(S1) units.
-
             * `'logL'` : log likelihood of the data fit
             * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates
                 for S1 responses.
@@ -276,7 +293,6 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
                 responses.
             * `'obs_FAR2_rS1'` : actual type 2 false alarm rates for S1
                 responses.
-
             * `'est_HR2_rS2'` : estimated type 2 hit rates for S2 responses.
             * `'obs_HR2_rS2'` : actual type 2 hit rates for S2 responses.
             * `'est_FAR2_rS2'` : estimated type 2 false alarm rates for S2
@@ -290,93 +306,96 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     stimulus alternatives on every trial and provides confidence ratings,
     provides a type 2 SDT analysis of the data.
 
-    N.B. if nR_S1 or nR_S2 contain zeros, this may interfere with estimation of
-    meta-d'.
+    .. warning:: If nR_S1 or nR_S2 contain zeros, this may interfere with
+        estimation of meta-d'. Some options for dealing with response cell
+        counts containing zeros are:
 
-    Some options for dealing with response cell counts containing zeros are:
+        * Add a small adjustment factor (e.g. `1/(len(nR_S1)`, to each input
+            vector. This is a generalization of the correction for similar
+            estimation issues of type 1 d' as recommended in [1]_. When using
+            this correction method, it is recommended to add the adjustment
+            factor to ALL data for all subjects, even for those subjects whose
+            data is not in need of such correction, in order to avoid biases in
+            the analysis (cf [2]_). Use `padding==True` to activate this
+            correction.
 
-    (1) Add a small adjustment factor, e.g. adj_f = 1/(length(nR_S1), to each
-    input vector:
+        * Collapse across rating categories. e.g. if your data set has 4
+            possible confidence ratings such that `len(nR_S1)==8`, defining new
+            input vectors:
 
-        adj_f = 1/length(nR_S1)
-        nR_S1_adj = nR_S1 + adj_f
-        nR_S2_adj = nR_S2 + adj_f
+            >>> nR_S1 = nR_S1.reshape(int(len(nR_S1)/collapse), 2).sum(axis=1)
 
-    This is a generalization of the correction for similar estimation issues of
-    type 1 d' as recommended in [#]_
+            This might be sufficient to eliminate zeros from the input without
+            using an adjustment. Use `collapse=True` to activate this
+            correction.
 
-    When using this correction method, it is recommended to add the adjustment
-    factor to ALL data for all subjects, even for those subjects whose data is
-    not in need of such correction, in order to avoid biases in the analysis
-    (cf Snodgrass & Corwin, 1988).
-
-    (2) Collapse across rating categories.
-
-    e.g. if your data set has 4 possible confidence ratings such that
-    `len(nR_S1)==8`, defining new input vectors:
-
-    >>> nR_S1_new = [sum(nR_S1[:2]), sum(nR_S1[2:4]),
-    >>>              sum(nR_S1(5:6)), sum(nR_S1[6:8])]
-    >>> nR_S2_new = [sum(nR_S2[:2]), sum(nR_S2[2:4]),
-    >>>              sum(nR_S2[4:6]), sum(nR_S2[6:8])]
-
-    might be sufficient to eliminate zeros from the input without using an
-    adjustment.
-
-    * s
-    this is the ratio of standard deviations for type 1 distributions, i.e.
-    `s = sd(S1) / sd(S2)`
-
-    if not specified, s is set to a default value of 1.
-    For most purposes, we recommend setting s = 1.
-    See http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
-
-    * fncdf
-    a function handle for the CDF of the type 1 distribution.
-    if not specified, fncdf defaults to @normcdf (i.e. CDF for normal
-    distribution)
-
-    * fninv
-    a function handle for the inverse CDF of the type 1 distribution.
-    if not specified, fninv defaults to @norminv
+    `s` is the ratio of standard deviations for type 1 distributions as:
+    `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default value of 1.
+    For most purposes, it is recommended to set `s=1`. See
+    http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
 
     If there are N ratings, then there will be N-1 type 2 hit rates and false
     alarm rates.
 
     Examples
     --------
+    No correction
     >>> nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]
     >>> nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]
-    >>> fit = fit_meta_d_MLE(nR_S1,nR_S2)
+    >>> fit = fit_meta_d_MLE(nR_S1, nR_S2, padding=False)
+
+    Correction by padding values
+    >>> nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]
+    >>> nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]
+    >>> fit = fit_meta_d_MLE(nR_S1, nR_S2, padding=True)
+
+    Correction by collapsing values
+    >>> nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]
+    >>> nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]
+    >>> fit = fit_meta_d_MLE(nR_S1, nR_S2, collapse=2)
 
     References
-    ---------
-    ..[#] Hautus, M. J. (1995). Corrections for extreme proportions and their
-    biasing effects on estimated values of d'. Behavior Research Methods,
+    ----------
+    ..[1] Hautus, M. J. (1995). Corrections for extreme proportions and their
+      biasing effects on estimated values of d'. Behavior Research Methods,
     Instruments, & Computers, 27, 46-51.
+    ..[2] Snodgrass, J. G., & Corwin, J. (1988). Pragmatics of measuring
+      recognition memory: Applications to dementia and amnesia. Journal of
+      Experimental Psychology: General, 117(1), 34–50.
+      https://doi.org/10.1037/0096-3445.117.1.34
     """
     if (len(nR_S1) % 2) != 0:
         raise ValueError('input arrays must have an even number of elements')
     if len(nR_S1) != len(nR_S2):
         raise ValueError('input arrays must have the same number of elements')
-    if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
-        import warnings
-        warnings.warn(
-            (f'Your inputs nR_S1: contain'
-             ' zeros! This may interfere with proper estimation of meta-d''.'
-             ' See `help fit_meta_d_MLE` for more information.'))
+    if (padding is False) & (collapse is None):
+        if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
+            import warnings
+            warnings.warn(
+                ('Your inputs contain zeros and is not corrected.'
+                 ' This may interfere with proper estimation of meta-d''.'
+                 ' See docstrings for more information.'))
+    elif (padding is True) & (collapse is None):
+        # A small padding is required to avoid problems in model fit if any
+        # confidence ratings aren't used (see Hautus MJ, 1995 for details)
+        adj_f = 1/len(nR_S1)
+        nR_S1 = nR_S1 + adj_f
+        nR_S2 = nR_S2 + adj_f
+    elif (padding is False) & (collapse is not None):
+        # Collapse values accross ratings to avoid problems in model fit
+        nR_S1 = nR_S1.reshape(int(len(nR_S1)/collapse), 2).sum(axis=1)
+        nR_S2 = nR_S2.reshape(int(len(nR_S2)/collapse), 2).sum(axis=1)
+    elif (padding is True) & (collapse is not None):
+        raise ValueError('Both padding and collapse are True.')
 
-    nRatings = int(len(nR_S1) / 2)  # number of ratings in the experiment
+    nRatings = int(len(nR_S1) / 2)   # number of ratings in the experiment
     nCriteria = int(2*nRatings - 1)  # number criteria to be fitted
 
     # parameters
     # meta-d' - 1
-    # t2c     - nCriteria-1
-    # constrain type 2 criteria values,
-    # such that t2c(i) is always <= t2c(i+1)
-    # want t2c(i)   <= t2c(i+1)
+    # t2c - nCriteria-1
+    # constrain type 2 criteria values, such that t2c(i) is always <= t2c(i+1)
     # -->  t2c(i+1) >= t2c(i) + 1e-5 (i.e. very small deviation from equality)
-    # -->  t2c(i) - t2c(i+1) <= -1e-5
     A, ub, lb = [], [], []
     for ii in range(nCriteria-2):
         tempArow = []
@@ -389,13 +408,13 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
 
     # lower bounds on parameters
     LB = []
-    LB.append(-10.)                              # meta-d'
+    LB.append(-10.)                             # meta-d'
     LB.extend(-20*np.ones((nCriteria-1)//2))    # criteria lower than t1c
     LB.extend(np.zeros((nCriteria-1)//2))       # criteria higher than t1c
 
     # upper bounds on parameters
     UB = []
-    UB.append(10.)                           # meta-d'
+    UB.append(10.)                             # meta-d'
     UB.extend(np.zeros((nCriteria-1)//2))      # criteria lower than t1c
     UB.extend(20*np.ones((nCriteria-1)//2))    # criteria higher than t1c
 
@@ -434,15 +453,12 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, fncdf=norm.cdf, fninv=norm.ppf):
     results = minimize(fit_meta_d_logL, guess, args=(inputObj),
                        method='trust-constr', jac='2-point', hess=SR1(),
                        constraints=[linear_constraint],
-                       options={'verbose': 1}, bounds=bounds)
+                       options={'verbose': verbose}, bounds=bounds)
 
     # quickly process some of the output
     meta_d1 = results.x[0]
     t2c1 = results.x[1:] + eval(constant_criterion)
     logL = -results.fun
-
-    # data is fit, now to package it...
-    # find observed t2FAR and t2HR
 
     # I_nR and C_nR are rating trial counts for incorrect and correct trials
     # element i corresponds to # (in)correct w/ rating i
@@ -556,6 +572,9 @@ def roc_auc(nR_S1, nR_S2):
 
     Examples
     --------
+    >>> nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]
+    >>> nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]
+    >>> auc = roc_auc(nR_S1, nR_S2)
     """
     nRatings = int(len(nR_S1)/2)
 

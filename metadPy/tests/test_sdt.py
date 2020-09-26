@@ -44,7 +44,7 @@ class Testsdt(TestCase):
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         fit = fit_meta_d_MLE(nR_S1, nR_S2)
-        assert round(fit['meta_da'], 3) == 1.654
+        assert round(fit['meta_da'], 3) == 1.634
         fit['t2ca_rS1']
         with pytest.raises(ValueError):
             fit = fit_meta_d_MLE(np.zeros(7), nR_S2)
