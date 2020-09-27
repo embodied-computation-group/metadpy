@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import unittest
 import pytest
-from metadPy.sdt import scores, rates, dprime, criterion, fit_meta_d_MLE, \
+from metadPy.sdt import scores, rates, dprime, criterion, metad_MLE, \
     roc_auc
 from unittest import TestCase
 
@@ -39,17 +39,17 @@ class Testsdt(TestCase):
         """Test criterion function"""
         assert .294 == -round(criterion(0.8, 0.4), 3)
 
-    def test_fit_meta_d_MLE(self):
+    def test_metad_MLE(self):
         """Test fit_meta_d_MLE function"""
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
-        fit = fit_meta_d_MLE(nR_S1, nR_S2)
+        fit = metad_MLE(nR_S1, nR_S2)
         assert round(fit['meta_da'], 3) == 1.634
         fit['t2ca_rS1']
         with pytest.raises(ValueError):
-            fit = fit_meta_d_MLE(np.zeros(7), nR_S2)
+            fit = metad_MLE(np.zeros(7), nR_S2)
         with pytest.raises(ValueError):
-            fit = fit_meta_d_MLE(nR_S1[:1], nR_S2)
+            fit = metad_MLE(nR_S1[:1], nR_S2)
 
     def test_roc_auc(self):
         """Test roc_auc function"""

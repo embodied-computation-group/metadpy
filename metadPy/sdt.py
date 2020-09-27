@@ -215,8 +215,8 @@ def fit_meta_d_logL(parameters, inputObj):
     return -logL
 
 
-def fit_meta_d_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
-                   fncdf=norm.cdf, fninv=norm.ppf, verbose=1):
+def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
+              fncdf=norm.cdf, fninv=norm.ppf, verbose=1):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
     This function is adapted from the transcription of fit_meta_d_MLE.m
@@ -330,8 +330,8 @@ def fit_meta_d_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
             correction.
 
     `s` is the ratio of standard deviations for type 1 distributions as:
-    `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default value of 1.
-    For most purposes, it is recommended to set `s=1`. See
+    `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default
+    value of 1. For most purposes, it is recommended to set `s=1`. See
     http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
 
     If there are N ratings, then there will be N-1 type 2 hit rates and false
