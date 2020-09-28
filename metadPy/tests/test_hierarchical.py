@@ -35,7 +35,8 @@ class Testsdt(TestCase):
         data = ratings2df(nR_S1, nR_S2)
         results = hmetad(
             data, stimuli='Stimuli', accuracy='Accuracy',
-            confidence='Confidence', nRatings=4)
+            confidence='Confidence', nRatings=4, chains=1, tune=100,
+            draws=100)
 
 
 
