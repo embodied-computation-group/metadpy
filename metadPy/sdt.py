@@ -579,9 +579,9 @@ def roc_auc(nR_S1, nR_S2):
     flip_nR_S2 = np.flip(nR_S2)
 
     S1_H2 = (nR_S1 + 0.5)[:nRatings]
-    S2_H2 = (nR_S2 + 0.5)[:nRatings]
+    S2_H2 = (flip_nR_S2 + 0.5)[:nRatings]
     S1_FA2 = (flip_nR_S1 + 0.5)[:nRatings]
-    S2_FA2 = (flip_nR_S2 + 0.5)[:nRatings]
+    S2_FA2 = (nR_S2 + 0.5)[:nRatings]
 
     H2 = S1_H2 + S2_H2
     FA2 = S1_FA2 + S2_FA2
