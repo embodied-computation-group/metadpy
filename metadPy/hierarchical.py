@@ -63,9 +63,16 @@ def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
 
     3. Repeated measures
 
+    Notes
+    -----
+    This function will compute hierarchical Bayesian estimation of
+    metacognitive efficiency as described in [1]_. The model can be fitter at
+    the subject level, at the group level and can account for repeated measures
+    by providing the corresponding `subject`, `between` and `within` factors.
+
     References
     ----------
-    .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
+    .. [1] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
     metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
     """
@@ -89,7 +96,8 @@ def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
         pymcData = preprocess(np.asarray(nR_S1), np.asarray(nR_S2))
 
         from subjectLevel import hmetad_subjectLevel
-        traces = hmetad_subjectLevel(pymcData, chains=3, tune=1000, draws=1000)
+        traces = hmetad_subjectLevel(pymcData, chains=chains, tune=tune,
+                                     draws=draws)
 
     #############
     # Group level
@@ -129,7 +137,8 @@ def hmetad(data, nR_S1=None, nR_S2=None, stimuli=None, accuracy=None,
         pymcData['Tol'] = 1e-05
 
         from groupLevel import hmetad_groupLevel
-        traces = hmetad_groupLevel(pymcData, chains=3, tune=1000, draws=1000)
+        traces = hmetad_groupLevel(pymcData, chains=chains, tune=tune,
+                                   draws=draws)
 
     return traces
 
@@ -158,7 +167,7 @@ def preprocess(nR_S1, nR_S2):
 
     See also
     --------
-    hmetad_individual
+    hmetad
     """
     if isinstance(nR_S1, list):
         nR_S1 = np.array(nR_S1)

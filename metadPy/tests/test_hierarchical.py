@@ -10,6 +10,7 @@ from unittest import TestCase
 nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
 nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
 
+
 class Testsdt(TestCase):
 
     def test_preprocess(self):
@@ -30,14 +31,12 @@ class Testsdt(TestCase):
 
     def test_hmetad(self):
         """Test hmetad function"""
-        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
-        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         data = ratings2df(nR_S1, nR_S2)
-        results = hmetad(
+        traces = hmetad(
             data, stimuli='Stimuli', accuracy='Accuracy',
             confidence='Confidence', nRatings=4, chains=1, tune=100,
             draws=100)
-
+        assert int(traces['metad'].mean()) == 1
 
 
 if __name__ == '__main__':

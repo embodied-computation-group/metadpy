@@ -282,9 +282,6 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
                 RMS units.
             * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
                 RMS units.
-            * `'S1units'` : contains same parameters in sd(S1) units. These may
-                be of use since the data-fitting is conducted using parameters
-                specified in sd(S1) units.
             * `'logL'` : log likelihood of the data fit
             * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates
                 for S1 responses.
