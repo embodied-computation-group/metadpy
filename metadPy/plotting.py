@@ -62,16 +62,16 @@ def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
     if ax is None:
         fig, ax = plt.subplots(1, 1, figsize=(8, 5))
     ax.bar(x=np.arange(.8, nRratings), height=C_prop_data, color='#5f9e6e',
-           width=.4, ec="k", label='Correct')
+           width=.4, ec="k", label='Obs Correct')
     ax.bar(x=np.arange(1.2, nRratings+.5), height=I_prop_data, color='#b55d60',
-           width=.4, ec="k", label='Incorrect')
+           width=.4, ec="k", label='Obs Incorrect')
     if fitModel is not None:
         ax.plot(np.arange(1.2, nRratings+.5), I_prop_model, 'o', color='w',
                 markeredgecolor='#b55d60', markersize=16, markeredgewidth=3,
-                label='Estimated Incorrect')
+                label='Est Incorrect')
         ax.plot(np.arange(.8, nRratings), C_prop_model, 'o', color='w',
                 markeredgecolor='#5f9e6e', markersize=16, markeredgewidth=3,
-                label='Estimated Correct')
+                label='Est Correct')
     ax.set_ylabel('P$_{(Confidence=y|Outcome)}$')
     ax.set_xlabel('Confidence rating')
     ax.set_xticks(range(1, nRratings+1))
