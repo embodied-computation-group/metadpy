@@ -55,8 +55,8 @@ class Testsdt(TestCase):
         """Test roc_auc function"""
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
-        rocauc = roc_auc(nR_S1, nR_S2)
-        assert round(rocauc, 3) == 0.508
+        auc = roc_auc(nR_S1, nR_S2)
+        assert round(auc, 3) == 0.728
 
 
 if __name__ == '__main__':

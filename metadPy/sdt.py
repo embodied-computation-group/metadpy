@@ -553,7 +553,8 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
 
 
 def roc_auc(nR_S1, nR_S2):
-    """ Function to calculate the area under the type 2 ROC curve.
+    """Calculate the area under the type 2 ROC curve given nR_S1 and nR_S2
+    ratings counts.
 
     Parameters
     ----------
@@ -564,15 +565,21 @@ def roc_auc(nR_S1, nR_S2):
 
     Returns
     -------
-    rocauc : float
+    auc : float
         Area under the type 2 ROC curve.
 
     Examples
     --------
     >>> nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]
     >>> nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]
-    >>> rocauc = roc_auc(nR_S1, nR_S2)
+    >>> roc_auc(nR_S1, nR_S2)
+    0.6998064266356949
     """
+    if isinstance(nR_S1, list):
+        nR_S1 = np.array(nR_S1)
+    if isinstance(nR_S2, list):
+        nR_S2 = np.array(nR_S2)
+
     nRatings = int(len(nR_S1)/2)
 
     flip_nR_S1 = np.flip(nR_S1)
