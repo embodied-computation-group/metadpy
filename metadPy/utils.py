@@ -5,9 +5,10 @@ import pandas as pd
 from scipy.stats import norm
 
 
-def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
-                  padAmount=None, data=None):
-    '''Response count.
+def trials2counts(stimuli='Stimuli', responses='Responses',
+                  accuracy='Accuracy', confidence='Confidence', nRatings=4,
+                  padCells=False, padAmount=None, data=None):
+    '''Convert raw behavioral data to nR_S1 and nR_S2 response count.
 
     Given data from an experiment where an observer discriminates between two
     stimulus alternatives on every trial and provides confidence ratings,
@@ -18,16 +19,23 @@ def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
     ----------
     stimuli : list, 1d array-like or string
         Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
-        the column containing the stimuli ID.
+        the column containing the stimuli ID. Default is `'Stimuli'`.
+    responses : list, 1d array-like or string
+        Response (0 or 1). If a dataframe is provided, should be the
+        name of the column containing the response accuracy. Default is
+        `'Responses'`.
     accuracy : list, 1d array-like or string
         Response accuracy (0 or 1). If a dataframe is provided, should be the
-        name of the column containing the response accuracy.
+        name of the column containing the response accuracy. Default is
+        `'Accuracy'`.
     confidence : list or 1d array-like
         Confidence ratings. If a dataframe is provided, should be the name of
-        the column containing the confidence ratings.
+        the column containing the confidence ratings. Default is
+        `'Confidence'`.
     nRatings : int
         Total of available subjective ratings available for the subject. e.g.
         if subject can rate confidence on a scale of 1-4, then nRatings = 4.
+        Default is `4`.
     padCells : boolean
         If `True`, each response count in the output has the value of padAmount
         added to it. Padding cells is desirable if trial counts of 0 interfere
@@ -49,8 +57,11 @@ def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
     Notes
     -----
     All trials where `stimuli` is not 0 or 1, accuracy is not 0 or 1, or
-    confidence is not in the range [1, nRatings], are omitted from the accuracy
-    count.
+    confidence is not in the range [1, nRatings], are automatically omitted.
+
+    The inputs can be responses, accuracy or both. If both `responses` and
+    `accuracy` are provided, will check for consstency. If only `accuracy` is
+    provided, the responses vector will be automatically infered.
 
     If nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was presented, the
     subject had the following accuracy counts:
@@ -83,43 +94,54 @@ def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
 
     Reference
     ---------
-    This function was adapted from Alan Lee version of trials2counts.m by
-    Maniscalco & Lau (2012) with minor changes.
+    This function was adapted from Alan Lee's version of trials2counts.m by
+    Maniscalco & Lau (2012):
+    http://www.columbia.edu/~bsm2105/type2sdt/trials2counts.py
     '''
     if data is not None:
         if isinstance(data, pd.DataFrame):
             stimuli = data[stimuli].to_numpy()
             confidence = data[confidence].to_numpy()
-            accuracy = data[accuracy].to_numpy()
+            if accuracy in data:
+                accuracy = data[accuracy].to_numpy()
+            if responses in data:
+                responses = data[responses].to_numpy()
         else:
             raise ValueError('`Data` should be a DataFrame')
 
+    if isinstance(accuracy, str) & isinstance(responses, str):
+        raise ValueError('Neither `responses` nor `accuracy` are provided')
+
+    # Create responses vector if missing
+    if isinstance(responses, str):
+        responses = stimuli.copy()
+        responses[accuracy == 0] = 1 - responses[accuracy == 0]
+
     # Check for valid inputs
-    if ((len(stimuli) == len(accuracy)) and
-       (len(stimuli) == len(confidence))) is False:
+    if not np.all(np.array([len(responses), len(confidence)])
+                  == len(stimuli)):
         raise ValueError('Input vectors must have the same length')
 
+    # Check data consistency
     tempstim, tempresp, tempratg = [], [], []
-
-    for s, rp, rt in zip(stimuli, accuracy, confidence):
+    for s, rp, rt in zip(stimuli, responses, confidence):
         if ((s == 0 or s == 1) and
            (rp == 0 or rp == 1) and (rt >= 1 and rt <= nRatings)):
             tempstim.append(s)
             tempresp.append(rp)
             tempratg.append(rt)
     stimuli = tempstim
-    accuracy = tempresp
+    responses = tempresp
     confidence = tempratg
 
     if padAmount is None:
         padAmount = 1/(2*nRatings)
 
     nR_S1, nR_S2 = [], []
-
     # S1 responses
     for r in range(nRatings, 0, -1):
         cs1, cs2 = 0, 0
-        for s, rp, rt in zip(stimuli, accuracy, confidence):
+        for s, rp, rt in zip(stimuli, responses, confidence):
             if s == 0 and rp == 0 and rt == r:
                 cs1 += 1
             if s == 1 and rp == 0 and rt == r:
@@ -130,7 +152,7 @@ def trials2counts(stimuli, accuracy, confidence, nRatings, padCells=False,
     # S2 responses
     for r in range(1, nRatings+1, 1):
         cs1, cs2 = 0, 0
-        for s, rp, rt in zip(stimuli, accuracy, confidence):
+        for s, rp, rt in zip(stimuli, responses, confidence):
             if s == 0 and rp == 1 and rt == r:
                 cs1 += 1
             if s == 1 and rp == 1 and rt == r:
@@ -438,34 +460,35 @@ def ratings2df(nR_S1, nR_S2):
     Returns
     -------
     df : :py:class:`pandas.DataFrame`
-         A DataFrame (nRows==`nTrials`) containing the responses and
+         A DataFrame (nRows==`nTrials`) containing the responses, accuracy and
          confidence rating for one participant given `nR_s1` and `nR_S2`.
 
     See also
     --------
-    responseSimulation
+    responseSimulation, trials2counts
     """
     df = pd.DataFrame([])
     nRatings = int(len(nR_S1)/2)
     for i in range(nRatings):
         if nR_S1[i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 1,
-                 'Confidence': [i+1]})]*nR_S1[i]))
+                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 1, 'Responses': 0,
+                 'Confidence': [nRatings-i]})]*nR_S1[i]))
         if nR_S2[i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 1,
-                 'Confidence': [i+1]})]*nR_S2[i]))
+                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 0, 'Responses': 0,
+                 'Confidence': [nRatings-i]})]*nR_S2[i]))
         if nR_S1[nRatings+i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 0,
+                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 0, 'Responses': 1,
                  'Confidence': [i+1]})]*nR_S1[nRatings+i]))
         if nR_S2[nRatings+i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 0,
+                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 1, 'Responses': 1,
                  'Confidence': [i+1]})]*nR_S2[nRatings+i]))
+
     # Shuffles rows before returning
     df = df.sample(frac=1).reset_index(drop=True)
-    df['nTrial'] = np.arange(len(df))  # Add a column for trials
+    df['nTrial'] = np.arange(len(df))  # Add a column for trials number
 
     return df

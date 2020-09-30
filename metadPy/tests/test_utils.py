@@ -29,7 +29,7 @@ class Testsdt(TestCase):
         nR_S1, nR_S2 = trials2counts(
             data=df, stimuli='stimuli', accuracy='accuracy',
             confidence='confidence', nRatings=4)
-        assert nR_S1 == [0, 0, 0, 1, 0, 0, 1, 1]
+        assert nR_S1 == [1, 1, 0, 0, 1, 0, 0, 0]
         assert nR_S2 == [1, 1, 0, 0, 1, 2, 0, 0]
         with pytest.raises(ValueError):
             nR_S1, nR_S2 = trials2counts(
@@ -86,7 +86,12 @@ class Testsdt(TestCase):
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         df = ratings2df(nR_S1, nR_S2)
         assert len(df) == sum(nR_S2)*2
-        assert df.Accuracy.sum() == (sum(nR_S1[:4])+sum(nR_S2[:4]))
+        assert df.Accuracy.sum() == (sum(nR_S1[:4])+sum(nR_S2[4:]))
+
+        # Test compatibility between ratings2df and trials2counts
+        nR_S1bis, nR_S2bis = trials2counts(data=df, nRatings=4)
+        assert np.all(nR_S1 == nR_S1bis)
+        assert np.all(nR_S2 == nR_S2bis)
 
 
 if __name__ == '__main__':
