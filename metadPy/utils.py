@@ -472,19 +472,19 @@ def ratings2df(nR_S1, nR_S2):
     for i in range(nRatings):
         if nR_S1[i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 1, 'Responses': 0,
+                [pd.DataFrame({'Stimuli': 0, 'Responses': 0, 'Accuracy': 1, 
                  'Confidence': [nRatings-i]})]*nR_S1[i]))
         if nR_S2[i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 0, 'Responses': 0,
+                [pd.DataFrame({'Stimuli': 1, 'Responses': 0, 'Accuracy': 0,
                  'Confidence': [nRatings-i]})]*nR_S2[i]))
         if nR_S1[nRatings+i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 0, 'Accuracy': 0, 'Responses': 1,
+                [pd.DataFrame({'Stimuli': 0, 'Responses': 1, 'Accuracy': 0,
                  'Confidence': [i+1]})]*nR_S1[nRatings+i]))
         if nR_S2[nRatings+i]:
             df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 1, 'Accuracy': 1, 'Responses': 1,
+                [pd.DataFrame({'Stimuli': 1, 'Responses': 1, 'Accuracy': 1,
                  'Confidence': [i+1]})]*nR_S2[nRatings+i]))
 
     # Shuffles rows before returning
