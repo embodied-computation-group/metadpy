@@ -8,7 +8,7 @@ import numpy as np
 
 
 def hmetad(
-    data,
+    data=None,
     nR_S1=None,
     nR_S2=None,
     stimuli=None,
@@ -27,12 +27,12 @@ def hmetad(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame`
+    data : :py:class:`pandas.DataFrame` or None
         Dataframe. Note that this function can also directly be used as a
         Pandas method, in which case this argument is no longer needed.
-    nR_S1 : 1d array-like, list or string
+    nR_S1 : 1d array-like, list, string or None
         Confience ratings (stimuli 1, correct and incorrect).
-    nR_S2 : 1d array-like, list or string
+    nR_S2 : 1d array-like, list, string or None
         Confience ratings (stimuli 2, correct and incorrect).
     stimuli : string
         Name of the column containing the stimuli.
@@ -92,22 +92,30 @@ def hmetad(
     modelScript = os.path.dirname(__file__) + "/models/"
     sys.path.append(modelScript)
 
-    # If a continuous rating scale was used (if N unique ratings > nRatings)
-    # transform confidence to discrete ratings
-    if data[confidence].nunique() > nRatings:
-        data[confidence] = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
+    if data is None:
+        if (nR_S1 is None) or (nR_S2 is None):
+            raise ValueError(
+                "If data is None, you should provide"
+                " the nR_S1 and nR_S2 vectors instead."
+            )
+    else:
+        if data[confidence].nunique() > nRatings:
+            # If a continuous rating scale was used (if N unique ratings > nRatings)
+            # transform confidence to discrete ratings
+            data[confidence] = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
 
     ###############
     # Subject level
     if (within is None) & (between is None) & (subject is None):
 
-        nR_S1, nR_S2 = trials2counts(
-            data=data,
-            stimuli=stimuli,
-            accuracy=accuracy,
-            confidence=confidence,
-            nRatings=nRatings,
-        )
+        if data is not None:
+            nR_S1, nR_S2 = trials2counts(
+                data=data,
+                stimuli=stimuli,
+                accuracy=accuracy,
+                confidence=confidence,
+                nRatings=nRatings,
+            )
 
         pymcData = preprocess(np.asarray(nR_S1), np.asarray(nR_S2))
 
