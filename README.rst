@@ -10,6 +10,9 @@
 .. image:: https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/LegrandNico/metadPy
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+
 ================
 
 .. image::  https://github.com/LegrandNico/metadPy/blob/master/images/logo.png

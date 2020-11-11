@@ -4,46 +4,143 @@ import unittest
 import pytest
 import numpy as np
 import pandas as pd
-from metadPy.utils import trials2counts, discreteRatings, responseSimulation,\
-    type2_SDT_simuation, ratings2df
+from metadPy.utils import (
+    trials2counts,
+    discreteRatings,
+    responseSimulation,
+    type2_SDT_simuation,
+    ratings2df,
+)
 from unittest import TestCase
 
-ratings = np.array([
-    96., 98., 95., 90., 32., 58., 77.,  6., 78., 78., 62., 60., 38.,
-    12., 63., 18., 15., 13., 49., 26.,  2., 38., 60., 23., 25., 39.,
-    22., 33., 32., 27., 40., 13., 35., 16., 35., 73., 50.,  3., 40.,
-    0., 34., 47., 52.,  0.,  0.,  0., 25.,  1., 16., 37., 59., 20.,
-    25., 23., 45., 22., 28., 62., 61., 69., 20., 75., 10., 18., 61.,
-    27., 63., 22., 54., 30., 36., 66., 14.,  2., 53., 58., 88., 23.,
-    77., 54.])
+ratings = np.array(
+    [
+        96.0,
+        98.0,
+        95.0,
+        90.0,
+        32.0,
+        58.0,
+        77.0,
+        6.0,
+        78.0,
+        78.0,
+        62.0,
+        60.0,
+        38.0,
+        12.0,
+        63.0,
+        18.0,
+        15.0,
+        13.0,
+        49.0,
+        26.0,
+        2.0,
+        38.0,
+        60.0,
+        23.0,
+        25.0,
+        39.0,
+        22.0,
+        33.0,
+        32.0,
+        27.0,
+        40.0,
+        13.0,
+        35.0,
+        16.0,
+        35.0,
+        73.0,
+        50.0,
+        3.0,
+        40.0,
+        0.0,
+        34.0,
+        47.0,
+        52.0,
+        0.0,
+        0.0,
+        0.0,
+        25.0,
+        1.0,
+        16.0,
+        37.0,
+        59.0,
+        20.0,
+        25.0,
+        23.0,
+        45.0,
+        22.0,
+        28.0,
+        62.0,
+        61.0,
+        69.0,
+        20.0,
+        75.0,
+        10.0,
+        18.0,
+        61.0,
+        27.0,
+        63.0,
+        22.0,
+        54.0,
+        30.0,
+        36.0,
+        66.0,
+        14.0,
+        2.0,
+        53.0,
+        58.0,
+        88.0,
+        23.0,
+        77.0,
+        54.0,
+    ]
+)
 
 
 class Testsdt(TestCase):
-
     def test_trials2counts(self):
         """Test trials2counts function"""
-        df = pd.DataFrame({'stimuli': [0, 1, 0, 0, 1, 1, 1, 1],
-                           'accuracy': [0, 1, 1, 1, 0, 0, 1, 1],
-                           'confidence': [1, 2, 3, 4, 4, 3, 2, 1],
-                           'nRatings': 4})
+        df = pd.DataFrame(
+            {
+                "stimuli": [0, 1, 0, 0, 1, 1, 1, 1],
+                "accuracy": [0, 1, 1, 1, 0, 0, 1, 1],
+                "confidence": [1, 2, 3, 4, 4, 3, 2, 1],
+                "nRatings": 4,
+            }
+        )
         nR_S1, nR_S2 = trials2counts(
-            data=df, stimuli='stimuli', accuracy='accuracy',
-            confidence='confidence', nRatings=4)
+            data=df,
+            stimuli="stimuli",
+            accuracy="accuracy",
+            confidence="confidence",
+            nRatings=4,
+        )
         assert nR_S1 == [1, 1, 0, 0, 1, 0, 0, 0]
         assert nR_S2 == [1, 1, 0, 0, 1, 2, 0, 0]
         with pytest.raises(ValueError):
             nR_S1, nR_S2 = trials2counts(
-                data='error', stimuli='stimuli',
-                accuracy='accuracy', confidence='confidence', nRatings=4)
+                data="error",
+                stimuli="stimuli",
+                accuracy="accuracy",
+                confidence="confidence",
+                nRatings=4,
+            )
         with pytest.raises(ValueError):
-            nR_S1, nR_S2 = trials2counts(stimuli=[0, 1, 0, 0, 1, 1, 1, 1],
-                                         accuracy=[0, 1, 1, 1, 0, 1, 1],
-                                         confidence=[1, 2, 3, 4, 4, 3, 2],
-                                         nRatings=4)
-        nR_S1, nR_S2 = trials2counts(stimuli=[0, 1, 0, 0, 1, 1, 1, 1],
-                                     accuracy=[0, 1, 1, 1, 0, 0, 1, 1],
-                                     confidence=[1, 2, 3, 4, 4, 3, 2, 1],
-                                     nRatings=4, padCells=True)
+            nR_S1, nR_S2 = trials2counts(
+                stimuli=[0, 1, 0, 0, 1, 1, 1, 1],
+                accuracy=[0, 1, 1, 1, 0, 1, 1],
+                confidence=[1, 2, 3, 4, 4, 3, 2],
+                nRatings=4,
+            )
+        nR_S1, nR_S2 = trials2counts(
+            stimuli=[0, 1, 0, 0, 1, 1, 1, 1],
+            accuracy=[0, 1, 1, 1, 0, 0, 1, 1],
+            confidence=[1, 2, 3, 4, 4, 3, 2, 1],
+            nRatings=4,
+            padCells=True,
+        )
 
     def test_discreteRatings(self):
         """Test trials2counts function"""
@@ -57,7 +154,7 @@ class Testsdt(TestCase):
         ratingsLow[np.where(ratings < 50)[0]] = 1
         responseConf, out = discreteRatings(ratingsLow, nbins=4)
         unique, counts = np.unique(responseConf, return_counts=True)
-        assert np.all(counts == np.array([51, 10,  9, 10]))
+        assert np.all(counts == np.array([51, 10, 9, 10]))
 
         ratingsHigh = ratings.copy()
         ratingsHigh[np.where(ratings > 50)[0]] = 99
@@ -67,26 +164,25 @@ class Testsdt(TestCase):
 
     def test_responseSimulation(self):
         """Test responseSimulation function"""
-        nR_S1, nR_S2 = responseSimulation(
-            d=1, metad=2, c=0, nRatings=4, nTrials=500)
+        nR_S1, nR_S2 = responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500)
         assert len(nR_S1) == len(nR_S2) == 8
         assert sum(nR_S1) == sum(nR_S2) == 250
 
     def test_type2_SDT_simuation(self):
         """Test responseSimulation function"""
-        nR_S1, nR_S2 = type2_SDT_simuation(
-            d=1, noise=.2, c=0, nRatings=4, nTrials=500)
+        nR_S1, nR_S2 = type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500)
         assert len(nR_S1) == len(nR_S2) == 8
         nR_S1, nR_S2 = type2_SDT_simuation(
-            d=1, noise=[.2, .8], c=0, nRatings=4, nTrials=500)
+            d=1, noise=[0.2, 0.8], c=0, nRatings=4, nTrials=500
+        )
 
     def test_ratings2df(self):
         """Test ratings2df function"""
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         df = ratings2df(nR_S1, nR_S2)
-        assert len(df) == sum(nR_S2)*2
-        assert df.Accuracy.sum() == (sum(nR_S1[:4])+sum(nR_S2[4:]))
+        assert len(df) == sum(nR_S2) * 2
+        assert df.Accuracy.sum() == (sum(nR_S1[:4]) + sum(nR_S2[4:]))
 
         # Test compatibility between ratings2df and trials2counts
         nR_S1bis, nR_S2bis = trials2counts(data=df, nRatings=4)
@@ -94,5 +190,5 @@ class Testsdt(TestCase):
         assert np.all(nR_S2 == nR_S2bis)
 
 
-if __name__ == '__main__':
-    unittest.main(argv=['first-arg-is-ignored'], exit=False)
+if __name__ == "__main__":
+    unittest.main(argv=["first-arg-is-ignored"], exit=False)

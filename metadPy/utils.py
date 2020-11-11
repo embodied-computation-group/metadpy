@@ -5,10 +5,17 @@ import pandas as pd
 from scipy.stats import norm
 
 
-def trials2counts(stimuli='Stimuli', responses='Responses',
-                  accuracy='Accuracy', confidence='Confidence', nRatings=4,
-                  padCells=False, padAmount=None, data=None):
-    '''Convert raw behavioral data to nR_S1 and nR_S2 response count.
+def trials2counts(
+    stimuli="Stimuli",
+    responses="Responses",
+    accuracy="Accuracy",
+    confidence="Confidence",
+    nRatings=4,
+    padCells=False,
+    padAmount=None,
+    data=None,
+):
+    """Convert raw behavioral data to nR_S1 and nR_S2 response count.
 
     Given data from an experiment where an observer discriminates between two
     stimulus alternatives on every trial and provides confidence ratings,
@@ -97,7 +104,7 @@ def trials2counts(stimuli='Stimuli', responses='Responses',
     This function was adapted from Alan Lee's version of trials2counts.m by
     Maniscalco & Lau (2012):
     http://www.columbia.edu/~bsm2105/type2sdt/trials2counts.py
-    '''
+    """
     if data is not None:
         if isinstance(data, pd.DataFrame):
             stimuli = data[stimuli].to_numpy()
@@ -107,10 +114,10 @@ def trials2counts(stimuli='Stimuli', responses='Responses',
             if responses in data:
                 responses = data[responses].to_numpy()
         else:
-            raise ValueError('`Data` should be a DataFrame')
+            raise ValueError("`Data` should be a DataFrame")
 
     if isinstance(accuracy, str) & isinstance(responses, str):
-        raise ValueError('Neither `responses` nor `accuracy` are provided')
+        raise ValueError("Neither `responses` nor `accuracy` are provided")
 
     # Create responses vector if missing
     if isinstance(responses, str):
@@ -118,15 +125,13 @@ def trials2counts(stimuli='Stimuli', responses='Responses',
         responses[accuracy == 0] = 1 - responses[accuracy == 0]
 
     # Check for valid inputs
-    if not np.all(np.array([len(responses), len(confidence)])
-                  == len(stimuli)):
-        raise ValueError('Input vectors must have the same length')
+    if not np.all(np.array([len(responses), len(confidence)]) == len(stimuli)):
+        raise ValueError("Input vectors must have the same length")
 
     # Check data consistency
     tempstim, tempresp, tempratg = [], [], []
     for s, rp, rt in zip(stimuli, responses, confidence):
-        if ((s == 0 or s == 1) and
-           (rp == 0 or rp == 1) and (rt >= 1 and rt <= nRatings)):
+        if (s == 0 or s == 1) and (rp == 0 or rp == 1) and (rt >= 1 and rt <= nRatings):
             tempstim.append(s)
             tempresp.append(rp)
             tempratg.append(rt)
@@ -135,7 +140,7 @@ def trials2counts(stimuli='Stimuli', responses='Responses',
     confidence = tempratg
 
     if padAmount is None:
-        padAmount = 1/(2*nRatings)
+        padAmount = 1 / (2 * nRatings)
 
     nR_S1, nR_S2 = [], []
     # S1 responses
@@ -150,7 +155,7 @@ def trials2counts(stimuli='Stimuli', responses='Responses',
         nR_S2.append(cs2)
 
     # S2 responses
-    for r in range(1, nRatings+1, 1):
+    for r in range(1, nRatings + 1, 1):
         cs1, cs2 = 0, 0
         for s, rp, rt in zip(stimuli, responses, confidence):
             if s == 0 and rp == 1 and rt == r:
@@ -162,8 +167,8 @@ def trials2counts(stimuli='Stimuli', responses='Responses',
 
     # pad response counts to avoid zeros
     if padCells:
-        nR_S1 = [n+padAmount for n in nR_S1]
-        nR_S2 = [n+padAmount for n in nR_S2]
+        nR_S1 = [n + padAmount for n in nR_S1]
+        nR_S2 = [n + padAmount for n in nR_S2]
 
     return nR_S1, nR_S2
 
@@ -213,53 +218,47 @@ def discreteRatings(ratings, nbins=4):
     {'confBins': array([ 0., 20., 35., 60., 98.]), 'rebin': 0, 'binCount': 21})
     """
     out, temp = {}, []
-    confBins = np.quantile(ratings, np.linspace(0, 1, nbins+1))
-    if (confBins[0] == confBins[1]) & (confBins[nbins-1] == confBins[nbins]):
-        raise ValueError('Bad bins!')
-    elif confBins[nbins-1] == confBins[nbins]:
-        print('Lots of high confidence ratings')
+    confBins = np.quantile(ratings, np.linspace(0, 1, nbins + 1))
+    if (confBins[0] == confBins[1]) & (confBins[nbins - 1] == confBins[nbins]):
+        raise ValueError("Bad bins!")
+    elif confBins[nbins - 1] == confBins[nbins]:
+        print("Lots of high confidence ratings")
         # Exclude high confidence trials and re-estimate
         hiConf = confBins[-1]
-        confBins = np.quantile(ratings[ratings != hiConf],
-                               np.linspace(0, 1, nbins))
-        for b in range(len(confBins)-1):
-            temp.append(
-                (ratings >= confBins[b]) & (ratings <= confBins[b+1]))
+        confBins = np.quantile(ratings[ratings != hiConf], np.linspace(0, 1, nbins))
+        for b in range(len(confBins) - 1):
+            temp.append((ratings >= confBins[b]) & (ratings <= confBins[b + 1]))
         temp.append(ratings == hiConf)
 
-        out['confBins'] = [confBins, hiConf]
-        out['rebin'] = 1
+        out["confBins"] = [confBins, hiConf]
+        out["rebin"] = 1
     elif confBins[0] == confBins[1]:
-        print('Lots of low confidence ratings')
+        print("Lots of low confidence ratings")
         # Exclude low confidence trials and re-estimate
         lowConf = confBins[1]
         temp.append(ratings == lowConf)
-        confBins = np.quantile(ratings[ratings != lowConf],
-                               np.linspace(0, 1, nbins))
+        confBins = np.quantile(ratings[ratings != lowConf], np.linspace(0, 1, nbins))
         for b in range(1, len(confBins)):
-            temp.append(
-                (ratings >= confBins[b-1]) & (ratings <= confBins[b]))
-        out['confBins'] = [lowConf, confBins]
-        out['rebin'] = 1
+            temp.append((ratings >= confBins[b - 1]) & (ratings <= confBins[b]))
+        out["confBins"] = [lowConf, confBins]
+        out["rebin"] = 1
     else:
-        for b in range(len(confBins)-1):
-            temp.append(
-                (ratings >= confBins[b]) & (ratings <= confBins[b+1]))
-        out['confBins'] = confBins
-        out['rebin'] = 0
+        for b in range(len(confBins) - 1):
+            temp.append((ratings >= confBins[b]) & (ratings <= confBins[b + 1]))
+        out["confBins"] = confBins
+        out["rebin"] = 0
 
-    discreteRatings = np.zeros(len(ratings), dtype='int')
+    discreteRatings = np.zeros(len(ratings), dtype="int")
     for b in range(nbins):
         discreteRatings[temp[b]] = b
     discreteRatings += 1
-    out['binCount'] = sum(temp[b])
+    out["binCount"] = sum(temp[b])
 
     return discreteRatings, out
 
 
-def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500,
-                       as_df=False):
-    """ Simulate nR_S1 and nR_S2 response counts.
+def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500, as_df=False):
+    """Simulate nR_S1 and nR_S2 response counts.
 
     Parameters
     ----------
@@ -299,39 +298,51 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500,
     c2 = c + np.linspace(0.5, 1.5, (nRatings - 1))
 
     # Calc type 1 response counts
-    H = round((1-norm.cdf(c, d/2))*(nTrials/2))
-    FA = round((1-norm.cdf(c, -d/2))*(nTrials/2))
-    CR = round(norm.cdf(c, -d/2)*(nTrials/2))
-    M = round(norm.cdf(c, d/2)*(nTrials/2))
+    H = round((1 - norm.cdf(c, d / 2)) * (nTrials / 2))
+    FA = round((1 - norm.cdf(c, -d / 2)) * (nTrials / 2))
+    CR = round(norm.cdf(c, -d / 2) * (nTrials / 2))
+    M = round(norm.cdf(c, d / 2) * (nTrials / 2))
 
     # Calc type 2 probabilities
-    S1mu = -metad/2
-    S2mu = metad/2
+    S1mu = -metad / 2
+    S2mu = metad / 2
 
     # Normalising constants
     C_area_rS1 = norm.cdf(c, S1mu)
     I_area_rS1 = norm.cdf(c, S2mu)
-    C_area_rS2 = 1-norm.cdf(c, S2mu)
-    I_area_rS2 = 1-norm.cdf(c, S1mu)
+    C_area_rS2 = 1 - norm.cdf(c, S2mu)
+    I_area_rS2 = 1 - norm.cdf(c, S1mu)
 
     t2c1x = np.hstack((-np.inf, c1, c, c2, np.inf))
 
     prC_rS1, prI_rS1, prC_rS2, prI_rS2 = [], [], [], []
     for i in range(nRatings):
-        prC_rS1.append((norm.cdf(t2c1x[i+1], S1mu) -
-                       norm.cdf(t2c1x[i], S1mu))/C_area_rS1)
-        prI_rS1.append((norm.cdf(t2c1x[i+1], S2mu) -
-                       norm.cdf(t2c1x[i], S2mu))/I_area_rS1)
-        prC_rS2.append(((1-norm.cdf(t2c1x[nRatings+i], S2mu)) -
-                       (1-norm.cdf(t2c1x[nRatings+i+1], S2mu)))/C_area_rS2)
-        prI_rS2.append(((1-norm.cdf(t2c1x[nRatings+i], S1mu)) -
-                       (1-norm.cdf(t2c1x[nRatings+i+1], S1mu)))/I_area_rS2)
+        prC_rS1.append(
+            (norm.cdf(t2c1x[i + 1], S1mu) - norm.cdf(t2c1x[i], S1mu)) / C_area_rS1
+        )
+        prI_rS1.append(
+            (norm.cdf(t2c1x[i + 1], S2mu) - norm.cdf(t2c1x[i], S2mu)) / I_area_rS1
+        )
+        prC_rS2.append(
+            (
+                (1 - norm.cdf(t2c1x[nRatings + i], S2mu))
+                - (1 - norm.cdf(t2c1x[nRatings + i + 1], S2mu))
+            )
+            / C_area_rS2
+        )
+        prI_rS2.append(
+            (
+                (1 - norm.cdf(t2c1x[nRatings + i], S1mu))
+                - (1 - norm.cdf(t2c1x[nRatings + i + 1], S1mu))
+            )
+            / I_area_rS2
+        )
 
     # Ensure vectors sum to 1 to avoid problems with mnrnd
-    prC_rS1 = prC_rS1/sum(prC_rS1)
-    prI_rS1 = prI_rS1/sum(prI_rS1)
-    prC_rS2 = prC_rS2/sum(prC_rS2)
-    prI_rS2 = prI_rS2/sum(prI_rS2)
+    prC_rS1 = prC_rS1 / sum(prC_rS1)
+    prI_rS1 = prI_rS1 / sum(prI_rS1)
+    prC_rS2 = prC_rS2 / sum(prC_rS2)
+    prI_rS2 = prI_rS2 / sum(prI_rS2)
 
     # Sample 4 response classes from multinomial distirbution (normalised
     # within each response class)
@@ -394,14 +405,14 @@ def type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500):
         rc = 0
         sigma = noise
 
-    S1mu = -d/2
-    S2mu = d/2
+    S1mu = -d / 2
+    S2mu = d / 2
 
     # Initialise response arrays
-    nC_rS1 = np.zeros(len(c1)+1)
-    nI_rS1 = np.zeros(len(c1)+1)
-    nC_rS2 = np.zeros(len(c2)+1)
-    nI_rS2 = np.zeros(len(c2)+1)
+    nC_rS1 = np.zeros(len(c1) + 1)
+    nI_rS1 = np.zeros(len(c1) + 1)
+    nC_rS2 = np.zeros(len(c2) + 1)
+    nI_rS2 = np.zeros(len(c2) + 1)
 
     for t in range(nTrials):
 
@@ -468,27 +479,75 @@ def ratings2df(nR_S1, nR_S2):
     responseSimulation, trials2counts
     """
     df = pd.DataFrame([])
-    nRatings = int(len(nR_S1)/2)
+    nRatings = int(len(nR_S1) / 2)
     for i in range(nRatings):
         if nR_S1[i]:
-            df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 0, 'Responses': 0, 'Accuracy': 1, 
-                 'Confidence': [nRatings-i]})]*nR_S1[i]))
+            df = df.append(
+                pd.concat(
+                    [
+                        pd.DataFrame(
+                            {
+                                "Stimuli": 0,
+                                "Responses": 0,
+                                "Accuracy": 1,
+                                "Confidence": [nRatings - i],
+                            }
+                        )
+                    ]
+                    * nR_S1[i]
+                )
+            )
         if nR_S2[i]:
-            df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 1, 'Responses': 0, 'Accuracy': 0,
-                 'Confidence': [nRatings-i]})]*nR_S2[i]))
-        if nR_S1[nRatings+i]:
-            df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 0, 'Responses': 1, 'Accuracy': 0,
-                 'Confidence': [i+1]})]*nR_S1[nRatings+i]))
-        if nR_S2[nRatings+i]:
-            df = df.append(pd.concat(
-                [pd.DataFrame({'Stimuli': 1, 'Responses': 1, 'Accuracy': 1,
-                 'Confidence': [i+1]})]*nR_S2[nRatings+i]))
+            df = df.append(
+                pd.concat(
+                    [
+                        pd.DataFrame(
+                            {
+                                "Stimuli": 1,
+                                "Responses": 0,
+                                "Accuracy": 0,
+                                "Confidence": [nRatings - i],
+                            }
+                        )
+                    ]
+                    * nR_S2[i]
+                )
+            )
+        if nR_S1[nRatings + i]:
+            df = df.append(
+                pd.concat(
+                    [
+                        pd.DataFrame(
+                            {
+                                "Stimuli": 0,
+                                "Responses": 1,
+                                "Accuracy": 0,
+                                "Confidence": [i + 1],
+                            }
+                        )
+                    ]
+                    * nR_S1[nRatings + i]
+                )
+            )
+        if nR_S2[nRatings + i]:
+            df = df.append(
+                pd.concat(
+                    [
+                        pd.DataFrame(
+                            {
+                                "Stimuli": 1,
+                                "Responses": 1,
+                                "Accuracy": 1,
+                                "Confidence": [i + 1],
+                            }
+                        )
+                    ]
+                    * nR_S2[nRatings + i]
+                )
+            )
 
     # Shuffles rows before returning
     df = df.sample(frac=1).reset_index(drop=True)
-    df['nTrial'] = np.arange(len(df))  # Add a column for trials number
+    df["nTrial"] = np.arange(len(df))  # Add a column for trials number
 
     return df

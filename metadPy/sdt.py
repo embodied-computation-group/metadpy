@@ -6,7 +6,7 @@ from scipy.stats import norm
 from scipy.optimize import Bounds, LinearConstraint, minimize, SR1
 
 
-def scores(data=None, signal='signal', responses='responses'):
+def scores(data=None, signal="signal", responses="responses"):
     """Extract hits, misses, false alarms and correct rejection from `signal`
     and `responses`.
 
@@ -36,23 +36,29 @@ def scores(data=None, signal='signal', responses='responses'):
     """
     # Formatting checks
     if data is None:
-        if isinstance(signal, (np.ndarray, np.generic)) and \
-           isinstance(responses, (np.ndarray, np.generic)) and \
-           (len(signal) == len(responses)) and \
-           np.all([s in [0, 1] for s in signal]) and\
-           np.all([s in [0, 1] for s in responses]):
+        if (
+            isinstance(signal, (np.ndarray, np.generic))
+            and isinstance(responses, (np.ndarray, np.generic))
+            and (len(signal) == len(responses))
+            and np.all([s in [0, 1] for s in signal])
+            and np.all([s in [0, 1] for s in responses])
+        ):
 
-            data = pd.DataFrame({'signal': signal, 'responses': responses})
+            data = pd.DataFrame({"signal": signal, "responses": responses})
         else:
-            raise ValueError(('If no data is provided, `signal` and',
-                              ' `responses` should be two boolean vectors',
-                              ' with equal lengths.'))
+            raise ValueError(
+                (
+                    "If no data is provided, `signal` and",
+                    " `responses` should be two boolean vectors",
+                    " with equal lengths.",
+                )
+            )
 
     # Extract hits, misses, false alarm and correct rejection
-    hit = sum(data['signal'] & data['responses'])
-    misses = sum(data['signal'] & ~data['responses'])
-    fa = sum(~data['signal'] & data['responses'])
-    cr = sum(~data['signal'] & ~data['responses'])
+    hit = sum(data["signal"] & data["responses"])
+    misses = sum(data["signal"] & ~data["responses"])
+    fa = sum(~data["signal"] & data["responses"])
+    cr = sum(~data["signal"] & ~data["responses"])
 
     return hit, misses, fa, cr
 
@@ -137,7 +143,7 @@ def criterion(hit_rate, fa_rate):
     dprime : float
         The d' value.
     """
-    return - .5 * (norm.ppf(hit_rate) + norm.ppf(fa_rate))
+    return -0.5 * (norm.ppf(hit_rate) + norm.ppf(fa_rate))
 
 
 def fit_meta_d_logL(parameters, inputObj):
@@ -151,14 +157,13 @@ def fit_meta_d_logL(parameters, inputObj):
     """
     meta_d1 = parameters[0]
     t2c1 = parameters[1:]
-    nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv = \
-        inputObj
+    nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv = inputObj
 
     # define mean and SD of S1 and S2 distributions
-    S1mu = -meta_d1/2
+    S1mu = -meta_d1 / 2
     S1sd = 1
-    S2mu = meta_d1/2
-    S2sd = S1sd/s
+    S2mu = meta_d1 / 2
+    S2sd = S1sd / s
 
     # adjust so that the type 1 criterion is set at 0
     # (this is just to work with optimization toolbox constraints...
@@ -174,50 +179,75 @@ def fit_meta_d_logL(parameters, inputObj):
     nC_rS1 = [nR_S1[i] for i in range(nRatings)]
     nI_rS1 = [nR_S2[i] for i in range(nRatings)]
     # S2 responses
-    nC_rS2 = [nR_S2[i+nRatings] for i in range(nRatings)]
-    nI_rS2 = [nR_S1[i+nRatings] for i in range(nRatings)]
+    nC_rS2 = [nR_S2[i + nRatings] for i in range(nRatings)]
+    nI_rS2 = [nR_S1[i + nRatings] for i in range(nRatings)]
 
     # get type 2 probabilities
     C_area_rS1 = fncdf(t1c1, S1mu, S1sd)
     I_area_rS1 = fncdf(t1c1, S2mu, S2sd)
 
-    C_area_rS2 = 1-fncdf(t1c1, S2mu, S2sd)
-    I_area_rS2 = 1-fncdf(t1c1, S1mu, S1sd)
+    C_area_rS2 = 1 - fncdf(t1c1, S2mu, S2sd)
+    I_area_rS2 = 1 - fncdf(t1c1, S1mu, S1sd)
 
     t2c1x = [-np.inf]
-    t2c1x.extend(t2c1[0:(nRatings-1)])
+    t2c1x.extend(t2c1[0 : (nRatings - 1)])
     t2c1x.append(t1c1)
-    t2c1x.extend(t2c1[(nRatings-1):])
+    t2c1x.extend(t2c1[(nRatings - 1) :])
     t2c1x.append(np.inf)
 
-    prC_rS1 = [(fncdf(t2c1x[i+1], S1mu, S1sd) -
-               fncdf(t2c1x[i], S1mu, S1sd)) / C_area_rS1
-               for i in range(nRatings)]
-    prI_rS1 = [(fncdf(t2c1x[i+1], S2mu, S2sd) -
-               fncdf(t2c1x[i], S2mu, S2sd)) / I_area_rS1
-               for i in range(nRatings)]
+    prC_rS1 = [
+        (fncdf(t2c1x[i + 1], S1mu, S1sd) - fncdf(t2c1x[i], S1mu, S1sd)) / C_area_rS1
+        for i in range(nRatings)
+    ]
+    prI_rS1 = [
+        (fncdf(t2c1x[i + 1], S2mu, S2sd) - fncdf(t2c1x[i], S2mu, S2sd)) / I_area_rS1
+        for i in range(nRatings)
+    ]
 
-    prC_rS2 = [((1-fncdf(t2c1x[nRatings+i], S2mu, S2sd)) -
-               (1-fncdf(t2c1x[nRatings+i+1], S2mu, S2sd))) / C_area_rS2
-               for i in range(nRatings)]
-    prI_rS2 = [((1-fncdf(t2c1x[nRatings+i], S1mu, S1sd)) -
-               (1-fncdf(t2c1x[nRatings+i+1], S1mu, S1sd))) / I_area_rS2
-               for i in range(nRatings)]
+    prC_rS2 = [
+        (
+            (1 - fncdf(t2c1x[nRatings + i], S2mu, S2sd))
+            - (1 - fncdf(t2c1x[nRatings + i + 1], S2mu, S2sd))
+        )
+        / C_area_rS2
+        for i in range(nRatings)
+    ]
+    prI_rS2 = [
+        (
+            (1 - fncdf(t2c1x[nRatings + i], S1mu, S1sd))
+            - (1 - fncdf(t2c1x[nRatings + i + 1], S1mu, S1sd))
+        )
+        / I_area_rS2
+        for i in range(nRatings)
+    ]
 
     # calculate logL
-    logL = np.sum([
-            nC_rS1[i]*np.log(prC_rS1[i])
-            + nI_rS1[i]*np.log(prI_rS1[i])
-            + nC_rS2[i]*np.log(prC_rS2[i])
-            + nI_rS2[i]*np.log(prI_rS2[i]) for i in range(nRatings)])
+    logL = np.sum(
+        [
+            nC_rS1[i] * np.log(prC_rS1[i])
+            + nI_rS1[i] * np.log(prI_rS1[i])
+            + nC_rS2[i] * np.log(prC_rS2[i])
+            + nI_rS2[i] * np.log(prI_rS2[i])
+            for i in range(nRatings)
+        ]
+    )
 
     if np.isinf(logL) or np.isnan(logL):
-        logL = -1e+300  # returning -inf may cause optimize.minimize() to fail
+        logL = -1e300  # returning -inf may cause optimize.minimize() to fail
     return -logL
 
 
-def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
-              fncdf=norm.cdf, fninv=norm.ppf, verbose=1, output_df=False):
+def metad_MLE(
+    nR_S1,
+    nR_S2,
+    s=1,
+    padding=True,
+    collapse=None,
+    fncdf=norm.cdf,
+    fninv=norm.ppf,
+    verbose=1,
+    output_df=False,
+):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
     This function is adapted from the transcription of fit_meta_d_MLE.m
@@ -362,31 +392,36 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
       https://doi.org/10.1037/0096-3445.117.1.34
     """
     if (len(nR_S1) % 2) != 0:
-        raise ValueError('input arrays must have an even number of elements')
+        raise ValueError("input arrays must have an even number of elements")
     if len(nR_S1) != len(nR_S2):
-        raise ValueError('input arrays must have the same number of elements')
+        raise ValueError("input arrays must have the same number of elements")
     if (padding is False) & (collapse is None):
         if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
             import warnings
+
             warnings.warn(
-                ('Your inputs contain zeros and is not corrected.'
-                 ' This may interfere with proper estimation of meta-d''.'
-                 ' See docstrings for more information.'))
+                (
+                    "Your inputs contain zeros and is not corrected."
+                    " This may interfere with proper estimation of meta-d"
+                    "."
+                    " See docstrings for more information."
+                )
+            )
     elif (padding is True) & (collapse is None):
         # A small padding is required to avoid problems in model fit if any
         # confidence ratings aren't used (see Hautus MJ, 1995 for details)
-        adj_f = 1/len(nR_S1)
+        adj_f = 1 / len(nR_S1)
         nR_S1 = nR_S1 + adj_f
         nR_S2 = nR_S2 + adj_f
     elif (padding is False) & (collapse is not None):
         # Collapse values accross ratings to avoid problems in model fit
-        nR_S1 = nR_S1.reshape(int(len(nR_S1)/collapse), 2).sum(axis=1)
-        nR_S2 = nR_S2.reshape(int(len(nR_S2)/collapse), 2).sum(axis=1)
+        nR_S1 = nR_S1.reshape(int(len(nR_S1) / collapse), 2).sum(axis=1)
+        nR_S2 = nR_S2.reshape(int(len(nR_S2) / collapse), 2).sum(axis=1)
     elif (padding is True) & (collapse is not None):
-        raise ValueError('Both padding and collapse are True.')
+        raise ValueError("Both padding and collapse are True.")
 
-    nRatings = int(len(nR_S1) / 2)   # number of ratings in the experiment
-    nCriteria = int(2*nRatings - 1)  # number criteria to be fitted
+    nRatings = int(len(nR_S1) / 2)  # number of ratings in the experiment
+    nCriteria = int(2 * nRatings - 1)  # number criteria to be fitted
 
     # parameters
     # meta-d' - 1
@@ -394,45 +429,45 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
     # constrain type 2 criteria values, such that t2c(i) is always <= t2c(i+1)
     # -->  t2c(i+1) >= t2c(i) + 1e-5 (i.e. very small deviation from equality)
     A, ub, lb = [], [], []
-    for ii in range(nCriteria-2):
+    for ii in range(nCriteria - 2):
         tempArow = []
-        tempArow.extend(np.zeros(ii+1))
+        tempArow.extend(np.zeros(ii + 1))
         tempArow.extend([1, -1])
-        tempArow.extend(np.zeros((nCriteria-2)-ii-1))
+        tempArow.extend(np.zeros((nCriteria - 2) - ii - 1))
         A.append(tempArow)
         ub.append(-1e-5)
         lb.append(-np.inf)
 
     # lower bounds on parameters
     LB = []
-    LB.append(-10.)                             # meta-d'
-    LB.extend(-20*np.ones((nCriteria-1)//2))    # criteria lower than t1c
-    LB.extend(np.zeros((nCriteria-1)//2))       # criteria higher than t1c
+    LB.append(-10.0)  # meta-d'
+    LB.extend(-20 * np.ones((nCriteria - 1) // 2))  # criteria lower than t1c
+    LB.extend(np.zeros((nCriteria - 1) // 2))  # criteria higher than t1c
 
     # upper bounds on parameters
     UB = []
-    UB.append(10.)                             # meta-d'
-    UB.extend(np.zeros((nCriteria-1)//2))      # criteria lower than t1c
-    UB.extend(20*np.ones((nCriteria-1)//2))    # criteria higher than t1c
+    UB.append(10.0)  # meta-d'
+    UB.extend(np.zeros((nCriteria - 1) // 2))  # criteria lower than t1c
+    UB.extend(20 * np.ones((nCriteria - 1) // 2))  # criteria higher than t1c
 
     # select constant criterion type
-    constant_criterion = 'meta_d1 * (t1c1 / d1)'  # relative criterion
+    constant_criterion = "meta_d1 * (t1c1 / d1)"  # relative criterion
 
     # set up initial guess at parameter values
     ratingHR = []
     ratingFAR = []
-    for c in range(1, int(nRatings*2)):
+    for c in range(1, int(nRatings * 2)):
         ratingHR.append(sum(nR_S2[c:]) / sum(nR_S2))
         ratingFAR.append(sum(nR_S1[c:]) / sum(nR_S1))
 
     # obtain index in the criteria array to mark Type I and Type II criteria
-    t1_index = nRatings-1
-    t2_index = list(set(list(range(0, 2*nRatings-1))) - set([t1_index]))
+    t1_index = nRatings - 1
+    t2_index = list(set(list(range(0, 2 * nRatings - 1))) - set([t1_index]))
 
-    d1 = (1/s) * fninv(ratingHR[t1_index]) - fninv(ratingFAR[t1_index])
+    d1 = (1 / s) * fninv(ratingHR[t1_index]) - fninv(ratingFAR[t1_index])
     meta_d1 = d1
 
-    c1 = (-1/(1+s)) * (fninv(ratingHR) + fninv(ratingFAR))
+    c1 = (-1 / (1 + s)) * (fninv(ratingHR) + fninv(ratingFAR))
     t1c1 = c1[t1_index]
     t2c1 = c1[t2_index]
 
@@ -441,16 +476,22 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
     guess.extend(list(t2c1 - eval(constant_criterion)))
 
     # other inputs for the minimization function
-    inputObj = [
-        nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv]
+    inputObj = [nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv]
     bounds = Bounds(LB, UB)
     linear_constraint = LinearConstraint(A, lb, ub)
 
     # minimization of negative log-likelihood
-    results = minimize(fit_meta_d_logL, guess, args=(inputObj),
-                       method='trust-constr', jac='2-point', hess=SR1(),
-                       constraints=[linear_constraint],
-                       options={'verbose': verbose}, bounds=bounds)
+    results = minimize(
+        fit_meta_d_logL,
+        guess,
+        args=(inputObj),
+        method="trust-constr",
+        jac="2-point",
+        hess=SR1(),
+        constraints=[linear_constraint],
+        options={"verbose": verbose},
+        bounds=bounds,
+    )
 
     # quickly process some of the output
     meta_d1 = results.x[0]
@@ -466,19 +507,23 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
     C_nR_rS1 = list(np.flip(nR_S1[0:nRatings], axis=0))
 
     obs_FAR2_rS2 = [
-        sum(I_nR_rS2[(i+1):]) / sum(I_nR_rS2) for i in range(nRatings-1)]
+        sum(I_nR_rS2[(i + 1) :]) / sum(I_nR_rS2) for i in range(nRatings - 1)
+    ]
     obs_HR2_rS2 = [
-        sum(C_nR_rS2[(i+1):]) / sum(C_nR_rS2) for i in range(nRatings-1)]
+        sum(C_nR_rS2[(i + 1) :]) / sum(C_nR_rS2) for i in range(nRatings - 1)
+    ]
     obs_FAR2_rS1 = [
-        sum(I_nR_rS1[(i+1):]) / sum(I_nR_rS1) for i in range(nRatings-1)]
+        sum(I_nR_rS1[(i + 1) :]) / sum(I_nR_rS1) for i in range(nRatings - 1)
+    ]
     obs_HR2_rS1 = [
-        sum(C_nR_rS1[(i+1):]) / sum(C_nR_rS1) for i in range(nRatings-1)]
+        sum(C_nR_rS1[(i + 1) :]) / sum(C_nR_rS1) for i in range(nRatings - 1)
+    ]
 
     # find estimated t2FAR and t2HR
-    S1mu = -meta_d1/2
+    S1mu = -meta_d1 / 2
     S1sd = 1
-    S2mu = meta_d1/2
-    S2sd = S1sd/s
+    S2mu = meta_d1 / 2
+    S2sd = S1sd / s
 
     mt1c1 = eval(constant_criterion)
 
@@ -491,13 +536,13 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
     est_FAR2_rS2, est_HR2_rS2 = [], []
     est_FAR2_rS1, est_HR2_rS1 = [], []
 
-    for i in range(nRatings-1):
+    for i in range(nRatings - 1):
 
-        t2c1_lower = t2c1[(nRatings-1)-(i+1)]
-        t2c1_upper = t2c1[(nRatings-1)+i]
+        t2c1_lower = t2c1[(nRatings - 1) - (i + 1)]
+        t2c1_upper = t2c1[(nRatings - 1) + i]
 
-        I_FAR_area_rS2 = 1-fncdf(t2c1_upper, S1mu, S1sd)
-        C_HR_area_rS2 = 1-fncdf(t2c1_upper, S2mu, S2sd)
+        I_FAR_area_rS2 = 1 - fncdf(t2c1_upper, S1mu, S1sd)
+        C_HR_area_rS2 = 1 - fncdf(t2c1_upper, S2mu, S2sd)
 
         I_FAR_area_rS1 = fncdf(t2c1_lower, S2mu, S2sd)
         C_HR_area_rS1 = fncdf(t2c1_lower, S1mu, S1sd)
@@ -510,38 +555,38 @@ def metad_MLE(nR_S1, nR_S2, s=1, padding=True, collapse=None,
 
     # package output
     fit = {}
-    fit['da'] = np.sqrt(2/(1+s**2)) * s * d1
-    fit['s'] = s
-    fit['meta_da'] = np.sqrt(2/(1+s**2)) * s * meta_d1
-    fit['M_diff'] = fit['meta_da'] - fit['da']
-    fit['M_ratio'] = fit['meta_da'] / fit['da']
+    fit["da"] = np.sqrt(2 / (1 + s ** 2)) * s * d1
+    fit["s"] = s
+    fit["meta_da"] = np.sqrt(2 / (1 + s ** 2)) * s * meta_d1
+    fit["M_diff"] = fit["meta_da"] - fit["da"]
+    fit["M_ratio"] = fit["meta_da"] / fit["da"]
 
     mt1c1 = eval(constant_criterion)
-    fit['meta_ca'] = (np.sqrt(2)*s / np.sqrt(1+s**2)) * mt1c1
+    fit["meta_ca"] = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * mt1c1
 
-    t2ca = (np.sqrt(2)*s / np.sqrt(1+s**2)) * np.array(t2c1)
-    fit['t2ca_rS1'] = t2ca[0:nRatings-1]
-    fit['t2ca_rS2'] = t2ca[(nRatings-1):]
+    t2ca = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * np.array(t2c1)
+    fit["t2ca_rS1"] = t2ca[0 : nRatings - 1]
+    fit["t2ca_rS2"] = t2ca[(nRatings - 1) :]
 
-    fit['d1'] = d1
-    fit['meta_d1'] = meta_d1
-    fit['s'] = s
-    fit['meta_c1'] = mt1c1
-    fit['t2c1_rS1'] = t2c1[0:nRatings-1]
-    fit['t2c1_rS2'] = t2c1[(nRatings-1):]
-    fit['logL'] = logL
+    fit["d1"] = d1
+    fit["meta_d1"] = meta_d1
+    fit["s"] = s
+    fit["meta_c1"] = mt1c1
+    fit["t2c1_rS1"] = t2c1[0 : nRatings - 1]
+    fit["t2c1_rS2"] = t2c1[(nRatings - 1) :]
+    fit["logL"] = logL
 
-    fit['est_HR2_rS1'] = est_HR2_rS1
-    fit['obs_HR2_rS1'] = obs_HR2_rS1
+    fit["est_HR2_rS1"] = est_HR2_rS1
+    fit["obs_HR2_rS1"] = obs_HR2_rS1
 
-    fit['est_FAR2_rS1'] = est_FAR2_rS1
-    fit['obs_FAR2_rS1'] = obs_FAR2_rS1
+    fit["est_FAR2_rS1"] = est_FAR2_rS1
+    fit["obs_FAR2_rS1"] = obs_FAR2_rS1
 
-    fit['est_HR2_rS2'] = est_HR2_rS2
-    fit['obs_HR2_rS2'] = obs_HR2_rS2
+    fit["est_HR2_rS2"] = est_HR2_rS2
+    fit["obs_HR2_rS2"] = obs_HR2_rS2
 
-    fit['est_FAR2_rS2'] = est_FAR2_rS2
-    fit['obs_FAR2_rS2'] = obs_FAR2_rS2
+    fit["est_FAR2_rS2"] = est_FAR2_rS2
+    fit["obs_FAR2_rS2"] = obs_FAR2_rS2
 
     if output_df is True:
         return pd.DataFrame(fit)
@@ -577,7 +622,7 @@ def roc_auc(nR_S1, nR_S2):
     if isinstance(nR_S2, list):
         nR_S2 = np.array(nR_S2)
 
-    nRatings = int(len(nR_S1)/2)
+    nRatings = int(len(nR_S1) / 2)
 
     flip_nR_S1 = np.flip(nR_S1)
     flip_nR_S2 = np.flip(nR_S2)
@@ -597,6 +642,6 @@ def roc_auc(nR_S1, nR_S2):
 
     k = []
     for c in range(nRatings):
-        k.append((cum_H2[c+1] - cum_FA2[c])**2 - (cum_H2[c] - cum_FA2[c+1])**2)
+        k.append((cum_H2[c + 1] - cum_FA2[c]) ** 2 - (cum_H2[c] - cum_FA2[c + 1]) ** 2)
 
     return 0.5 + 0.25 * sum(k)
