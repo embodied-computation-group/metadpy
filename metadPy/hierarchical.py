@@ -297,6 +297,7 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
     pymcData = {
         "nSubj": data[subject].nunique(),
         "subID": [],
+        "nCond": data[within].nunique(),
         "condition": [],
         "hits": [],
         "falsealarms": [],

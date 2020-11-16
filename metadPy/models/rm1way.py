@@ -54,7 +54,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
     nSubj = data["nSubj"]
     subID = np.arange(nSubj, dtype="int")
 
-    nCond = len(data["condition"].unique)
+    nCond = data["nCond"]
     cond = data["condition"]
 
     hits = data["hits"]
@@ -77,12 +77,12 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         mu_D = Normal("mu_D", mu=0.0, tau=0.01, shape=1)
         sigma_D = Bound(Normal, lower=0.0)("sigma_D", mu=0, tau=0.01)
         lambda_D = Deterministic("lambda_D", sigma_D ** -2)
-        sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
+        sigD = Deterministic("sigD", 1/math.sqrt(lambda_D))
 
         mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.01, shape=1)
         sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.01)
         lambda_Cond1 = Deterministic("lambda_D", sigma_Cond1 ** -2)
-        sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
+        sigCond1 = Deterministic("sigCond1", 1/math.sqrt(lambda_Cond1))
 
         # Hyperpriors - Subject level
         dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=nSubj)
