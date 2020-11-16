@@ -81,7 +81,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
 
         mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.01, shape=1)
         sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.01)
-        lambda_Cond1 = Deterministic("lambda_D", sigma_Cond1 ** -2)
+        lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
         sigCond1 = Deterministic("sigCond1", 1/math.sqrt(lambda_Cond1))
 
         # Hyperpriors - Subject level
