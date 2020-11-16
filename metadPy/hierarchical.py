@@ -1,5 +1,6 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+import numbers
 import os
 import sys
 from metadPy.sdt import dprime, criterion
@@ -103,6 +104,9 @@ def hmetad(
     modelScript = os.path.dirname(__file__) + "/models/"
     sys.path.append(modelScript)
 
+    if nRatings is None:
+        raise ValueError("You should provide the number of ratings")
+
     if data is None:
         if (nR_S1 is None) or (nR_S2 is None):
             raise ValueError(
@@ -113,6 +117,10 @@ def hmetad(
         if data[confidence].nunique() > nRatings:
             # If a continuous rating scale was used (if N unique ratings > nRatings)
             # transform confidence to discrete ratings
+            print(
+                "The confidence columns contains more unique values than nRatings",
+                "The ratings are going to be discretized using discreteRatings",
+            )
             data[confidence] = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
 
     ###############
@@ -130,7 +138,7 @@ def hmetad(
                 padAmount=padAmount,
             )
 
-        pymcData = preprocess(np.asarray(nR_S1), np.asarray(nR_S2))
+        pymcData = extractParameters(np.asarray(nR_S1), np.asarray(nR_S2))
 
         from subjectLevel import hmetad_subjectLevel
 
@@ -140,58 +148,27 @@ def hmetad(
     # Group level
     if (within is None) & (between is None) & (subject is not None):
 
-        pymcData = {
-            "nSubj": data[subject].nunique(),
-            "subID": np.arange(data[subject].nunique(), dtype="int"),
-            "hits": [],
-            "falsealarms": [],
-            "s": [],
-            "n": [],
-            "counts": [],
-            "nRatings": nRatings,
-            "Tol": 1e-05,
-            "cr": [],
-            "m": [],
-        }
-
-        for sub in data[subject].unique():
-            nR_S1, nR_S2 = trials2counts(
-                data=data[data[subject] == sub],
-                stimuli=stimuli,
-                accuracy=accuracy,
-                confidence=confidence,
-                nRatings=nRatings,
-            )
-
-            this_data = preprocess(nR_S1, nR_S2)
-            pymcData["s"].append(this_data["S"])
-            pymcData["n"].append(this_data["N"])
-            pymcData["m"].append(this_data["M"])
-            pymcData["cr"].append(this_data["CR"])
-            pymcData["counts"].append(this_data["counts"])
-            pymcData["hits"].append(this_data["H"])
-            pymcData["falsealarms"].append(this_data["FA"])
-
-        pymcData["s"] = np.array(pymcData["s"], dtype="int")
-        pymcData["n"] = np.array(pymcData["n"], dtype="int")
-        pymcData["m"] = np.array(pymcData["m"], dtype="int")
-        pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
-        pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
-        pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
-        pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
-        pymcData["nRatings"] = 4
-        pymcData["nSubj"] = data[subject].nunique()
-        pymcData["subID"] = np.arange(20, dtype="int")
-        pymcData["Tol"] = 1e-05
-
+        pymcData = preprocess_group(data)
         from groupLevel import hmetad_groupLevel
 
         traces = hmetad_groupLevel(pymcData, chains=chains, tune=tune, draws=draws)
 
+    ###################
+    # Repeated-measures
+    if (within is not None) & (between is None) & (subject is not None):
+
+        pymcData = preprocess_rm1way(
+            data, subject, within, stimuli, accuracy, confidence, nRatings
+        )
+
+        from rm1way import hmetad_rm1way
+
+        traces = hmetad_rm1way(pymcData, chains=chains, tune=tune, draws=draws)
+
     return traces
 
 
-def preprocess(nR_S1, nR_S2):
+def extractParameters(nR_S1, nR_S2):
     """Extract rates and task parameters.
 
     Parameters
@@ -264,3 +241,105 @@ def preprocess(nR_S1, nR_S2):
     }
 
     return data
+
+
+def preprocess_group(data):
+    """Preprocess group data."""
+    pymcData = {
+        "nSubj": data[subject].nunique(),
+        "subID": np.arange(data[subject].nunique(), dtype="int"),
+        "hits": [],
+        "falsealarms": [],
+        "s": [],
+        "n": [],
+        "counts": [],
+        "nRatings": nRatings,
+        "Tol": 1e-05,
+        "cr": [],
+        "m": [],
+    }
+
+    for sub in data[subject].unique():
+        nR_S1, nR_S2 = trials2counts(
+            data=data[data[subject] == sub],
+            stimuli=stimuli,
+            accuracy=accuracy,
+            confidence=confidence,
+            nRatings=nRatings,
+        )
+
+        this_data = extractParameters(nR_S1, nR_S2)
+        pymcData["s"].append(this_data["S"])
+        pymcData["n"].append(this_data["N"])
+        pymcData["m"].append(this_data["M"])
+        pymcData["cr"].append(this_data["CR"])
+        pymcData["counts"].append(this_data["counts"])
+        pymcData["hits"].append(this_data["H"])
+        pymcData["falsealarms"].append(this_data["FA"])
+
+    pymcData["s"] = np.array(pymcData["s"], dtype="int")
+    pymcData["n"] = np.array(pymcData["n"], dtype="int")
+    pymcData["m"] = np.array(pymcData["m"], dtype="int")
+    pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
+    pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
+    pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
+    pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
+    pymcData["nRatings"] = 4
+    pymcData["nSubj"] = data[subject].nunique()
+    pymcData["subID"] = np.arange(20, dtype="int")
+    pymcData["Tol"] = 1e-05
+
+    return pymcData
+
+
+def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRatings):
+    """Preprocess repeated measures data."""
+    pymcData = {
+        "nSubj": data[subject].nunique(),
+        "subID": [],
+        "condition": [],
+        "hits": [],
+        "falsealarms": [],
+        "s": [],
+        "n": [],
+        "counts": [],
+        "nRatings": nRatings,
+        "Tol": 1e-05,
+        "cr": [],
+        "m": [],
+    }
+
+    for nSub, sub in enumerate(data[subject].unique()):
+        for ncond, cond in enumerate(data[within].unique()):
+            nR_S1, nR_S2 = trials2counts(
+                data=data[(data[subject] == sub) & (data[within] == cond)],
+                stimuli=stimuli,
+                accuracy=accuracy,
+                confidence=confidence,
+                nRatings=nRatings,
+            )
+
+            this_data = extractParameters(nR_S1, nR_S2)
+            pymcData["subID"].append(nSub)
+            pymcData["condition"].append(ncond)
+            pymcData["s"].append(this_data["S"])
+            pymcData["n"].append(this_data["N"])
+            pymcData["m"].append(this_data["M"])
+            pymcData["cr"].append(this_data["CR"])
+            pymcData["counts"].append(this_data["counts"])
+            pymcData["hits"].append(this_data["H"])
+            pymcData["falsealarms"].append(this_data["FA"])
+
+    pymcData["subID"] = np.array(pymcData["subID"], dtype="int")
+    pymcData["condition"] = np.array(pymcData["condition"], dtype="int")
+    pymcData["s"] = np.array(pymcData["s"], dtype="int")
+    pymcData["n"] = np.array(pymcData["n"], dtype="int")
+    pymcData["m"] = np.array(pymcData["m"], dtype="int")
+    pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
+    pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
+    pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
+    pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
+    pymcData["nRatings"] = 4
+    pymcData["Tol"] = 1e-05
+
+    return pymcData
