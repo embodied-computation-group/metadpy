@@ -121,7 +121,8 @@ def hmetad(
                 "The confidence columns contains more unique values than nRatings",
                 "The ratings are going to be discretized using discreteRatings",
             )
-            data[confidence] = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
+            new_ratings, out = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
+            data.loc[:, confidence] = new_ratings
 
     ###############
     # Subject level
@@ -323,6 +324,9 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
     pymcData["cr"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
     pymcData["condition"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
     pymcData["subID"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["c1"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["d1"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+
     for nSub, sub in enumerate(data[subject].unique()):
         for nCond, cond in enumerate(data[within].unique()):
             nR_S1, nR_S2 = trials2counts(
@@ -342,6 +346,8 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
             pymcData["cr"][nSub, nCond] = this_data["CR"]
             pymcData["hits"][nSub, nCond] = this_data["H"]
             pymcData["falsealarms"][nSub, nCond] = this_data["FA"]
+            pymcData["c1"][nSub, nCond] = this_data["c1"]
+            pymcData["d1"][nSub, nCond] = this_data["d1"]
             pymcData["counts"][nSub, nCond, :] = this_data["counts"]
 
     pymcData["subID"] = np.array(pymcData["subID"], dtype="int")
