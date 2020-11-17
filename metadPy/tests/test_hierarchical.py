@@ -3,7 +3,7 @@
 import numpy as np
 import unittest
 import pytest
-from metadPy.hierarchical import preprocess, hmetad
+from metadPy.hierarchical import extractParameters, hmetad
 from metadPy.utils import ratings2df
 from unittest import TestCase
 
@@ -14,7 +14,7 @@ nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
 class Testsdt(TestCase):
     def test_preprocess(self):
         """Test preprocess function"""
-        data = preprocess(nR_S1, nR_S2)
+        data = extractParameters(nR_S1, nR_S2)
         assert round(data["d1"], 3) == 1.535
         assert round(data["c1"]) == 0
         assert np.all(
