@@ -91,12 +91,12 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
 
         # Refactor dbase
         dbase_offset = Normal("dbase_offset", mu=0, sd=1, shape=(1, nSubj, 1))
-        dbase = Deterministic("dbase", mu_D + dbase_offset * 1 / math.sqrt(lambda_D))
+        dbase = Deterministic("dbase", mu_D + dbase_offset * sigma_D)
 
         # Refactor cond1
         Bd_Cond1_offset = Normal("Bd_Cond1_offset", mu=0, sd=1, shape=(1, nSubj, 1))
         Bd_Cond1 = Deterministic(
-            "Bd_Cond1", mu_Cond1 + Bd_Cond1_offset * 1 / math.sqrt(lambda_Cond1)
+            "Bd_Cond1", mu_Cond1 + Bd_Cond1_offset * sigma_Cond1
         )
 
         tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
@@ -119,7 +119,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
             "logMratio_offset", mu=0, sd=1, shape=(1, nSubj, nCond)
         )
         logMratio = Deterministic(
-            "logMratio", mu_regression + logMratio_offset * 1 / math.sqrt(tau)
+            "logMratio", mu_regression + logMratio_offset / math.sqrt(tau)
         )
 
         mRatio = Deterministic("mRatio", math.exp(logMratio))
