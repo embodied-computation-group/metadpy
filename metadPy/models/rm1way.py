@@ -65,9 +65,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
     Tol = data["Tol"]
     cr = data["cr"]
     m = data["m"]
-    c1 = data['c1']
-    d1 = data['d1']
-
+    c1 = data["c1"]
+    d1 = data["d1"]
 
     with Model() as model:
 
@@ -89,10 +88,17 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         #############################
         # Hyperpriors - Subject level
         #############################
-        dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=(1, nSubj, 1))
-        Bd_Cond1 = Normal(
-            "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=(1, nSubj, 1)
+
+        # Refactor dbase
+        dbase_offset = Normal("dbase_offset", mu=0, sd=1, shape=(1, nSubj, 1))
+        dbase = Deterministic("a", mu_D + dbase_offset * 1 / math.sqrt(lambda_D))
+
+        # Refactor cond1
+        Bd_Cond1_offset = Normal("Bd_Cond1_offset", mu=0, sd=1, shape=(1, nSubj, 1))
+        Bd_Cond1 = Deterministic(
+            "a", mu_Cond1 + Bd_Cond1_offset * 1 / math.sqrt(lambda_Cond1)
         )
+
         tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
 
         ###############################
@@ -107,9 +113,15 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         FA = Binomial("FA", n, f[0], observed=falsealarms)
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
-        logMratio = Normal(
-            "logMratio", mu=mu_regression, tau=tau, shape=(1, nSubj, nCond)
+
+        # Refactor logMratio
+        logMratio_offset = Normal(
+            "logMratio_offset", mu=0, sd=1, shape=(1, nSubj, nCond)
         )
+        logMratio = Deterministic(
+            "a", mu_regression + logMratio_offset * 1 / math.sqrt(tau)
+        )
+
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
