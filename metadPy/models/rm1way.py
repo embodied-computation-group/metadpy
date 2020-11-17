@@ -284,7 +284,6 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                 mu_D,
                 mu_Cond1,
                 mu_c2,
-                d1,
                 metad,
                 sigD,
                 sigCond1,
