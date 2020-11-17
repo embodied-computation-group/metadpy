@@ -113,15 +113,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         FA = Binomial("FA", n, f[0], observed=falsealarms)
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
-
-        # Refactor logMratio
-        logMratio_offset = Normal(
-            "logMratio_offset", mu=0, sd=1, shape=(1, nSubj, nCond)
-        )
-        logMratio = Deterministic(
-            "logMratio", mu_regression + logMratio_offset / math.sqrt(tau)
-        )
-
+        logMratio = Normal("logMratio", mu_regression, tau=tau)
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
