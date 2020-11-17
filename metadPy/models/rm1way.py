@@ -117,9 +117,9 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
-        mu = Deterministic("mu", mRatio * d1)
-        S2mu = Deterministic("S2mu", mu / 2)
-        S1mu = Deterministic("S1mu", -mu / 2)
+        metad = Deterministic("metad", mRatio * d1)
+        S2mu = Deterministic("S2mu", metad / 2)
+        S1mu = Deterministic("S1mu", -metad / 2)
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
@@ -288,8 +288,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         )
 
         trace = sample(
-            progressbar=True, cores=4, chains=1,
-            trace=[mRatio, mu_D, d1, mu_Cond1, sigD, sigCond1, tau, dbase],
+            progressbar=True, chains=chains, tune=tune, draws=draws,
+            trace=[mRatio, mu_D, mu_Cond1, mu_c2, d1, metad, sigD, sigCond1, tau, dbase],
         )
 
     return model, trace
