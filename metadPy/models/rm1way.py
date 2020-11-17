@@ -17,6 +17,7 @@ from pymc3 import (
     math,
     sample,
     Beta,
+    HalfCauchy,
 )
 
 
@@ -99,7 +100,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
             "Bd_Cond1", mu_Cond1 + Bd_Cond1_offset * sigma_Cond1
         )
 
-        tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
+        #tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
+        tau = HalfCauchy('tau', beta=10, testval=1.)
 
         ###############################
         # Hypterprior - Condition level
