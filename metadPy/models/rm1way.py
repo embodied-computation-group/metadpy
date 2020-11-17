@@ -26,7 +26,7 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
+def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
@@ -39,6 +39,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         Number of iterations to tune. Defaults to `1000`.
     draws : int
         The number of samples to draw. Defaults to `1000`.
+    cores : int or None
+        The number of chains to run in parallel.
 
     Returns
     -------
@@ -285,6 +287,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
             chains=chains,
             tune=tune,
             draws=draws,
+            cores=cores,
             trace=[
                 mRatio,
                 mu_D,
