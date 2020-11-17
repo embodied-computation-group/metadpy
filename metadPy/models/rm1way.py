@@ -77,41 +77,50 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         mu_D = Normal("mu_D", mu=0.0, tau=0.01, shape=1)
         sigma_D = Bound(Normal, lower=0.0)("sigma_D", mu=0, tau=0.01)
         lambda_D = Deterministic("lambda_D", sigma_D ** -2)
-        sigD = Deterministic("sigD", 1/math.sqrt(lambda_D))
+        sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
 
         mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.01, shape=1)
         sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.01)
         lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
-        sigCond1 = Deterministic("sigCond1", 1/math.sqrt(lambda_Cond1))
+        sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
 
+        #############################
         # Hyperpriors - Subject level
+        #############################
         dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=nSubj)
-        Bd_Cond1 = Normal("Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=nSubj)
+        Bd_Cond1 = Normal(
+            "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=nSubj * nCond
+        )
         tau = Gamma("tau", alpha=0.0, beta=0.01, shape=nSubj)
 
+        ###############################
         # Hypterprior - Condition level
-        mu_regression = Deterministic(
-            "mu_regression", dbase + Bd_Cond1 * cond, shape=(1, nSubj, nCond)
-        )
-        logMratio = Normal("logMratio", mu_regression, tau)
-        Mratio = Deterministic("mRatio", math.exp(logMratio), shape=(1, nSubj, nCond))
-
-        # Means of SDT distributions
-        mu = Deterministic("mu", mRatio * d1, shape=(1, nSubj, nCond))
-        S2mu = Deterministic("S2mu", mu / 2, shape=(1, nSubj, nCond))
-        S1mu = Deterministic("S2mu", -mu / 2, shape=(1, nSubj, nCond))
+        ###############################
 
         # Type 1 priors
-        # c1 = Normal("c1", mu=0.0, tau=2, shape=1)
-        # d1 = Normal("d1", mu=0.0, tau=0.5, shape=1)
+        c1 = Normal("c1", mu=0.0, tau=2, shape=(1, nSubj, nCond))
+        d1 = Normal("d1", mu=0.0, tau=0.5, shape=(1, nSubj, nCond))
 
         # TYPE 1 SDT BINOMIAL MODEL
         h = cumulative_normal(d1 / 2 - c1)
         f = cumulative_normal(-d1 / 2 - c1)
-        H = Binomial("H", s[subID, cond], h[0, subID, cond], observed=hits[subID, cond])
+        H = Binomial(
+            "H", s[subID, cond], h[0, subID, cond], observed=hits[subID, cond]
+        )
         FA = Binomial(
             "FA", n[subID, cond], f[0, subID, cond], observed=falsealarms[subID, cond]
         )
+
+        mu_regression = Deterministic(
+            "mu_regression", dbase + Bd_Cond1 * cond, shape=(1, nSubj * nCond)
+        )
+        logMratio = Normal("logMratio", mu_regression, tau)
+        mRatio = Deterministic("mRatio", math.exp(logMratio), shape=(1, nSubj * nCond))
+
+        # Means of SDT distributions
+        mu = Deterministic("mu", mRatio * d1, shape=(1, nSubj * nCond))
+        S2mu = Deterministic("S2mu", mu / 2, shape=(1, nSubj * nCond))
+        S1mu = Deterministic("S2mu", -mu / 2, shape=(1, nSubj * nCond))
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1

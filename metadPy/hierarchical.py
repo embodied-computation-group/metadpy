@@ -303,15 +303,34 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
         "falsealarms": [],
         "s": [],
         "n": [],
-        "counts": [],
         "nRatings": nRatings,
         "Tol": 1e-05,
         "cr": [],
         "m": [],
     }
-
+    pymcData["counts"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"] * 4)
+    )
+    pymcData["hits"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"])
+    )
+    pymcData["falsealarms"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"])
+    )
+    pymcData["s"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+    )
+    pymcData["n"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+    )
+    pymcData["m"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+    )
+    pymcData["cr"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+    )
     for nSub, sub in enumerate(data[subject].unique()):
-        for ncond, cond in enumerate(data[within].unique()):
+        for nCond, cond in enumerate(data[within].unique()):
             nR_S1, nR_S2 = trials2counts(
                 data=data[(data[subject] == sub) & (data[within] == cond)],
                 stimuli=stimuli,
@@ -322,14 +341,14 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
 
             this_data = extractParameters(nR_S1, nR_S2)
             pymcData["subID"].append(nSub)
-            pymcData["condition"].append(ncond)
-            pymcData["s"].append(this_data["S"])
-            pymcData["n"].append(this_data["N"])
-            pymcData["m"].append(this_data["M"])
-            pymcData["cr"].append(this_data["CR"])
-            pymcData["counts"].append(this_data["counts"])
-            pymcData["hits"].append(this_data["H"])
-            pymcData["falsealarms"].append(this_data["FA"])
+            pymcData["condition"].append(nCond)
+            pymcData["s"][nSub, nCond, :] = this_data["S"]
+            pymcData["n"][nSub, nCond, :] = this_data["N"]
+            pymcData["m"][nSub, nCond, :] = this_data["M"]
+            pymcData["cr"][nSub, nCond, :] = this_data["CR"]
+            pymcData["hits"][nSub, nCond] = this_data["H"]
+            pymcData["falsealarms"][nSub, nCond] = this_data["FA"]
+            pymcData["counts"][nSub, nCond, :] = this_data["counts"]
 
     pymcData["subID"] = np.array(pymcData["subID"], dtype="int")
     pymcData["condition"] = np.array(pymcData["condition"], dtype="int")
