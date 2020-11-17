@@ -65,6 +65,9 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
     Tol = data["Tol"]
     cr = data["cr"]
     m = data["m"]
+    c1 = data['c1']
+    d1 = data['d1']
+
 
     with Model() as model:
 
@@ -95,10 +98,6 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         ###############################
         # Hypterprior - Condition level
         ###############################
-
-        # Type 1 priors
-        c1 = Normal("c1", mu=0.0, tau=2, shape=(1, nSubj, nCond))
-        d1 = Normal("d1", mu=0.0, tau=0.5, shape=(1, nSubj, nCond))
 
         # TYPE 1 SDT BINOMIAL MODEL
         h = cumulative_normal(d1 / 2 - c1)
