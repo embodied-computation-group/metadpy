@@ -40,6 +40,8 @@ def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000):
 
     Returns
     -------
+    model : :py:class:`pymc3.Model` instance
+        The pymc3 model.
     traces : dict
         Dictionnary of the results and logs:
             * `'trace'`: the MCMC traces
@@ -62,7 +64,7 @@ def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000):
     cr = data["cr"]
     m = data["m"]
 
-    with Model():
+    with Model() as model:
 
         # hyperpriors on d, c and c2
         mu_c = Normal("mu_c", mu=0, tau=0.01, shape=(1, nSubj))
@@ -260,4 +262,4 @@ def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000):
             trace=[sigma_logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
         )
 
-    return trace
+    return model, trace

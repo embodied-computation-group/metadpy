@@ -142,7 +142,7 @@ def hmetad(
 
         from subjectLevel import hmetad_subjectLevel
 
-        traces = hmetad_subjectLevel(pymcData, chains=chains, tune=tune, draws=draws)
+        model, trace = hmetad_subjectLevel(pymcData, chains=chains, tune=tune, draws=draws)
 
     #############
     # Group level
@@ -151,7 +151,7 @@ def hmetad(
         pymcData = preprocess_group(data)
         from groupLevel import hmetad_groupLevel
 
-        traces = hmetad_groupLevel(pymcData, chains=chains, tune=tune, draws=draws)
+        model, trace = hmetad_groupLevel(pymcData, chains=chains, tune=tune, draws=draws)
 
     ###################
     # Repeated-measures
@@ -163,9 +163,9 @@ def hmetad(
 
         from rm1way import hmetad_rm1way
 
-        traces = hmetad_rm1way(pymcData, chains=chains, tune=tune, draws=draws)
+        model, trace = hmetad_rm1way(pymcData, chains=chains, tune=tune, draws=draws)
 
-    return traces
+    return model, trace
 
 
 def extractParameters(nR_S1, nR_S2):

@@ -38,6 +38,8 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
 
     Returns
     -------
+    model : :py:class:`pymc3.Model` instance
+        The pymc3 model.
     traces : dict
         Dictionnary of the results and logs:
             * `'trace'`: the MCMC traces
@@ -49,7 +51,7 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
     """
     nRatings = data["nratings"]
-    with Model():
+    with Model() as model:
 
         # Type 1 priors
         c1 = Normal("c1", mu=0.0, tau=2, shape=1)
@@ -218,4 +220,4 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
             draws, chains=chains, progressbar=True, trace=[meta_d, cS1, cS2], tune=tune
         )
 
-    return trace
+    return model, trace

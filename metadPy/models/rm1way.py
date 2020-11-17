@@ -41,6 +41,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
 
     Returns
     -------
+    model : :py:class:`pymc3.Model` instance
+        The pymc3 model.
     traces : dict
         Dictionnary of the results and logs:
             * `'trace'`: the MCMC traces
@@ -290,4 +292,4 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
             trace=[mRatio, mu_D, d1, mu_Cond1, sigD, sigCond1, tau, dbase],
         )
 
-    return trace
+    return model, trace
