@@ -173,7 +173,7 @@ def trials2counts(
     return nR_S1, nR_S2
 
 
-def discreteRatings(ratings, nbins=4):
+def discreteRatings(ratings, nbins=4, verbose=True):
     """Convert continuous ratings to dscrete bins
 
     Resample if quantiles are equal at high or low end to ensure proper
@@ -185,6 +185,8 @@ def discreteRatings(ratings, nbins=4):
         Ratings on a continuous scale.
     nbins : int
         The number of discrete ratings to resample. Defaut set to `4`.
+    verbose : boolean
+        If `True`, warning warnings be returned.
 
     Returns
     -------
@@ -222,7 +224,8 @@ def discreteRatings(ratings, nbins=4):
     if (confBins[0] == confBins[1]) & (confBins[nbins - 1] == confBins[nbins]):
         raise ValueError("Bad bins!")
     elif confBins[nbins - 1] == confBins[nbins]:
-        print("Lots of high confidence ratings")
+        if verbose is True:
+            print("Lots of high confidence ratings")
         # Exclude high confidence trials and re-estimate
         hiConf = confBins[-1]
         confBins = np.quantile(ratings[ratings != hiConf], np.linspace(0, 1, nbins))
@@ -233,7 +236,8 @@ def discreteRatings(ratings, nbins=4):
         out["confBins"] = [confBins, hiConf]
         out["rebin"] = 1
     elif confBins[0] == confBins[1]:
-        print("Lots of low confidence ratings")
+        if verbose is True:
+            print("Lots of low confidence ratings")
         # Exclude low confidence trials and re-estimate
         lowConf = confBins[1]
         temp.append(ratings == lowConf)
