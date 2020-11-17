@@ -329,6 +329,12 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
     pymcData["cr"] = np.zeros(
         (pymcData["nSubj"], pymcData["nCond"])
     )
+    pymcData["condition"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"])
+    )
+    pymcData["subID"] = np.zeros(
+        (pymcData["nSubj"], pymcData["nCond"])
+    )
     for nSub, sub in enumerate(data[subject].unique()):
         for nCond, cond in enumerate(data[within].unique()):
             nR_S1, nR_S2 = trials2counts(
@@ -340,8 +346,8 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
             )
 
             this_data = extractParameters(nR_S1, nR_S2)
-            pymcData["subID"].append(nSub)
-            pymcData["condition"].append(nCond)
+            pymcData["subID"][nSub, nCond] = nSub
+            pymcData["condition"][nSub, nCond] = nCond
             pymcData["s"][nSub, nCond] = this_data["S"]
             pymcData["n"][nSub, nCond] = this_data["N"]
             pymcData["m"][nSub, nCond] = this_data["M"]
