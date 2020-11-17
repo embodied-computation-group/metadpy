@@ -77,14 +77,14 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
         mu_D = Normal("mu_D", mu=0.0, tau=0.001, shape=1)
-        sigma_D = Bound(Normal, lower=0.0)("sigma_D", mu=0, tau=0.1)
-        lambda_D = Deterministic("lambda_D", sigma_D ** -2)
-        sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
+        sigma_D = HalfCauchy('sigma_D', beta=10)
+        #lambda_D = Deterministic("lambda_D", sigma_D ** -2)
+        #sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
 
         mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.001, shape=1)
-        sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.1)
-        lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
-        sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
+        sigma_Cond1 = HalfCauchy('sigma_Cond1', beta=10)
+        #lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
+        #sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
 
         #############################
         # Hyperpriors - Subject level
@@ -101,7 +101,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         )
 
         #tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
-        tau = HalfCauchy('tau', beta=10, testval=1.)
+        tau = HalfCauchy('tau', beta=10)
 
         ###############################
         # Hypterprior - Condition level
@@ -115,7 +115,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         FA = Binomial("FA", n, f[0], observed=falsealarms)
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
-        logMratio = Normal("logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond))
+        logMratio = Normal("logMratio", mu_regression, sigma=tau, shape=(1, nSubj, nCond))
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
@@ -291,8 +291,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                 mu_Cond1,
                 mu_c2,
                 metad,
-                sigD,
-                sigCond1,
+                #sigD,
+                #sigCond1,
                 tau,
                 dbase,
             ],
