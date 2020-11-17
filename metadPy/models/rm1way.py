@@ -79,27 +79,22 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
         lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
         mu_D = Normal("mu_D", mu=0.0, tau=0.001, shape=1)
-        sigma_D = HalfCauchy('sigma_D', beta=10)
-        #lambda_D = Deterministic("lambda_D", sigma_D ** -2)
-        #sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
+        sigma_D = Bound(Normal, lower=0.0)("sigma_D", mu=0, tau=0.1)
+        lambda_D = Deterministic("lambda_D", sigma_D ** -2)
+        sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
 
         mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.001, shape=1)
-        sigma_Cond1 = HalfCauchy('sigma_Cond1', beta=10)
-        #lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
-        #sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
+        sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.1)
+        lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
+        sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
 
         #############################
         # Hyperpriors - Subject level
         #############################
 
-        # Refactor dbase
-        dbase_offset = Normal("dbase_offset", mu=0, sd=1, shape=(1, nSubj, 1))
-        dbase = Deterministic("dbase", mu_D + dbase_offset * sigma_D)
-
-        # Refactor cond1
-        Bd_Cond1_offset = Normal("Bd_Cond1_offset", mu=0, sd=1, shape=(1, nSubj, 1))
-        Bd_Cond1 = Deterministic(
-            "Bd_Cond1", mu_Cond1 + Bd_Cond1_offset * sigma_Cond1
+        dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=(1, nSubj, 1))
+        Bd_Cond1 = Normal(
+            "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=(1, nSubj, 1)
         )
 
         #tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
