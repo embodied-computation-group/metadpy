@@ -318,16 +318,16 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
         (pymcData["nSubj"], pymcData["nCond"])
     )
     pymcData["s"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+        (pymcData["nSubj"], pymcData["nCond"])
     )
     pymcData["n"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+        (pymcData["nSubj"], pymcData["nCond"])
     )
     pymcData["m"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+        (pymcData["nSubj"], pymcData["nCond"])
     )
     pymcData["cr"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"])
+        (pymcData["nSubj"], pymcData["nCond"])
     )
     for nSub, sub in enumerate(data[subject].unique()):
         for nCond, cond in enumerate(data[within].unique()):
@@ -342,10 +342,10 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
             this_data = extractParameters(nR_S1, nR_S2)
             pymcData["subID"].append(nSub)
             pymcData["condition"].append(nCond)
-            pymcData["s"][nSub, nCond, :] = this_data["S"]
-            pymcData["n"][nSub, nCond, :] = this_data["N"]
-            pymcData["m"][nSub, nCond, :] = this_data["M"]
-            pymcData["cr"][nSub, nCond, :] = this_data["CR"]
+            pymcData["s"][nSub, nCond] = this_data["S"]
+            pymcData["n"][nSub, nCond] = this_data["N"]
+            pymcData["m"][nSub, nCond] = this_data["M"]
+            pymcData["cr"][nSub, nCond] = this_data["CR"]
             pymcData["hits"][nSub, nCond] = this_data["H"]
             pymcData["falsealarms"][nSub, nCond] = this_data["FA"]
             pymcData["counts"][nSub, nCond, :] = this_data["counts"]
