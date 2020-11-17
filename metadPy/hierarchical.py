@@ -142,7 +142,9 @@ def hmetad(
 
         from subjectLevel import hmetad_subjectLevel
 
-        model, trace = hmetad_subjectLevel(pymcData, chains=chains, tune=tune, draws=draws)
+        model, trace = hmetad_subjectLevel(
+            pymcData, chains=chains, tune=tune, draws=draws
+        )
 
     #############
     # Group level
@@ -151,7 +153,9 @@ def hmetad(
         pymcData = preprocess_group(data)
         from groupLevel import hmetad_groupLevel
 
-        model, trace = hmetad_groupLevel(pymcData, chains=chains, tune=tune, draws=draws)
+        model, trace = hmetad_groupLevel(
+            pymcData, chains=chains, tune=tune, draws=draws
+        )
 
     ###################
     # Repeated-measures
@@ -311,30 +315,14 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
     pymcData["counts"] = np.zeros(
         (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"] * 4)
     )
-    pymcData["hits"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["falsealarms"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["s"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["n"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["m"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["cr"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["condition"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
-    pymcData["subID"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"])
-    )
+    pymcData["hits"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["falsealarms"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["s"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["n"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["m"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["cr"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["condition"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+    pymcData["subID"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
     for nSub, sub in enumerate(data[subject].unique()):
         for nCond, cond in enumerate(data[within].unique()):
             nR_S1, nR_S2 = trials2counts(

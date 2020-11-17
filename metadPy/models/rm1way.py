@@ -104,16 +104,13 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         h = cumulative_normal(d1 / 2 - c1)
         f = cumulative_normal(-d1 / 2 - c1)
 
-        H = Binomial(
-            "H", s, h[0], observed=hits
-        )
-        FA = Binomial(
-            "FA", n, f[0], observed=falsealarms
-        )
+        H = Binomial("H", s, h[0], observed=hits)
+        FA = Binomial("FA", n, f[0], observed=falsealarms)
 
-        mu_regression = Deterministic(
-            "mu_regression", dbase + Bd_Cond1 * cond)
-        logMratio = Normal("logMratio", mu=mu_regression, tau=tau, shape=(1, nSubj, nCond))
+        mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
+        logMratio = Normal(
+            "logMratio", mu=mu_regression, tau=tau, shape=(1, nSubj, nCond)
+        )
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
@@ -164,9 +161,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                         (
                             (
                                 cumulative_normal(c1 - S1mu)
-                                - cumulative_normal(
-                                    cS1[(nRatings - 2)] - S1mu
-                                )
+                                - cumulative_normal(cS1[(nRatings - 2)] - S1mu)
                             )
                             / C_area_rS1
                         ),
@@ -189,10 +184,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                         )
                         / I_area_rS2,
                         nI_rS2[:-1]
-                        - (1 - cumulative_normal(cS2[1:] - S1mu))
-                        / I_area_rS2,
-                        (1 - cumulative_normal(cS2[nRatings - 2] - S1mu))
-                        / I_area_rS2,
+                        - (1 - cumulative_normal(cS2[1:] - S1mu)) / I_area_rS2,
+                        (1 - cumulative_normal(cS2[nRatings - 2] - S1mu)) / I_area_rS2,
                     ]
                 ),
                 axis=0,
@@ -207,8 +200,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                 (
                     [
                         cumulative_normal(cS1[0] - S2mu) / I_area_rS1,
-                        nI_rS1[:-1]
-                        + (cumulative_normal(cS1[1:] - S2mu)) / I_area_rS1,
+                        nI_rS1[:-1] + (cumulative_normal(cS1[1:] - S2mu)) / I_area_rS1,
                         (
                             cumulative_normal(c1 - S2mu)
                             - cumulative_normal(cS1[nRatings - 2] - S2mu)
@@ -233,12 +225,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                         )
                         / C_area_rS2,
                         nC_rS2[:-1]
-                        - (
-                            (1 - cumulative_normal(cS2[1:] - S2mu))
-                            / C_area_rS2
-                        ),
-                        (1 - cumulative_normal(cS2[nRatings - 2] - S2mu))
-                        / C_area_rS2,
+                        - ((1 - cumulative_normal(cS2[1:] - S2mu)) / C_area_rS2),
+                        (1 - cumulative_normal(cS2[nRatings - 2] - S2mu)) / C_area_rS2,
                     ]
                 ),
                 axis=0,
@@ -288,8 +276,22 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         )
 
         trace = sample(
-            progressbar=True, chains=chains, tune=tune, draws=draws,
-            trace=[mRatio, mu_D, mu_Cond1, mu_c2, d1, metad, sigD, sigCond1, tau, dbase],
+            progressbar=True,
+            chains=chains,
+            tune=tune,
+            draws=draws,
+            trace=[
+                mRatio,
+                mu_D,
+                mu_Cond1,
+                mu_c2,
+                d1,
+                metad,
+                sigD,
+                sigCond1,
+                tau,
+                dbase,
+            ],
         )
 
     return model, trace
