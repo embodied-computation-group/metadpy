@@ -52,11 +52,8 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
     """
     nSubj = data["nSubj"]
-    subID = np.arange(nSubj, dtype="int")
-
     nCond = data["nCond"]
     cond = data["condition"]
-
     hits = data["hits"]
     falsealarms = data["falsealarms"]
     s = data["s"]
@@ -67,31 +64,31 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
     cr = data["cr"]
     m = data["m"]
 
-    with Model():
+    with Model() as model:
 
         # Hyperpriors
         mu_c2 = Normal("mu_c2", mu=0.0, tau=0.01, shape=1)
         sigma_c2 = Bound(Normal, lower=0.0)("sigma_c2", mu=0, tau=0.01)
         lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
-        mu_D = Normal("mu_D", mu=0.0, tau=0.01, shape=1)
-        sigma_D = Bound(Normal, lower=0.0)("sigma_D", mu=0, tau=0.01)
+        mu_D = Normal("mu_D", mu=0.0, tau=0.001, shape=1)
+        sigma_D = Bound(Normal, lower=0.0)("sigma_D", mu=0, tau=0.1)
         lambda_D = Deterministic("lambda_D", sigma_D ** -2)
         sigD = Deterministic("sigD", 1 / math.sqrt(lambda_D))
 
-        mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.01, shape=1)
-        sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.01)
+        mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.001, shape=1)
+        sigma_Cond1 = Bound(Normal, lower=0.0)("sigma_Cond1", mu=0, tau=0.1)
         lambda_Cond1 = Deterministic("lambda_Cond1", sigma_Cond1 ** -2)
         sigCond1 = Deterministic("sigCond1", 1 / math.sqrt(lambda_Cond1))
 
         #############################
         # Hyperpriors - Subject level
         #############################
-        dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=nSubj)
+        dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=(1, nSubj, 1))
         Bd_Cond1 = Normal(
-            "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=nSubj * nCond
+            "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=(1, nSubj, 1)
         )
-        tau = Gamma("tau", alpha=0.0, beta=0.01, shape=nSubj)
+        tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
 
         ###############################
         # Hypterprior - Condition level
@@ -104,23 +101,23 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         # TYPE 1 SDT BINOMIAL MODEL
         h = cumulative_normal(d1 / 2 - c1)
         f = cumulative_normal(-d1 / 2 - c1)
+
         H = Binomial(
-            "H", s[subID, cond], h[0, subID, cond], observed=hits[subID, cond]
+            "H", s, h[0], observed=hits
         )
         FA = Binomial(
-            "FA", n[subID, cond], f[0, subID, cond], observed=falsealarms[subID, cond]
+            "FA", n, f[0], observed=falsealarms
         )
 
         mu_regression = Deterministic(
-            "mu_regression", dbase + Bd_Cond1 * cond, shape=(1, nSubj * nCond)
-        )
-        logMratio = Normal("logMratio", mu_regression, tau)
-        mRatio = Deterministic("mRatio", math.exp(logMratio), shape=(1, nSubj * nCond))
+            "mu_regression", dbase + Bd_Cond1 * cond)
+        logMratio = Normal("logMratio", mu=mu_regression, tau=tau, shape=(1, nSubj, nCond))
+        mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
-        mu = Deterministic("mu", mRatio * d1, shape=(1, nSubj * nCond))
-        S2mu = Deterministic("S2mu", mu / 2, shape=(1, nSubj * nCond))
-        S1mu = Deterministic("S2mu", -mu / 2, shape=(1, nSubj * nCond))
+        mu = Deterministic("mu", mRatio * d1)
+        S2mu = Deterministic("S2mu", mu / 2)
+        S1mu = Deterministic("S1mu", -mu / 2)
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
@@ -161,12 +158,12 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                 (
                     [
                         cumulative_normal(cS1[0] - S1mu) / C_area_rS1,
-                        nC_rS1[1:, subID, cond] - nC_rS1[:-1, subID, cond],
+                        nC_rS1[1:] - nC_rS1[:-1],
                         (
                             (
                                 cumulative_normal(c1 - S1mu)
                                 - cumulative_normal(
-                                    cS1[(nRatings - 2, subID, cond)] - S1mu
+                                    cS1[(nRatings - 2)] - S1mu
                                 )
                             )
                             / C_area_rS1
@@ -186,13 +183,13 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                     [
                         (
                             (1 - cumulative_normal(c1 - S1mu))
-                            - (1 - cumulative_normal(cS2[0, subID, cond] - S1mu))
+                            - (1 - cumulative_normal(cS2[0] - S1mu))
                         )
                         / I_area_rS2,
-                        nI_rS2[:-1, subID, cond]
-                        - (1 - cumulative_normal(cS2[1:, subID, cond] - S1mu))
+                        nI_rS2[:-1]
+                        - (1 - cumulative_normal(cS2[1:] - S1mu))
                         / I_area_rS2,
-                        (1 - cumulative_normal(cS2[nRatings - 2, subID, cond] - S1mu))
+                        (1 - cumulative_normal(cS2[nRatings - 2] - S1mu))
                         / I_area_rS2,
                     ]
                 ),
@@ -207,12 +204,12 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
             math.concatenate(
                 (
                     [
-                        cumulative_normal(cS1[0, subID, cond] - S2mu) / I_area_rS1,
+                        cumulative_normal(cS1[0] - S2mu) / I_area_rS1,
                         nI_rS1[:-1]
-                        + (cumulative_normal(cS1[1:, subID, cond] - S2mu)) / I_area_rS1,
+                        + (cumulative_normal(cS1[1:] - S2mu)) / I_area_rS1,
                         (
                             cumulative_normal(c1 - S2mu)
-                            - cumulative_normal(cS1[nRatings - 2, subID, cond] - S2mu)
+                            - cumulative_normal(cS1[nRatings - 2] - S2mu)
                         )
                         / I_area_rS1,
                     ]
@@ -230,15 +227,15 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
                     [
                         (
                             (1 - cumulative_normal(c1 - S2mu))
-                            - (1 - cumulative_normal(cS2[0, subID, cond] - S2mu))
+                            - (1 - cumulative_normal(cS2[0] - S2mu))
                         )
                         / C_area_rS2,
                         nC_rS2[:-1]
                         - (
-                            (1 - cumulative_normal(cS2[1:, subID, cond] - S2mu))
+                            (1 - cumulative_normal(cS2[1:] - S2mu))
                             / C_area_rS2
                         ),
-                        (1 - cumulative_normal(cS2[nRatings - 2, subID, cond] - S2mu))
+                        (1 - cumulative_normal(cS2[nRatings - 2] - S2mu))
                         / C_area_rS2,
                     ]
                 ),
@@ -252,40 +249,45 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000):
         nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1)
         nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2)
 
+        nC_rS1 = nC_rS1.transpose((1, 2, 0))
+        nI_rS2 = nI_rS2.transpose((1, 2, 0))
+        nI_rS1 = nI_rS1.transpose((1, 2, 0))
+        nC_rS2 = nC_rS2.transpose((1, 2, 0))
+
         # TYPE 2 SDT MODEL (META-D)
         # Multinomial likelihood for response counts ordered as c(nR_S1,nR_S2)
         Multinomial(
             "CR_counts",
             cr,
-            nC_rS1.swapaxes(axis1=1, axis2=0),
-            shape=(nSubj, nCond, nRatings),
-            observed=counts[subID, cond, :nRatings],
+            nC_rS1,
+            shape=(nRatings, nSubj, nCond),
+            observed=counts[:, :, :nRatings],
         )
         Multinomial(
             "FA_counts",
             FA,
-            nI_rS2.swapaxes(axis1=1, axis2=0),
-            shape=(nSubj, nCond, nRatings),
-            observed=counts[subID, cond, nRatings : nRatings * 2],
+            nI_rS2,
+            shape=(nRatings, nSubj, nCond),
+            observed=counts[:, :, nRatings : nRatings * 2],
         )
         Multinomial(
             "M_counts",
             m,
-            nI_rS1.swapaxes(axis1=1, axis2=0),
-            shape=(nSubj, nCond, nRatings),
-            observed=counts[subID, cond, nRatings * 2 : nRatings * 3],
+            nI_rS1,
+            shape=(nRatings, nSubj, nCond),
+            observed=counts[:, :, nRatings * 2 : nRatings * 3],
         )
         Multinomial(
             "H_counts",
             H,
-            nC_rS2.swapaxes(axis1=1, axis2=0),
-            shape=(nSubj, nCond, nRatings),
-            observed=counts[subID, cond, nRatings * 3 : nRatings * 4],
+            nC_rS2,
+            shape=(nRatings, nSubj, nCond),
+            observed=counts[:, :, nRatings * 3 : nRatings * 4],
         )
 
         trace = sample(
-            progressbar=True,
-            trace=[sigma_logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
+            progressbar=True, cores=4, chains=1,
+            trace=[mRatio, mu_D, d1, mu_Cond1, sigD, sigCond1, tau, dbase],
         )
 
     return trace

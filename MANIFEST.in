@@ -1,3 +1,4 @@
 # Add models files
 include metadPy/models/subjectLevel.py
 include metadPy/models/groupLevel.py
+include metadPy/models/rm1way.py
