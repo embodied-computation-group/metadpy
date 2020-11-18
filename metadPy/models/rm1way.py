@@ -110,7 +110,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
         logMratio = Normal(
-            "logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond)
+            "logMratio", mu_regression, sigma=tau, shape=(1, nSubj, nCond)
         )
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
