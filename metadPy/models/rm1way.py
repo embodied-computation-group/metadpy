@@ -110,7 +110,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
         logMratio = Normal(
-            "logMratio", mu_regression, sigma=tau, shape=(1, nSubj, nCond)
+            "logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond)
         )
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
@@ -235,15 +235,10 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
         )
 
         # Avoid underflow of probabilities
-        nC_rS1 = math.switch(nC_rS1 < Tol, Tol, nC_rS1)
-        nI_rS2 = math.switch(nI_rS2 < Tol, Tol, nI_rS2)
-        nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1)
-        nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2)
-
-        nC_rS1 = nC_rS1.transpose((1, 2, 0))
-        nI_rS2 = nI_rS2.transpose((1, 2, 0))
-        nI_rS1 = nI_rS1.transpose((1, 2, 0))
-        nC_rS2 = nC_rS2.transpose((1, 2, 0))
+        nC_rS1 = math.switch(nC_rS1 < Tol, Tol, nC_rS1).transpose((1, 2, 0))
+        nI_rS2 = math.switch(nI_rS2 < Tol, Tol, nI_rS2).transpose((1, 2, 0))
+        nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1).transpose((1, 2, 0))
+        nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2).transpose((1, 2, 0))
 
         # TYPE 2 SDT MODEL (META-D)
         # Multinomial likelihood for response counts ordered as c(nR_S1,nR_S2)
