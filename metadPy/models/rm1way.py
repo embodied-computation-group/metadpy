@@ -95,7 +95,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
         Bd_Cond1 = Normal(
             "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=(1, nSubj, 1)
         )
-        tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
+        tau = Gamma("tau", alpha=0.001, beta=0.001, shape=(1, nSubj, 1))
 
         ###############################
         # Hypterprior - Condition level
@@ -110,7 +110,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
         logMratio = Normal(
-            "logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond)
+            "logMratio", mu_regression, sigma=tau, shape=(1, nSubj, nCond)
         )
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
@@ -291,6 +291,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
                 metad,
                 tau,
                 dbase,
+                Bd_Cond1,
             ],
         )
 
