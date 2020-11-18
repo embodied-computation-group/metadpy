@@ -92,10 +92,13 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
         # Hyperpriors - Subject level
         #############################
 
-        dbase = Normal("dbase", mu=mu_D, tau=lambda_D, shape=(1, nSubj, 1))
-        Bd_Cond1 = Normal(
-            "Bd_Cond1", mu=mu_Cond1, tau=lambda_Cond1, shape=(1, nSubj, 1)
-        )
+        # Refactor dbase
+        dbase_offset = Normal("dbase_offset", mu=0, sd=1, shape=(1, nSubj, 1))
+        dbase = Deterministic("dbase", mu_D + dbase_offset * sigma_D)
+
+        # Refactor cond1
+        Bd_Cond1_offset = Normal("Bd_Cond1_offset", mu=0, sd=1, shape=(1, nSubj, 1))
+        Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + Bd_Cond1_offset * sigma_Cond1)
 
         tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
 
@@ -111,7 +114,9 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
         FA = Binomial("FA", n, f[0], observed=falsealarms)
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
-        logMratio = Normal("logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond))
+        logMratio = Normal(
+            "logMratio", mu_regression, sigma=tau, shape=(1, nSubj, nCond)
+        )
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
@@ -284,12 +289,16 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
             cores=cores,
             trace=[
                 mRatio,
-                mu_D,
-                mu_Cond1,
                 mu_c2,
+                sigma_c2,
+                lambda_c2,
+                mu_D,
+                sigma_D,
+                sigD,
+                mu_Cond1,
+                sigma_Cond1,
+                sigCond1,
                 metad,
-                #sigD,
-                #sigCond1,
                 tau,
                 dbase,
             ],

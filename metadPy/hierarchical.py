@@ -25,7 +25,7 @@ def hmetad(
     chains=3,
     tune=1000,
     draws=1000,
-    cores=None
+    cores=None,
 ):
     """Estimate parameters of the Hierarchical Bayesian meta-d'
 
@@ -169,7 +169,9 @@ def hmetad(
 
         from rm1way import hmetad_rm1way
 
-        model, trace = hmetad_rm1way(pymcData, chains=chains, tune=tune, draws=draws, cores=cores)
+        model, trace = hmetad_rm1way(
+            pymcData, chains=chains, tune=tune, draws=draws, cores=cores
+        )
 
     return model, trace
 
