@@ -362,7 +362,5 @@ def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRat
     pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
     pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
     pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
-    pymcData["nRatings"] = 4
-    pymcData["Tol"] = 1e-05
 
     return pymcData

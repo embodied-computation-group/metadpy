@@ -22,7 +22,7 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
+def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000, cores=1):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
@@ -217,7 +217,7 @@ def hmetad_subjectLevel(data, chains=3, tune=1000, draws=1000):
         )
 
         trace = sample(
-            draws, chains=chains, progressbar=True, trace=[meta_d, cS1, cS2], tune=tune
+            draws, chains=chains, progressbar=True, trace=[meta_d, cS1, cS2], tune=tune, cores=cores
         )
 
     return model, trace
