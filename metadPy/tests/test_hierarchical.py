@@ -33,7 +33,7 @@ class Testsdt(TestCase):
     def test_hmetad(self):
         """Test hmetad function"""
         data = ratings2df(nR_S1, nR_S2)
-        traces = hmetad(
+        model, trace = hmetad(
             data,
             stimuli="Stimuli",
             accuracy="Accuracy",
@@ -43,7 +43,7 @@ class Testsdt(TestCase):
             tune=100,
             draws=100,
         )
-        assert int(traces["metad"].mean()) == 1
+        assert int(trace["metad"].mean()) == 1
 
 
 if __name__ == "__main__":
