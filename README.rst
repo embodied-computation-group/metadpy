@@ -26,7 +26,7 @@ Measuring metacognition with Python.
 
 metadPy implement standard Signal Detection Theory metrics as well as MLE [#]_ and hierarchical bayesian estimates of meta-d' [#]_.
 
-It is build on the top of `Pandas <https://pandas.pydata.org/>`_ and `PyMC3 <https://docs.pymc.io/>`_ and let you fit a model with a single line of code.
+It is build on the top of `Pandas <https://pandas.pydata.org/>`_ and uses `PyMC3 <https://docs.pymc.io/>`_ to let you fit a model with a single line of code.
 
 Installation
 ============
@@ -35,7 +35,7 @@ metadPy can be installed using pip:
 
 .. code-block:: shell
 
-  pip install metadPy
+  pip install git+https://github.com/LegrandNico/metadPy.git
 
 The following packages are required:
 
@@ -45,6 +45,28 @@ The following packages are required:
 * Matplotlib (>=3.0.2)
 * Seaborn (>=0.9.0)
 * PyMC3 (>=3.8)
+
+Quick start
+===========
+
+Signal Detection Theory (SDT)
+-----------------------------
+
+Estimating meta-dprime using Maximum Likelyhood Estimates (MLE)
+--------------------------------------------------------------- 
+
+Estimating meta-dprime using hierarchical Bayesian modeling
+-----------------------------------------------------------
+
+Single subject model
+""""""""""""""""""""
+
+Group level model
+"""""""""""""""""
+
+Repeated measures model (2 way)
+"""""""""""""""""""""""""""""""
+
 
 References
 ==========
