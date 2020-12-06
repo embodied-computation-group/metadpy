@@ -3,6 +3,8 @@
 import numbers
 import os
 import sys
+
+from theano.compile.ops import OutputGuard
 from metadPy.sdt import dprime, criterion
 from metadPy.utils import discreteRatings, trials2counts
 import numpy as np
@@ -145,7 +147,7 @@ def hmetad(
 
         from subjectLevel import hmetad_subjectLevel
 
-        model, trace = hmetad_subjectLevel(
+        output = hmetad_subjectLevel(
             pymcData,
             chains=chains,
             tune=tune,
@@ -156,12 +158,12 @@ def hmetad(
 
     #############
     # Group level
-    if (within is None) & (between is None) & (subject is not None):
+    elif (within is None) & (between is None) & (subject is not None):
 
         pymcData = preprocess_group(data)
         from groupLevel import hmetad_groupLevel
 
-        model, trace = hmetad_groupLevel(
+        output = hmetad_groupLevel(
             pymcData,
             chains=chains,
             tune=tune,
@@ -172,7 +174,7 @@ def hmetad(
 
     ###################
     # Repeated-measures
-    if (within is not None) & (between is None) & (subject is not None):
+    elif (within is not None) & (between is None) & (subject is not None):
 
         pymcData = preprocess_rm1way(
             data, subject, within, stimuli, accuracy, confidence, nRatings
@@ -180,7 +182,7 @@ def hmetad(
 
         from rm1way import hmetad_rm1way
 
-        model, trace = hmetad_rm1way(
+        output = hmetad_rm1way(
             pymcData,
             chains=chains,
             tune=tune,
@@ -189,7 +191,15 @@ def hmetad(
             sample_model=sample_model,
         )
 
-    return model, trace
+    else:
+        raise ValueError("Invalid design specification provided. No model fitted.")
+
+    if sample_model is True:
+        model, trace = output
+        return model, trace
+    else:
+        model = output
+        return model
 
 
 def extractParameters(nR_S1, nR_S2):

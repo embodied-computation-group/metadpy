@@ -56,8 +56,8 @@ def hmetad_subjectLevel(
     with Model() as model:
 
         # Type 1 priors
-        c1 = Normal("c1", mu=0.0, tau=2, shape=1)
-        d1 = Normal("d1", mu=0.0, tau=0.5, shape=1)
+        c1 = Normal("c1", mu=0.0, tau=2)
+        d1 = Normal("d1", mu=0.0, tau=0.5)
 
         # TYPE 1 SDT BINOMIAL MODEL
         h = cumulative_normal(d1 / 2 - c1)
@@ -66,14 +66,14 @@ def hmetad_subjectLevel(
         FA = Binomial("FA", data["N"], f, observed=data["FA"])
 
         # Type 2 priors
-        meta_d = Normal("metad", mu=d1, tau=2, shape=1)
+        meta_d = Normal("metad", mu=d1, tau=2)
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
         cS1 = Deterministic(
             "cS1",
             tt.sort(
-                Bound(Normal, upper=c1 - data["Tol"])(
+                Bound(Normal, upper=data['c1'] - data["Tol"])(
                     "cS1_raw", mu=0.0, tau=2, shape=nRatings - 1
                 )
             ),
@@ -81,15 +81,15 @@ def hmetad_subjectLevel(
         cS2 = Deterministic(
             "cS2",
             tt.sort(
-                Bound(Normal, lower=c1 + data["Tol"])(
+                Bound(Normal, lower=data['c1'] + data["Tol"])(
                     "cS2_raw", mu=0.0, tau=2, shape=nRatings - 1
                 )
             ),
         )
 
         # Means of SDT distributions
-        S2mu = meta_d / 2
-        S1mu = -meta_d / 2
+        S2mu = math.flatten(meta_d / 2, 1)
+        S1mu = math.flatten(-meta_d / 2, 1)
 
         # Calculate normalisation constants
         C_area_rS1 = cumulative_normal(c1 - S1mu)
