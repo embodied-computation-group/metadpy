@@ -24,7 +24,7 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000):
+def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000, sample_model=True):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
@@ -257,9 +257,16 @@ def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000):
             observed=counts[subID, nRatings * 3 : nRatings * 4],
         )
 
-        trace = sample(
-            progressbar=True,
-            trace=[sigma_logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
-        )
+        if sample_model is True:
+
+            trace = sample(
+                progressbar=True,
+                trace=[sigma_logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
+            )
+
+            return model, trace
+
+        else:
+            return model
 
     return model, trace

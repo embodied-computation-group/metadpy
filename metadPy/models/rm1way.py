@@ -26,7 +26,7 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
+def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None, sample_model=True):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
@@ -75,23 +75,23 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
 
         # Hyperpriors
         mu_c2 = Normal("mu_c2", mu=0.0, tau=0.01, shape=1)
-        sigma_c2 = Bound(Normal, lower=0.0)("sigma_c2", mu=0, tau=0.01)
+        sigma_c2 = Bound(Normal, lower=0.0)("sigma_c2", mu=0, tau=0.01, shape=1)
         lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
         mu_D = Normal("mu_D", mu=0.0, tau=0.001, shape=1)
-        sigma_D = HalfCauchy('sigma_D', beta=5)
+        sigma_D = HalfCauchy("sigma_D", beta=5)
 
         mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.001, shape=1)
-        sigma_Cond1 = HalfCauchy('sigma_Cond1', beta=5)
+        sigma_Cond1 = HalfCauchy("sigma_Cond1", beta=5)
 
         #############################
         # Hyperpriors - Subject level
         #############################
-        dbase_tilde = Normal('dbase_tilde', mu=0, sd=1, shape=(1, nSubj, 1))
-        dbase = Deterministic('dbase', mu_D + sigma_D * dbase_tilde)
+        dbase_tilde = Normal("dbase_tilde", mu=0, sd=1, shape=(1, nSubj, 1))
+        dbase = Deterministic("dbase", mu_D + sigma_D * dbase_tilde)
 
-        Bd_Cond1_tilde = Normal('Bd_Cond1_tilde', mu=0, sd=1, shape=(1, nSubj, 1))
-        Bd_Cond1 = Deterministic('Bd_Cond1', mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
+        Bd_Cond1_tilde = Normal("Bd_Cond1_tilde", mu=0, sd=1, shape=(1, nSubj, 1))
+        Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
 
         tau = Gamma("tau", alpha=0.001, beta=0.001, shape=(1, nSubj, 1))
 
@@ -107,9 +107,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
         FA = Binomial("FA", n, f[0], observed=falsealarms)
 
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
-        logMratio = Normal(
-            "logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond)
-        )
+        logMratio = Normal("logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond))
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 
         # Means of SDT distributions
@@ -269,26 +267,31 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None):
             observed=counts[:, :, nRatings * 3 : nRatings * 4],
         )
 
-        trace = sample(
-            progressbar=True,
-            chains=chains,
-            tune=tune,
-            draws=draws,
-            cores=cores,
-            trace=[
-                mRatio,
-                mu_c2,
-                sigma_c2,
-                lambda_c2,
-                mu_D,
-                sigma_D,
-                mu_Cond1,
-                sigma_Cond1,
-                metad,
-                tau,
-                dbase,
-                Bd_Cond1,
-            ],
-        )
+        if sample_model is True:
 
-    return model, trace
+            trace = sample(
+                progressbar=True,
+                chains=chains,
+                tune=tune,
+                draws=draws,
+                cores=cores,
+                trace=[
+                    mRatio,
+                    mu_c2,
+                    sigma_c2,
+                    lambda_c2,
+                    mu_D,
+                    sigma_D,
+                    mu_Cond1,
+                    sigma_Cond1,
+                    metad,
+                    tau,
+                    dbase,
+                    Bd_Cond1,
+                ],
+            )
+
+            return model, trace
+
+        else:
+            return model
