@@ -1,11 +1,13 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import numpy as np
 import unittest
+from unittest import TestCase
+
+import numpy as np
 import pytest
+
 from metadPy.hierarchical import extractParameters, hmetad
 from metadPy.utils import ratings2df
-from unittest import TestCase
 
 nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
 nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])

@@ -1,8 +1,8 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import norm
-import matplotlib.pyplot as plt
 
 
 def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):

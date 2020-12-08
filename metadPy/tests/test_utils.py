@@ -1,17 +1,19 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import unittest
-import pytest
+from unittest import TestCase
+
 import numpy as np
 import pandas as pd
+import pytest
+
 from metadPy.utils import (
-    trials2counts,
     discreteRatings,
-    responseSimulation,
-    type2_SDT_simuation,
     ratings2df,
+    responseSimulation,
+    trials2counts,
+    type2_SDT_simuation,
 )
-from unittest import TestCase
 
 ratings = np.array(
     [

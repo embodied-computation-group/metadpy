@@ -7,17 +7,17 @@ the metadPy.hierarchical.metad function instead.
 import numpy as np
 import theano.tensor as tt
 from pymc3 import (
-    Model,
-    Normal,
+    Beta,
     Binomial,
-    Gamma,
-    Multinomial,
     Bound,
     Deterministic,
+    Gamma,
+    HalfCauchy,
+    Model,
+    Multinomial,
+    Normal,
     math,
     sample,
-    Beta,
-    HalfCauchy,
 )
 
 

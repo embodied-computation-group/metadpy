@@ -4,14 +4,15 @@ This is an internal function. The subject level modeling shoul be called using
 the metadPy.hierarchical.metad function instead.
 """
 
-import theano.tensor as tt
+import numpy as np
+import pymc3.distributions.transforms as tr
 from pymc3 import (
-    Model,
-    Normal,
     Binomial,
-    Multinomial,
     Bound,
     Deterministic,
+    Model,
+    Multinomial,
+    Normal,
     math,
     sample,
 )
@@ -70,21 +71,24 @@ def hmetad_subjectLevel(
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
-        cS1 = Deterministic(
+        BoundedNormal_cS1 = Bound(Normal, upper=data["c1"] - data["Tol"])
+        cS1 = BoundedNormal_cS1(
             "cS1",
-            tt.sort(
-                Bound(Normal, upper=data['c1'] - data["Tol"])(
-                    "cS1_raw", mu=0.0, tau=2, shape=nRatings - 1
-                )
-            ),
+            mu=0.0,
+            tau=2,
+            shape=nRatings - 1,
+            transform=tr.Ordered(),
+            testval=np.arange(-(nRatings - 1), 0),
         )
-        cS2 = Deterministic(
+
+        BoundedNormal_cS2 = Bound(Normal, lower=data["c1"] + data["Tol"])
+        cS2 = BoundedNormal_cS2(
             "cS2",
-            tt.sort(
-                Bound(Normal, lower=data['c1'] + data["Tol"])(
-                    "cS2_raw", mu=0.0, tau=2, shape=nRatings - 1
-                )
-            ),
+            mu=0.0,
+            tau=2,
+            shape=nRatings - 1,
+            transform=tr.Ordered(),
+            testval=np.arange(1, nRatings),
         )
 
         # Means of SDT distributions

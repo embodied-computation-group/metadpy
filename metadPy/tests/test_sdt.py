@@ -1,11 +1,13 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import pandas as pd
-import numpy as np
 import unittest
-import pytest
-from metadPy.sdt import scores, rates, dprime, criterion, metad_MLE, roc_auc
 from unittest import TestCase
+
+import numpy as np
+import pandas as pd
+import pytest
+
+from metadPy.sdt import criterion, dprime, metad_MLE, rates, roc_auc, scores
 
 data = pd.DataFrame(
     {

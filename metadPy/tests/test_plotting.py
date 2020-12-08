@@ -1,11 +1,13 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import unittest
-import pytest
+from unittest import TestCase
+
 import matplotlib
+import pytest
+
 from metadPy.plotting import plot_confidence, plot_roc
 from metadPy.utils import responseSimulation
-from unittest import TestCase
 
 
 class Testsdt(TestCase):

@@ -7,15 +7,15 @@ the metadPy.hierarchical.metad function instead.
 import numpy as np
 import theano.tensor as tt
 from pymc3 import (
-    Model,
-    Normal,
+    Beta,
     Binomial,
-    Multinomial,
     Bound,
     Deterministic,
+    Model,
+    Multinomial,
+    Normal,
     math,
     sample,
-    Beta,
 )
 
 
@@ -261,7 +261,7 @@ def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000, sample_model=True):
 
             trace = sample(
                 progressbar=True,
-                trace=[sigma_logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
+                trace=[sigma_, logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
             )
 
             return model, trace

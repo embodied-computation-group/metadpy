@@ -11,6 +11,8 @@ install:
 
 script:
   - coverage run -m pytest
+  - black --check
+  - isort --check-only
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

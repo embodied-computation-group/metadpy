@@ -2,8 +2,8 @@
 
 import numpy as np
 import pandas as pd
+from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
-from scipy.optimize import Bounds, LinearConstraint, minimize, SR1
 
 
 def scores(data=None, signal="signal", responses="responses"):
