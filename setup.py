@@ -24,6 +24,7 @@ INSTALL_REQUIRES = [
 
 PACKAGES = [
     "metadPy",
+    "metadPy.datasets"
 ]
 
 try:

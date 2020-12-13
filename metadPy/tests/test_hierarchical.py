@@ -7,8 +7,10 @@ import numpy as np
 import pytest
 
 from metadPy.hierarchical import extractParameters, hmetad
-from metadPy.utils import ratings2df, load_dataset
+from metadPy.utils import ratings2df
+from metadPy import load_dataset
 import pymc3 as pm
+
 
 class Testsdt(TestCase):
     def test_preprocess(self):
