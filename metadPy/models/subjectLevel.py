@@ -8,6 +8,7 @@ import numpy as np
 import pymc3.distributions.transforms as tr
 from pymc3 import (
     Binomial,
+    HalfNormal,
     Deterministic,
     Model,
     Multinomial,

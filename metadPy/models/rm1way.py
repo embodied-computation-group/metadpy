@@ -9,6 +9,7 @@ import theano.tensor as tt
 from pymc3 import (
     Model,
     Normal,
+    HalfNormal,
     Gamma,
     Multinomial,
     Bound,
