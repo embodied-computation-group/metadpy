@@ -46,7 +46,7 @@ def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
         else:
             raise ValueError(
                 "You should provided a dictionnary. "
-                "See metadpy.std.metad_MLE() for help."
+                "See metadPy.sdt.metad_MLE() for help."
             )
 
     if len(nR_S1) != len(nR_S2):
