@@ -24,19 +24,17 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000, sample_model=True):
+def hmetad_groupLevel(data, sample_model=True, **kwargs):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
     ----------
     data : dict
         Response data.
-    chains : int
-        The number of chains to sample. Defaults to `3`.
-    tune : int
-        Number of iterations to tune. Defaults to `1000`.
-    draws : int
-        The number of samples to draw. Defaults to `1000`.
+    sample_model : boolean
+        If `False`, only the model is returned without sampling.
+    **kwargs : keyword arguments
+        All keyword arguments are passed to `func::pymc3.sampling.sample`.
 
     Returns
     -------
@@ -260,8 +258,8 @@ def hmetad_groupLevel(data, chains=3, tune=1000, draws=1000, sample_model=True):
         if sample_model is True:
 
             trace = sample(
-                progressbar=True,
                 trace=[sigma_, logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
+                **kwargs,
             )
 
             return model, trace

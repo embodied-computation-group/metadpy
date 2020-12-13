@@ -25,11 +25,8 @@ def hmetad(
     nbins=4,
     padCells=False,
     padAmount=None,
-    chains=3,
-    tune=1000,
-    draws=1000,
-    cores=None,
     sample_model=True,
+    **kwargs
 ):
     """Estimate parameters of the Hierarchical Bayesian meta-d'
 
@@ -73,12 +70,11 @@ def hmetad(
     padAmount : float
         The value to add to each response count if padCells is set to 1.
         Default value is 1/(2*nRatings)
-    chains : int
-        The number of chains to sample. Defaults to `3`.
-    tune : int
-        Number of iterations to tune. Defaults to `1000`.
-    draws : int
-        The number of samples to draw. Defaults to `1000`.
+    sample_model : boolean
+        If `False`, only the model is returned without sampling.
+    **kwargs : keyword arguments
+        All keyword arguments are passed to `func::pymc3.sampling.sample`.
+
 
     Returns
     -------
@@ -150,11 +146,8 @@ def hmetad(
 
         output = hmetad_subjectLevel(
             pymcData,
-            chains=chains,
-            tune=tune,
-            draws=draws,
-            cores=cores,
             sample_model=sample_model,
+            **kwargs,
         )
 
     #############
@@ -166,11 +159,8 @@ def hmetad(
 
         output = hmetad_groupLevel(
             pymcData,
-            chains=chains,
-            tune=tune,
-            draws=draws,
-            cores=cores,
             sample_model=sample_model,
+            **kwargs,
         )
 
     ###################
@@ -185,11 +175,8 @@ def hmetad(
 
         output = hmetad_rm1way(
             pymcData,
-            chains=chains,
-            tune=tune,
-            draws=draws,
-            cores=cores,
             sample_model=sample_model,
+            **kwargs,
         )
 
     else:

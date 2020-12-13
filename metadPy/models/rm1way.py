@@ -26,21 +26,17 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None, sample_model=True):
+def hmetad_rm1way(data, sample_model=True, **kwargs):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
     ----------
     data : dict
         Response data.
-    chains : int
-        The number of chains to sample. Defaults to `3`.
-    tune : int
-        Number of iterations to tune. Defaults to `1000`.
-    draws : int
-        The number of samples to draw. Defaults to `1000`.
-    cores : int or None
-        The number of chains to run in parallel.
+    sample_model : boolean
+        If `False`, only the model is returned without sampling.
+    **kwargs : keyword arguments
+        All keyword arguments are passed to `func::pymc3.sampling.sample`.
 
     Returns
     -------
@@ -271,10 +267,6 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None, sample_mode
 
             trace = sample(
                 progressbar=True,
-                chains=chains,
-                tune=tune,
-                draws=draws,
-                cores=cores,
                 trace=[
                     mRatio,
                     mu_c2,
@@ -289,6 +281,7 @@ def hmetad_rm1way(data, chains=3, tune=1000, draws=1000, cores=None, sample_mode
                     dbase,
                     Bd_Cond1,
                 ],
+                **kwargs,
             )
 
             return model, trace
