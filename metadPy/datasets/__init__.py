@@ -17,6 +17,5 @@ def load_dataset(dataset):
     df : :py:class:`pandas.DataFrame`
         Pandas dataframe.
     """
-    path = ('https://github.com/LegrandNico/metadPy/raw/'
-            'master/metadPy/datasets/')
-    return pd.read_csv(op.join(path, 'rm.txt'))
+    path = "https://github.com/LegrandNico/metadPy/raw/" "master/metadPy/datasets/"
+    return pd.read_csv(op.join(path, "rm.txt"))
