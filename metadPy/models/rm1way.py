@@ -7,17 +7,15 @@ the metadPy.hierarchical.metad function instead.
 import numpy as np
 import theano.tensor as tt
 from pymc3 import (
-    Beta,
-    Binomial,
+    Model,
+    Normal,
+    Gamma,
+    Multinomial,
     Bound,
     Deterministic,
-    Gamma,
-    HalfCauchy,
-    Model,
-    Multinomial,
-    Normal,
     math,
     sample,
+    HalfCauchy,
 )
 
 
@@ -41,10 +39,11 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
     Returns
     -------
     model : :py:class:`pymc3.Model` instance
-        The pymc3 model.
-    traces : dict
-        Dictionnary of the results and logs:
-            * `'trace'`: the MCMC traces
+        The pymc3 model. Encapsulates the variables and likelihood factors.
+    trace : :py:class:`pymc3.backends.base.MultiTrace` or
+        :py:class:`arviz.InferenceData`
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the
+        samples.
 
     References
     ----------
@@ -55,29 +54,30 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
     nSubj = data["nSubj"]
     nCond = data["nCond"]
     cond = data["condition"]
-    hits = data["hits"]
-    falsealarms = data["falsealarms"]
+    nRatings = data["nRatings"]
+    hits = data["hits"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
+    falsealarms = data["falsealarms"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
     s = data["s"]
     n = data["n"]
     counts = data["counts"]
-    nRatings = data["nRatings"]
     Tol = data["Tol"]
-    cr = data["cr"]
-    m = data["m"]
+    cr = data["cr"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
+    m = data["m"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
     c1 = data["c1"]
     d1 = data["d1"]
+
 
     with Model() as model:
 
         # Hyperpriors
-        mu_c2 = Normal("mu_c2", mu=0.0, tau=0.01, shape=1)
-        sigma_c2 = Bound(Normal, lower=0.0)("sigma_c2", mu=0, tau=0.01, shape=1)
+        mu_c2 = Normal("mu_c2", mu=0.0, tau=0.01, shape=(nRatings - 1, nSubj, nCond))
+        sigma_c2 = Bound(Normal, lower=0.0)("sigma_c2", mu=0, tau=0.01, shape=(nRatings - 1, nSubj, nCond))
         lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
-        mu_D = Normal("mu_D", mu=0.0, tau=0.001, shape=1)
+        mu_D = Normal("mu_D", mu=0.0, tau=0.01, testval=0)
         sigma_D = HalfCauchy("sigma_D", beta=5)
 
-        mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.001, shape=1)
+        mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.01, testval=0)
         sigma_Cond1 = HalfCauchy("sigma_Cond1", beta=5)
 
         #############################
@@ -89,19 +89,11 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
         Bd_Cond1_tilde = Normal("Bd_Cond1_tilde", mu=0, sd=1, shape=(1, nSubj, 1))
         Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
 
-        tau = Gamma("tau", alpha=0.001, beta=0.001, shape=(1, nSubj, 1))
+        tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
 
         ###############################
         # Hypterprior - Condition level
         ###############################
-
-        # TYPE 1 SDT BINOMIAL MODEL
-        h = cumulative_normal(d1 / 2 - c1)
-        f = cumulative_normal(-d1 / 2 - c1)
-
-        H = Binomial("H", s, h[0], observed=hits)
-        FA = Binomial("FA", n, f[0], observed=falsealarms)
-
         mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
         logMratio = Normal("logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond))
         mRatio = Deterministic("mRatio", math.exp(logMratio))
@@ -113,28 +105,25 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
-        cS1 = Deterministic(
-            "cS1",
-            tt.sort(
-                Bound(Normal, upper=c1 - Tol)(
-                    "cS1_raw",
-                    mu=mu_c2,
-                    tau=lambda_c2,
-                    shape=(nRatings - 1, nSubj, nCond),
-                )
-            ),
+        cS1_hn = HalfNormal(
+            "cS1_hn",
+            tau=lambda_c2,
+            shape=(nRatings - 1, nSubj, nCond),
+            testval=np.linspace(1.5, 0.5, nRatings - 1)
+              .reshape(nRatings - 1, 1, 1).repeat(nSubj, axis=1)
+              .repeat(nCond, axis=2),
         )
-        cS2 = Deterministic(
-            "cS2",
-            tt.sort(
-                Bound(Normal, lower=c1 + Tol)(
-                    "cS2_raw",
-                    mu=mu_c2,
-                    tau=lambda_c2,
-                    shape=(nRatings - 1, nSubj, nCond),
-                )
-            ),
+        cS1 = Deterministic('cS1', mu_c2 -cS1_hn + (c1 - data["Tol"]))
+
+        cS2_hn = HalfNormal(
+            "cS2_hn",
+            tau=lambda_c2,
+            shape=(nRatings - 1, nSubj, nCond),
+            testval=np.linspace(1.5, 0.5, nRatings - 1)
+              .reshape(nRatings - 1, 1, 1).repeat(nSubj, axis=1)
+              .repeat(nCond, axis=2),
         )
+        cS2 = Deterministic('cS2', mu_c2 + cS2_hn + (c1 - data["Tol"]))
 
         # Calculate normalisation constants
         C_area_rS1 = cumulative_normal(c1 - S1mu)
@@ -227,39 +216,39 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
         )
 
         # Avoid underflow of probabilities
-        nC_rS1 = math.switch(nC_rS1 < Tol, Tol, nC_rS1).transpose((1, 2, 0))
-        nI_rS2 = math.switch(nI_rS2 < Tol, Tol, nI_rS2).transpose((1, 2, 0))
-        nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1).transpose((1, 2, 0))
-        nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2).transpose((1, 2, 0))
+        nC_rS1 = math.switch(nC_rS1 < Tol, Tol, nC_rS1).transpose(1, 2, 0)
+        nI_rS2 = math.switch(nI_rS2 < Tol, Tol, nI_rS2).transpose(1, 2, 0)
+        nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1).transpose(1, 2, 0)
+        nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2).transpose(1, 2, 0)
 
         # TYPE 2 SDT MODEL (META-D)
-        # Multinomial likelihood for response counts ordered as c(nR_S1,nR_S2)
+        # Multinomial likelihood for response counts
         Multinomial(
             "CR_counts",
             cr,
             nC_rS1,
-            shape=(nRatings, nSubj, nCond),
+            #shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, :nRatings],
         )
         Multinomial(
-            "FA_counts",
-            FA,
+           "FA_counts",
+            falsealarms,
             nI_rS2,
-            shape=(nRatings, nSubj, nCond),
+            #shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, nRatings : nRatings * 2],
         )
         Multinomial(
             "M_counts",
             m,
             nI_rS1,
-            shape=(nRatings, nSubj, nCond),
+            #shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, nRatings * 2 : nRatings * 3],
         )
         Multinomial(
             "H_counts",
-            H,
+            hits,
             nC_rS2,
-            shape=(nRatings, nSubj, nCond),
+            #shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, nRatings * 3 : nRatings * 4],
         )
 

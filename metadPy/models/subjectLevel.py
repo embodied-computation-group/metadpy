@@ -8,7 +8,6 @@ import numpy as np
 import pymc3.distributions.transforms as tr
 from pymc3 import (
     Binomial,
-    Bound,
     Deterministic,
     Model,
     Multinomial,
@@ -38,10 +37,11 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     Returns
     -------
     model : :py:class:`pymc3.Model` instance
-        The pymc3 model.
-    traces : dict
-        Dictionnary of the results and logs:
-            * `'trace'`: the MCMC traces
+        The pymc3 model. Encapsulates the variables and likelihood factors.
+    trace : :py:class:`pymc3.backends.base.MultiTrace` or
+        :py:class:`arviz.InferenceData`
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the
+        samples.
 
     References
     ----------
@@ -67,25 +67,21 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
-        BoundedNormal_cS1 = Bound(Normal, upper=data["c1"] - data["Tol"])
-        cS1 = BoundedNormal_cS1(
-            "cS1",
-            mu=0.0,
+        cS1_hn = HalfNormal(
+            "cS1_hn",
             tau=2,
             shape=nRatings - 1,
-            transform=tr.Ordered(),
-            testval=np.arange(-(nRatings - 1), 0),
+            testval=np.linspace(1.5, 0.5, nRatings - 1),
         )
+        cS1 = Deterministic("cS1", -cS1_hn + (c1 - data["Tol"]))
 
-        BoundedNormal_cS2 = Bound(Normal, lower=data["c1"] + data["Tol"])
-        cS2 = BoundedNormal_cS2(
-            "cS2",
-            mu=0.0,
+        cS2_hn = HalfNormal(
+            "cS2_hn",
             tau=2,
             shape=nRatings - 1,
-            transform=tr.Ordered(),
-            testval=np.arange(1, nRatings),
+            testval=np.linspace(0.5, 1.5, nRatings - 1),
         )
+        cS2 = Deterministic("cS2", cS2_hn + (c1 - data["Tol"]))
 
         # Means of SDT distributions
         S2mu = math.flatten(meta_d / 2, 1)
@@ -221,7 +217,6 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
         if sample_model is True:
             trace = sample(
                 trace=[meta_d, cS1, cS2],
-                **kwargs,
             )
 
             return model, trace

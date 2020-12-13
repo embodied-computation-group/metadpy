@@ -39,10 +39,11 @@ def hmetad_groupLevel(data, sample_model=True, **kwargs):
     Returns
     -------
     model : :py:class:`pymc3.Model` instance
-        The pymc3 model.
-    traces : dict
-        Dictionnary of the results and logs:
-            * `'trace'`: the MCMC traces
+        The pymc3 model. Encapsulates the variables and likelihood factors.
+    trace : :py:class:`pymc3.backends.base.MultiTrace` or
+        :py:class:`arviz.InferenceData`
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the
+        samples.
 
     References
     ----------
