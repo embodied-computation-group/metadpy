@@ -66,12 +66,13 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
     c1 = data["c1"]
     d1 = data["d1"]
 
-
     with Model() as model:
 
         # Hyperpriors
         mu_c2 = Normal("mu_c2", mu=0.0, tau=0.01, shape=(nRatings - 1, nSubj, nCond))
-        sigma_c2 = Bound(Normal, lower=0.0)("sigma_c2", mu=0, tau=0.01, shape=(nRatings - 1, nSubj, nCond))
+        sigma_c2 = Bound(Normal, lower=0.0)(
+            "sigma_c2", mu=0, tau=0.01, shape=(nRatings - 1, nSubj, nCond)
+        )
         lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
         mu_D = Normal("mu_D", mu=0.0, tau=0.01, testval=0)
@@ -110,20 +111,22 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
             tau=lambda_c2,
             shape=(nRatings - 1, nSubj, nCond),
             testval=np.linspace(1.5, 0.5, nRatings - 1)
-              .reshape(nRatings - 1, 1, 1).repeat(nSubj, axis=1)
-              .repeat(nCond, axis=2),
+            .reshape(nRatings - 1, 1, 1)
+            .repeat(nSubj, axis=1)
+            .repeat(nCond, axis=2),
         )
-        cS1 = Deterministic('cS1', mu_c2 -cS1_hn + (c1 - data["Tol"]))
+        cS1 = Deterministic("cS1", mu_c2 - cS1_hn + (c1 - data["Tol"]))
 
         cS2_hn = HalfNormal(
             "cS2_hn",
             tau=lambda_c2,
             shape=(nRatings - 1, nSubj, nCond),
             testval=np.linspace(1.5, 0.5, nRatings - 1)
-              .reshape(nRatings - 1, 1, 1).repeat(nSubj, axis=1)
-              .repeat(nCond, axis=2),
+            .reshape(nRatings - 1, 1, 1)
+            .repeat(nSubj, axis=1)
+            .repeat(nCond, axis=2),
         )
-        cS2 = Deterministic('cS2', mu_c2 + cS2_hn + (c1 - data["Tol"]))
+        cS2 = Deterministic("cS2", mu_c2 + cS2_hn + (c1 - data["Tol"]))
 
         # Calculate normalisation constants
         C_area_rS1 = cumulative_normal(c1 - S1mu)
@@ -227,28 +230,28 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
             "CR_counts",
             cr,
             nC_rS1,
-            #shape=(nRatings, nSubj, nCond),
+            # shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, :nRatings],
         )
         Multinomial(
-           "FA_counts",
+            "FA_counts",
             falsealarms,
             nI_rS2,
-            #shape=(nRatings, nSubj, nCond),
+            # shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, nRatings : nRatings * 2],
         )
         Multinomial(
             "M_counts",
             m,
             nI_rS1,
-            #shape=(nRatings, nSubj, nCond),
+            # shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, nRatings * 2 : nRatings * 3],
         )
         Multinomial(
             "H_counts",
             hits,
             nC_rS2,
-            #shape=(nRatings, nSubj, nCond),
+            # shape=(nRatings, nSubj, nCond),
             observed=counts[:, :, nRatings * 3 : nRatings * 4],
         )
 
