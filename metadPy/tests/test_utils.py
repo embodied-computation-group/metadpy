@@ -141,7 +141,7 @@ class Testsdt(TestCase):
             accuracy=[0, 1, 1, 1, 0, 0, 1, 1],
             confidence=[1, 2, 3, 4, 4, 3, 2, 1],
             nRatings=4,
-            padCells=True,
+            padding=True,
         )
 
     def test_discreteRatings(self):

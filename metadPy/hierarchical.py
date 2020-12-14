@@ -23,7 +23,7 @@ def hmetad(
     between=None,
     subject=None,
     nbins=4,
-    padCells=False,
+    padding=False,
     padAmount=None,
     sample_model=True,
     **kwargs
@@ -61,11 +61,11 @@ def hmetad(
         If a continuous rating scale was using, `nbins` define the number of
         discrete ratings when converting using
         :py:func:`metadPy.utils.discreteRatings`. The default value is `4`.
-    padCells : boolean
+    padding : boolean
         If `True`, each response count in the output has the value of padAmount
         added to it. Padding cells is desirable if trial counts of 0 interfere
         with model fitting. If False, trial counts are not manipulated and 0s
-        may be present in the response count output. Default value for padCells
+        may be present in the response count output. Default value for padding
         is 0.
     padAmount : float
         The value to add to each response count if padCells is set to 1.
@@ -136,7 +136,7 @@ def hmetad(
                 accuracy=accuracy,
                 confidence=confidence,
                 nRatings=nRatings,
-                padCells=padCells,
+                padding=padding,
                 padAmount=padAmount,
             )
 
