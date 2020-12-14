@@ -22,10 +22,7 @@ INSTALL_REQUIRES = [
     "seaborn>=0.10.0",
 ]
 
-PACKAGES = [
-    "metadPy",
-    "metadPy.datasets"
-]
+PACKAGES = ["metadPy", "metadPy.datasets"]
 
 try:
     from setuptools import setup

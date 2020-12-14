@@ -21,8 +21,7 @@ class Testsdt(TestCase):
         assert round(data["c1"]) == 0
         assert np.all(
             data["counts"]
-            == np.array([52, 32, 35, 37, 26, 12, 4, 2, 2,
-                         5, 15, 22, 33, 38, 40, 45])
+            == np.array([52, 32, 35, 37, 26, 12, 4, 2, 2, 5, 15, 22, 33, 38, 40, 45])
         )
         assert data["nratings"] == 4
         assert data["Tol"] == 1e-05
@@ -35,29 +34,42 @@ class Testsdt(TestCase):
 
     def test_hmetad(self):
         """Test hmetad function"""
-        group_df = load_dataset('rm')
+        group_df = load_dataset("rm")
 
         # Test subject level
         ####################
-        this_df = group_df[(group_df.Subject == 0) &
-                           (group_df.Condition == 0)]
-        model, trace = hmetad(data=this_df, nRatings=4, stimuli='Stimuli',
-                              accuracy='Accuracy', confidence='Confidence',
-                              tune=50, draws=50)
+        this_df = group_df[(group_df.Subject == 0) & (group_df.Condition == 0)]
+        model, trace = hmetad(
+            data=this_df,
+            nRatings=4,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+            tune=50,
+            draws=50,
+        )
         assert isinstance(model, pm.Model)
         assert isinstance(trace, pm.backends.base.MultiTrace)
-        #assert round(trace['metad'].mean()) == 1
+        # assert round(trace['metad'].mean()) == 1
 
         # Test repeated measure
         #######################
-        model, trace = hmetad(data=group_df, nRatings=4, stimuli='Stimuli',
-                              accuracy='Accuracy', confidence='Confidence',
-                              subject='Subject', within='Condition', cores=2,
-                              tune=50, draws=50)
+        model, trace = hmetad(
+            data=group_df,
+            nRatings=4,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+            subject="Subject",
+            within="Condition",
+            cores=2,
+            tune=50,
+            draws=50,
+        )
         assert isinstance(model, pm.Model)
         assert isinstance(trace, pm.backends.base.MultiTrace)
-        #assert round(trace['mRatio'].mean(0)[0][:, 0].mean() - 1) == 0
-        #assert round(trace['mRatio'].mean(0)[0][:, 0].mean() - .6) == 0
+        # assert round(trace['mRatio'].mean(0)[0][:, 0].mean() - 1) == 0
+        # assert round(trace['mRatio'].mean(0)[0][:, 0].mean() - .6) == 0
 
 
 if __name__ == "__main__":

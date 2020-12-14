@@ -443,9 +443,8 @@ def metad(
 
             warnings.warn(
                 (
-                    "Your inputs contain zeros and is not corrected."
-                    " This may interfere with proper estimation of meta-d"
-                    "."
+                    "Your inputs contain zeros and is not corrected. "
+                    " This may interfere with proper estimation of meta-d."
                     " See docstrings for more information."
                 )
             )
@@ -453,7 +452,7 @@ def metad(
         # A small padding is required to avoid problems in model fit if any
         # confidence ratings aren't used (see Hautus MJ, 1995 for details)
         if padAmount is None:
-            padAmount = 1 / (2 * nRatings)
+            padAmount = 1 / len(nR_S1)
         nR_S1 = nR_S1 + padAmount
         nR_S2 = nR_S2 + padAmount
     elif (padding is False) & (collapse is not None):
@@ -550,16 +549,16 @@ def metad(
     C_nR_rS1 = list(np.flip(nR_S1[0:nRatings], axis=0))
 
     obs_FAR2_rS2 = [
-        sum(I_nR_rS2[(i + 1):]) / sum(I_nR_rS2) for i in range(nRatings - 1)
+        sum(I_nR_rS2[(i + 1) :]) / sum(I_nR_rS2) for i in range(nRatings - 1)
     ]
     obs_HR2_rS2 = [
-        sum(C_nR_rS2[(i + 1):]) / sum(C_nR_rS2) for i in range(nRatings - 1)
+        sum(C_nR_rS2[(i + 1) :]) / sum(C_nR_rS2) for i in range(nRatings - 1)
     ]
     obs_FAR2_rS1 = [
-        sum(I_nR_rS1[(i + 1):]) / sum(I_nR_rS1) for i in range(nRatings - 1)
+        sum(I_nR_rS1[(i + 1) :]) / sum(I_nR_rS1) for i in range(nRatings - 1)
     ]
     obs_HR2_rS1 = [
-        sum(C_nR_rS1[(i + 1):]) / sum(C_nR_rS1) for i in range(nRatings - 1)
+        sum(C_nR_rS1[(i + 1) :]) / sum(C_nR_rS1) for i in range(nRatings - 1)
     ]
 
     # find estimated t2FAR and t2HR
@@ -608,15 +607,15 @@ def metad(
     fit["meta_ca"] = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * mt1c1
 
     t2ca = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * np.array(t2c1)
-    fit["t2ca_rS1"] = t2ca[0:nRatings - 1]
-    fit["t2ca_rS2"] = t2ca[(nRatings - 1):]
+    fit["t2ca_rS1"] = t2ca[0 : nRatings - 1]
+    fit["t2ca_rS2"] = t2ca[(nRatings - 1) :]
 
     fit["d1"] = d1
     fit["meta_d1"] = meta_d1
     fit["s"] = s
     fit["meta_c1"] = mt1c1
-    fit["t2c1_rS1"] = t2c1[0:nRatings - 1]
-    fit["t2c1_rS2"] = t2c1[(nRatings - 1):]
+    fit["t2c1_rS1"] = t2c1[0 : nRatings - 1]
+    fit["t2c1_rS2"] = t2c1[(nRatings - 1) :]
     fit["logL"] = logL
 
     fit["est_HR2_rS1"] = est_HR2_rS1

@@ -50,17 +50,20 @@ class Testsdt(TestCase):
         """Test fit_meta_d_MLE function"""
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
-        fit = metad(nR_S1, nR_S2)
+        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
         assert round(fit["meta_da"], 3) == 1.634
         with pytest.raises(ValueError):
-            fit = metad(np.zeros(7), nR_S2)
+            fit = metad(nR_S1=np.zeros(7), nR_S2=nR_S2)
         with pytest.raises(ValueError):
-            fit = metad(nR_S1[:1], nR_S2)
-        df = load_dataset('rm')
+            fit = metad(nR_S1=nR_S1[:1], nR_S2=nR_S2)
+        df = load_dataset("rm")
         fit = metad(
-            data=df[df.Subject == 0], nRatings=4, 
-            stimuli='Stimuli', accuracy='Accuracy',
-            confidence='Confidence')
+            data=df[df.Subject == 0],
+            nRatings=4,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+        )
         assert round(fit["meta_da"], 3) == 0.782
 
     def test_roc_auc(self):

@@ -85,10 +85,10 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
         #############################
         # Hyperpriors - Subject level
         #############################
-        dbase_tilde = Normal("dbase_tilde", mu=0, sd=1, shape=(1, nSubj, 1))
+        dbase_tilde = Normal("dbase_tilde", mu=0, sigma=1, shape=(1, nSubj, 1))
         dbase = Deterministic("dbase", mu_D + sigma_D * dbase_tilde)
 
-        Bd_Cond1_tilde = Normal("Bd_Cond1_tilde", mu=0, sd=1, shape=(1, nSubj, 1))
+        Bd_Cond1_tilde = Normal("Bd_Cond1_tilde", mu=0, sigma=1, shape=(1, nSubj, 1))
         Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
 
         tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
