@@ -2,8 +2,10 @@
 
 import numpy as np
 import pandas as pd
+import pandas_flavor as pf
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
+from metadPy.utils import trials2counts
 
 
 def scores(data=None, signal="signal", responses="responses"):
@@ -237,9 +239,16 @@ def fit_meta_d_logL(parameters, inputObj):
     return -logL
 
 
+@pf.register_dataframe_method
 def metad(
-    nR_S1,
-    nR_S2,
+    data=None,
+    stimuli=None,
+    accuracy=None,
+    confidence=None,
+    nRatings=None,
+    padAmount=None,
+    nR_S1=None,
+    nR_S2=None,
     s=1,
     padding=True,
     collapse=None,
@@ -256,6 +265,19 @@ def metad(
 
     Parameters
     ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe. Note that this function can also directly be used as a
+        Pandas method, in which case this argument is no longer needed.
+    stimuli : string
+        Name of the column containing the stimuli.
+    accuracy : string
+        Name of the columns containing the accuracy.
+    confidence : string
+        Name of the column containing the confidence ratings.
+    nRatings : int
+        Number of discrete ratings. If a continuous rating scale was used, and
+        the number of unique ratings does not match `nRatings`, will convert to
+        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
     nR_S1, nR_S2 : list or 1d array-like
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
@@ -280,6 +302,9 @@ def metad(
     padding : boolean
         If `True`, a small value will be added to the counts to avoid problems
         during fit.
+    padAmount : float
+        The value to add to each response count if padding is set to 1.
+        Default value is 1/(2*nRatings)
     collapse : int or None
         If an integer `N` is provided, will collpase ratings to avoid zeros by
         summing every `N` consecutive ratings. Default set to `None`.
@@ -392,6 +417,22 @@ def metad(
       Experimental Psychology: General, 117(1), 34–50.
       https://doi.org/10.1037/0096-3445.117.1.34
     """
+    if isinstance(data, pd.DataFrame):
+        if padAmount is None:
+            padAmount = 1 / (2 * nRatings)
+        nR_S1, nR_S2 = trials2counts(
+            data=data,
+            stimuli=stimuli,
+            accuracy=accuracy,
+            confidence=confidence,
+            nRatings=nRatings,
+            padding=padding,
+            padAmount=padAmount,
+        )
+    if isinstance(nR_S1, list):
+        nR_S1 = np.array(nR_S1)
+    if isinstance(nR_S2, list):
+        nR_S2 = np.array(nR_S2)
     if (len(nR_S1) % 2) != 0:
         raise ValueError("input arrays must have an even number of elements")
     if len(nR_S1) != len(nR_S2):
@@ -411,9 +452,10 @@ def metad(
     elif (padding is True) & (collapse is None):
         # A small padding is required to avoid problems in model fit if any
         # confidence ratings aren't used (see Hautus MJ, 1995 for details)
-        adj_f = 1 / len(nR_S1)
-        nR_S1 = nR_S1 + adj_f
-        nR_S2 = nR_S2 + adj_f
+        if padAmount is None:
+            padAmount = 1 / (2 * nRatings)
+        nR_S1 = nR_S1 + padAmount
+        nR_S2 = nR_S2 + padAmount
     elif (padding is False) & (collapse is not None):
         # Collapse values accross ratings to avoid problems in model fit
         nR_S1 = nR_S1.reshape(int(len(nR_S1) / collapse), 2).sum(axis=1)

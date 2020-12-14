@@ -11,7 +11,7 @@ def trials2counts(
     accuracy="Accuracy",
     confidence="Confidence",
     nRatings=4,
-    padCells=False,
+    padding=False,
     padAmount=None,
     data=None,
 ):
@@ -43,14 +43,14 @@ def trials2counts(
         Total of available subjective ratings available for the subject. e.g.
         if subject can rate confidence on a scale of 1-4, then nRatings = 4.
         Default is `4`.
-    padCells : boolean
+    padding : boolean
         If `True`, each response count in the output has the value of padAmount
         added to it. Padding cells is desirable if trial counts of 0 interfere
         with model fitting. If False, trial counts are not manipulated and 0s
-        may be present in the response count output. Default value for padCells
+        may be present in the response count output. Default value for padding
         is 0.
     padAmount : float
-        The value to add to each response count if padCells is set to 1.
+        The value to add to each response count if padding is set to 1.
         Default value is 1/(2*nRatings)
     data : :py:class:`pandas.DataFrame` or None
         Dataframe containing stimuli, accuracy and confidence ratings.
@@ -166,7 +166,7 @@ def trials2counts(
         nR_S2.append(cs2)
 
     # pad response counts to avoid zeros
-    if padCells:
+    if padding:
         nR_S1 = [n + padAmount for n in nR_S1]
         nR_S2 = [n + padAmount for n in nR_S2]
 

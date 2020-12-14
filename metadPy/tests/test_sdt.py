@@ -8,6 +8,7 @@ import pandas as pd
 import pytest
 
 from metadPy.sdt import criterion, dprime, metad, rates, roc_auc, scores
+from metadPy import load_dataset
 
 data = pd.DataFrame(
     {
@@ -51,11 +52,16 @@ class Testsdt(TestCase):
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         fit = metad(nR_S1, nR_S2)
         assert round(fit["meta_da"], 3) == 1.634
-        fit["t2ca_rS1"]
         with pytest.raises(ValueError):
             fit = metad(np.zeros(7), nR_S2)
         with pytest.raises(ValueError):
             fit = metad(nR_S1[:1], nR_S2)
+        df = load_dataset('rm')
+        fit = metad(
+            data=df[df.Subject == 0], nRatings=4, 
+            stimuli='Stimuli', accuracy='Accuracy',
+            confidence='Confidence')
+        assert round(fit["meta_da"], 3) == 0.782
 
     def test_roc_auc(self):
         """Test roc_auc function"""

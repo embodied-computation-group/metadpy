@@ -7,4 +7,4 @@ pymc3>=3.8
 black
 pytest
 coverage
-pre-commit
+pandas_flavor>=0.1.2
