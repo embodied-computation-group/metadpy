@@ -15,7 +15,7 @@ def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
     nR_S2 : 1d array-like
         Confidence ratings (stimuli 2).
     fitModel : dict or None
-        Dictionnary returned by :py:funct:`metadpy.std.metad_MLE()`. If
+        Dictionnary returned by :py:funct:`metadpy.std.metad()`. If
         provided, the estimated ratings will be plotted toghether with the
         observed data.
     ax : `Matplotlib.Axes` or None
@@ -46,7 +46,7 @@ def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
         else:
             raise ValueError(
                 "You should provided a dictionnary. "
-                "See metadPy.sdt.metad_MLE() for help."
+                "See metadPy.sdt.metad() for help."
             )
 
     if len(nR_S1) != len(nR_S2):
@@ -175,7 +175,7 @@ def plot_roc(nR_S1=None, nR_S2=None, fitModel=None, ax=None):
         if not isinstance(fitModel, dict):
             raise ValueError(
                 "You should provided a dictionnary. "
-                "See metadpy.std.metad_MLE() for help."
+                "See metadpy.std.metad() for help."
             )
         if ax is None:
             fig, ax = plt.subplots(1, 2, figsize=(10, 5))

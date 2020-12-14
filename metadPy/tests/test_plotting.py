@@ -8,7 +8,7 @@ import pytest
 
 from metadPy.plotting import plot_confidence, plot_roc
 from metadPy.utils import responseSimulation
-from metadPy.sdt import metad_MLE
+from metadPy.sdt import metad
 
 
 class Testsdt(TestCase):
@@ -19,7 +19,7 @@ class Testsdt(TestCase):
         assert isinstance(ax, matplotlib.axes.Axes)
         with pytest.raises(ValueError):
             ax = plot_confidence(nR_S1[:-1], nR_S2)
-        modelFit = metad_MLE(nR_S1, nR_S2)
+        modelFit = metad(nR_S1, nR_S2)
         ax = plot_confidence(nR_S1, nR_S2, fitModel=modelFit)
         assert isinstance(ax, matplotlib.axes.Axes)
 
@@ -28,7 +28,7 @@ class Testsdt(TestCase):
         nR_S1, nR_S2 = responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500)
         ax = plot_roc(nR_S1, nR_S2)
         assert isinstance(ax, matplotlib.axes.Axes)
-        modelFit = metad_MLE(nR_S1, nR_S2)
+        modelFit = metad(nR_S1, nR_S2)
         ax = plot_roc(nR_S1, nR_S2, fitModel=modelFit)
         assert isinstance(ax[0], matplotlib.axes.Axes)
         assert isinstance(ax[1], matplotlib.axes.Axes)

@@ -237,7 +237,7 @@ def fit_meta_d_logL(parameters, inputObj):
     return -logL
 
 
-def metad_MLE(
+def metad(
     nR_S1,
     nR_S2,
     s=1,
@@ -251,7 +251,8 @@ def metad_MLE(
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
     This function is adapted from the transcription of fit_meta_d_MLE.m
-    (Maniscalco & Lau, 2012) by Alan Lee: http://www.columbia.edu/~bsm2105/type2sdt/.
+    (Maniscalco & Lau, 2012) by Alan Lee:
+    http://www.columbia.edu/~bsm2105/type2sdt/.
 
     Parameters
     ----------
@@ -507,16 +508,16 @@ def metad_MLE(
     C_nR_rS1 = list(np.flip(nR_S1[0:nRatings], axis=0))
 
     obs_FAR2_rS2 = [
-        sum(I_nR_rS2[(i + 1) :]) / sum(I_nR_rS2) for i in range(nRatings - 1)
+        sum(I_nR_rS2[(i + 1):]) / sum(I_nR_rS2) for i in range(nRatings - 1)
     ]
     obs_HR2_rS2 = [
-        sum(C_nR_rS2[(i + 1) :]) / sum(C_nR_rS2) for i in range(nRatings - 1)
+        sum(C_nR_rS2[(i + 1):]) / sum(C_nR_rS2) for i in range(nRatings - 1)
     ]
     obs_FAR2_rS1 = [
-        sum(I_nR_rS1[(i + 1) :]) / sum(I_nR_rS1) for i in range(nRatings - 1)
+        sum(I_nR_rS1[(i + 1):]) / sum(I_nR_rS1) for i in range(nRatings - 1)
     ]
     obs_HR2_rS1 = [
-        sum(C_nR_rS1[(i + 1) :]) / sum(C_nR_rS1) for i in range(nRatings - 1)
+        sum(C_nR_rS1[(i + 1):]) / sum(C_nR_rS1) for i in range(nRatings - 1)
     ]
 
     # find estimated t2FAR and t2HR
@@ -565,15 +566,15 @@ def metad_MLE(
     fit["meta_ca"] = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * mt1c1
 
     t2ca = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * np.array(t2c1)
-    fit["t2ca_rS1"] = t2ca[0 : nRatings - 1]
-    fit["t2ca_rS2"] = t2ca[(nRatings - 1) :]
+    fit["t2ca_rS1"] = t2ca[0:nRatings - 1]
+    fit["t2ca_rS2"] = t2ca[(nRatings - 1):]
 
     fit["d1"] = d1
     fit["meta_d1"] = meta_d1
     fit["s"] = s
     fit["meta_c1"] = mt1c1
-    fit["t2c1_rS1"] = t2c1[0 : nRatings - 1]
-    fit["t2c1_rS2"] = t2c1[(nRatings - 1) :]
+    fit["t2c1_rS1"] = t2c1[0:nRatings - 1]
+    fit["t2c1_rS2"] = t2c1[(nRatings - 1):]
     fit["logL"] = logL
 
     fit["est_HR2_rS1"] = est_HR2_rS1
