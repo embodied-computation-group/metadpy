@@ -259,7 +259,7 @@ def hmetad_groupLevel(data, sample_model=True, **kwargs):
         if sample_model is True:
 
             trace = sample(
-                trace=[sigma_, logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
+                trace=[logMratio, meta_d, mRatio, mu_logMratio, mu_d1, mu_c],
                 **kwargs,
             )
 
