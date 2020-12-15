@@ -154,7 +154,9 @@ def hmetad(
     # Group level
     elif (within is None) & (between is None) & (subject is not None):
 
-        pymcData = preprocess_group(data)
+        pymcData = preprocess_group(
+            data, subject, stimuli, accuracy, confidence, nRatings
+        )
         from groupLevel import hmetad_groupLevel
 
         output = hmetad_groupLevel(
@@ -235,8 +237,8 @@ def extractParameters(nR_S1, nR_S2):
         ratingHR.append(sum(nR_S2_adj[c:]) / sum(nR_S2_adj))
         ratingFAR.append(sum(nR_S1_adj[c:]) / sum(nR_S1_adj))
 
-    d1 = dprime(ratingHR[nratings - 1], ratingFAR[nratings - 1])
-    c1 = criterion(ratingHR[nratings - 1], ratingFAR[nratings - 1])
+    d1 = dprime(hit_rate=ratingHR[nratings - 1], fa_rate=ratingFAR[nratings - 1])
+    c1 = criterion(hit_rate=ratingHR[nratings - 1], fa_rate=ratingFAR[nratings - 1])
     counts = np.hstack([nR_S1, nR_S2])
 
     # Type 1 counts
@@ -265,7 +267,7 @@ def extractParameters(nR_S1, nR_S2):
     return data
 
 
-def preprocess_group(data):
+def preprocess_group(data, subject, stimuli, accuracy, confidence, nRatings):
     """Preprocess group data."""
     pymcData = {
         "nSubj": data[subject].nunique(),
