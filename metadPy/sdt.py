@@ -8,18 +8,19 @@ from scipy.stats import norm
 from metadPy.utils import trials2counts
 
 
-def scores(data=None, signal="signal", responses="responses"):
-    """Extract hits, misses, false alarms and correct rejection from `signal`
+@pf.register_dataframe_method
+def scores(data=None, stimuli="stimuli", responses="responses"):
+    """Extract hits, misses, false alarms and correct rejection from `stimuli`
     and `responses`.
 
     Parameters
     ----------
     data :  :py:class:`pandas.DataFrame` or None
-        Dataframe containing one `signal` and one `response` column.
-    signal : str, 1d array-like or list
+        Dataframe containing one `stimuli` and one `response` column.
+    stimuli : str, 1d array-like or list
         If a string is provided, should be the name of the column used as
-        `signal`. If a list or an array is provided, should contain the boolean
-        vectors for `signal`.
+        `stimuli`. If a list or an array is provided, should contain the
+        boolean vectors for `stimuli`.
     responses : str or 1d array-like
         If a string is provided, should be the name of the column used as
         `responses`. If a list or an array is provided, should contain the
@@ -33,39 +34,48 @@ def scores(data=None, signal="signal", responses="responses"):
     Notes
     -----
     If a :py:class:`pandas.DataFrame` is provided, the function will search for
-    a `signal`and a `responses` column by default if no other column names are
+    a `stimuli`and a `responses` column by default if no other column names are
     provided.
     """
     # Formatting checks
     if data is None:
         if (
-            isinstance(signal, (np.ndarray, np.generic))
+            isinstance(stimuli, (np.ndarray, np.generic))
             and isinstance(responses, (np.ndarray, np.generic))
-            and (len(signal) == len(responses))
-            and np.all([s in [0, 1] for s in signal])
+            and (len(stimuli) == len(responses))
+            and np.all([s in [0, 1] for s in stimuli])
             and np.all([s in [0, 1] for s in responses])
         ):
 
-            data = pd.DataFrame({"signal": signal, "responses": responses})
+            data = pd.DataFrame({"stimuli": stimuli, "responses": responses})
         else:
             raise ValueError(
                 (
-                    "If no data is provided, `signal` and",
+                    "If no data is provided, `stimuli` and",
                     " `responses` should be two boolean vectors",
                     " with equal lengths.",
                 )
             )
 
     # Extract hits, misses, false alarm and correct rejection
-    hit = sum(data["signal"] & data["responses"])
-    misses = sum(data["signal"] & ~data["responses"])
-    fa = sum(~data["signal"] & data["responses"])
-    cr = sum(~data["signal"] & ~data["responses"])
+    hits = sum(data["stimuli"] & data["responses"])
+    misses = sum(data["stimuli"] & ~data["responses"])
+    fas = sum(~data["stimuli"] & data["responses"])
+    crs = sum(~data["stimuli"] & ~data["responses"])
 
-    return hit, misses, fa, cr
+    return hits, misses, fas, crs
 
 
-def rates(hits, misses, fas, crs):
+@pf.register_dataframe_method
+def rates(
+    data=None,
+    stimuli="stimuli",
+    responses="responses",
+    hits=None,
+    misses=None,
+    fas=None,
+    crs=None
+):
     """Hit and false alarm rates.
 
     Parameters
@@ -88,6 +98,13 @@ def rates(hits, misses, fas, crs):
     ----------
     Adapted from: https://lindeloev.net/calculating-d-in-python-and-php/
     """
+    if data is not None:
+        if isinstance(data, pd.DataFrame):
+            hits, misses, fas, crs = scores(
+                data=data, stimuli=stimuli, responses=stimuli
+            )
+        else:
+            raise ValueError("data should be a dataframe")
     # Floors an ceilings are replaced with half inverse hits and fa
     half_hit = 0.5 / (hits + misses)
     half_fa = 0.5 / (fas + crs)
@@ -109,15 +126,24 @@ def rates(hits, misses, fas, crs):
     return hit_rate, fa_rate
 
 
-def dprime(hit_rate, fa_rate):
-    """Calculate d'.
+@pf.register_dataframe_method
+def dprime(data=None, stimuli="stimuli", responses="responses",
+           hit_rate=None, fa_rate=None):
+    """Calculate d prime.
 
     Parameters
     ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe. Note that this function can also directly be used as a
+        Pandas method, in which case this argument is no longer needed.
     hit_rate : float
         Hit rate.
     fa_rate : float
         False alarm rate.
+    stimuli : string
+        Name of the column containing the stimuli.
+    responses : string
+        Name of the column containing the responses.
 
     Returns
     -------
@@ -128,23 +154,49 @@ def dprime(hit_rate, fa_rate):
     -----
     The d’ is a measure of the ability to discriminate a signal from noise.
     """
+    if data is not None:
+        if isinstance(data, pd.DataFrame):
+            hits, misses, fas, crs = scores(
+                data=data, stimuli=stimuli, responses=responses
+            )
+            hit_rate, fa_rate = rates(hits=hits, misses=misses, fas=fas, crs=crs)
+        else:
+            raise ValueError("data should be a dataframe")
     return norm.ppf(hit_rate) - norm.ppf(fa_rate)
 
 
-def criterion(hit_rate, fa_rate):
+@pf.register_dataframe_method
+def criterion(data=None, stimuli="stimuli", responses="responses",
+              hit_rate=None, fa_rate=None):
     """Calculate criterion.
+
     Parameters
     ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe. Note that this function can also directly be used as a
+        Pandas method, in which case this argument is no longer needed.
     hit_rate : float
         Hit rate.
     fa_rate : float
         False alarm rate.
+    stimuli : string
+        Name of the column containing the stimuli.
+    responses : string
+        Name of the column containing the responses.
 
     Returns
     -------
     dprime : float
         The d' value.
     """
+    if data is not None:
+        if isinstance(data, pd.DataFrame):
+            hits, misses, fas, crs = scores(
+                data=data, stimuli=stimuli, responses=responses
+            )
+            hit_rate, fa_rate = rates(hits=hits, misses=misses, fas=fas, crs=crs)
+        else:
+            raise ValueError("data should be a dataframe")
     return -0.5 * (norm.ppf(hit_rate) + norm.ppf(fa_rate))
 
 

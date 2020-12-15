@@ -12,7 +12,7 @@ from metadPy import load_dataset
 
 data = pd.DataFrame(
     {
-        "signal": np.concatenate(
+        "stimuli": np.concatenate(
             (np.ones(20), np.ones(5), np.zeros(10), np.zeros(15))
         ).astype(bool),
         "responses": np.concatenate(
@@ -25,26 +25,31 @@ data = pd.DataFrame(
 class Testsdt(TestCase):
     def test_scores(self):
         """Test scores function"""
+        data.scores()
         assert (20, 5, 10, 15) == scores(data=data)
+        assert (20, 5, 10, 15) == data.scores()
         assert (20, 5, 10, 15) == scores(
-            signal=data.signal.to_numpy(), responses=data.responses.to_numpy()
+            stimuli=data.stimuli.to_numpy(), responses=data.responses.to_numpy()
         )
         with pytest.raises(ValueError):
-            scores(data=None, signal=None, responses=None)
+            scores(data=None, stimuli=None, responses=None)
 
     def test_rates(self):
         """Test rates function"""
-        assert (0.8, 0.4) == rates(20, 5, 10, 15)
-        rates(0, 5, 0, 15)
-        rates(5, 5, 5, 5)
+        assert (0.8, 0.4) == data.rates()
+        assert (0.8, 0.4) == rates(hits=20, misses=5, fas=10, crs=15)
+        rates(hits=0, misses=5, fas=0, crs=15)
+        rates(hits=5, misses=5, fas=5, crs=5)
 
     def test_dprime(self):
         """Test d prime function"""
-        assert 1.095 == round(dprime(0.8, 0.4), 3)
+        assert 1.095 == round(dprime(hit_rate=0.8, fa_rate=0.4), 3)
+        assert 1.095 == round(data.dprime(), 3)
 
     def test_criterion(self):
         """Test criterion function"""
-        assert 0.294 == -round(criterion(0.8, 0.4), 3)
+        assert 0.294 == -round(criterion(hit_rate=0.8, fa_rate=0.4), 3)
+        assert 0.294 == -round(data.criterion(), 3)
 
     def test_metad(self):
         """Test fit_meta_d_MLE function"""
