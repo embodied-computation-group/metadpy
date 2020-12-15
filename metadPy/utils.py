@@ -57,7 +57,7 @@ def trials2counts(
 
     Returns
     -------
-    nR_S1, nR_S2 : list
+    nR_S1, nR_S2 : 1d array-like
         Vectors containing the total number of responses in each accuracy
         category, conditional on presentation of S1 and S2.
 
@@ -170,7 +170,7 @@ def trials2counts(
         nR_S1 = [n + padAmount for n in nR_S1]
         nR_S2 = [n + padAmount for n in nR_S2]
 
-    return nR_S1, nR_S2
+    return np.array(nR_S1), np.array(nR_S2)
 
 
 def discreteRatings(ratings, nbins=4, verbose=True):
