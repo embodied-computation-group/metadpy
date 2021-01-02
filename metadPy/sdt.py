@@ -6,16 +6,21 @@ import pandas_flavor as pf
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 from metadPy.utils import trials2counts
+from typing import Optional, Tuple, Union, Callable
 
 
 @pf.register_dataframe_method
-def scores(data=None, stimuli="stimuli", responses="responses"):
+def scores(
+    data: Optional[pd.DataFrame] = None, 
+    stimuli: Union[str, list, np.array] = "stimuli", 
+    responses: Union[str, list, np.array] = "responses"
+) -> Tuple[float, float, float, float]:
     """Extract hits, misses, false alarms and correct rejection from `stimuli`
     and `responses`.
 
     Parameters
     ----------
-    data :  :py:class:`pandas.DataFrame` or None
+    data : :py:class:`pandas.DataFrame` or None
         Dataframe containing one `stimuli` and one `response` column.
     stimuli : str, 1d array-like or list
         If a string is provided, should be the name of the column used as
@@ -48,6 +53,7 @@ def scores(data=None, stimuli="stimuli", responses="responses"):
         ):
 
             data = pd.DataFrame({"stimuli": stimuli, "responses": responses})
+            stimuli, responses = 'stimuli', 'responses'
         else:
             raise ValueError(
                 (
@@ -58,28 +64,38 @@ def scores(data=None, stimuli="stimuli", responses="responses"):
             )
 
     # Extract hits, misses, false alarm and correct rejection
-    hits = sum(data["stimuli"] & data["responses"])
-    misses = sum(data["stimuli"] & ~data["responses"])
-    fas = sum(~data["stimuli"] & data["responses"])
-    crs = sum(~data["stimuli"] & ~data["responses"])
+    hits = sum(data[stimuli] & data[responses])
+    misses = sum(data[stimuli] & ~data[responses])
+    fas = sum(~data[stimuli] & data[responses])
+    crs = sum(~data[stimuli] & ~data[responses])
 
     return hits, misses, fas, crs
 
 
 @pf.register_dataframe_method
 def rates(
-    data=None,
-    stimuli="stimuli",
-    responses="responses",
-    hits=None,
-    misses=None,
-    fas=None,
-    crs=None
-):
+    data: Optional[pd.DataFrame] = None,
+    stimuli: Optional[str] = "stimuli",
+    responses: Optional[str] = "responses",
+    hits: Optional[float] = None,
+    misses: Optional[float] = None,
+    fas: Optional[float] = None,
+    crs: Optional[float] = None,
+) -> Tuple[float, float]:
     """Hit and false alarm rates.
 
     Parameters
     ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe containing one `stimuli` and one `response` column.
+    stimuli : str, 1d array-like or list
+        If a string is provided, should be the name of the column used as
+        `stimuli`. If a list or an array is provided, should contain the
+        boolean vectors for `stimuli`.
+    responses : str or 1d array-like
+        If a string is provided, should be the name of the column used as
+        `responses`. If a list or an array is provided, should contain the
+        boolean vector for `responses`.
     hits : float
         Hits.
     misses :  float
@@ -91,8 +107,10 @@ def rates(
 
     Returns
     -------
-    hit_rate, fa_rate : float
-        Hit and false alarm rate.
+    hit_rate: float
+        Hit rate.
+    fa_rate : float
+        False alarm rate.
 
     References
     ----------
@@ -101,7 +119,7 @@ def rates(
     if data is not None:
         if isinstance(data, pd.DataFrame):
             hits, misses, fas, crs = scores(
-                data=data, stimuli=stimuli, responses=stimuli
+                data=data, stimuli=stimuli, responses=responses
             )
         else:
             raise ValueError("data should be a dataframe")
@@ -127,8 +145,13 @@ def rates(
 
 
 @pf.register_dataframe_method
-def dprime(data=None, stimuli="stimuli", responses="responses",
-           hit_rate=None, fa_rate=None):
+def dprime(
+    data: Optional[pd.DataFrame] = None,
+    stimuli: Optional[str] = "stimuli",
+    responses: Optional[str] = "responses",
+    hit_rate: Optional[float] = None,
+    fa_rate: Optional[float] = None,
+) -> float:
     """Calculate d prime.
 
     Parameters
@@ -166,9 +189,14 @@ def dprime(data=None, stimuli="stimuli", responses="responses",
 
 
 @pf.register_dataframe_method
-def criterion(data=None, stimuli="stimuli", responses="responses",
-              hit_rate=None, fa_rate=None):
-    """Calculate criterion.
+def criterion(
+    data: Optional[pd.DataFrame] = None,
+    stimuli: Optional[str] = "stimuli",
+    responses: Optional[str] = "responses",
+    hit_rate: Optional[float] = None,
+    fa_rate: Optional[float] = None,
+) -> float:
+    """Response criterion.
 
     Parameters
     ----------
@@ -200,7 +228,7 @@ def criterion(data=None, stimuli="stimuli", responses="responses",
     return -0.5 * (norm.ppf(hit_rate) + norm.ppf(fa_rate))
 
 
-def fit_meta_d_logL(parameters, inputObj):
+def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     """Returns negative log-likelihood of parameters given experimental data.
 
     Parameters
@@ -208,6 +236,18 @@ def fit_meta_d_logL(parameters, inputObj):
     parameters : list
         parameters[0] = meta d'
         parameters[1:end] = type-2 criteria locations
+    inputObj : list
+        List containing the following variables when called from
+        `:py:func:metadPy.sdt.metad`:
+            * nR_S1
+            * nR_S2
+            * nRatings
+            * d1
+            * t1c1
+            * s
+            * constant_criterion
+            * fncdf
+            * fninv
     """
     meta_d1 = parameters[0]
     t2c1 = parameters[1:]
@@ -293,21 +333,21 @@ def fit_meta_d_logL(parameters, inputObj):
 
 @pf.register_dataframe_method
 def metad(
-    data=None,
-    stimuli=None,
-    accuracy=None,
-    confidence=None,
-    nRatings=None,
-    padAmount=None,
-    nR_S1=None,
-    nR_S2=None,
-    s=1,
-    padding=True,
-    collapse=None,
-    fncdf=norm.cdf,
-    fninv=norm.ppf,
-    verbose=1,
-    output_df=False,
+    data: Optional[pd.DataFrame] = None,
+    stimuli: Optional[str] = None,
+    accuracy: Optional[str] = None,
+    confidence: Optional[str] = None,
+    nRatings: Optional[str] = None,
+    padAmount: Optional[float] = None,
+    nR_S1: Optional[Union[list, np.array]] = None,
+    nR_S2: Optional[Union[list, np.array]] = None,
+    s: int = 1,
+    padding: bool = True,
+    collapse: Optional[int] = None,
+    fncdf: Callable[..., float] = norm.cdf,
+    fninv: Callable[..., float] = norm.ppf,
+    verbose: int = 1,
+    output_df: bool = False,
 ):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
@@ -351,6 +391,11 @@ def metad(
             * responded `'S2'`, rating=`1` : 12 times
             * responded `'S2'`, rating=`2` : 27 times
             * responded `'S2'`, rating=`3` : 89 times
+    s : int
+        Ratio of standard deviations for type 1 distributions as:
+        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default
+        value of 1. For most purposes, it is recommended to set `s=1`. See
+        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
     padding : boolean
         If `True`, a small value will be added to the counts to avoid problems
         during fit.
@@ -433,11 +478,6 @@ def metad(
             This might be sufficient to eliminate zeros from the input without
             using an adjustment. Use `collapse=True` to activate this
             correction.
-
-    `s` is the ratio of standard deviations for type 1 distributions as:
-    `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default
-    value of 1. For most purposes, it is recommended to set `s=1`. See
-    http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
 
     If there are N ratings, then there will be N-1 type 2 hit rates and false
     alarm rates.
@@ -688,15 +728,17 @@ def metad(
         return fit
 
 
-def roc_auc(nR_S1, nR_S2):
+def roc_auc(
+    nR_S1: Union[list, np.array], 
+    nR_S2: Union[list, np.array]) -> float:
     """Calculate the area under the type 2 ROC curve given nR_S1 and nR_S2
     ratings counts.
 
     Parameters
     ----------
-    nR_S1 : 1d array-like
+    nR_S1 : list or 1d array-like
         Confience ratings (stimuli 1).
-    nR_S2 : 1d array-like
+    nR_S2 : list or 1d array-like
         Confidence ratings (stimuli 2).
 
     Returns
