@@ -10,13 +10,11 @@ from pymc3 import (
     Model,
     Normal,
     HalfNormal,
-    Gamma,
+    Exponential,
     Multinomial,
-    Bound,
     Deterministic,
     math,
     sample,
-    HalfCauchy,
 )
 
 
@@ -25,7 +23,7 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_rm1way(data, sample_model=True, **kwargs):
+def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
@@ -54,230 +52,242 @@ def hmetad_rm1way(data, sample_model=True, **kwargs):
     """
     nSubj = data["nSubj"]
     nCond = data["nCond"]
-    cond = data["condition"]
     nRatings = data["nRatings"]
-    hits = data["hits"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
-    falsealarms = data["falsealarms"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
-    s = data["s"]
-    n = data["n"]
+    hits = data["hits"].reshape(20, 2)
+    falsealarms = data["falsealarms"].reshape(20, 2)
     counts = data["counts"]
     Tol = data["Tol"]
-    cr = data["cr"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
-    m = data["m"].reshape(nSubj, nCond, 1).repeat(nRatings, axis=2)
-    c1 = data["c1"]
-    d1 = data["d1"]
+    cr = data["cr"].reshape(20, 2)
+    m = data["m"].reshape(20, 2)
+    c1 = data["c1"].reshape(20, 2, 1)
+    d1 = data["d1"].reshape(20, 2, 1)
 
     with Model() as model:
 
-        # Hyperpriors
-        mu_c2 = Normal("mu_c2", mu=0.0, tau=0.01, shape=(nRatings - 1, nSubj, nCond))
-        sigma_c2 = Bound(Normal, lower=0.0)(
-            "sigma_c2", mu=0, tau=0.01, shape=(nRatings - 1, nSubj, nCond)
-        )
-        lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
+      #############
+      # Hyperpriors
+      #############
+      mu_c2 = HalfNormal("mu_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand()*0.1)
+      sigma_c2 = HalfNormal("sigma_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand()*0.1)   
+      lambda_c2 = Deterministic("lambda_c2", math.sqrt(sigma_c2))
 
-        mu_D = Normal("mu_D", mu=0.0, tau=0.01, testval=0)
-        sigma_D = HalfCauchy("sigma_D", beta=5)
+      mu_D = HalfNormal("mu_D", tau=0.001, shape=(1), testval=np.random.rand()*0.1)
+      sigma_D = HalfNormal("sigma_D", tau=0.1, shape=(1), testval=np.random.rand()*0.1)
+      lamBd_D = Deterministic('lamBd_D', math.sqrt(sigma_D))
+      sigD_D = Deterministic('sigD_D', 1/math.sqrt(lamBd_D))
 
-        mu_Cond1 = Normal("mu_Cond1", mu=0.0, tau=0.01, testval=0)
-        sigma_Cond1 = HalfCauchy("sigma_Cond1", beta=5)
+      mu_Cond1 = Normal("mu_Cond1", mu=0, tau=0.001, shape=(1), testval=np.random.rand()*0.1)
+      sigma_Cond1 = HalfNormal("sigma_Cond1", tau=0.1, shape=(1), testval=np.random.rand()*0.1)
+      lamBd_Condition1 = Deterministic('lamBd_Condition1', math.sqrt(sigma_Cond1))
+      sigD_Condition1 = Deterministic('sigD_Condition1', 1/math.sqrt(lamBd_Condition1))
 
-        #############################
-        # Hyperpriors - Subject level
-        #############################
-        dbase_tilde = Normal("dbase_tilde", mu=0, sigma=1, shape=(1, nSubj, 1))
-        dbase = Deterministic("dbase", mu_D + sigma_D * dbase_tilde)
+      #############################
+      # Hyperpriors - Subject level
+      #############################
+      dbase_tilde = Normal("dbase_tilde", mu=0, sigma=1, shape=(nSubj, 1, 1),
+                           testval=(np.random.rand(nSubj)*0.1).reshape(nSubj, 1, 1))
+      dbase = Deterministic("dbase", mu_D + sigma_D * dbase_tilde)
 
-        Bd_Cond1_tilde = Normal("Bd_Cond1_tilde", mu=0, sigma=1, shape=(1, nSubj, 1))
-        Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
+      Bd_Cond1_tilde = Normal("Bd_Cond1_tilde", mu=0, sigma=1, shape=(nSubj, 1),
+                              testval=(np.random.rand(nSubj)*0.1).reshape(nSubj, 1))
+      Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
 
-        tau = Gamma("tau", alpha=0.01, beta=0.01, shape=(1, nSubj, 1))
+      sigma_logMratio = Exponential("sigma_logMratio", 2,
+                              shape=(nSubj, 1, 1), 
+                              testval=(np.random.rand(nSubj)+1).reshape(nSubj, 1, 1))
 
-        ###############################
-        # Hypterprior - Condition level
-        ###############################
-        mu_regression = Deterministic("mu_regression", dbase + Bd_Cond1 * cond)
-        logMratio = Normal("logMratio", mu_regression, tau=tau, shape=(1, nSubj, nCond))
-        mRatio = Deterministic("mRatio", math.exp(logMratio))
+      ###############################
+      # Hypterprior - Condition level
+      ###############################
+      dbase = tt.tile(dbase, (1, 2, 1))
+      mu_regression = Deterministic(
+          'mu_regression',
+          tt.set_subtensor(dbase[:, 1, :], dbase[:, 1, :] + Bd_Cond1))
 
-        # Means of SDT distributions
-        metad = Deterministic("metad", mRatio * d1)
-        S2mu = Deterministic("S2mu", metad / 2)
-        S1mu = Deterministic("S1mu", -metad / 2)
+      logMratio_tilde = Normal("logMratio_tilde", mu=0, sigma=1, shape=(nSubj, nCond, 1))
+      logMratio = Deterministic("logMratio", mu_regression + sigma_logMratio * logMratio_tilde)
+      mRatio = Deterministic("mRatio", tt.exp(logMratio))
 
-        # Specify ordered prior on criteria
-        # bounded above and below by Type 1 c1
-        cS1_hn = HalfNormal(
-            "cS1_hn",
-            tau=lambda_c2,
-            shape=(nRatings - 1, nSubj, nCond),
-            testval=np.linspace(1.5, 0.5, nRatings - 1)
-            .reshape(nRatings - 1, 1, 1)
-            .repeat(nSubj, axis=1)
-            .repeat(nCond, axis=2),
-        )
-        cS1 = Deterministic("cS1", mu_c2 - cS1_hn + (c1 - data["Tol"]))
+      # Means of SDT distributions
+      metad = Deterministic("metad", mRatio * d1)
+      S2mu = Deterministic("S2mu", metad / 2)
+      S1mu = Deterministic("S1mu", -metad / 2)
 
-        cS2_hn = HalfNormal(
-            "cS2_hn",
-            tau=lambda_c2,
-            shape=(nRatings - 1, nSubj, nCond),
-            testval=np.linspace(1.5, 0.5, nRatings - 1)
-            .reshape(nRatings - 1, 1, 1)
-            .repeat(nSubj, axis=1)
-            .repeat(nCond, axis=2),
-        )
-        cS2 = Deterministic("cS2", mu_c2 + cS2_hn + (c1 - data["Tol"]))
+      # TYPE 2 SDT MODEL (META-D)
+      # Multinomial likelihood for response counts
+      # Specify ordered prior on criteria
+      # bounded above and below by Type 1 c1
+      cS1_hn = HalfNormal(
+          "cS1_hn",
+          tau=lambda_c2,
+          shape=(nSubj, nCond, nRatings - 1),
+          testval=np.linspace(1.5, 0.5, nRatings - 1)
+          .reshape(1, 1, nRatings - 1)
+          .repeat(nSubj, axis=0)
+          .repeat(nCond, axis=1),
+      )
+      cS1 = Deterministic("cS1", - mu_c2 - cS1_hn + (c1 - data["Tol"]))
 
-        # Calculate normalisation constants
-        C_area_rS1 = cumulative_normal(c1 - S1mu)
-        I_area_rS1 = cumulative_normal(c1 - S2mu)
-        C_area_rS2 = 1 - cumulative_normal(c1 - S2mu)
-        I_area_rS2 = 1 - cumulative_normal(c1 - S1mu)
+      cS2_hn = HalfNormal(
+          "cS2_hn",
+          tau=lambda_c2,
+          shape=(nSubj, nCond, nRatings - 1),
+          testval=np.linspace(.5, 1.5, nRatings - 1)
+          .reshape(1, 1, nRatings - 1)
+          .repeat(nSubj, axis=0)
+          .repeat(nCond, axis=1),
+      )
+      cS2 = Deterministic("cS2", mu_c2 + cS2_hn + (c1 - data["Tol"]))
 
-        # Get nC_rS1 probs
-        nC_rS1 = cumulative_normal(cS1 - S1mu) / C_area_rS1
-        nC_rS1 = Deterministic(
-            "nC_rS1",
-            math.concatenate(
-                (
-                    [
-                        cumulative_normal(cS1[0] - S1mu) / C_area_rS1,
-                        nC_rS1[1:] - nC_rS1[:-1],
-                        (
-                            (
-                                cumulative_normal(c1 - S1mu)
-                                - cumulative_normal(cS1[(nRatings - 2)] - S1mu)
-                            )
-                            / C_area_rS1
-                        ),
-                    ]
-                ),
-                axis=0,
-            ),
-        )
+      # Calculate normalisation constants
+      C_area_rS1 = cumulative_normal(c1 - S1mu)
+      I_area_rS1 = cumulative_normal(c1 - S2mu)
+      C_area_rS2 = 1 - cumulative_normal(c1 - S2mu)
+      I_area_rS2 = 1 - cumulative_normal(c1 - S1mu)
 
-        # Get nI_rS2 probs
-        nI_rS2 = (1 - cumulative_normal(cS2 - S1mu)) / I_area_rS2
-        nI_rS2 = Deterministic(
-            "nI_rS2",
-            math.concatenate(
-                (
-                    [
-                        (
-                            (1 - cumulative_normal(c1 - S1mu))
-                            - (1 - cumulative_normal(cS2[0] - S1mu))
-                        )
-                        / I_area_rS2,
-                        nI_rS2[:-1]
-                        - (1 - cumulative_normal(cS2[1:] - S1mu)) / I_area_rS2,
-                        (1 - cumulative_normal(cS2[nRatings - 2] - S1mu)) / I_area_rS2,
-                    ]
-                ),
-                axis=0,
-            ),
-        )
+      # Get nC_rS1 probs
+      nC_rS1 = cumulative_normal(cS1 - S1mu) / C_area_rS1
+      nC_rS1 = Deterministic(
+          "nC_rS1",
+          math.concatenate(
+              (
+                  [
+                      cumulative_normal(cS1[:, :, 0].reshape((nSubj, 2, 1)) - S1mu) / C_area_rS1,
+                      nC_rS1[:, :, 1:] - nC_rS1[:, :, :-1],
+                      (
+                          (
+                              cumulative_normal(c1 - S1mu)
+                              - cumulative_normal(cS1[:, :, (nRatings - 2)].reshape((nSubj, 2, 1)) - S1mu)
+                          )
+                          / C_area_rS1
+                      ),
+                  ]
+              ),
+              axis=2,
+          ),
+      )
 
-        # Get nI_rS1 probs
-        nI_rS1 = (-cumulative_normal(cS1 - S2mu)) / I_area_rS1
-        nI_rS1 = Deterministic(
-            "nI_rS1",
-            math.concatenate(
-                (
-                    [
-                        cumulative_normal(cS1[0] - S2mu) / I_area_rS1,
-                        nI_rS1[:-1] + (cumulative_normal(cS1[1:] - S2mu)) / I_area_rS1,
-                        (
-                            cumulative_normal(c1 - S2mu)
-                            - cumulative_normal(cS1[nRatings - 2] - S2mu)
-                        )
-                        / I_area_rS1,
-                    ]
-                ),
-                axis=0,
-            ),
-        )
+      # Get nI_rS2 probs
+      nI_rS2 = (1 - cumulative_normal(cS2 - S1mu)) / I_area_rS2
+      nI_rS2 = Deterministic(
+          "nI_rS2",
+          math.concatenate(
+              (
+                  [
+                      (
+                          (1 - cumulative_normal(c1 - S1mu))
+                          - (1 - cumulative_normal(cS2[:, :, 0].reshape((nSubj, nCond, 1)) - S1mu))
+                      )
+                      / I_area_rS2,
+                      nI_rS2[:, :, :-1]
+                      - (1 - cumulative_normal(cS2[:, :, 1:] - S1mu)) / I_area_rS2,
+                      (1 - cumulative_normal(cS2[:, :, nRatings - 2].reshape((nSubj, nCond, 1)) - S1mu)) / I_area_rS2,
+                  ]
+              ),
+              axis=2,
+          ),
+      )
 
-        # Get nC_rS2 probs
-        nC_rS2 = (1 - cumulative_normal(cS2 - S2mu)) / C_area_rS2
-        nC_rS2 = Deterministic(
-            "nC_rS2",
-            math.concatenate(
-                (
-                    [
-                        (
-                            (1 - cumulative_normal(c1 - S2mu))
-                            - (1 - cumulative_normal(cS2[0] - S2mu))
-                        )
-                        / C_area_rS2,
-                        nC_rS2[:-1]
-                        - ((1 - cumulative_normal(cS2[1:] - S2mu)) / C_area_rS2),
-                        (1 - cumulative_normal(cS2[nRatings - 2] - S2mu)) / C_area_rS2,
-                    ]
-                ),
-                axis=0,
-            ),
-        )
+      # Get nI_rS1 probs
+      nI_rS1 = (-cumulative_normal(cS1 - S2mu)) / I_area_rS1
+      nI_rS1 = Deterministic(
+          "nI_rS1",
+          math.concatenate(
+              (
+                  [
+                      cumulative_normal(cS1[:, :, 0].reshape((nSubj, nCond, 1)) - S2mu) / I_area_rS1,
+                      nI_rS1[:, :, :-1] + (cumulative_normal(cS1[:, :, 1:] - S2mu)) / I_area_rS1,
+                      (
+                          cumulative_normal(c1 - S2mu)
+                          - cumulative_normal(cS1[:, :, nRatings - 2].reshape((nSubj, nCond, 1)) - S2mu)
+                      )
+                      / I_area_rS1,
+                  ]
+              ),
+              axis=2,
+          ),
+      )
 
-        # Avoid underflow of probabilities
-        nC_rS1 = math.switch(nC_rS1 < Tol, Tol, nC_rS1).transpose(1, 2, 0)
-        nI_rS2 = math.switch(nI_rS2 < Tol, Tol, nI_rS2).transpose(1, 2, 0)
-        nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1).transpose(1, 2, 0)
-        nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2).transpose(1, 2, 0)
+      # Get nC_rS2 probs
+      nC_rS2 = (1 - cumulative_normal(cS2 - S2mu)) / C_area_rS2
+      nC_rS2 = Deterministic(
+          "nC_rS2",
+          math.concatenate(
+              (
+                  [
+                      (
+                          (1 - cumulative_normal(c1 - S2mu))
+                          - (1 - cumulative_normal(cS2[:, :, 0].reshape((nSubj, nCond, 1)) - S2mu))
+                      )
+                      / C_area_rS2,
+                      nC_rS2[:, :, :-1]
+                      - ((1 - cumulative_normal(cS2[:, :, 1:] - S2mu)) / C_area_rS2),
+                      (1 - cumulative_normal(cS2[:, :, nRatings - 2].reshape((nSubj, nCond, 1)) - S2mu)) / C_area_rS2,
+                  ]
+              ),
+              axis=2,
+          ),
+      )
 
-        # TYPE 2 SDT MODEL (META-D)
-        # Multinomial likelihood for response counts
+      # Avoid underflow of probabilities
+      nC_rS1 = math.switch(nC_rS1 < Tol, Tol, nC_rS1)
+      nI_rS2 = math.switch(nI_rS2 < Tol, Tol, nI_rS2)
+      nI_rS1 = math.switch(nI_rS1 < Tol, Tol, nI_rS1)
+      nC_rS2 = math.switch(nC_rS2 < Tol, Tol, nC_rS2)
+
+      for c in range(nCond):
         Multinomial(
-            "CR_counts",
-            cr,
-            nC_rS1,
-            # shape=(nRatings, nSubj, nCond),
-            observed=counts[:, :, :nRatings],
+              f"CR_counts_{c}",
+              n=cr[:, c],
+              p=nC_rS1[:, c, :],
+              observed=counts[:, c, :nRatings],
+              shape=(nSubj, nRatings)
+          )
+        Multinomial(
+            f"H_counts_{c}",
+            n=hits[:, c],
+            p=nC_rS2[:, c, :],
+            observed=counts[:, c, nRatings * 3 : nRatings * 4],
+            shape=(nSubj, nRatings)
         )
         Multinomial(
-            "FA_counts",
-            falsealarms,
-            nI_rS2,
-            # shape=(nRatings, nSubj, nCond),
-            observed=counts[:, :, nRatings : nRatings * 2],
+            f"FA_counts_{c}",
+            n=falsealarms[:, c],
+            p=nI_rS2[:, c, :],
+            observed=counts[:, c, nRatings : nRatings * 2],
+            shape=(nSubj, nRatings)
         )
         Multinomial(
-            "M_counts",
-            m,
-            nI_rS1,
-            # shape=(nRatings, nSubj, nCond),
-            observed=counts[:, :, nRatings * 2 : nRatings * 3],
-        )
-        Multinomial(
-            "H_counts",
-            hits,
-            nC_rS2,
-            # shape=(nRatings, nSubj, nCond),
-            observed=counts[:, :, nRatings * 3 : nRatings * 4],
+            f"M_counts_{c}",
+            n=m[:, c],
+            p=nI_rS1[:, c, :],
+            observed=counts[:, c, nRatings * 2 : nRatings * 3],
+            shape=(nSubj, nRatings)
         )
 
-        if sample_model is True:
+      if sample_model is True:
 
-            trace = sample(
-                progressbar=True,
-                trace=[
-                    mRatio,
-                    mu_c2,
-                    sigma_c2,
-                    lambda_c2,
-                    mu_D,
-                    sigma_D,
-                    mu_Cond1,
-                    sigma_Cond1,
-                    metad,
-                    tau,
-                    dbase,
-                    Bd_Cond1,
-                ],
-                **kwargs,
-            )
+          trace = sample(
+              progressbar=True,
+              trace=[
+                  mu_regression,
+                  mRatio,
+                  mu_c2,
+                  sigma_c2,
+                  lambda_c2,
+                  mu_D,
+                  sigma_D,
+                  mu_Cond1,
+                  sigma_Cond1,
+                  metad,
+                  dbase,
+                  Bd_Cond1,
+                  sigma_logMratio
+              ],
+              **kwargs,
+          )
 
-            return model, trace
+          return model, trace
 
-        else:
-            return model
+      else:
+          return model
