@@ -36,6 +36,7 @@ class Testsdt(TestCase):
         """Test hmetad function"""
         group_df = load_dataset("rm")
 
+        ####################
         # Test subject level
         ####################
         this_df = group_df[(group_df.Subject == 0) & (group_df.Condition == 0)]
@@ -51,6 +52,7 @@ class Testsdt(TestCase):
         assert isinstance(model, pm.Model)
         assert isinstance(trace, pm.backends.base.MultiTrace)
 
+        #######################
         # Test repeated measure
         #######################
         model, trace = hmetad(
@@ -61,7 +63,6 @@ class Testsdt(TestCase):
             confidence="Confidence",
             subject="Subject",
             within="Condition",
-            cores=2,
             tune=50,
             draws=50,
         )
