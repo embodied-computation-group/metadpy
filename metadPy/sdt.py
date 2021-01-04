@@ -11,9 +11,9 @@ from typing import Optional, Tuple, Union, Callable
 
 @pf.register_dataframe_method
 def scores(
-    data: Optional[pd.DataFrame] = None, 
-    stimuli: Union[str, list, np.array] = "stimuli", 
-    responses: Union[str, list, np.array] = "responses"
+    data: Optional[pd.DataFrame] = None,
+    stimuli: Union[str, list, np.array] = "stimuli",
+    responses: Union[str, list, np.array] = "responses",
 ) -> Tuple[float, float, float, float]:
     """Extract hits, misses, false alarms and correct rejection from `stimuli`
     and `responses`.
@@ -53,7 +53,7 @@ def scores(
         ):
 
             data = pd.DataFrame({"stimuli": stimuli, "responses": responses})
-            stimuli, responses = 'stimuli', 'responses'
+            stimuli, responses = "stimuli", "responses"
         else:
             raise ValueError(
                 (
@@ -728,9 +728,7 @@ def metad(
         return fit
 
 
-def roc_auc(
-    nR_S1: Union[list, np.array], 
-    nR_S2: Union[list, np.array]) -> float:
+def roc_auc(nR_S1: Union[list, np.array], nR_S2: Union[list, np.array]) -> float:
     """Calculate the area under the type 2 ROC curve given nR_S1 and nR_S2
     ratings counts.
 

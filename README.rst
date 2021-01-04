@@ -46,32 +46,6 @@ The following packages are required:
 * Seaborn (>=0.9.0)
 * PyMC3 (>=3.8)
 
-Quick start
-===========
-
-```python
-from metadPy import load_dataset
-dataset = load_dataset('rm)
-dataset.head()
-```
-
-Signal Detection Theory (SDT)
------------------------------
-
-
-Estimating meta-dprime using Maximum Likelyhood Estimates (MLE)
----------------------------------------------------------------
-
-
-Estimating meta-dprime using hierarchical Bayesian modeling
------------------------------------------------------------
-
-Single subject model
-""""""""""""""""""""
-
-Repeated measures model (two-way)
-"""""""""""""""""""""""""""""""""
-
 
 References
 ==========

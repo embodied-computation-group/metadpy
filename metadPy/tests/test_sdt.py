@@ -72,7 +72,7 @@ class Testsdt(TestCase):
             confidence="Confidence",
             output_df=True,
             padding=False,
-            collapse=2
+            collapse=2,
         )
         assert round(fit["meta_da"], 3) == 0.782
 
