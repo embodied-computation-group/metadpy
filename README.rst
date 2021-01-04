@@ -2,16 +2,16 @@
   :target: https://github.com/LegrandNico/metadPy/blob/master/LICENSE
 
 .. image:: https://badge.fury.io/py/metadPy.svg
-    :target: https://badge.fury.io/py/metadPy
+  :target: https://badge.fury.io/py/metadPy
 
-.. image:: https://travis-ci.org/LegrandNico/metadPy.svg?branch=master
-   :target: https://travis-ci.org/LegandNico/metadPy
+.. image:: https://travis-ci.com/LegrandNico/metadPy.svg?branch=master
+  :target: https://travis-ci.com/LegandNico/metadPy
 
 .. image:: https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/LegrandNico/metadPy
+  :target: https://codecov.io/gh/LegrandNico/metadPy
 
 .. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
+  :target: https://github.com/psf/black
 
 ================
 
@@ -49,11 +49,19 @@ The following packages are required:
 Quick start
 ===========
 
+```python
+from metadPy import load_dataset
+dataset = load_dataset('rm)
+dataset.head()
+```
+
 Signal Detection Theory (SDT)
 -----------------------------
 
+
 Estimating meta-dprime using Maximum Likelyhood Estimates (MLE)
---------------------------------------------------------------- 
+---------------------------------------------------------------
+
 
 Estimating meta-dprime using hierarchical Bayesian modeling
 -----------------------------------------------------------
@@ -61,15 +69,14 @@ Estimating meta-dprime using hierarchical Bayesian modeling
 Single subject model
 """"""""""""""""""""
 
-Group level model
-"""""""""""""""""
-
-Repeated measures model (2 way)
-"""""""""""""""""""""""""""""""
+Repeated measures model (two-way)
+"""""""""""""""""""""""""""""""""
 
 
 References
 ==========
+
+.. [#] Maniscalco, B., & Lau, H. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d′, Response-Specific Meta-d′, and the Unequal Variance SDT Model. In The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-642-45190-4_3 
 
 .. [#] Fleming, S. M., & Lau, H. C. (2014). How to measure metacognition. Frontiers in Human Neuroscience, 8. https://doi.org/10.3389/fnhum.2014.00443
 
