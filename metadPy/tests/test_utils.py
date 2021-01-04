@@ -119,8 +119,8 @@ class Testsdt(TestCase):
             confidence="confidence",
             nRatings=4,
         )
-        assert nR_S1 == [1, 1, 0, 0, 1, 0, 0, 0]
-        assert nR_S2 == [1, 1, 0, 0, 1, 2, 0, 0]
+        assert (nR_S1 == np.array([1, 1, 0, 0, 1, 0, 0, 0])).all()
+        assert (nR_S2 == np.array([1, 1, 0, 0, 1, 2, 0, 0])).all()
         with pytest.raises(ValueError):
             nR_S1, nR_S2 = trials2counts(
                 data="error",
