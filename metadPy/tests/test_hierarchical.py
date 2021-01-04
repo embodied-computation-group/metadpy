@@ -51,22 +51,6 @@ class Testsdt(TestCase):
         assert isinstance(model, pm.Model)
         assert isinstance(trace, pm.backends.base.MultiTrace)
 
-        # Test group level
-        ##################
-        model, trace = hmetad(
-            data=group_df[group_df.Condition == 0],
-            nRatings=4,
-            stimuli="Stimuli",
-            accuracy="Accuracy",
-            confidence="Confidence",
-            subject="Subject",
-            cores=2,
-            tune=50,
-            draws=50,
-        )
-        assert isinstance(model, pm.Model)
-        assert isinstance(trace, pm.backends.base.MultiTrace)
-
         # Test repeated measure
         #######################
         model, trace = hmetad(
