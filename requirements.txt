@@ -3,7 +3,8 @@ scipy>=1.3.0
 pandas>=0.24
 matplotlib>=3.0.2
 seaborn>=0.9.0
-pymc3>=3.8
+pymc3==3.10.0
+theano-pymc
 black
 pytest
 coverage
