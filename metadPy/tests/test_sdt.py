@@ -61,6 +61,8 @@ class Testsdt(TestCase):
             fit = metad(nR_S1=np.zeros(7), nR_S2=nR_S2)
         with pytest.raises(ValueError):
             fit = metad(nR_S1=nR_S1[:1], nR_S2=nR_S2)
+        with pytest.raises(ValueError):
+            fit = metad(nR_S1=nR_S1, nR_S2=nR_S2, padding=True, collapse=2)
         df = load_dataset("rm")
         fit = metad(
             data=df[df.Subject == 0],
@@ -68,13 +70,16 @@ class Testsdt(TestCase):
             stimuli="Stimuli",
             accuracy="Accuracy",
             confidence="Confidence",
+            output_df=True,
+            padding=False,
+            collapse=2
         )
         assert round(fit["meta_da"], 3) == 0.782
 
     def test_roc_auc(self):
         """Test roc_auc function"""
-        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
-        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
+        nR_S1 = [52, 32, 35, 37, 26, 12, 4, 2]
+        nR_S2 = [2, 5, 15, 22, 33, 38, 40, 45]
         auc = roc_auc(nR_S1, nR_S2)
         assert round(auc, 3) == 0.728
 
