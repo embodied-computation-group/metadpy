@@ -53,14 +53,14 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
     nSubj = data["nSubj"]
     nCond = data["nCond"]
     nRatings = data["nRatings"]
-    hits = data["hits"].reshape(20, 2)
-    falsealarms = data["falsealarms"].reshape(20, 2)
+    hits = data["hits"].reshape(nSubj, 2)
+    falsealarms = data["falsealarms"].reshape(nSubj, 2)
     counts = data["counts"]
     Tol = data["Tol"]
-    cr = data["cr"].reshape(20, 2)
-    m = data["m"].reshape(20, 2)
-    c1 = data["c1"].reshape(20, 2, 1)
-    d1 = data["d1"].reshape(20, 2, 1)
+    cr = data["cr"].reshape(nSubj, 2)
+    m = data["m"].reshape(nSubj, 2)
+    c1 = data["c1"].reshape(nSubj, 2, 1)
+    d1 = data["d1"].reshape(nSubj, 2, 1)
 
     with Model() as model:
 
