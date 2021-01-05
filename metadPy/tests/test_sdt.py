@@ -74,7 +74,7 @@ class Testsdt(TestCase):
             padding=False,
             collapse=2,
         )
-        assert round(fit["meta_da"], 3) == 0.782
+        assert round(fit["meta_da"].iloc[0], 1) == 0.8
 
     def test_roc_auc(self):
         """Test roc_auc function"""

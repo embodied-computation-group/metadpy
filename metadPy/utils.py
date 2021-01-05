@@ -222,7 +222,8 @@ def discreteRatings(ratings, nbins=4, verbose=True):
     out, temp = {}, []
     confBins = np.quantile(ratings, np.linspace(0, 1, nbins + 1))
     if (confBins[0] == confBins[1]) & (confBins[nbins - 1] == confBins[nbins]):
-        raise ValueError("Bad bins!")
+        raise ValueError("The resulting rating scale contains a lot of identical"
+                         " values and cannot be further analyzed")
     elif confBins[nbins - 1] == confBins[nbins]:
         if verbose is True:
             print("Lots of high confidence ratings")

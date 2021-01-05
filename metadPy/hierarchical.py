@@ -1,12 +1,8 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import numbers
 import os
 import sys
-
 import numpy as np
-from theano.compile.ops import OutputGuard
-
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
 
