@@ -306,7 +306,7 @@ def preprocess_group(data, subject, stimuli, accuracy, confidence, nRatings):
     pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
     pymcData["nRatings"] = 4
     pymcData["nSubj"] = data[subject].nunique()
-    pymcData["subID"] = np.arange(20, dtype="int")
+    pymcData["subID"] = np.arange(pymcData["nSubj"], dtype="int")
     pymcData["Tol"] = 1e-05
 
     return pymcData

@@ -10,7 +10,7 @@ from pymc3 import (
     Model,
     Normal,
     HalfNormal,
-    Exponential,
+    Gamma,
     Multinomial,
     Deterministic,
     math,
@@ -23,7 +23,7 @@ def cumulative_normal(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
+def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
     """Compute hierachical meta-d' at the subject level.
 
     Parameters
@@ -67,19 +67,19 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
         #############
         # Hyperpriors
         #############
-        mu_c2 = HalfNormal(
+        mu_c2 = Normal(
             "mu_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand() * 0.1
         )
         sigma_c2 = HalfNormal(
             "sigma_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand() * 0.1
         )
-        lambda_c2 = Deterministic("lambda_c2", math.sqrt(sigma_c2))
+        lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
-        mu_D = HalfNormal("mu_D", tau=0.001, shape=(1), testval=np.random.rand() * 0.1)
+        mu_D = Normal("mu_D", tau=0.001, shape=(1), testval=np.random.rand() * 0.1)
         sigma_D = HalfNormal(
             "sigma_D", tau=0.1, shape=(1), testval=np.random.rand() * 0.1
         )
-        lamBd_D = Deterministic("lamBd_D", math.sqrt(sigma_D))
+        lamBd_D = Deterministic("lamBd_D", sigma_D ** -2)
         sigD_D = Deterministic("sigD_D", 1 / math.sqrt(lamBd_D))
 
         mu_Cond1 = Normal(
@@ -88,7 +88,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
         sigma_Cond1 = HalfNormal(
             "sigma_Cond1", tau=0.1, shape=(1), testval=np.random.rand() * 0.1
         )
-        lamBd_Condition1 = Deterministic("lamBd_Condition1", math.sqrt(sigma_Cond1))
+        lamBd_Condition1 = Deterministic("lamBd_Condition1", sigma_Cond1 ** -2)
         sigD_Condition1 = Deterministic(
             "sigD_Condition1", 1 / math.sqrt(lamBd_Condition1)
         )
@@ -114,12 +114,10 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
         )
         Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
 
-        sigma_logMratio = Exponential(
-            "sigma_logMratio",
-            2,
-            shape=(nSubj, 1, 1),
-            testval=(np.random.rand(nSubj) + 1).reshape(nSubj, 1, 1),
+        tau_logMratio = Gamma(
+            "tau_logMratio", alpha=0.01, beta=0.01, shape=(nSubj, 1, 1)
         )
+        # testval=(np.random.rand(nSubj)+1).reshape(nSubj, 1, 1))
 
         ###############################
         # Hypterprior - Condition level
@@ -133,7 +131,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
             "logMratio_tilde", mu=0, sigma=1, shape=(nSubj, nCond, 1)
         )
         logMratio = Deterministic(
-            "logMratio", mu_regression + sigma_logMratio * logMratio_tilde
+            "logMratio", mu_regression + math.sqrt(1 / tau_logMratio) * logMratio_tilde
         )
         mRatio = Deterministic("mRatio", tt.exp(logMratio))
 
@@ -166,7 +164,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
             .repeat(nSubj, axis=0)
             .repeat(nCond, axis=1),
         )
-        cS2 = Deterministic("cS2", mu_c2 + cS2_hn + (c1 - data["Tol"]))
+        cS2 = Deterministic("cS2", mu_c2 + cS2_hn + (c1 + data["Tol"]))
 
         # Calculate normalisation constants
         C_area_rS1 = cumulative_normal(c1 - S1mu)
@@ -331,15 +329,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
 
         if sample_model is True:
 
-            trace = sample(
-                progressbar=True,
-                return_inferencedata=True,
-                trace=[
-                    mu_Cond1,
-                    mRatio
-                ],
-                **kwargs
-            )
+            trace = sample(progressbar=True, return_inferencedata=True, **kwargs)
 
             return model, trace
 

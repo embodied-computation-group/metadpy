@@ -9,6 +9,7 @@ import pytest
 from metadPy.hierarchical import extractParameters, hmetad
 from metadPy import load_dataset
 import pymc3 as pm
+import arviz as az
 
 
 class Testsdt(TestCase):
@@ -50,7 +51,7 @@ class Testsdt(TestCase):
             draws=50,
         )
         assert isinstance(model, pm.Model)
-        assert isinstance(trace, pm.backends.base.MultiTrace)
+        assert isinstance(trace, az.InferenceData)
 
         #######################
         # Test repeated measure
@@ -67,7 +68,7 @@ class Testsdt(TestCase):
             draws=50,
         )
         assert isinstance(model, pm.Model)
-        assert isinstance(trace, pm.backends.base.MultiTrace)
+        assert isinstance(trace, az.InferenceData)
 
 
 if __name__ == "__main__":
