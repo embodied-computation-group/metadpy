@@ -333,22 +333,12 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs):
 
             trace = sample(
                 progressbar=True,
+                return_inferencedata=True,
                 trace=[
-                    mu_regression,
-                    mRatio,
-                    mu_c2,
-                    sigma_c2,
-                    lambda_c2,
-                    mu_D,
-                    sigma_D,
                     mu_Cond1,
-                    sigma_Cond1,
-                    metad,
-                    dbase,
-                    Bd_Cond1,
-                    sigma_logMratio,
+                    mRatio
                 ],
-                **kwargs,
+                **kwargs
             )
 
             return model, trace

@@ -23,8 +23,8 @@ def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
 
     Returns
     -------
-    ax : `Matplotlib.Axes` or None
-        The figure.
+    ax : :class:`matplotlib.axes.Axes`
+        The matplotlib axes containing the plot.
 
     Examples
     --------
@@ -119,8 +119,8 @@ def plot_roc(nR_S1=None, nR_S2=None, fitModel=None, ax=None):
 
     Returns
     -------
-    ax : `Matplotlib.Axes` or None
-        The figure.
+    ax : :class:`matplotlib.axes.Axes`
+        The matplotlib axes containing the plot.
 
     Examples
     --------

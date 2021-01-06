@@ -216,7 +216,9 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
         )
 
         if sample_model is True:
-            trace = sample(trace=[meta_d, cS1, cS2], **kwargs)
+            trace = sample(
+                trace=[meta_d, cS1, cS2], return_inferencedata=True, **kwargs
+            )
 
             return model, trace
 
