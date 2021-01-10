@@ -1,8 +1,4 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
-"""
-This is an internal function. The subject level modeling shoul be called using
-the metadPy.hierarchical.metad function instead.
-"""
 
 import numpy as np
 import theano.tensor as tt
@@ -10,7 +6,7 @@ from pymc3 import (
     Model,
     Normal,
     HalfNormal,
-    Gamma,
+    Exponential,
     Multinomial,
     Deterministic,
     math,
@@ -25,6 +21,9 @@ def cumulative_normal(x):
 
 def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
     """Compute hierachical meta-d' at the subject level.
+
+    This is an internal function. The repeated measures model must be
+    called using :py:func:`metadPy.hierarchical.hmetad`.
 
     Parameters
     ----------
@@ -79,18 +78,12 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         sigma_D = HalfNormal(
             "sigma_D", tau=0.1, shape=(1), testval=np.random.rand() * 0.1
         )
-        lamBd_D = Deterministic("lamBd_D", sigma_D ** -2)
-        sigD_D = Deterministic("sigD_D", 1 / math.sqrt(lamBd_D))
 
         mu_Cond1 = Normal(
             "mu_Cond1", mu=0, tau=0.001, shape=(1), testval=np.random.rand() * 0.1
         )
         sigma_Cond1 = HalfNormal(
             "sigma_Cond1", tau=0.1, shape=(1), testval=np.random.rand() * 0.1
-        )
-        lamBd_Condition1 = Deterministic("lamBd_Condition1", sigma_Cond1 ** -2)
-        sigD_Condition1 = Deterministic(
-            "sigD_Condition1", 1 / math.sqrt(lamBd_Condition1)
         )
 
         #############################
@@ -101,39 +94,34 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
             mu=0,
             sigma=1,
             shape=(nSubj, 1, 1),
-            testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
         )
         dbase = Deterministic("dbase", mu_D + sigma_D * dbase_tilde)
 
-        Bd_Cond1_tilde = Normal(
-            "Bd_Cond1_tilde",
-            mu=0,
-            sigma=1,
-            shape=(nSubj, 1),
-            testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1),
+        Bd_Cond1 = Normal(
+            "Bd_Cond1",
+            mu=mu_Cond1,
+            sigma=sigma_Cond1,
+            shape=(nSubj, 1, 1),
+            testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
         )
-        Bd_Cond1 = Deterministic("Bd_Cond1", mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde)
 
-        tau_logMratio = Gamma(
-            "tau_logMratio", alpha=0.01, beta=0.01, shape=(nSubj, 1, 1)
-        )
-        # testval=(np.random.rand(nSubj)+1).reshape(nSubj, 1, 1))
+        tau_logMratio = Exponential("tau_logMratio", 0.1, shape=(nSubj, 1, 1))
 
         ###############################
         # Hypterprior - Condition level
         ###############################
-        dbase = tt.tile(dbase, (1, 2, 1))
-        mu_regression = Deterministic(
-            "mu_regression", tt.set_subtensor(dbase[:, 1, :], dbase[:, 1, :] + Bd_Cond1)
+        mu_regression = [dbase + (Bd_Cond1 * c) for c in range(nCond)]
+
+        log_mRatio_tilde = Normal(
+            "log_mRatio_tilde", mu=0, tau=tau_logMratio, shape=(nSubj, 1, 1)
+        )
+        log_mRatio = Deterministic(
+            "log_mRatio",
+            tt.stack(mu_regression, axis=1)[:, :, :, 0]
+            + tt.tile(log_mRatio_tilde, (1, 2, 1)),
         )
 
-        logMratio_tilde = Normal(
-            "logMratio_tilde", mu=0, sigma=1, shape=(nSubj, nCond, 1)
-        )
-        logMratio = Deterministic(
-            "logMratio", mu_regression + math.sqrt(1 / tau_logMratio) * logMratio_tilde
-        )
-        mRatio = Deterministic("mRatio", tt.exp(logMratio))
+        mRatio = Deterministic("mRatio", tt.exp(log_mRatio))
 
         # Means of SDT distributions
         metad = Deterministic("metad", mRatio * d1)
@@ -143,10 +131,10 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         # TYPE 2 SDT MODEL (META-D)
         # Multinomial likelihood for response counts
         # Specify ordered prior on criteria
-        # bounded above and below by Type 1 c1
+        # bounded above and below by Type 1 c
         cS1_hn = HalfNormal(
             "cS1_hn",
-            tau=lambda_c2,
+            sigma=sigma_c2,
             shape=(nSubj, nCond, nRatings - 1),
             testval=np.linspace(1.5, 0.5, nRatings - 1)
             .reshape(1, 1, nRatings - 1)
@@ -157,7 +145,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
 
         cS2_hn = HalfNormal(
             "cS2_hn",
-            tau=lambda_c2,
+            sigma=sigma_c2,
             shape=(nSubj, nCond, nRatings - 1),
             testval=np.linspace(0.5, 1.5, nRatings - 1)
             .reshape(1, 1, nRatings - 1)

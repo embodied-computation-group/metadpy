@@ -1,8 +1,4 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
-"""
-This is an internal function. The subject level modeling shoul be called using
-the metadPy.hierarchical.metad function instead.
-"""
 
 import numpy as np
 import pymc3.distributions.transforms as tr
@@ -24,7 +20,10 @@ def cumulative_normal(x):
 
 
 def hmetad_subjectLevel(data, sample_model=True, **kwargs):
-    """Compute hierachical meta-d' at the subject level.
+    """Hierachical Bayesian modeling of meta-d' (subject level).
+
+    This is an internal function. The subject level model must be
+    called using :py:func:`metadPy.hierarchical.hmetad`.
 
     Parameters
     ----------
