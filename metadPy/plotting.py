@@ -108,7 +108,8 @@ def plot_confidence(
             label="Est Correct",
         )
     ax.set_ylabel("P$_{(Confidence=y|Outcome)}$")
-    ax.set_xlabel("Confidence rating")
+    ax.set_xlabel("Confidence level")
+    ax.set_title("Confidence ratings\n and task performances")
     ax.set_xticks(range(1, nRratings + 1))
 
     return ax
