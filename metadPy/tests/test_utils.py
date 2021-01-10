@@ -106,27 +106,29 @@ class Testsdt(TestCase):
         """Test trials2counts function"""
         df = pd.DataFrame(
             {
-                "stimuli": [0, 1, 0, 0, 1, 1, 1, 1],
-                "accuracy": [0, 1, 1, 1, 0, 0, 1, 1],
-                "confidence": [1, 2, 3, 4, 4, 3, 2, 1],
+                "Stimuli": [0, 1, 0, 0, 1, 1, 1, 1],
+                "Accuracy": [0, 1, 1, 1, 0, 0, 1, 1],
+                "Confidence": [1, 2, 3, 4, 4, 3, 2, 1],
                 "nRatings": 4,
             }
         )
         nR_S1, nR_S2 = trials2counts(
             data=df,
-            stimuli="stimuli",
-            accuracy="accuracy",
-            confidence="confidence",
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
             nRatings=4,
         )
         assert (nR_S1 == np.array([1, 1, 0, 0, 1, 0, 0, 0])).all()
         assert (nR_S2 == np.array([1, 1, 0, 0, 1, 2, 0, 0])).all()
+
+        nR_S1, nR_S2 = df.trials2counts()
+        assert (nR_S1 == np.array([1, 1, 0, 0, 1, 0, 0, 0])).all()
+        assert (nR_S2 == np.array([1, 1, 0, 0, 1, 2, 0, 0])).all()
+
         with pytest.raises(ValueError):
             nR_S1, nR_S2 = trials2counts(
                 data="error",
-                stimuli="stimuli",
-                accuracy="accuracy",
-                confidence="confidence",
                 nRatings=4,
             )
         with pytest.raises(ValueError):
@@ -143,6 +145,20 @@ class Testsdt(TestCase):
             nRatings=4,
             padding=True,
         )
+        assert (
+            nR_S1 == np.array([1.125, 1.125, 0.125, 0.125, 1.125, 0.125, 0.125, 0.125])
+        ).all()
+        assert (
+            nR_S2 == np.array([0.125, 0.125, 0.125, 0.125, 1.125, 2.125, 1.125, 1.125])
+        ).all()
+        nR_S1, nR_S2 = trials2counts(
+            stimuli=np.array([0, 1, 0, 0, 1, 1, 1, 1]),
+            accuracy=np.array([0, 1, 1, 1, 0, 0, 1, 1]),
+            confidence=np.array([1, 2, 3, 4, 4, 3, 2, 1]),
+            nRatings=4,
+        )
+        assert (nR_S1 == np.array([1, 1, 0, 0, 1, 0, 0, 0])).all()
+        assert (nR_S2 == np.array([1, 1, 0, 0, 1, 2, 0, 0])).all()
 
     def test_discreteRatings(self):
         """Test trials2counts function"""

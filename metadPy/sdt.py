@@ -6,17 +6,35 @@ import pandas_flavor as pf
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 from metadPy.utils import trials2counts
-from typing import Optional, Tuple, Union, Callable
+from typing import Optional, Tuple, List, Union, Callable, overload, Any
+
+
+@overload
+def scores(
+    data: None,
+    stimuli: Union[List[Any], np.ndarray],
+    responses: Union[List[Any], np.ndarray],
+) -> Tuple[int, int, int, int]:
+    ...
+
+
+@overload
+def scores(
+    data: pd.DataFrame,
+    stimuli: str,
+    responses: str,
+) -> Tuple[int, int, int, int]:
+    ...
 
 
 @pf.register_dataframe_method
 def scores(
-    data: Optional[pd.DataFrame] = None,
-    stimuli: Union[str, list, np.array] = "stimuli",
-    responses: Union[str, list, np.array] = "responses",
-) -> Tuple[float, float, float, float]:
-    """Extract hits, misses, false alarms and correct rejection from `stimuli`
-    and `responses`.
+    data=None,
+    stimuli=None,
+    responses=None,
+):
+    """Extract hits, misses, false alarms and correct rejection from stimuli
+    and responses vectors.
 
     Parameters
     ----------
@@ -33,7 +51,7 @@ def scores(
 
     Returns
     -------
-    hits, misses, fas, crs : floats
+    hits, misses, fas, crs : int
         Return the number of hits, misees, false alarms and correct rejections.
 
     Notes
@@ -63,6 +81,12 @@ def scores(
                 )
             )
 
+    # Set default columns names if data is a DataFrame
+    if stimuli is None:
+        stimuli = "Stimuli"
+    if responses is None:
+        responses = "Responses"
+
     # Extract hits, misses, false alarm and correct rejection
     hits = sum(data[stimuli] & data[responses])
     misses = sum(data[stimuli] & ~data[responses])
@@ -72,17 +96,62 @@ def scores(
     return hits, misses, fas, crs
 
 
+@overload
+def rates(
+    data: None,
+    hits: None,
+    misses: None,
+    fas: None,
+    crs: None,
+    stimuli: Union[List[Any], Any],
+    responses: Union[List[Any], Any],
+    correction: bool = ...,
+) -> Tuple[float, float]:
+    ...
+
+
+@overload
+def rates(
+    data: pd.DataFrame,
+    hits: None,
+    misses: None,
+    fas: None,
+    crs: None,
+    stimuli: str,
+    responses: str,
+    correction: bool = ...,
+) -> Tuple[float, float]:
+    ...
+
+
+@overload
+def rates(
+    data: None,
+    hits: int,
+    misses: int,
+    fas: int,
+    crs: int,
+    stimuli: None,
+    responses: None,
+    correction: bool = ...,
+) -> Tuple[float, float]:
+    ...
+
+
 @pf.register_dataframe_method
 def rates(
-    data: Optional[pd.DataFrame] = None,
-    stimuli: Optional[str] = "stimuli",
-    responses: Optional[str] = "responses",
-    hits: Optional[float] = None,
-    misses: Optional[float] = None,
-    fas: Optional[float] = None,
-    crs: Optional[float] = None,
-) -> Tuple[float, float]:
-    """Hit and false alarm rates.
+    data=None,
+    hits=None,
+    misses=None,
+    fas=None,
+    crs=None,
+    stimuli=None,
+    responses=None,
+    correction=True,
+):
+    """Calculate hit and false alarm rates.
+
+    The values are automatically corrected to avoid d' infinity (see below).
 
     Parameters
     ----------
@@ -91,19 +160,28 @@ def rates(
     stimuli : str, 1d array-like or list
         If a string is provided, should be the name of the column used as
         `stimuli`. If a list or an array is provided, should contain the
-        boolean vectors for `stimuli`.
+        boolean vectors for `stimuli`. If `None` and `data` is a
+        :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
     responses : str or 1d array-like
         If a string is provided, should be the name of the column used as
         `responses`. If a list or an array is provided, should contain the
-        boolean vector for `responses`.
-    hits : float
+        boolean vector for `responses`. If `None` and `data` is a
+        :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
+    hits : int or None
         Hits.
-    misses :  float
+    misses :  int or None
         Misses.
-    fas : float
+    fas : int or None
         False alarms.
-    crs : float
+    crs : int or None
         Correct rejections.
+    correction : bool
+        Avoid d' infinity by correcting false alarm and hit rate vaules
+        if equal to 0 or 1 using half inverse or 1 - half inverse.
+        Half inverses values are defined by:
+            half_hit = 0.5 / (hits + misses)
+            half_fa = 0.5 / (fas + crs)
+        Default is set to `True` (use correction).
 
     Returns
     -------
@@ -112,46 +190,107 @@ def rates(
     fa_rate : float
         False alarm rate.
 
+    Info
+    ----
+    Will return hits rate and false alarm rates. The hits rate is defined by:
+
+    .. math:: hits rate = \\frac{\\hits}{s_{hits + misses}}
+
+    The false alarms rate is defined by:
+
+    .. math:: fals alarms rate = \\frac{\\fals alarms}{s_{fals alarms + correct rejections}}
+
+    .. warning:: This function will correct false alarm rates and hits rates
+        by default using a half inverse method to avoid `0` and `1` values,
+        which can bias d' estimates. Use `corretion=False` to compute
+        uncorrected hits and false alarm rates.
+
+    See also
+    --------
+    dprime, criterion, scores
+
     References
     ----------
     Adapted from: https://lindeloev.net/calculating-d-in-python-and-php/
     """
-    if data is not None:
-        if isinstance(data, pd.DataFrame):
-            hits, misses, fas, crs = scores(
-                data=data, stimuli=stimuli, responses=responses
-            )
-        else:
-            raise ValueError("data should be a dataframe")
-    # Floors an ceilings are replaced with half inverse hits and fa
-    half_hit = 0.5 / (hits + misses)
-    half_fa = 0.5 / (fas + crs)
+    if isinstance(data, pd.DataFrame):
+        if stimuli is None:
+            stimuli = "Stimuli"
+        if responses is None:
+            responses = "Responses"
+        hits, misses, fas, crs = data.scores(stimuli=stimuli, responses=responses)
+    elif data is not None:
+        raise ValueError("Parameter `data` is not a dataframe.")
 
-    # Calculate hit_rate and avoid d' infinity
+    if all(p is None for p in [hits, misses, fas, crs]):
+        raise ValueError("No variable provided.")
+
+    # Calculate hit_rate
     hit_rate = hits / (hits + misses)
-    if hit_rate == 1:
-        hit_rate = 1 - half_hit
-    if hit_rate == 0:
-        hit_rate = half_hit
 
-    # Calculate false alarm rate and avoid d' infinity
+    # Calculate false alarm rate
     fa_rate = fas / (fas + crs)
-    if fa_rate == 1:
-        fa_rate = 1 - half_fa
-    if fa_rate == 0:
-        fa_rate = half_fa
 
-    return hit_rate, fa_rate
+    if correction is True:  # avoid d' infinity if fa or hit is in [0, 1]
+
+        # Floors an ceilings are replaced with half inverse hits and fa
+        half_hit = 0.5 / (hits + misses)
+        half_fa = 0.5 / (fas + crs)
+
+        if hit_rate == 1:
+            hit_rate = 1 - half_hit
+        if hit_rate == 0:
+            hit_rate = half_hit
+
+        if fa_rate == 1:
+            fa_rate = 1 - half_fa
+        if fa_rate == 0:
+            fa_rate = half_fa
+
+    return float(hit_rate), float(fa_rate)
+
+
+@overload
+def dprime(
+    data: pd.DataFrame,
+    stimuli: str,
+    responses: str,
+    hit_rate: None,
+    fa_rate: None,
+) -> float:
+    ...
+
+
+@overload
+def dprime(
+    data: None,
+    stimuli: None,
+    responses: None,
+    hit_rate: float,
+    fa_rate: float,
+) -> float:
+    ...
+
+
+@overload
+def dprime(
+    data: None,
+    stimuli: Union[list, np.ndarray],
+    responses: Union[list, np.ndarray],
+    hit_rate: None,
+    fa_rate: None,
+) -> float:
+    ...
 
 
 @pf.register_dataframe_method
 def dprime(
-    data: Optional[pd.DataFrame] = None,
-    stimuli: Optional[str] = "stimuli",
-    responses: Optional[str] = "responses",
-    hit_rate: Optional[float] = None,
-    fa_rate: Optional[float] = None,
-) -> float:
+    data=None,
+    stimuli=None,
+    responses=None,
+    hit_rate=None,
+    fa_rate=None,
+):
     """Calculate d prime.
 
     Parameters
@@ -164,9 +303,11 @@ def dprime(
     fa_rate : float
         False alarm rate.
     stimuli : string
-        Name of the column containing the stimuli.
+        Name of the column containing the stimuli. If `None` and `data` is a
+        :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
     responses : string
-        Name of the column containing the responses.
+        Name of the column containing the responses. If `None` and `data` is a
+        :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
 
     Returns
     -------
@@ -177,25 +318,71 @@ def dprime(
     -----
     The d’ is a measure of the ability to discriminate a signal from noise.
     """
-    if data is not None:
-        if isinstance(data, pd.DataFrame):
-            hits, misses, fas, crs = scores(
-                data=data, stimuli=stimuli, responses=responses
+    if isinstance(data, pd.DataFrame):
+        if stimuli is None:
+            stimuli = "Stimuli"
+        if responses is None:
+            responses = "Responses"
+        if (not isinstance(stimuli, str)) | (not isinstance(responses, str)):
+            raise ValueError(
+                "Parameters `stimuli` and `responses` must be strings",
+                "when `data` is a DataFrame.",
             )
-            hit_rate, fa_rate = rates(hits=hits, misses=misses, fas=fas, crs=crs)
-        else:
-            raise ValueError("data should be a dataframe")
+        hits, misses, fas, crs = scores(data=data, stimuli=stimuli, responses=responses)
+
+        hit_rate, fa_rate = rates(hits=hits, misses=misses, fas=fas, crs=crs)
+    elif (data is not None) & (
+        ~isinstance(hit_rate, float) | ~isinstance(fa_rate, float)
+    ):
+        raise ValueError("No variable provided.")
+
     return norm.ppf(hit_rate) - norm.ppf(fa_rate)
+
+
+@overload
+def criterion(
+    data: pd.DataFrame,
+    hit_rate: None,
+    fa_rate: None,
+    stimuli: str,
+    responses: str,
+    correction: bool = True,
+) -> float:
+    ...
+
+
+@overload
+def criterion(
+    data: None,
+    hit_rate: float,
+    fa_rate: float,
+    stimuli: None,
+    responses: None,
+    correction: bool = True,
+) -> float:
+    ...
+
+
+@overload
+def criterion(
+    data: None,
+    hit_rate: None,
+    fa_rate: None,
+    stimuli: Union[list, np.ndarray],
+    responses: Union[list, np.ndarray],
+    correction: bool = True,
+) -> float:
+    ...
 
 
 @pf.register_dataframe_method
 def criterion(
-    data: Optional[pd.DataFrame] = None,
-    stimuli: Optional[str] = "stimuli",
-    responses: Optional[str] = "responses",
-    hit_rate: Optional[float] = None,
-    fa_rate: Optional[float] = None,
-) -> float:
+    data=None,
+    stimuli="Stimuli",
+    responses="Responses",
+    hit_rate=None,
+    fa_rate=None,
+):
     """Response criterion.
 
     Parameters
@@ -331,16 +518,16 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     return -logL
 
 
-@pf.register_dataframe_method
+@overload
 def metad(
-    data: Optional[pd.DataFrame] = None,
-    stimuli: Optional[str] = None,
-    accuracy: Optional[str] = None,
-    confidence: Optional[str] = None,
-    nRatings: Optional[str] = None,
+    data: None,
+    nRatings: int,
+    nR_S1: None,
+    nR_S2: None,
+    stimuli: Union[list, np.array],
+    accuracy: Union[list, np.array],
+    confidence: Union[list, np.array],
     padAmount: Optional[float] = None,
-    nR_S1: Optional[Union[list, np.array]] = None,
-    nR_S2: Optional[Union[list, np.array]] = None,
     s: int = 1,
     padding: bool = True,
     collapse: Optional[int] = None,
@@ -348,6 +535,69 @@ def metad(
     fninv: Callable[..., float] = norm.ppf,
     verbose: int = 1,
     output_df: bool = False,
+) -> Union[dict, pd.DataFrame]:
+    ...
+
+
+@overload
+def metad(
+    data: None,
+    nRatings: int,
+    nR_S1: Union[list, np.array],
+    nR_S2: Union[list, np.array],
+    stimuli: None,
+    accuracy: None,
+    confidence: None,
+    padAmount: Optional[float] = None,
+    s: int = 1,
+    padding: bool = True,
+    collapse: Optional[int] = None,
+    fncdf: Callable[..., float] = norm.cdf,
+    fninv: Callable[..., float] = norm.ppf,
+    verbose: int = 1,
+    output_df: bool = False,
+) -> Union[dict, pd.DataFrame]:
+    ...
+
+
+@overload
+def metad(
+    data: pd.DataFrame,
+    nRatings: int,
+    nR_S1: None,
+    nR_S2: None,
+    stimuli: str = "Stimuli",
+    accuracy: str = "Accuracy",
+    confidence: str = "Confidence",
+    padAmount: Optional[float] = None,
+    s: int = 1,
+    padding: bool = True,
+    collapse: Optional[int] = None,
+    fncdf: Callable[..., float] = norm.cdf,
+    fninv: Callable[..., float] = norm.ppf,
+    verbose: int = 1,
+    output_df: bool = False,
+) -> Union[dict, pd.DataFrame]:
+    ...
+
+
+@pf.register_dataframe_method
+def metad(
+    data=None,
+    nRatings=None,
+    stimuli=None,
+    accuracy=None,
+    confidence=None,
+    padAmount=None,
+    nR_S1=None,
+    nR_S2=None,
+    s=1,
+    padding=True,
+    collapse=None,
+    fncdf=norm.cdf,
+    fninv=norm.ppf,
+    verbose=1,
+    output_df=False,
 ):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
@@ -360,16 +610,16 @@ def metad(
     data : :py:class:`pandas.DataFrame` or None
         Dataframe. Note that this function can also directly be used as a
         Pandas method, in which case this argument is no longer needed.
+    nRatings : int
+        Number of discrete ratings. If a continuous rating scale was used, and
+        the number of unique ratings does not match `nRatings`, will convert to
+        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
     stimuli : string
         Name of the column containing the stimuli.
     accuracy : string
         Name of the columns containing the accuracy.
     confidence : string
         Name of the column containing the confidence ratings.
-    nRatings : int
-        Number of discrete ratings. If a continuous rating scale was used, and
-        the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
     nR_S1, nR_S2 : list or 1d array-like
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
@@ -504,6 +754,7 @@ def metad(
     ..[1] Hautus, M. J. (1995). Corrections for extreme proportions and their
       biasing effects on estimated values of d'. Behavior Research Methods,
     Instruments, & Computers, 27, 46-51.
+
     ..[2] Snodgrass, J. G., & Corwin, J. (1988). Pragmatics of measuring
       recognition memory: Applications to dementia and amnesia. Journal of
       Experimental Psychology: General, 117(1), 34–50.

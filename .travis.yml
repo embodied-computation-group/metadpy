@@ -8,10 +8,12 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coverage pytest
+  - pip install mypy
 
 script:
   - coverage run -m pytest
   - black --check ./
+  - mypy ./metadPy/ --ignore-missing-imports
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

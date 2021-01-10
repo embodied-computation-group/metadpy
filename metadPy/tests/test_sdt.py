@@ -12,10 +12,10 @@ from metadPy import load_dataset
 
 data = pd.DataFrame(
     {
-        "stimuli": np.concatenate(
+        "Stimuli": np.concatenate(
             (np.ones(20), np.ones(5), np.zeros(10), np.zeros(15))
         ).astype(bool),
-        "responses": np.concatenate(
+        "Responses": np.concatenate(
             (np.ones(20), np.zeros(5), np.ones(10), np.zeros(15))
         ).astype(bool),
     }
@@ -29,7 +29,7 @@ class Testsdt(TestCase):
         assert (20, 5, 10, 15) == scores(data=data)
         assert (20, 5, 10, 15) == data.scores()
         assert (20, 5, 10, 15) == scores(
-            stimuli=data.stimuli.to_numpy(), responses=data.responses.to_numpy()
+            stimuli=data.Stimuli.to_numpy(), responses=data.Responses.to_numpy()
         )
         with pytest.raises(ValueError):
             scores(data=None, stimuli=None, responses=None)

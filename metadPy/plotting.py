@@ -1,11 +1,18 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
 import numpy as np
 from scipy.stats import norm
+from typing import Union, Optional
 
 
-def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
+def plot_confidence(
+    nR_S1: Union[list, np.array],
+    nR_S2: Union[list, np.array],
+    fitModel: Optional[dict] = None,
+    ax: Axes = None,
+) -> Axes:
     """Plot nR_S1 and nR_S2 confidence ratings.
 
     Parameters
@@ -107,7 +114,12 @@ def plot_confidence(nR_S1, nR_S2, fitModel=None, ax=None):
     return ax
 
 
-def plot_roc(nR_S1=None, nR_S2=None, fitModel=None, ax=None):
+def plot_roc(
+    nR_S1: Union[list, np.array],
+    nR_S2: Union[list, np.array],
+    fitModel: Optional[dict] = None,
+    ax: Axes = None,
+) -> Axes:
     """Function to plot type2 ROC curve from observed an estimated data fit.
 
     Parameters
@@ -116,6 +128,12 @@ def plot_roc(nR_S1=None, nR_S2=None, fitModel=None, ax=None):
         Number of ratings for signal 1 (correct and incorrect).
     nR_S2 : 1d array-like
         Number of ratings for signal 2 (correct and incorrect).
+    fitModel : dict or None
+        Dictionnary returned by :py:func:`metadpy.std.metad()`. If
+        provided, the estimated ratings will be plotted toghether with the
+        observed data.
+    ax : `Matplotlib.Axes` or None
+        Where to draw the plot. Default is `None` (create a new figure).
 
     Returns
     -------

@@ -2,10 +2,42 @@
 
 import numpy as np
 import pandas as pd
+import pandas_flavor as pf
 from scipy.stats import norm
+from typing import Optional, Tuple, Union, Dict, List, overload, Any
 
 
+@overload
 def trials2counts(
+    data: None,
+    stimuli: Union[list, np.array],
+    responses: Union[list, np.array],
+    accuracy: Union[list, np.array],
+    confidence: Union[list, np.array],
+    nRatings: int = 4,
+    padding: bool = False,
+    padAmount: Optional[float] = None,
+) -> Tuple[np.ndarray, np.ndarray]:
+    ...
+
+
+@overload
+def trials2counts(
+    data=pd.DataFrame,
+    stimuli: str = "Stimuli",
+    responses: str = "Responses",
+    accuracy: str = "Accuracy",
+    confidence: str = "Confidence",
+    nRatings: int = 4,
+    padding: bool = False,
+    padAmount: Optional[float] = None,
+) -> Tuple[np.ndarray, np.ndarray]:
+    ...
+
+
+@pf.register_dataframe_method
+def trials2counts(
+    data=None,
     stimuli="Stimuli",
     responses="Responses",
     accuracy="Accuracy",
@@ -13,8 +45,7 @@ def trials2counts(
     nRatings=4,
     padding=False,
     padAmount=None,
-    data=None,
-):
+) -> Tuple[np.ndarray, np.ndarray]:
     """Convert raw behavioral data to nR_S1 and nR_S2 response count.
 
     Given data from an experiment where an observer discriminates between two
@@ -24,6 +55,8 @@ def trials2counts(
 
     Parameters
     ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe containing stimuli, accuracy and confidence ratings.
     stimuli : list, 1d array-like or string
         Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
         the column containing the stimuli ID. Default is `'Stimuli'`.
@@ -52,8 +85,6 @@ def trials2counts(
     padAmount : float
         The value to add to each response count if padding is set to 1.
         Default value is 1/(2*nRatings)
-    data : :py:class:`pandas.DataFrame` or None
-        Dataframe containing stimuli, accuracy and confidence ratings.
 
     Returns
     -------
@@ -101,20 +132,24 @@ def trials2counts(
 
     Reference
     ---------
-    This function was adapted from Alan Lee's version of trials2counts.m by
-    Maniscalco & Lau (2012):
+    This function is adapted from the Python version of trials2counts.m by
+    Maniscalco & Lau [1] retrieved at:
     http://www.columbia.edu/~bsm2105/type2sdt/trials2counts.py
+
+    .. [1] Maniscalco, B., & Lau, H. (2012). A signal detection theoretic
+        approach for estimating metacognitive sensitivity from confidence
+        ratings. Consciousness and Cognition, 21(1), 422–430.
+        https://doi.org/10.1016/j.concog.2011.09.021
     """
-    if data is not None:
-        if isinstance(data, pd.DataFrame):
-            stimuli = data[stimuli].to_numpy()
-            confidence = data[confidence].to_numpy()
-            if accuracy in data:
-                accuracy = data[accuracy].to_numpy()
-            if responses in data:
-                responses = data[responses].to_numpy()
-        else:
-            raise ValueError("`Data` should be a DataFrame")
+    if isinstance(data, pd.DataFrame):
+        stimuli = data[stimuli].to_numpy()
+        confidence = data[confidence].to_numpy()
+        if accuracy in data:
+            accuracy = data[accuracy].to_numpy()
+        if responses in data:
+            responses = data[responses].to_numpy()
+    elif data is not None:
+        raise ValueError("`Data` should be a DataFrame")
 
     if isinstance(accuracy, str) & isinstance(responses, str):
         raise ValueError("Neither `responses` nor `accuracy` are provided")
@@ -173,7 +208,9 @@ def trials2counts(
     return np.array(nR_S1), np.array(nR_S2)
 
 
-def discreteRatings(ratings, nbins=4, verbose=True):
+def discreteRatings(
+    ratings: Union[list, np.array], nbins: int = 4, verbose: bool = True
+) -> Tuple[np.array, Dict[str, list]]:
     """Convert continuous ratings to dscrete bins
 
     Resample if quantiles are equal at high or low end to ensure proper
@@ -202,6 +239,11 @@ def discreteRatings(ratings, nbins=4, verbose=True):
                 larger numbers of highs or low ratings.
             * `'binCount'` : int - Number of bins
 
+    .. warning:: This function will automatically control for bias in high or
+        low confidence ratings. If the first two or the last two quantiles
+        have identical values, low or high confidence trials are excluded
+        (respectively), and the function is run again on the remaining data.
+
     Examples
     --------
     >>> from metadPy.utils import discreteRatings
@@ -228,7 +270,7 @@ def discreteRatings(ratings, nbins=4, verbose=True):
         )
     elif confBins[nbins - 1] == confBins[nbins]:
         if verbose is True:
-            print("Lots of high confidence ratings")
+            print("Correcting for bias in high confidence ratings")
         # Exclude high confidence trials and re-estimate
         hiConf = confBins[-1]
         confBins = np.quantile(ratings[ratings != hiConf], np.linspace(0, 1, nbins))
@@ -237,10 +279,10 @@ def discreteRatings(ratings, nbins=4, verbose=True):
         temp.append(ratings == hiConf)
 
         out["confBins"] = [confBins, hiConf]
-        out["rebin"] = 1
+        out["rebin"] = [1]
     elif confBins[0] == confBins[1]:
         if verbose is True:
-            print("Lots of low confidence ratings")
+            print("Correction for bias in low confidence ratings")
         # Exclude low confidence trials and re-estimate
         lowConf = confBins[1]
         temp.append(ratings == lowConf)
@@ -248,23 +290,30 @@ def discreteRatings(ratings, nbins=4, verbose=True):
         for b in range(1, len(confBins)):
             temp.append((ratings >= confBins[b - 1]) & (ratings <= confBins[b]))
         out["confBins"] = [lowConf, confBins]
-        out["rebin"] = 1
+        out["rebin"] = [1]
     else:
         for b in range(len(confBins) - 1):
             temp.append((ratings >= confBins[b]) & (ratings <= confBins[b + 1]))
         out["confBins"] = confBins
-        out["rebin"] = 0
+        out["rebin"] = [0]
 
     discreteRatings = np.zeros(len(ratings), dtype="int")
     for b in range(nbins):
         discreteRatings[temp[b]] = b
     discreteRatings += 1
-    out["binCount"] = sum(temp[b])
+    out["binCount"] = [sum(temp[b])]
 
     return discreteRatings, out
 
 
-def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500, as_df=False):
+def responseSimulation(
+    d: float = 1.0,
+    metad: float = 2.0,
+    c: float = 0,
+    nRatings: int = 4,
+    nTrials: int = 500,
+    as_df: bool = False,
+) -> Union[pd.DataFrame, Tuple[np.array, np.array]]:
     """Simulate nR_S1 and nR_S2 response counts.
 
     Parameters
@@ -279,6 +328,9 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500, as_df=False):
         Number of ratings.
     nTrials : int
         Number of trials to simulate, assumes equal S/N.
+    as_df : bool
+        If `True`, return a :py:class:`pandas.DataFrame`, else will
+        return two :py:class:`numpy.array` (nR_S1, nR_S2).
 
     Returns
     -------
@@ -293,7 +345,7 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500, as_df=False):
 
     References
     ----------
-    Adapted from the Matlab `cpc_metad_sim` function from:
+    This function is adapted from the Matlab `cpc_metad_sim` function from:
     https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
 
     See also
@@ -346,10 +398,10 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500, as_df=False):
         )
 
     # Ensure vectors sum to 1 to avoid problems with mnrnd
-    prC_rS1 = prC_rS1 / sum(prC_rS1)
-    prI_rS1 = prI_rS1 / sum(prI_rS1)
-    prC_rS2 = prC_rS2 / sum(prC_rS2)
-    prI_rS2 = prI_rS2 / sum(prI_rS2)
+    prC_rS1 = np.array(prC_rS1) / sum(np.array(prC_rS1))
+    prI_rS1 = np.array(prI_rS1) / sum(np.array(prI_rS1))
+    prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))
+    prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))
 
     # Sample 4 response classes from multinomial distirbution (normalised
     # within each response class)
@@ -368,7 +420,13 @@ def responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500, as_df=False):
         return nR_S1, nR_S2
 
 
-def type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500):
+def type2_SDT_simuation(
+    d: float = 1,
+    noise: Union[float, List[float]] = 0.2,
+    c: float = 0,
+    nRatings: int = 4,
+    nTrials: int = 500,
+) -> Tuple[np.array, np.array]:
     """Type 2 SDT simulation with variable noise.
 
     Parameters
@@ -465,7 +523,7 @@ def type2_SDT_simuation(d=1, noise=0.2, c=0, nRatings=4, nTrials=500):
     return nR_S1, nR_S2
 
 
-def ratings2df(nR_S1, nR_S2):
+def ratings2df(nR_S1: np.array, nR_S2: np.array) -> pd.DataFrame:
     """Convert response count to dataframe.
 
     Parameters
