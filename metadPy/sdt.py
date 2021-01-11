@@ -88,10 +88,10 @@ def scores(
         responses = "Responses"
 
     # Extract hits, misses, false alarm and correct rejection
-    hits = sum(data[stimuli].astype('bool') & data[responses].astype('bool'))
-    misses = sum(data[stimuli].astype('bool') & ~ data[responses].astype('bool'))
-    fas = sum(~ data[stimuli].astype('bool') & data[responses].astype('bool'))
-    crs = sum(~ data[stimuli].astype('bool') & ~ data[responses].astype('bool'))
+    hits = sum(data[stimuli].astype("bool") & data[responses].astype("bool"))
+    misses = sum(data[stimuli].astype("bool") & ~data[responses].astype("bool"))
+    fas = sum(~data[stimuli].astype("bool") & data[responses].astype("bool"))
+    crs = sum(~data[stimuli].astype("bool") & ~data[responses].astype("bool"))
 
     return hits, misses, fas, crs
 
@@ -1083,7 +1083,7 @@ def roc_auc(
             stimuli=stimuli,
             accuracy=accuracy,
             confidence=confidence,
-            nRatings=nRatings
+            nRatings=nRatings,
         )
 
     if isinstance(nR_S1, list):
