@@ -979,12 +979,80 @@ def metad(
         return fit
 
 
-def roc_auc(nR_S1: Union[list, np.array], nR_S2: Union[list, np.array]) -> float:
+@overload
+def roc_auc(
+    data: None,
+    stimuli: None,
+    responses: None,
+    accuracy: None,
+    confidence: None,
+    nRatings: None,
+    nR_S1: Union[list, np.array],
+    nR_S2: Union[list, np.array],
+) -> float:
+    ...
+
+
+@overload
+def roc_auc(
+    data: None,
+    stimuli: Union[list, np.array],
+    responses: Union[list, np.array],
+    accuracy: Union[list, np.array],
+    confidence: Union[list, np.array],
+    nRatings: None,
+    nR_S1: None,
+    nR_S2: None,
+) -> float:
+    ...
+
+
+@overload
+def roc_auc(
+    data: pd.DataFrame,
+    stimuli: str,
+    responses: str,
+    accuracy: str,
+    confidence: str,
+    nRatings: int,
+    nR_S1: None,
+    nR_S2: None,
+) -> float:
+    ...
+
+
+@pf.register_dataframe_method
+def roc_auc(
+    data=None,
+    stimuli=None,
+    responses=None,
+    accuracy=None,
+    confidence=None,
+    nRatings=None,
+    nR_S1=None,
+    nR_S2=None,
+):
     """Calculate the area under the type 2 ROC curve given nR_S1 and nR_S2
     ratings counts.
 
     Parameters
     ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe containing one `stimuli` and one `response` column.
+    stimuli : str, 1d array-like or list
+        If a string is provided, should be the name of the column used as
+        `stimuli`. If a list or an array is provided, should contain the
+        boolean vectors for `stimuli`. If `None` and `data` is a
+        :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
+    responses : str or 1d array-like
+        If a string is provided, should be the name of the column used as
+        `responses`. If a list or an array is provided, should contain the
+        boolean vector for `responses`. If `None` and `data` is a
+        :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
+    nRatings : int
+        Total of available subjective ratings available for the subject. e.g.
+        if subject can rate confidence on a scale of 1-4, then nRatings = 4.
+        Default is `4`.
     nR_S1 : list or 1d array-like
         Confience ratings (stimuli 1).
     nR_S2 : list or 1d array-like
@@ -1002,6 +1070,22 @@ def roc_auc(nR_S1: Union[list, np.array], nR_S2: Union[list, np.array]) -> float
     >>> roc_auc(nR_S1, nR_S2)
     0.6998064266356949
     """
+    if isinstance(data, pd.DataFrame):
+        if stimuli is None:
+            stimuli = "Stimuli"
+        if responses is None:
+            responses = "Responses"
+        if confidence is None:
+            confidence = "Confidence"
+
+        nR_S1, nR_S2 = trials2counts(
+            data=data,
+            stimuli=stimuli,
+            accuracy=accuracy,
+            confidence=confidence,
+            nRatings=nRatings
+        )
+
     if isinstance(nR_S1, list):
         nR_S1 = np.array(nR_S1)
     if isinstance(nR_S2, list):

@@ -80,8 +80,11 @@ class Testsdt(TestCase):
         """Test roc_auc function"""
         nR_S1 = [52, 32, 35, 37, 26, 12, 4, 2]
         nR_S2 = [2, 5, 15, 22, 33, 38, 40, 45]
-        auc = roc_auc(nR_S1, nR_S2)
+        auc = roc_auc(nR_S1=nR_S1, nR_S2=nR_S2)
         assert round(auc, 3) == 0.728
+
+        df = load_dataset("rm")
+        assert round(df.roc_auc(nRatings=4), 3) == 0.621
 
 
 if __name__ == "__main__":
