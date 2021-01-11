@@ -30,7 +30,7 @@ analysis for metacognition research.
 
 It is aimed to provide simple yet powerful functions to compute standard
 index and metric of signal detection theory (SDT) and metacognitive
-efficiency (meta-d’ and hierarchical meta-d’)  [1]_ [2]_ [3]_, only provided with a data
+efficiency (meta-d’ and hierarchical meta-d’) [1]_ [2]_, only provided with a data
 frame encoding task performances and confidence ratings at the trial
 level.
 
@@ -142,7 +142,7 @@ participant having ``d=1`` and ``c=0`` (task performances) and a
 ``meta-d=1.5`` (metacognitive sensibility). The confidence ratings were
 provided using a 1-to-4 rating scale.
 
-.. code:: ipython3
+.. code:: python
 
     from metadPy.utils import responseSimulation      
     simulation = responseSimulation(d=1, metad=1.5, c=0, 
@@ -277,7 +277,7 @@ provided using a 1-to-4 rating scale.
 
 
 
-.. code:: ipython3
+.. code:: python
 
     from metadPy.utils import trials2counts
     nR_S1, nR_S2 = trials2counts(
@@ -292,11 +292,11 @@ functions. Here, we will use the ``plot_confidence`` and the
 ``plot_roc`` functions to visualize the metacognitive performance of our
 participant.
 
-.. code:: ipython3
+.. code:: python
 
     from metadPy.plotting import plot_confidence, plot_roc
 
-.. code:: ipython3
+.. code:: python
 
     fig, axs = plt.subplots(1, 2, figsize=(13, 5))
     plot_confidence(nR_S1, nR_S2, ax=axs[0])
@@ -311,7 +311,7 @@ participant.
 Signal detection theory (SDT)
 =============================
 
-.. code:: ipython3
+.. code:: python
 
     from metadPy.sdt import criterion, dprime, rates, roc_auc, scores
 
@@ -324,7 +324,7 @@ the function call, making your code more clean and readable.
 
 -  Criterion
 
-.. code:: ipython3
+.. code:: python
 
     simulation.criterion()
 
@@ -339,7 +339,7 @@ the function call, making your code more clean and readable.
 
 -  d prime
 
-.. code:: ipython3
+.. code:: python
 
     simulation.dprime()
 
@@ -354,7 +354,7 @@ the function call, making your code more clean and readable.
 
 -  Hits rate and false alarms rate
 
-.. code:: ipython3
+.. code:: python
 
     simulation.rates()
 
@@ -369,7 +369,7 @@ the function call, making your code more clean and readable.
 
 -  ROC AUC
 
-.. code:: ipython3
+.. code:: python
 
     simulation.roc_auc(nRatings=4)
 
@@ -384,7 +384,7 @@ the function call, making your code more clean and readable.
 
 -  Scores: hits, misses, fas, crs
 
-.. code:: ipython3
+.. code:: python
 
     simulation.scores()
 
@@ -403,7 +403,7 @@ Criterion
 Estimating meta dprime using Maximum Likelyhood Estimates (MLE)
 ===============================================================
 
-.. code:: ipython3
+.. code:: python
 
     from metadPy.sdt import metad
     
@@ -431,12 +431,12 @@ Estimating meta-dprime using hierarchical Bayesian modeling
 Subject level
 -------------
 
-.. code:: ipython3
+.. code:: python
 
     import pymc3 as pm
     from metadPy.hierarchical import hmetad
 
-.. code:: ipython3
+.. code:: python
 
     model, trace = hmetad(data=simulation, nRatings=4, stimuli='Stimuli',
                           accuracy='Accuracy', confidence='Confidence')
@@ -505,7 +505,7 @@ Subject level
     There were 2 divergences after tuning. Increase `target_accept` or reparameterize.
     
 
-.. code:: ipython3
+.. code:: python
 
     pm.traceplot(trace, var_names=['metad', 'cS2', 'cS1']);
 
@@ -514,7 +514,7 @@ Subject level
 .. image:: ./images/hmetad.png
 
 
-.. code:: ipython3
+.. code:: python
 
     pm.summary(trace)
 
