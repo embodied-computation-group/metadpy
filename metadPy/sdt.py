@@ -88,10 +88,10 @@ def scores(
         responses = "Responses"
 
     # Extract hits, misses, false alarm and correct rejection
-    hits = sum(data[stimuli] & data[responses])
-    misses = sum(data[stimuli] & ~data[responses])
-    fas = sum(~data[stimuli] & data[responses])
-    crs = sum(~data[stimuli] & ~data[responses])
+    hits = sum(data[stimuli].astype('bool') & data[responses].astype('bool'))
+    misses = sum(data[stimuli].astype('bool') & ~ data[responses].astype('bool'))
+    fas = sum(~ data[stimuli].astype('bool') & data[responses].astype('bool'))
+    crs = sum(~ data[stimuli].astype('bool') & ~ data[responses].astype('bool'))
 
     return hits, misses, fas, crs
 
