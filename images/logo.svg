@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
+   width="81.835335mm"
    height="83.862976mm"
-   viewBox="0 0 210 83.862976"
+   viewBox="0 0 81.835335 83.862976"
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
@@ -148,14 +148,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="460.36947"
+     inkscape:cx="218.16852"
      inkscape:cy="136.36135"
      inkscape:document-units="mm"
      inkscape:current-layer="g1299"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="986"
-     inkscape:window-x="-11"
+     inkscape:window-x="3829"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
      inkscape:document-rotation="0"
@@ -172,7 +172,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -180,7 +180,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-7.5844582,-3.6733669)">
+     transform="translate(-71.666792,-3.6733669)">
     <text
        xml:space="preserve"
        id="text896"
@@ -201,7 +201,7 @@
         <path
            id="path866"
            style="opacity:0.96;fill:#1a1a1a;stroke:#1a1a1a;stroke-width:0.41;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter957)"
-           d="m 188.50624,36.698531 v 34.136956 a 6.4158056,6.4158056 120 0 1 -3.2079,5.556251 L 155.73488,93.46021 a 6.4158026,6.4158026 3.447793e-6 0 1 -6.4158,0 L 119.75563,76.391738 a 6.4158065,6.4158065 60.000006 0 1 -3.2079,-5.556251 V 36.698531 a 6.4158062,6.4158062 120 0 1 3.2079,-5.556251 l 29.56345,-17.06847 a 6.4158032,6.4158032 -180 0 1 6.4158,0 l 29.56346,17.06847 a 6.4158053,6.4158053 60.000002 0 1 3.2079,5.556251 z"
+           d="m 188.50624,36.698531 v 34.136956 a 6.4158056,6.4158056 120 0 1 -3.2079,5.556251 L 155.73488,93.46021 a 6.4158026,6.4158026 3.447793e-6 0 1 -6.4158,0 L 119.75563,76.391738 a 6.4158065,6.4158065 60.000006 0 1 -3.2079,-5.556251 V 36.698531 a 6.4158062,6.4158062 120 0 1 3.2079,-5.556251 l 29.56345,-17.06847 a 6.4158032,6.4158032 180 0 1 6.4158,0 l 29.56346,17.06847 a 6.4158053,6.4158053 60.000002 0 1 3.2079,5.556251 z"
            inkscape:path-effect="#path-effect868"
            inkscape:original-d="m 188.50624,32.994364 v 41.54529 l -35.97926,20.77264 -35.97925,-20.77264 v -41.54529 l 35.97925,-20.772638 z" />
         <path
@@ -212,7 +212,7 @@
         <path
            id="path956"
            style="opacity:0.96;fill:#ffffff;stroke:#333333;stroke-width:0.41;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m 187.44786,35.111031 v 34.136956 a 6.4158056,6.4158056 120 0 1 -3.2079,5.556251 L 154.6765,91.87271 a 6.4158026,6.4158026 3.447793e-6 0 1 -6.4158,0 L 118.69725,74.804238 a 6.4158065,6.4158065 60.000006 0 1 -3.2079,-5.556251 V 35.111031 a 6.4158062,6.4158062 120 0 1 3.2079,-5.556251 L 148.2607,12.48631 a 6.4158032,6.4158032 -180 0 1 6.4158,0 l 29.56346,17.06847 a 6.4158053,6.4158053 60.000002 0 1 3.2079,5.556251 z"
+           d="m 187.44786,35.111031 v 34.136956 a 6.4158056,6.4158056 120 0 1 -3.2079,5.556251 L 154.6765,91.87271 a 6.4158026,6.4158026 3.447793e-6 0 1 -6.4158,0 L 118.69725,74.804238 a 6.4158065,6.4158065 60.000006 0 1 -3.2079,-5.556251 V 35.111031 a 6.4158062,6.4158062 120 0 1 3.2079,-5.556251 L 148.2607,12.48631 a 6.4158032,6.4158032 180 0 1 6.4158,0 l 29.56346,17.06847 a 6.4158053,6.4158053 60.000002 0 1 3.2079,5.556251 z"
            inkscape:path-effect="#path-effect862"
            inkscape:original-d="m 187.44786,31.406864 v 41.54529 L 151.4686,93.724794 115.48935,72.952154 V 31.406864 L 151.4686,10.634226 Z" />
         <rect
