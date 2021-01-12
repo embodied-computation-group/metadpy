@@ -183,8 +183,7 @@ class Testsdt(TestCase):
     def test_responseSimulation(self):
         """Test responseSimulation function"""
         # Single subject
-        simulation_df = responseSimulation(
-            d=1, metad=2, c=0, nRatings=4, nTrials=500)
+        simulation_df = responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500)
         assert isinstance(simulation_df, pd.DataFrame)
         assert len(simulation_df) == 500
         nR_S1, nR_S2 = simulation_df.trials2counts()
@@ -192,20 +191,21 @@ class Testsdt(TestCase):
 
         # Group of subjects
         simulation_df = responseSimulation(
-            d=1, metad=2, c=0, nRatings=4, nTrials=500, nSubjects=10)
+            d=1, metad=2, c=0, nRatings=4, nTrials=500, nSubjects=10
+        )
         assert isinstance(simulation_df, pd.DataFrame)
-        assert simulation_df['Subject'].nunique() == 10
+        assert simulation_df["Subject"].nunique() == 10
         nR_S1, nR_S2 = simulation_df.trials2counts()
         assert sum(nR_S1) == sum(nR_S2) == 2500
 
         # Repeated measures
         simulation_df = responseSimulation(
-            d=1, metad=2, c=0, nRatings=4, nTrials=500, nSubjects=10, nConditions=2)
+            d=1, metad=2, c=0, nRatings=4, nTrials=500, nSubjects=10, nConditions=2
+        )
         assert isinstance(simulation_df, pd.DataFrame)
-        assert simulation_df['Subject'].nunique() == 10
+        assert simulation_df["Subject"].nunique() == 10
         nR_S1, nR_S2 = simulation_df.trials2counts()
         assert sum(nR_S1) == sum(nR_S2) == 5000
-
 
     def test_type2_SDT_simuation(self):
         """Test responseSimulation function"""

@@ -319,7 +319,6 @@ def responseSimulation(
     nTrials: int = 500,
     nSubjects: int = 1,
     nConditions: int = 1,
-    as_df: bool = False,
 ) -> pd.DataFrame:
     """Simulate nR_S1 and nR_S2 response counts.
 
@@ -367,7 +366,7 @@ def responseSimulation(
     """
     if len(mRatio) == 1:
         mRatio.append(1)
-    
+
     covMatrix = np.array(
         [
             [mRatio_sigma ** 2, mRatio_rho * mRatio_sigma ** 2],
@@ -451,7 +450,7 @@ def responseSimulation(
             prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))
             prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))
 
-            # Sample 4 response classes from multinomial distirbution 
+            # Sample 4 response classes from multinomial distirbution
             # (normalised within each response class)
             nC_rS1 = np.random.multinomial(CR, prC_rS1)
             nI_rS1 = np.random.multinomial(M, prI_rS1)
