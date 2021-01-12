@@ -308,40 +308,53 @@ def discreteRatings(
 
 def responseSimulation(
     d: float = 1.0,
+    d_sigma: float = 0.1,
     metad: float = 2.0,
+    mRatio: list = [1],
+    mRatio_sigma: float = 0.2,
+    mRatio_rho: float = 0,
     c: float = 0,
+    c_sigma: float = 0.1,
     nRatings: int = 4,
     nTrials: int = 500,
+    nSubjects: int = 1,
+    nConditions: int = 1,
     as_df: bool = False,
-) -> Union[pd.DataFrame, Tuple[np.array, np.array]]:
+) -> pd.DataFrame:
     """Simulate nR_S1 and nR_S2 response counts.
 
     Parameters
     ----------
     d : float
-        Type 1 dprime.
+        Type 1 task performance (d prime).
+    d_sigma : float
+        Include some between-subject variability for d prime.
     metad : float
         Type 2 sensitivity in units of type 1 dprime.
+    mRatio : list
+        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios
+        are assumed to be drawn from a repeated measures design.
+    mRatio_sigma : float
+        Include some variability in the mRatio scores.
+    mRatio_rho : float
+        Specify the correlation between the two Mratios.
     c : float
-        Type 1 criterion.
+        Type 1 task bias (criterion).
+    c_sigma : float
+        Include some between-subject variability for criterion.
     nRatings : int
         Number of ratings.
     nTrials : int
-        Number of trials to simulate, assumes equal S/N.
-    as_df : bool
-        If `True`, return a :py:class:`pandas.DataFrame`, else will
-        return two :py:class:`numpy.array` (nR_S1, nR_S2).
+        Set the number of trials performed.
+    nSubjects : int
+        Specify the number of subject who performed the task.
 
     Returns
     -------
-    If `as_df is False`:
-        nR_S1, nR_S2 : 1d array-like
-            nR_S1 and nR_S2 response counts.
-    If `as_df is True`:
-        df : :py:class:`pandas.DataFrame`
-            A DataFrame (nRows==`nTrials`) containing the responses and
-            confidence rating for one participant given the provided
-            parameters.
+    df : :py:class:`pandas.DataFrame`
+        A DataFrame (nRows==`nTrials`) containing the responses and
+        confidence rating for one participant given the provided
+        parameters.
 
     References
     ----------
@@ -352,72 +365,110 @@ def responseSimulation(
     --------
     ratings2df
     """
-    # Specify the confidence criterions based on the number of ratings
-    c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
-    c2 = c + np.linspace(0.5, 1.5, (nRatings - 1))
+    if len(mRatio) == 1:
+        mRatio.append(1)
+    
+    covMatrix = np.array(
+        [
+            [mRatio_sigma ** 2, mRatio_rho * mRatio_sigma ** 2],
+            [mRatio_rho * mRatio_sigma ** 2, mRatio_sigma ** 2],
+        ]
+    )
 
-    # Calc type 1 response counts
-    H = round((1 - norm.cdf(c, d / 2)) * (nTrials / 2))
-    FA = round((1 - norm.cdf(c, -d / 2)) * (nTrials / 2))
-    CR = round(norm.cdf(c, -d / 2) * (nTrials / 2))
-    M = round(norm.cdf(c, d / 2) * (nTrials / 2))
+    MVvalues = np.zeros((nSubjects, 2))
+    d_vector, c_vector = np.zeros((nSubjects, 2)), np.zeros((nSubjects, 2))
 
-    # Calc type 2 probabilities
-    S1mu = -metad / 2
-    S2mu = metad / 2
+    nR_S1, nR_S2 = np.zeros((nSubjects, 2, 2 * nRatings)), np.zeros(
+        (nSubjects, 2, 2 * nRatings)
+    )
+    group_df = pd.DataFrame([])
 
-    # Normalising constants
-    C_area_rS1 = norm.cdf(c, S1mu)
-    I_area_rS1 = norm.cdf(c, S2mu)
-    C_area_rS2 = 1 - norm.cdf(c, S2mu)
-    I_area_rS2 = 1 - norm.cdf(c, S1mu)
+    for b in range(nSubjects):
+        # Generate the Mratio values from a multivariate normal distribution
+        MVvalues[b, :] = np.random.multivariate_normal(mRatio, covMatrix)
+        for a in range(nConditions):
+            # Generate dprime values
+            d_vector[b, a] = np.random.normal(d, d_sigma)
+            # Generate bias values
+            c_vector[b, a] = np.random.normal(c, c_sigma)
+            # Generate meta-d values
+            metad = MVvalues[b, a] * d_vector[b, a]
 
-    t2c1x = np.hstack((-np.inf, c1, c, c2, np.inf))
+            #################
+            # Simulate data #
+            #################
 
-    prC_rS1, prI_rS1, prC_rS2, prI_rS2 = [], [], [], []
-    for i in range(nRatings):
-        prC_rS1.append(
-            (norm.cdf(t2c1x[i + 1], S1mu) - norm.cdf(t2c1x[i], S1mu)) / C_area_rS1
-        )
-        prI_rS1.append(
-            (norm.cdf(t2c1x[i + 1], S2mu) - norm.cdf(t2c1x[i], S2mu)) / I_area_rS1
-        )
-        prC_rS2.append(
-            (
-                (1 - norm.cdf(t2c1x[nRatings + i], S2mu))
-                - (1 - norm.cdf(t2c1x[nRatings + i + 1], S2mu))
-            )
-            / C_area_rS2
-        )
-        prI_rS2.append(
-            (
-                (1 - norm.cdf(t2c1x[nRatings + i], S1mu))
-                - (1 - norm.cdf(t2c1x[nRatings + i + 1], S1mu))
-            )
-            / I_area_rS2
-        )
+            # Specify the confidence criterions based on the number of ratings
+            c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
+            c2 = c + np.linspace(0.5, 1.5, (nRatings - 1))
 
-    # Ensure vectors sum to 1 to avoid problems with mnrnd
-    prC_rS1 = np.array(prC_rS1) / sum(np.array(prC_rS1))
-    prI_rS1 = np.array(prI_rS1) / sum(np.array(prI_rS1))
-    prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))
-    prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))
+            # Calc type 1 response counts
+            H = round((1 - norm.cdf(c, d / 2)) * (nTrials / 2))
+            FA = round((1 - norm.cdf(c, -d / 2)) * (nTrials / 2))
+            CR = round(norm.cdf(c, -d / 2) * (nTrials / 2))
+            M = round(norm.cdf(c, d / 2) * (nTrials / 2))
 
-    # Sample 4 response classes from multinomial distirbution (normalised
-    # within each response class)
-    nC_rS1 = np.random.multinomial(CR, prC_rS1)
-    nI_rS1 = np.random.multinomial(M, prI_rS1)
-    nC_rS2 = np.random.multinomial(H, prC_rS2)
-    nI_rS2 = np.random.multinomial(FA, prI_rS2)
+            # Calc type 2 probabilities
+            S1mu = -metad / 2
+            S2mu = metad / 2
 
-    # Add to data vectors
-    nR_S1 = np.hstack((nC_rS1, nI_rS2))
-    nR_S2 = np.hstack((nI_rS1, nC_rS2))
+            # Normalising constants
+            C_area_rS1 = norm.cdf(c, S1mu)
+            I_area_rS1 = norm.cdf(c, S2mu)
+            C_area_rS2 = 1 - norm.cdf(c, S2mu)
+            I_area_rS2 = 1 - norm.cdf(c, S1mu)
 
-    if as_df is True:
-        return ratings2df(nR_S1, nR_S2)
-    else:
-        return nR_S1, nR_S2
+            t2c1x = np.hstack((-np.inf, c1, c, c2, np.inf))
+
+            prC_rS1, prI_rS1, prC_rS2, prI_rS2 = [], [], [], []
+            for i in range(nRatings):
+                prC_rS1.append(
+                    (norm.cdf(t2c1x[i + 1], S1mu) - norm.cdf(t2c1x[i], S1mu))
+                    / C_area_rS1
+                )
+                prI_rS1.append(
+                    (norm.cdf(t2c1x[i + 1], S2mu) - norm.cdf(t2c1x[i], S2mu))
+                    / I_area_rS1
+                )
+                prC_rS2.append(
+                    (
+                        (1 - norm.cdf(t2c1x[nRatings + i], S2mu))
+                        - (1 - norm.cdf(t2c1x[nRatings + i + 1], S2mu))
+                    )
+                    / C_area_rS2
+                )
+                prI_rS2.append(
+                    (
+                        (1 - norm.cdf(t2c1x[nRatings + i], S1mu))
+                        - (1 - norm.cdf(t2c1x[nRatings + i + 1], S1mu))
+                    )
+                    / I_area_rS2
+                )
+
+            # Ensure vectors sum to 1 to avoid problems with mnrnd
+            prC_rS1 = np.array(prC_rS1) / sum(np.array(prC_rS1))
+            prI_rS1 = np.array(prI_rS1) / sum(np.array(prI_rS1))
+            prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))
+            prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))
+
+            # Sample 4 response classes from multinomial distirbution 
+            # (normalised within each response class)
+            nC_rS1 = np.random.multinomial(CR, prC_rS1)
+            nI_rS1 = np.random.multinomial(M, prI_rS1)
+            nC_rS2 = np.random.multinomial(H, prC_rS2)
+            nI_rS2 = np.random.multinomial(FA, prI_rS2)
+
+            # Add to data vectors
+            nR_S1 = np.hstack((nC_rS1, nI_rS2))
+            nR_S2 = np.hstack((nI_rS1, nC_rS2))
+
+            this_df = ratings2df(nR_S1, nR_S2)
+
+            this_df["Subject"] = b
+            this_df["Condition"] = a
+            group_df = group_df.append(this_df, ignore_index=True)
+
+    return group_df
 
 
 def type2_SDT_simuation(
