@@ -72,7 +72,6 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         sigma_c2 = HalfNormal(
             "sigma_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand() * 0.1
         )
-        lambda_c2 = Deterministic("lambda_c2", sigma_c2 ** -2)
 
         mu_D = Normal("mu_D", tau=0.001, shape=(1), testval=np.random.rand() * 0.1)
         sigma_D = HalfNormal(
