@@ -1,22 +1,20 @@
-
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadPy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadPy.svg)](https://badge.fury.io/py/metadPy) [![travis](https://travis-ci.com/LegrandNico/metadPy.svg?branch=master)](https://travis-ci.com/LegandNico/metadPy) [![codecov](https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadPy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
+***
 
-<img src="./images/logo.png" align="left"
-     alt="metadPy" height="250" HSPACE=30>
+<img src="https://github.com/LegrandNico/metadPy/raw/master/images/logo.png" align="left" alt="metadPy" height="250" HSPACE=30>
 
 metadPy is an open-source Python package dedicated to behavioural data
-analysis for metacognition research. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) [1]_ [2]_, only provided with a data frame encoding task performances and confidence ratings at the trial level.
+analysis for metacognition research. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) [1, 2], only provided with a data frame encoding task performances and confidence ratings at the trial level.
 
 metadPy is written in Python 3 and use mostly [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>). Computing meta-d’ using maximum likelihood estimation (MLE) is based on Scipy. Hierarchical Bayesian modelling of meta-d’ and m-ratio is based on [PyMC3](https://docs.pymc.io/>).
-
 
 # Installation
 
 metadPy can be installed using pip:
 
 ```shell
-  pip install git+https://github.com/LegrandNico/metadPy.git
+pip install git+https://github.com/LegrandNico/metadPy.git
 ```
 
 The following packages are required:
@@ -26,7 +24,7 @@ The following packages are required:
 * Pandas (>=0.24)
 * Matplotlib (>=3.0.2)
 * Seaborn (>=0.9.0)
-* PyMC3 (>=3.8)
+* PyMC3 (>=3.10.0)
 
 # Why metadPy?
 
@@ -36,13 +34,15 @@ metadPy aims to be a Python equivalent of the hMeta-d toolbox (available in Matl
 
 For an extensive introduction to metadPy, you can navigate the following notebooks that are Python adaptations of the introduction to the hMeta-d toolbox written in Matlab by Olivia Faul for the Zurich Computational Psychiatry course (see [this link](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial)).
 
-1. What metacognition looks like? [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://](https://colab.research.google.com/)github.com/LegrandNico/metadPy/blob/master/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb) [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)]([https://](https://nbviewer.jupyter.org/)github.com/LegrandNico/metadPy/blob/master/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb)
+1. What metacognition looks like? [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/LegrandNico/metadPy/blob/master/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb) [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://github.com/LegrandNico/metadPy/blob/master/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb)
 
-2. Fitting the model [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)]([https://](https://colab.research.google.com/)github.com/LegrandNico/metadPy/blob/master/notebooks/2%20-%20Fitting%20the%20model.ipynb) [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)]([https://](https://nbviewer.jupyter.org/)github.com/LegrandNico/metadPy/blob/master/notebooks/2%20-%20Fitting%20the%20model.ipynb)
+2. Fitting the model [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/LegrandNico/metadPy/blob/master/notebooks/2%20-%20Fitting%20the%20model.ipynb) [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://github.com/LegrandNico/metadPy/blob/master/notebooks/2%20-%20Fitting%20the%20model.ipynb)
 
 3. Hierarchical Bayesian model of metacognition
 
 Or just follow the quick tour below.
+
+<div class="alert alert-block alert-warning"><b>Warning:</b> This work is still under progress. The code is continuously optimized for speed, precision, and checked for errors. Please always double-check your results with other toolboxes.</div>
 
 # Importing data
 
@@ -63,9 +63,9 @@ Due to the logical dependence between the `Stimuli`, `Responses` and `Accuracy` 
 
 
 ```python
-from metadPy.utils import responseSimulation      
+from metadPy.utils import responseSimulation
 simulation = responseSimulation(d=1, metad=1.5, c=0, 
-                                nRatings=4, nTrials=200, as_df=True)
+                                nRatings=4, nTrials=200)
 simulation
 ```
 
@@ -95,15 +95,19 @@ simulation
       <th>Accuracy</th>
       <th>Confidence</th>
       <th>nTrial</th>
+      <th>Subject</th>
+      <th>Condition</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
     </tr>
     <tr>
@@ -111,35 +115,45 @@ simulation
       <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
       <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>4</td>
       <td>2</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
       <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>2</td>
       <td>4</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -151,45 +165,57 @@ simulation
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>2</td>
       <td>195</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>196</th>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>3</td>
       <td>196</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>197</th>
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
+      <td>3</td>
       <td>197</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>198</th>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>4</td>
       <td>198</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>199</th>
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>4</td>
+      <td>3</td>
       <td>199</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>200 rows × 5 columns</p>
+<p>200 rows × 7 columns</p>
 </div>
+
+
 
 
 ```python
@@ -205,7 +231,11 @@ You can easily visualize metacognition results using one of the plotting functio
 
 
 ```python
+import arviz as az
+import matplotlib.pyplot as plt
+import seaborn as sns
 from metadPy.plotting import plot_confidence, plot_roc
+sns.set_context('talk')
 ```
 
 
@@ -216,7 +246,11 @@ plot_roc(nR_S1, nR_S2, ax=axs[1])
 sns.despine()
 ```
 
+
+    
 ![png](./images/confidence_ROCAUC.png)
+    
+
 
 # Signal detection theory (SDT)
 
@@ -226,8 +260,6 @@ from metadPy.sdt import criterion, dprime, rates, roc_auc, scores
 ```
 
 All metadPy functions are registred as Pandas flavors (see [pandas-flavor](https://pypi.org/project/pandas-flavor/)), which means that the functions can be called as a method from the result data frame. When using the default columns names (`Stimuli`, `Response`, `Accuracy`, `Confidence`), this significantly reduces the length of the function call, making your code more clean and readable.
-
-* Criterion
 
 
 ```python
@@ -241,8 +273,6 @@ simulation.criterion()
 
 
 
-* d prime
-
 
 ```python
 simulation.dprime()
@@ -254,8 +284,6 @@ simulation.dprime()
     0.9917006946949065
 
 
-
-* Hits rate and false alarms rate 
 
 
 ```python
@@ -269,8 +297,6 @@ simulation.rates()
 
 
 
-* ROC AUC
-
 
 ```python
 simulation.roc_auc(nRatings=4)
@@ -279,11 +305,9 @@ simulation.roc_auc(nRatings=4)
 
 
 
-    0.7106274007682458
+    0.5797055057618438
 
 
-
-* Scores: hits, misses, fas, crs
 
 
 ```python
@@ -297,8 +321,6 @@ simulation.scores()
 
 
 
-## Criterion
-
 # Estimating meta dprime using Maximum Likelyhood Estimates (MLE)
 
 
@@ -307,17 +329,15 @@ simulation.scores()
 from metadPy.sdt import metad
 
 metad = metad(data=simulation, nRatings=4, stimuli='Stimuli',
-              accuracy='Accuracy', confidence='Confidence')
-print('meta-d\' = {str(metad["meta_da"])}')
+              accuracy='Accuracy', confidence='Confidence', verbose=0)
+print(f'meta-d\' = {str(metad["meta_da"])}')
 ```
 
     /usr/local/lib/python3.6/dist-packages/scipy/optimize/_hessian_update_strategy.py:187: UserWarning: delta_grad == 0.0. Check if the approximated function is linear. If the function is linear better results can be obtained by defining the Hessian as zero instead of using quasi-Newton approximations.
       'approximations.', UserWarning)
     
 
-    `xtol` termination condition is satisfied.
-    Number of iterations: 154, function evaluations: 1896, CG iterations: 289, optimality: 2.45e-06, constraint violation: 0.00e+00, execution time: 1e+01 s.
-    meta-d' = {str(metad["meta_da"])}
+    meta-d' = 0.5223485447196857
     
 
 # Estimating meta-dprime using hierarchical Bayesian modeling
@@ -359,7 +379,7 @@ model, trace = hmetad(data=simulation, nRatings=4, stimuli='Stimuli',
         }
     </style>
   <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [2000/2000 00:08<00:00 Sampling chain 0, 1 divergences]
+  100.00% [2000/2000 00:07<00:00 Sampling chain 0, 1 divergences]
 </div>
 
 
@@ -380,16 +400,16 @@ model, trace = hmetad(data=simulation, nRatings=4, stimuli='Stimuli',
         }
     </style>
   <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [2000/2000 00:08<00:00 Sampling chain 1, 1 divergences]
+  100.00% [2000/2000 00:07<00:00 Sampling chain 1, 0 divergences]
 </div>
 
 
 
-    Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 17 seconds.
+    Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 15 seconds.
     /usr/local/lib/python3.6/dist-packages/arviz/data/io_pymc3.py:314: UserWarning: Could not compute log_likelihood, it will be omitted. Check your model object or set log_likelihood=False
       warnings.warn(warn_msg)
     There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
-    There were 2 divergences after tuning. Increase `target_accept` or reparameterize.
+    There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
     
 
 
@@ -445,111 +465,306 @@ pm.summary(trace)
   <tbody>
     <tr>
       <th>metad</th>
-      <td>1.440</td>
-      <td>0.266</td>
-      <td>0.936</td>
-      <td>1.925</td>
-      <td>0.008</td>
+      <td>0.534</td>
+      <td>0.245</td>
+      <td>0.018</td>
+      <td>0.960</td>
       <td>0.006</td>
-      <td>1163.0</td>
-      <td>1157.0</td>
-      <td>1164.0</td>
-      <td>913.0</td>
-      <td>1.0</td>
+      <td>0.004</td>
+      <td>1779.0</td>
+      <td>1779.0</td>
+      <td>1810.0</td>
+      <td>1376.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>cS1[0]</th>
-      <td>-1.442</td>
-      <td>0.136</td>
-      <td>-1.685</td>
-      <td>-1.183</td>
-      <td>0.004</td>
+      <td>-1.488</td>
+      <td>0.139</td>
+      <td>-1.755</td>
+      <td>-1.239</td>
       <td>0.003</td>
-      <td>1213.0</td>
-      <td>1203.0</td>
-      <td>1210.0</td>
-      <td>1519.0</td>
-      <td>1.0</td>
+      <td>0.002</td>
+      <td>1871.0</td>
+      <td>1846.0</td>
+      <td>1879.0</td>
+      <td>1615.0</td>
+      <td>1.01</td>
     </tr>
     <tr>
       <th>cS1[1]</th>
-      <td>-1.034</td>
-      <td>0.116</td>
-      <td>-1.253</td>
-      <td>-0.822</td>
-      <td>0.003</td>
+      <td>-0.928</td>
+      <td>0.109</td>
+      <td>-1.125</td>
+      <td>-0.725</td>
       <td>0.002</td>
-      <td>1116.0</td>
-      <td>1116.0</td>
-      <td>1115.0</td>
-      <td>1284.0</td>
-      <td>1.0</td>
+      <td>0.002</td>
+      <td>2161.0</td>
+      <td>2121.0</td>
+      <td>2155.0</td>
+      <td>1813.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>cS1[2]</th>
-      <td>-0.515</td>
-      <td>0.094</td>
-      <td>-0.690</td>
-      <td>-0.338</td>
-      <td>0.003</td>
+      <td>-0.429</td>
+      <td>0.092</td>
+      <td>-0.596</td>
+      <td>-0.259</td>
       <td>0.002</td>
-      <td>1393.0</td>
-      <td>1377.0</td>
-      <td>1398.0</td>
-      <td>1260.0</td>
-      <td>1.0</td>
+      <td>0.001</td>
+      <td>1987.0</td>
+      <td>1909.0</td>
+      <td>1988.0</td>
+      <td>1742.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>cS2[0]</th>
-      <td>0.399</td>
+      <td>0.486</td>
       <td>0.093</td>
-      <td>0.233</td>
-      <td>0.586</td>
+      <td>0.317</td>
+      <td>0.664</td>
       <td>0.002</td>
-      <td>0.002</td>
-      <td>1566.0</td>
-      <td>1461.0</td>
-      <td>1556.0</td>
-      <td>1189.0</td>
-      <td>1.0</td>
+      <td>0.001</td>
+      <td>2200.0</td>
+      <td>2197.0</td>
+      <td>2188.0</td>
+      <td>1710.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>cS2[1]</th>
-      <td>1.026</td>
-      <td>0.110</td>
-      <td>0.832</td>
-      <td>1.233</td>
-      <td>0.003</td>
+      <td>0.904</td>
+      <td>0.106</td>
+      <td>0.711</td>
+      <td>1.103</td>
       <td>0.002</td>
-      <td>1466.0</td>
-      <td>1435.0</td>
-      <td>1488.0</td>
-      <td>1337.0</td>
-      <td>1.0</td>
+      <td>0.002</td>
+      <td>2051.0</td>
+      <td>2034.0</td>
+      <td>2049.0</td>
+      <td>1702.0</td>
+      <td>1.00</td>
     </tr>
     <tr>
       <th>cS2[2]</th>
-      <td>1.357</td>
-      <td>0.124</td>
-      <td>1.136</td>
-      <td>1.597</td>
+      <td>1.408</td>
+      <td>0.131</td>
+      <td>1.179</td>
+      <td>1.663</td>
       <td>0.003</td>
       <td>0.002</td>
-      <td>1503.0</td>
-      <td>1503.0</td>
-      <td>1504.0</td>
-      <td>1686.0</td>
-      <td>1.0</td>
+      <td>1784.0</td>
+      <td>1772.0</td>
+      <td>1786.0</td>
+      <td>1598.0</td>
+      <td>1.00</td>
     </tr>
   </tbody>
 </table>
 </div>
 
 
+
+## Group level
+
+
+```python
+simulation = responseSimulation(d=1, metad=1.5, c=0, nRatings=4,
+                                nTrials=200, nSubjects=10)
+```
+
+
+```python
+model, trace = hmetad(
+    data=simulation, nRatings=4, stimuli='Stimuli', accuracy='Accuracy',
+    confidence='Confidence', subject='Subject')
+```
+
+    Auto-assigning NUTS sampler...
+    Initializing NUTS using jitter+adapt_diag...
+    Sequential sampling (2 chains in 1 job)
+    NUTS: [cS2_hn, cS1_hn, epsilon_logMratio, delta_tilde, sigma_delta, mu_logMratio, d1_tilde, c1_tilde, sigma_d1, sigma_c2, sigma_c1, mu_d1, mu_c2, mu_c1]
+    
+
+
+
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [2000/2000 00:45<00:00 Sampling chain 0, 13 divergences]
+</div>
+
+
+
+
+
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [2000/2000 00:38<00:00 Sampling chain 1, 11 divergences]
+</div>
+
+
+
+    Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 84 seconds.
+    There were 13 divergences after tuning. Increase `target_accept` or reparameterize.
+    There were 24 divergences after tuning. Increase `target_accept` or reparameterize.
+    The estimated number of effective samples is smaller than 200 for some parameters.
+    
+
+
+```python
+az.plot_posterior(trace, var_names=['mu_logMratio'], kind='hist', bins=20)
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f38e8be6278>
+
+
+
+
+    
+![png](./images/groupLevel.png)
+    
+
+
+## Repeated measures
+
+
+```python
+simulation = responseSimulation(
+    d=1, metad=1.5, c=0, nRatings=4, nTrials=200, nSubjects=10, nConditions=2)
+```
+
+
+```python
+model, trace = hmetad(
+    data=simulation, nRatings=4, stimuli='Stimuli', accuracy='Accuracy',
+    confidence='Confidence', subject='Subject', within='Condition')
+```
+
+    Auto-assigning NUTS sampler...
+    Initializing NUTS using jitter+adapt_diag...
+    Sequential sampling (2 chains in 1 job)
+    NUTS: [cS2_hn, cS1_hn, log_mRatio_tilde, tau_logMratio, Bd_Cond1, dbase_tilde, sigma_Cond1, mu_Cond1, sigma_D, mu_D, sigma_c2, mu_c2]
+    
+
+
+
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [2000/2000 01:10<00:00 Sampling chain 0, 21 divergences]
+</div>
+
+
+
+
+
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [2000/2000 00:56<00:00 Sampling chain 1, 32 divergences]
+</div>
+
+
+
+    Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 127 seconds.
+    There were 21 divergences after tuning. Increase `target_accept` or reparameterize.
+    There were 53 divergences after tuning. Increase `target_accept` or reparameterize.
+    The number of effective samples is smaller than 25% for some parameters.
+    
+
+
+```python
+az.plot_posterior(trace, var_names=['mu_Cond1'], kind='hist', bins=20)
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f387f5986d8>
+
+
+
+
+    
+![png](./images/repeatedMeasures.png)
+    
+
+
+
+```python
+az.plot_forest(trace, var_names=["mRatio"])
+```
+
+
+
+
+    array([<matplotlib.axes._subplots.AxesSubplot object at 0x7f387f3d1278>],
+          dtype=object)
+
+
+
+
+    
+![png](./images/repeatedMeasures2.png)
+    
+
+
 # References
 
-1. Maniscalco, B., & Lau, H. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d′, Response-Specific Meta-d′, and the Unequal Variance SDT Model. In The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-642-45190-4_3 
+[1] Maniscalco, B., & Lau, H. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d′, Response-Specific Meta-d′, and the Unequal Variance SDT Model. In The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-642-45190-4_3 
 
-2. Fleming, S. M., & Lau, H. C. (2014). How to measure metacognition. Frontiers in Human Neuroscience, 8. https://doi.org/10.3389/fnhum.2014.00443
+[2] Fleming, S. M., & Lau, H. C. (2014). How to measure metacognition. Frontiers in Human Neuroscience, 8. https://doi.org/10.3389/fnhum.2014.00443
 
-3. Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings, Neuroscience of Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+[3] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings, Neuroscience of Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+
