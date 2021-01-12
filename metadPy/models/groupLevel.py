@@ -298,7 +298,7 @@ def hmetad_groupLevel(data: dict, sample_model: bool = True, **kwargs):
 
         if sample_model is True:
 
-            trace = sample(progressbar=True, return_inferencedata=True, **kwargs)
+            trace = sample(return_inferencedata=True, **kwargs)
 
             return model, trace
 

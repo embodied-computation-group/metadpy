@@ -316,7 +316,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
 
         if sample_model is True:
 
-            trace = sample(progressbar=True, return_inferencedata=True, **kwargs)
+            trace = sample(return_inferencedata=True, **kwargs)
 
             return model, trace
 
