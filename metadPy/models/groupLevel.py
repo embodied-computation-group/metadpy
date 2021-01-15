@@ -74,9 +74,15 @@ def hmetad_groupLevel(data: dict, sample_model: bool = True, **kwargs):
             "mu_d1", mu=0, tau=0.01, shape=(1), testval=np.random.rand() * 0.1
         )
 
-        sigma_c1 = HalfNormal("sigma_c1", tau=0.01, shape=(1))
-        sigma_c2 = HalfNormal("sigma_c2", tau=0.01, shape=(1, 1))
-        sigma_d1 = HalfNormal("sigma_d1", tau=0.01, shape=(1))
+        sigma_c1 = HalfNormal(
+            "sigma_c1", tau=0.01, shape=(1), testval=np.random.rand() * 0.1
+        )
+        sigma_c2 = HalfNormal(
+            "sigma_c2", tau=0.01, shape=(1, 1), testval=np.random.rand() * 0.1
+        )
+        sigma_d1 = HalfNormal(
+            "sigma_d1", tau=0.01, shape=(1), testval=np.random.rand() * 0.1
+        )
 
         # Type 1 priors
         c1_tilde = Normal("c1_tilde", mu=0, sigma=1, shape=(nSubj, 1))

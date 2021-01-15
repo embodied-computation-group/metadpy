@@ -66,6 +66,7 @@ class Testsdt(TestCase):
             tune=50,
             draws=50,
         )
+
         assert isinstance(model, pm.Model)
         assert isinstance(trace, az.InferenceData)
 
