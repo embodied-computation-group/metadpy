@@ -3,13 +3,12 @@
 import unittest
 from unittest import TestCase
 
-import numpy as np
-import pytest
-
-from metadPy.hierarchical import extractParameters, hmetad
-from metadPy import load_dataset
-import pymc3 as pm
 import arviz as az
+import numpy as np
+import pymc3 as pm
+
+from metadPy import load_dataset
+from metadPy.hierarchical import extractParameters, hmetad
 
 
 class Testsdt(TestCase):

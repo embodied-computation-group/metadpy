@@ -7,8 +7,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from metadPy.sdt import criterion, dprime, metad, rates, roc_auc, scores
 from metadPy import load_dataset
+from metadPy.sdt import criterion, dprime, metad, rates, roc_auc, scores
 
 data = pd.DataFrame(
     {

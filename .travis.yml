@@ -9,11 +9,15 @@ install:
   - pip install -r requirements.txt
   - pip install coverage pytest
   - pip install mypy
+  - pip install flake8
+  - pip install isort    
 
 script:
   - coverage run -m pytest
   - black --check ./
+  - isort ./
   - mypy ./metadPy/ --ignore-missing-imports
+  - flake8 --count --exclude
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

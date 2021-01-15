@@ -1,10 +1,11 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+from typing import Optional, Union
+
 import matplotlib.pyplot as plt
-from matplotlib.axes import Axes
 import numpy as np
+from matplotlib.axes import Axes
 from scipy.stats import norm
-from typing import Union, Optional
 
 
 def plot_confidence(

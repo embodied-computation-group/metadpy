@@ -1,10 +1,11 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+from typing import Dict, List, Optional, Tuple, Union, overload
+
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from scipy.stats import norm
-from typing import Optional, Tuple, Union, Dict, List, overload, Any
 
 
 @overload

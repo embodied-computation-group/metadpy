@@ -1,12 +1,14 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+from typing import Any, Callable, List, Optional, Tuple, Union, overload
+
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
+
 from metadPy.utils import trials2counts
-from typing import Optional, Tuple, List, Union, Callable, overload, Any
 
 
 @overload
@@ -198,7 +200,8 @@ def rates(
 
     The false alarms rate is defined by:
 
-    .. math:: fals alarms rate = \\frac{\\fals alarms}{s_{fals alarms + correct rejections}}
+    .. math:: fals alarms rate =
+        \\frac{\\fals alarms}{s_{fals alarms + correct rejections}}
 
     .. warning:: This function will correct false alarm rates and hits rates
         by default using a half inverse method to avoid `0` and `1` values,

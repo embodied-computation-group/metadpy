@@ -1,11 +1,10 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import numpy as np
-import pymc3.distributions.transforms as tr
 from pymc3 import (
     Binomial,
-    HalfNormal,
     Deterministic,
+    HalfNormal,
     Model,
     Multinomial,
     Normal,

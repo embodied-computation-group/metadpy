@@ -7,8 +7,8 @@ import matplotlib
 import pytest
 
 from metadPy.plotting import plot_confidence, plot_roc
-from metadPy.utils import responseSimulation
 from metadPy.sdt import metad
+from metadPy.utils import responseSimulation
 
 
 class Testsdt(TestCase):

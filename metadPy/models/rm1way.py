@@ -3,12 +3,12 @@
 import numpy as np
 import theano.tensor as tt
 from pymc3 import (
-    Model,
-    Normal,
-    HalfNormal,
-    Exponential,
-    Multinomial,
     Deterministic,
+    Exponential,
+    HalfNormal,
+    Model,
+    Multinomial,
+    Normal,
     math,
     sample,
 )

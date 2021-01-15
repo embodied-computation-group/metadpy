@@ -101,9 +101,6 @@ def hmetad_groupLevel(data: dict, sample_model: bool = True, **kwargs):
         delta = Deterministic("delta", sigma_delta * delta_tilde)
 
         epsilon_logMratio = Beta("epsilon_logMratio", 1, 1, shape=(1))
-        sigma_logMratio = Deterministic(
-            "sigma_logMratio", math.abs_(epsilon_logMratio) * sigma_delta
-        )
         logMratio = Deterministic("logMratio", mu_logMratio + epsilon_logMratio * delta)
         mRatio = Deterministic("mRatio", math.exp(logMratio))
 

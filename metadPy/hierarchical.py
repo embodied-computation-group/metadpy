@@ -2,7 +2,9 @@
 
 import os
 import sys
+
 import numpy as np
+
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
 
