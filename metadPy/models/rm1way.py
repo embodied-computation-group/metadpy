@@ -104,7 +104,9 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
             testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
         )
 
-        tau_logMratio = Exponential("tau_logMratio", 0.1, shape=(nSubj, 1, 1))
+        tau_logMratio = Exponential(
+            "tau_logMratio", 1, shape=(nSubj, 1, 1), testval=np.random.rand(nSubj) * 0.1
+        )
 
         ###############################
         # Hypterprior - Condition level
