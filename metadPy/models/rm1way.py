@@ -4,7 +4,7 @@ import numpy as np
 import theano.tensor as tt
 from pymc3 import (
     Deterministic,
-    Exponential,
+    HalfCauchy,
     HalfNormal,
     Model,
     Multinomial,
@@ -104,8 +104,11 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
             testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
         )
 
-        tau_logMratio = Exponential(
-            "tau_logMratio", 1, shape=(nSubj, 1, 1), testval=np.random.rand(nSubj) * 0.1
+        sigma_logMratio = HalfCauchy(
+            "sigma_logMratio",
+            5,
+            shape=(nSubj, 1, 1),
+            testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
         )
 
         ###############################
@@ -114,7 +117,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         mu_regression = [dbase + (Bd_Cond1 * c) for c in range(nCond)]
 
         log_mRatio_tilde = Normal(
-            "log_mRatio_tilde", mu=0, tau=tau_logMratio, shape=(nSubj, 1, 1)
+            "log_mRatio_tilde", mu=0, sigma=sigma_logMratio, shape=(nSubj, 1, 1)
         )
         log_mRatio = Deterministic(
             "log_mRatio",
