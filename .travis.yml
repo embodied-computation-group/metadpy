@@ -17,7 +17,7 @@ script:
   - black --check ./
   - isort ./
   - mypy ./metadPy/ --ignore-missing-imports
-  - flake8 --count --exclude
+  - flake8 ./
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
