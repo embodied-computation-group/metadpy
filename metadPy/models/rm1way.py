@@ -66,11 +66,9 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         #############
         # Hyperpriors
         #############
-        mu_c2 = Normal(
-            "mu_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand() * 0.1
-        )
+        mu_c2 = Normal("mu_c2", tau=0.01, shape=(1,), testval=np.random.rand() * 0.1)
         sigma_c2 = HalfNormal(
-            "sigma_c2", tau=0.01, shape=(1, 1, 1), testval=np.random.rand() * 0.1
+            "sigma_c2", tau=0.01, shape=(1,), testval=np.random.rand() * 0.1
         )
 
         mu_D = Normal("mu_D", tau=0.001, shape=(1), testval=np.random.rand() * 0.1)
@@ -96,19 +94,22 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         )
         dbase = Deterministic("dbase", mu_D + sigma_D * dbase_tilde)
 
-        Bd_Cond1 = Normal(
-            "Bd_Cond1",
-            mu=mu_Cond1,
-            sigma=sigma_Cond1,
+        Bd_Cond1_tilde = Normal(
+            "Bd_Cond1_tilde",
+            mu=0,
+            sigma=1,
             shape=(nSubj, 1, 1),
-            testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
+        )
+
+        Bd_Cond1 = Deterministic(
+            "Bd_Cond1",
+            mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde,
         )
 
         sigma_logMratio = HalfCauchy(
             "sigma_logMratio",
-            5,
+            0.01,
             shape=(nSubj, 1, 1),
-            testval=(np.random.rand(nSubj) * 0.1).reshape(nSubj, 1, 1),
         )
 
         ###############################
@@ -117,12 +118,13 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         mu_regression = [dbase + (Bd_Cond1 * c) for c in range(nCond)]
 
         log_mRatio_tilde = Normal(
-            "log_mRatio_tilde", mu=0, sigma=sigma_logMratio, shape=(nSubj, 1, 1)
+            "log_mRatio_tilde", mu=0, sigma=1, shape=(nSubj, 1, 1)
         )
         log_mRatio = Deterministic(
             "log_mRatio",
             tt.stack(mu_regression, axis=1)[:, :, :, 0]
-            + tt.tile(log_mRatio_tilde, (1, 2, 1)),
+            + tt.tile(log_mRatio_tilde, (1, 2, 1))
+            * tt.tile(sigma_logMratio, (1, 2, 1)),
         )
 
         mRatio = Deterministic("mRatio", tt.exp(log_mRatio))
@@ -136,27 +138,29 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
         # Multinomial likelihood for response counts
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c
-        cS1_hn = HalfNormal(
+        cS1_hn = Normal(
             "cS1_hn",
-            sigma=sigma_c2,
+            mu=0,
+            sigma=1,
             shape=(nSubj, nCond, nRatings - 1),
-            testval=np.linspace(1.5, 0.5, nRatings - 1)
+            testval=np.linspace(-1.5, -0.5, nRatings - 1)
             .reshape(1, 1, nRatings - 1)
             .repeat(nSubj, axis=0)
             .repeat(nCond, axis=1),
         )
-        cS1 = Deterministic("cS1", -mu_c2 - cS1_hn + (c1 - data["Tol"]))
+        cS1 = Deterministic("cS1", -mu_c2 + (cS1_hn * sigma_c2))
 
-        cS2_hn = HalfNormal(
+        cS2_hn = Normal(
             "cS2_hn",
-            sigma=sigma_c2,
+            mu=0,
+            sigma=1,
             shape=(nSubj, nCond, nRatings - 1),
             testval=np.linspace(0.5, 1.5, nRatings - 1)
             .reshape(1, 1, nRatings - 1)
             .repeat(nSubj, axis=0)
             .repeat(nCond, axis=1),
         )
-        cS2 = Deterministic("cS2", mu_c2 + cS2_hn + (c1 + data["Tol"]))
+        cS2 = Deterministic("cS2", mu_c2 + (cS2_hn * sigma_c2))
 
         # Calculate normalisation constants
         C_area_rS1 = cumulative_normal(c1 - S1mu)
@@ -321,7 +325,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
 
         if sample_model is True:
 
-            trace = sample(return_inferencedata=True, **kwargs)
+            trace = sample(return_inferencedata=True, init="adapt_diag", **kwargs)
 
             return model, trace
 

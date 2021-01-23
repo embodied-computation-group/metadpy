@@ -1,7 +1,6 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import numpy as np
-import theano.tensor as tt
 from pymc3 import (
     Beta,
     Binomial,
@@ -115,29 +114,27 @@ def hmetad_groupLevel(data: dict, sample_model: bool = True, **kwargs):
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
-        cS1_hn = HalfNormal(
+        cS1_hn = Normal(
             "cS1_hn",
-            sigma=sigma_c2,
+            mu=0,
+            sigma=1,
             shape=(nSubj, nRatings - 1),
-            testval=np.linspace(1.5, 0.5, nRatings - 1)
+            testval=np.linspace(-1.5, -0.5, nRatings - 1)
             .reshape(1, nRatings - 1)
             .repeat(nSubj, axis=0),
         )
-        cS1 = Deterministic(
-            "cS1", -mu_c2 - cS1_hn + (tt.tile(c1, (1, nRatings - 1)) - data["Tol"])
-        )
+        cS1 = Deterministic("cS1", -mu_c2 + (cS1_hn * sigma_c2))
 
-        cS2_hn = HalfNormal(
+        cS2_hn = Normal(
             "cS2_hn",
-            sigma=sigma_c2,
+            mu=0,
+            sigma=1,
             shape=(nSubj, nRatings - 1),
             testval=np.linspace(0.5, 1.5, nRatings - 1)
             .reshape(1, nRatings - 1)
             .repeat(nSubj, axis=0),
         )
-        cS2 = Deterministic(
-            "cS2", mu_c2 + cS2_hn + (tt.tile(c1, (1, nRatings - 1)) + data["Tol"])
-        )
+        cS2 = Deterministic("cS2", mu_c2 + (cS2_hn * sigma_c2))
 
         # Means of SDT distributions
         S2mu = meta_d / 2
