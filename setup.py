@@ -6,7 +6,9 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-DESCRIPTION = """Hierarchical meta-d' model"""
+DESCRIPTION = (
+    "Fitting behavioural and cognitive models" "of metacognitive efficiency in Python."
+)
 
 DISTNAME = "metadPy"
 MAINTAINER = "Nicolas Legrand"
@@ -18,7 +20,7 @@ INSTALL_REQUIRES = [
     "scipy>=1.3",
     "pandas>=0.24",
     "matplotlib>=3.1.3",
-    "pymc3>=3.8",
+    "pymc3>=3.11.0",
     "seaborn>=0.10.0",
     "pandas_flavor>=0.1.2",
 ]

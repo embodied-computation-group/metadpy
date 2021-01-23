@@ -3,7 +3,6 @@
 import unittest
 from unittest import TestCase
 
-import arviz as az
 import numpy as np
 import pymc3 as pm
 
@@ -40,40 +39,35 @@ class Testsdt(TestCase):
         # Test subject level
         ####################
         this_df = group_df[(group_df.Subject == 0) & (group_df.Condition == 0)]
-        model, trace = hmetad(
+        model = hmetad(
             data=this_df,
             nRatings=4,
             stimuli="Stimuli",
             accuracy="Accuracy",
             confidence="Confidence",
-            tune=50,
-            draws=50,
+            sample_model=False,
         )
         assert isinstance(model, pm.Model)
-        assert isinstance(trace, az.InferenceData)
 
         ####################
         # Test group level
         ####################
         this_df = group_df[group_df.Condition == 0]
-        model, trace = hmetad(
+        model = hmetad(
             data=this_df,
             nRatings=4,
             stimuli="Stimuli",
             accuracy="Accuracy",
             confidence="Confidence",
             subject="Subject",
-            tune=50,
-            draws=50,
+            sample_model=False,
         )
-
         assert isinstance(model, pm.Model)
-        assert isinstance(trace, az.InferenceData)
 
         #######################
         # Test repeated measure
         #######################
-        model, trace = hmetad(
+        model = hmetad(
             data=group_df,
             nRatings=4,
             stimuli="Stimuli",
@@ -81,11 +75,9 @@ class Testsdt(TestCase):
             confidence="Confidence",
             subject="Subject",
             within="Condition",
-            tune=50,
-            draws=50,
+            sample_model=False,
         )
         assert isinstance(model, pm.Model)
-        assert isinstance(trace, az.InferenceData)
 
 
 if __name__ == "__main__":

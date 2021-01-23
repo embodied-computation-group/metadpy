@@ -4,17 +4,18 @@ import unittest
 from unittest import TestCase
 
 import matplotlib
+import numpy as np
 import pytest
 
 from metadPy.plotting import plot_confidence, plot_roc
 from metadPy.sdt import metad
-from metadPy.utils import responseSimulation
 
 
 class Testsdt(TestCase):
     def test_plot_confidence(self):
         """Test plot_confidence function"""
-        nR_S1, nR_S2 = responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500)
+        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
+        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         ax = plot_confidence(nR_S1, nR_S2)
         assert isinstance(ax, matplotlib.axes.Axes)
         with pytest.raises(ValueError):
@@ -25,7 +26,8 @@ class Testsdt(TestCase):
 
     def test_plot_roc(self):
         """Test plot_roc function"""
-        nR_S1, nR_S2 = responseSimulation(d=1, metad=2, c=0, nRatings=4, nTrials=500)
+        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
+        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         ax = plot_roc(nR_S1, nR_S2)
         assert isinstance(ax, matplotlib.axes.Axes)
         modelFit = metad(nR_S1=nR_S1, nR_S2=nR_S2)

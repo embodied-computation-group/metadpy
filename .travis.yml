@@ -1,9 +1,9 @@
 language: python
 
 python:
-  - "3.6"
   - "3.7"
   - "3.8"
+  - "3.9"
 
 install:
   - pip install -r requirements.txt
@@ -16,7 +16,7 @@ script:
   - coverage run -m pytest
   - black --check ./
   - isort ./
-  - mypy ./metadPy/ --ignore-missing-imports
+  - mypy ./metadPy/ --ignore-missing-imports --follow-imports=skip
   - flake8 ./
 
 after_success:
