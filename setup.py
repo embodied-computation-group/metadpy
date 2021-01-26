@@ -20,7 +20,7 @@ INSTALL_REQUIRES = [
     "scipy>=1.3",
     "pandas>=0.24",
     "matplotlib>=3.1.3",
-    "pymc3>=3.11.0",
+    "pymc3>=3.10.0",
     "seaborn>=0.10.0",
     "pandas_flavor>=0.1.2",
 ]
