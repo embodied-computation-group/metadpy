@@ -4,7 +4,7 @@ import numpy as np
 import theano.tensor as tt
 from pymc3 import (
     Deterministic,
-    HalfCauchy,
+    Gamma,
     HalfNormal,
     Model,
     Multinomial,
@@ -106,10 +106,14 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
             mu_Cond1 + sigma_Cond1 * Bd_Cond1_tilde,
         )
 
-        sigma_logMratio = HalfCauchy(
-            "sigma_logMratio",
-            0.01,
+        lambda_logMratio = Gamma(
+            "lambda_logMratio",
+            alpha=0.001,
+            beta=0.001,
             shape=(nSubj, 1, 1),
+        )
+        sigma_logMratio = Deterministic(
+            "sigma_logMratio", 1 / math.sqrt(lambda_logMratio)
         )
 
         ###############################
@@ -325,7 +329,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
 
         if sample_model is True:
 
-            trace = sample(return_inferencedata=True, init="adapt_diag", **kwargs)
+            trace = sample(return_inferencedata=True, **kwargs)
 
             return model, trace
 
