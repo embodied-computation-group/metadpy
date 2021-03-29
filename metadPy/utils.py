@@ -11,10 +11,10 @@ from scipy.stats import norm
 @overload
 def trials2counts(
     data: None,
-    stimuli: Union[list, np.array],
-    responses: Union[list, np.array],
-    accuracy: Union[list, np.array],
-    confidence: Union[list, np.array],
+    stimuli: Union[list, np.ndarray],
+    responses: Union[list, np.ndarray],
+    accuracy: Union[list, np.ndarray],
+    confidence: Union[list, np.ndarray],
     nRatings: int = 4,
     padding: bool = False,
     padAmount: Optional[float] = None,
@@ -210,7 +210,7 @@ def trials2counts(
 
 
 def discreteRatings(
-    ratings: Union[list, np.array], nbins: int = 4, verbose: bool = True
+    ratings: Union[list, np.ndarray], nbins: int = 4, verbose: bool = True
 ) -> Tuple[np.array, Dict[str, list]]:
     """Convert continuous ratings to dscrete bins
 
@@ -572,7 +572,7 @@ def type2_SDT_simuation(
     c: float = 0,
     nRatings: int = 4,
     nTrials: int = 500,
-) -> Tuple[np.array, np.array]:
+) -> Tuple[np.ndarray, np.ndarray]:
     """Type 2 SDT simulation with variable noise.
 
     Parameters
@@ -665,7 +665,7 @@ def type2_SDT_simuation(
     return nR_S1, nR_S2
 
 
-def ratings2df(nR_S1: np.array, nR_S2: np.array) -> pd.DataFrame:
+def ratings2df(nR_S1: np.ndarray, nR_S2: np.ndarray) -> pd.DataFrame:
     """Convert response count to dataframe.
 
     Parameters
