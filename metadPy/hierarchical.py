@@ -2,17 +2,17 @@
 
 import os
 import sys
-from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union, overload
+from typing import Dict, List, Optional, Tuple, Union, overload
 
 import numpy as np
+import pandas as pd
 import pandas_flavor as pf
+from arviz import InferenceData
+from pymc3.backends.base import MultiTrace
+from pymc3.model import Model
 
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
-
-if TYPE_CHECKING:
-    import pandas as pd
-    import pymc3 as pm
 
 
 @overload
@@ -27,7 +27,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
-) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
 
@@ -44,7 +44,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
-) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
 
@@ -61,7 +61,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
-) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
 
@@ -78,7 +78,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
-) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
 
@@ -99,7 +99,7 @@ def hmetad(
     padAmount=None,
     sample_model=True,
     **kwargs
-) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+):
     """Estimate parameters of the Hierarchical Bayesian meta-d'
 
     Parameters
