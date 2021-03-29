@@ -587,10 +587,10 @@ def metad(
 @pf.register_dataframe_method
 def metad(
     data=None,
-    nRatings=None,
-    stimuli=None,
-    accuracy=None,
-    confidence=None,
+    nRatings=4,
+    stimuli="Stimuli",
+    accuracy="Accuracy",
+    confidence="Confidence",
     padAmount=None,
     nR_S1=None,
     nR_S2=None,
@@ -616,14 +616,15 @@ def metad(
     nRatings : int
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
-    stimuli : string
+        discrete ratings using :py:func:`metadPy.utils.discreteRatings`. Default
+        set to 4.
+    stimuli : string or None
         Name of the column containing the stimuli.
-    accuracy : string
+    accuracy : string or None
         Name of the columns containing the accuracy.
-    confidence : string
+    confidence : string or None
         Name of the column containing the confidence ratings.
-    nR_S1, nR_S2 : list or 1d array-like
+    nR_S1, nR_S2 : list, 1d array-like or None
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
         nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was presented, the
@@ -652,7 +653,7 @@ def metad(
     padding : boolean
         If `True`, a small value will be added to the counts to avoid problems
         during fit.
-    padAmount : float
+    padAmount : float or None
         The value to add to each response count if padding is set to 1.
         Default value is 1/(2*nRatings)
     collapse : int or None
@@ -670,6 +671,9 @@ def metad(
             * 1 : display a termination report.
             * 2 : display progress during iterations.
             * 3 : display progress during iterations (more complete report).
+    output_df : bool
+        If `True`, return a :py:`class:pandas:DataFrame`, otherwise will
+        return a dictionary.
 
     Returns
     -------
