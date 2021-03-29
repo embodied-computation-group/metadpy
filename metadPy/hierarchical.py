@@ -325,7 +325,6 @@ def extractParameters(
         fa_rate=ratingFAR[nratings - 1],
         stimuli=None,
         responses=None,
-        correction=True,
     )
     counts = np.hstack([nR_S1, nR_S2])
 
