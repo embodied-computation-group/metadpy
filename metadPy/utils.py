@@ -418,47 +418,29 @@ def trialSimulation(
 
 def responseSimulation(
     d: float = 1.0,
-    d_sigma: float = 0.1,
     metad: float = 2.0,
-    mRatio: list = [1],
-    mRatio_sigma: float = 0.2,
-    mRatio_rho: float = 0,
     c: float = 0,
-    c_sigma: float = 0.1,
     nRatings: int = 4,
     nTrials: int = 500,
     nSubjects: int = 1,
-    nConditions: int = 1,
 ) -> pd.DataFrame:
-    """Simulate nR_S1 and nR_S2 response counts.
+    """Simulate response and confidence ratings at the trial level for one
+    or a group of participants.
 
     Parameters
     ----------
     d : float
         Type 1 task performance (d prime).
-    d_sigma : float
-        Include some between-subject variability for d prime.
     metad : float
         Type 2 sensitivity in units of type 1 dprime.
-    mRatio : list
-        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios
-        are assumed to be drawn from a repeated measures design.
-    mRatio_sigma : float
-        Include some variability in the mRatio scores.
-    mRatio_rho : float
-        Specify the correlation between the two Mratios.
     c : float
         Type 1 task bias (criterion).
-    c_sigma : float
-        Include some between-subject variability for criterion.
     nRatings : int
         Number of ratings.
     nTrials : int
         Set the number of trials performed.
     nSubjects : int
         Specify the number of subject who performed the task.
-    nConditions : int
-        Number of conditions (1 or 2).
 
     Returns
     -------
@@ -476,63 +458,110 @@ def responseSimulation(
     --------
     ratings2df
     """
-    if nConditions == 1:
-        if nSubjects == 1:
-            output_df = trialSimulation(
-                d=d,
-                metad=metad,
-                c=c,
+    output_df = pd.DataFrame([])
+    for sub in range(nSubjects):
+        this_df = trialSimulation(
+            d=d,
+            metad=metad,
+            c=c,
+            nRatings=nRatings,
+            nTrials=nTrials,
+        )
+        this_df["Subject"] = sub
+        output_df = output_df.append(this_df, ignore_index=True)
+
+    return output_df
+
+
+def pairedResponseSimulation(
+    d: float = 1.0,
+    d_sigma: float = 0.1,
+    mRatio: list = [1, 0.6],
+    mRatio_sigma: float = 0.2,
+    mRatio_rho: float = 0,
+    c: float = 0,
+    c_sigma: float = 0.1,
+    nRatings: int = 4,
+    nTrials: int = 500,
+    nSubjects: int = 20,
+) -> pd.DataFrame:
+    """Simulate response and confidence ratings at the trial level
+    for a group of `nSubjects` participants with 2 experimental conditions.
+
+    Parameters
+    ----------
+    d : float
+        Type 1 task performance (d prime).
+    d_sigma : float
+        Include some between-subject variability for d prime.
+    mRatio : list
+        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios
+        are assumed to be drawn from a repeated measures design.
+    mRatio_sigma : float
+        Include some variability in the mRatio scores.
+    mRatio_rho : float
+        Specify the correlation between the two Mratios.
+    c : float
+        Type 1 task bias (criterion).
+    c_sigma : float
+        Include some between-subject variability for criterion.
+    nRatings : int
+        Number of ratings.
+    nTrials : int
+        Set the number of trials performed.
+    nSubjects : int
+        Specify the number of subject who performed the task. Default set
+        to `20`.
+
+    Returns
+    -------
+    output_df : :py:class:`pandas.DataFrame`
+        A DataFrame (nRows==`nTrials` * `nSubjects`) containing the
+        responses and confidence rating for one or many participants
+        given the provided parameters.
+
+    References
+    ----------
+    This function is adapted from the Matlab `cpc_metad_sim` function from:
+    https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
+
+    See also
+    --------
+    ratings2df"""
+    # Create covariance matrix for the two mRatios
+    covMatrix = np.array(
+        [
+            [mRatio_sigma ** 2, mRatio_rho * mRatio_sigma ** 2],
+            [mRatio_rho * mRatio_sigma ** 2, mRatio_sigma ** 2],
+        ]
+    )
+    MVvalues = np.zeros((nSubjects, 2))
+    d_vector, c_vector = np.zeros((nSubjects, 2)), np.zeros((nSubjects, 2))
+    metad_list = np.zeros((nSubjects, 2))
+    output_df = pd.DataFrame([])
+
+    for b in range(nSubjects):
+        # Generate the Mratio values
+        # from a multivariate normal distribution
+        MVvalues[b, :] = np.random.multivariate_normal(mRatio, covMatrix)
+        for a in range(2):
+            # Generate dprime values
+            d_vector[b, a] = np.random.normal(d, d_sigma)
+            # Generate bias values
+            c_vector[b, a] = np.random.normal(c, c_sigma)
+            # Generate meta-d values
+            metad_list[b, a] = MVvalues[b, a] * d_vector[b, a]
+            # Simulate data
+            this_df = trialSimulation(
+                d=d_vector[b, a],
+                metad=metad_list[b, a],
+                c=c_vector[b, a],
                 nRatings=nRatings,
                 nTrials=nTrials,
             )
-        elif nSubjects >= 1:
-            output_df = pd.DataFrame([])
-            for sub in range(nSubjects):
-                this_df = trialSimulation(
-                    d=d,
-                    metad=metad,
-                    c=c,
-                    nRatings=nRatings,
-                    nTrials=nTrials,
-                )
-                this_df["Subject"] = sub
-                output_df = output_df.append(this_df, ignore_index=True)
-
-    if nConditions == 2:
-
-        # Create covariance matrix for the two mRatios
-        covMatrix = np.array(
-            [
-                [mRatio_sigma ** 2, mRatio_rho * mRatio_sigma ** 2],
-                [mRatio_rho * mRatio_sigma ** 2, mRatio_sigma ** 2],
-            ]
-        )
-        MVvalues = np.zeros((nSubjects, 2))
-        d_vector, c_vector = np.zeros((nSubjects, 2)), np.zeros((nSubjects, 2))
-        metad_list = np.zeros((nSubjects, 2))
-        output_df = pd.DataFrame([])
-
-        for b in range(nSubjects):
-            # Generate the Mratio values from a multivariate normal distribution
-            MVvalues[b, :] = np.random.multivariate_normal(mRatio, covMatrix)
-            for a in range(2):
-                # Generate dprime values
-                d_vector[b, a] = np.random.normal(d, d_sigma)
-                # Generate bias values
-                c_vector[b, a] = np.random.normal(c, c_sigma)
-                # Generate meta-d values
-                metad_list[b, a] = MVvalues[b, a] * d_vector[b, a]
-                # Simulate data
-                this_df = trialSimulation(
-                    d=d_vector[b, a],
-                    metad=metad_list[b, a],
-                    c=c_vector[b, a],
-                    nRatings=nRatings,
-                    nTrials=nTrials,
-                )
-                this_df["Subject"] = b
-                this_df["Condition"] = a
-                output_df = output_df.append(this_df, ignore_index=True)
+            this_df["Subject"] = b
+            this_df["Condition"] = a
+            output_df = output_df.append(this_df, ignore_index=True)
 
     return output_df
 

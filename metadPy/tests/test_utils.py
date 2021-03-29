@@ -9,6 +9,7 @@ import pytest
 
 from metadPy.utils import (
     discreteRatings,
+    pairedResponseSimulation,
     ratings2df,
     responseSimulation,
     trials2counts,
@@ -213,20 +214,14 @@ class Testsdt(TestCase):
         nR_S1, nR_S2 = simulation_df.trials2counts()
         assert sum(nR_S1) == sum(nR_S2) == 2500
 
-        # Repeated measures
-        simulation_df = responseSimulation(
-            d=1,
-            mRatio=[1, 2],
-            c=0,
-            nRatings=4,
-            nTrials=500,
-            nSubjects=10,
-            nConditions=2,
-        )
+    def test_pairedResponseSimulation(self):
+        """Test responseSimulation function"""
+        simulation_df = pairedResponseSimulation()
+
         assert isinstance(simulation_df, pd.DataFrame)
-        assert simulation_df["Subject"].nunique() == 10
+        assert simulation_df["Subject"].nunique() == 20
         nR_S1, nR_S2 = simulation_df.trials2counts()
-        assert sum(nR_S1) == sum(nR_S2) == 5000
+        assert sum(nR_S1) == sum(nR_S2) == 10000
 
     def test_type2_SDT_simuation(self):
         """Test responseSimulation function"""
