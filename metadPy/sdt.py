@@ -14,8 +14,8 @@ from metadPy.utils import trials2counts
 @overload
 def scores(
     data: None,
-    stimuli: Union[List[Any], np.ndarray],
-    responses: Union[List[Any], np.ndarray],
+    stimuli: Union[List[int], np.ndarray],
+    responses: Union[List[int], np.ndarray],
 ) -> Tuple[int, int, int, int]:
     ...
 
@@ -151,7 +151,7 @@ def rates(
     responses=None,
     correction=True,
 ):
-    """Calculate hit and false alarm rates.
+    """Compute hit and false alarm rates.
 
     The values are automatically corrected to avoid d' infinity (see below).
 
