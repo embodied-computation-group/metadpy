@@ -2,13 +2,87 @@
 
 import os
 import sys
+from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union, overload
 
 import numpy as np
+import pandas_flavor as pf
 
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
 
+if TYPE_CHECKING:
+    import pandas as pd
+    import pymc3 as pm
 
+
+@overload
+def hmetad(
+    data: None,
+    nR_S1: Union[List, np.ndarray],
+    nR_S2: Union[List, np.ndarray],
+    nRatings: Optional[int],
+    subject: None,
+    within: None,
+    nbins: int,
+    padding: bool = False,
+    padAmount: Optional[float] = None,
+    sample_model: bool = True,
+) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+    ...
+
+
+@overload
+def hmetad(
+    data: pd.DataFrame,
+    stimuli: str,
+    accuracy: str,
+    confidence: str,
+    nRatings: Optional[int],
+    subject: None,
+    within: None,
+    nbins: int,
+    padding: bool = False,
+    padAmount: Optional[float] = None,
+    sample_model: bool = True,
+) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+    ...
+
+
+@overload
+def hmetad(
+    data: pd.DataFrame,
+    stimuli: str,
+    accuracy: str,
+    confidence: str,
+    nRatings: Optional[int],
+    subject: str,
+    within: None,
+    nbins: int,
+    padding: bool = False,
+    padAmount: Optional[float] = None,
+    sample_model: bool = True,
+) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+    ...
+
+
+@overload
+def hmetad(
+    data: pd.DataFrame,
+    stimuli: str,
+    accuracy: str,
+    confidence: str,
+    nRatings: Optional[int],
+    subject: str,
+    within: str,
+    nbins: int,
+    padding: bool = False,
+    padAmount: Optional[float] = None,
+    sample_model: bool = True,
+) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
+    ...
+
+
+@pf.register_dataframe_method
 def hmetad(
     data=None,
     nR_S1=None,
@@ -25,7 +99,7 @@ def hmetad(
     padAmount=None,
     sample_model=True,
     **kwargs
-):
+) -> Union[pm.Model, Tuple[pm.Model, pm.Trace]]:
     """Estimate parameters of the Hierarchical Bayesian meta-d'
 
     Parameters
@@ -37,22 +111,22 @@ def hmetad(
         Confience ratings (stimuli 1, correct and incorrect).
     nR_S2 : 1d array-like, list, string or None
         Confience ratings (stimuli 2, correct and incorrect).
-    stimuli : string
+    stimuli : string or None
         Name of the column containing the stimuli.
-    accuracy : string
+    accuracy : string or None
         Name of the columns containing the accuracy.
-    confidence : string
+    confidence : string or None
         Name of the column containing the confidence ratings.
-    nRatings : int
+    nRatings : int or None
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
         discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
-    within : string
+    within : string or None
         Name of column containing the within factor (condition comparison).
-    between : string
+    between : string or None
         Name of column containing the between subject factor (group
         comparison).
-    subject : string
+    subject : string or None
         Name of column containing the subject identifier (only required if a
         within-subject or a between-subject factor is provided).
     nbins : int
@@ -65,7 +139,7 @@ def hmetad(
         with model fitting. If False, trial counts are not manipulated and 0s
         may be present in the response count output. Default value for padding
         is 0.
-    padAmount : float
+    padAmount : float or None
         The value to add to each response count if padCells is set to 1.
         Default value is 1/(2*nRatings)
     sample_model : boolean
@@ -190,7 +264,9 @@ def hmetad(
         return model
 
 
-def extractParameters(nR_S1, nR_S2):
+def extractParameters(
+    nR_S1: Union[List[int], np.array], nR_S2: Union[List[int], np.array]
+) -> Dict:
     """Extract rates and task parameters.
 
     Parameters
@@ -217,9 +293,9 @@ def extractParameters(nR_S1, nR_S2):
     hmetad
     """
     if isinstance(nR_S1, list):
-        nR_S1 = np.array(nR_S1)
+        nR_S1 = np.array(nR_S1, dtype=float)
     if isinstance(nR_S2, list):
-        nR_S2 = np.array(nR_S2)
+        nR_S2 = np.array(nR_S2, dtype=float)
 
     Tol = 1e-05
     nratings = int(len(nR_S1) / 2)
@@ -230,13 +306,27 @@ def extractParameters(nR_S1, nR_S2):
     nR_S1_adj = nR_S1 + adj_f
     nR_S2_adj = nR_S2 + adj_f
 
-    ratingHR, ratingFAR = [], []
+    ratingHR: List[float] = []
+    ratingFAR: List[float] = []
     for c in range(1, int(nratings * 2)):
         ratingHR.append(sum(nR_S2_adj[c:]) / sum(nR_S2_adj))
         ratingFAR.append(sum(nR_S1_adj[c:]) / sum(nR_S1_adj))
 
-    d1 = dprime(hit_rate=ratingHR[nratings - 1], fa_rate=ratingFAR[nratings - 1])
-    c1 = criterion(hit_rate=ratingHR[nratings - 1], fa_rate=ratingFAR[nratings - 1])
+    d1 = dprime(
+        data=None,
+        stimuli=None,
+        responses=None,
+        hit_rate=ratingHR[nratings - 1],
+        fa_rate=ratingFAR[nratings - 1],
+    )
+    c1 = criterion(
+        data=None,
+        hit_rate=ratingHR[nratings - 1],
+        fa_rate=ratingFAR[nratings - 1],
+        stimuli=None,
+        responses=None,
+        correction=True,
+    )
     counts = np.hstack([nR_S1, nR_S2])
 
     # Type 1 counts
@@ -265,8 +355,40 @@ def extractParameters(nR_S1, nR_S2):
     return data
 
 
-def preprocess_group(data, subject, stimuli, accuracy, confidence, nRatings):
-    """Preprocess group data."""
+def preprocess_group(
+    data: pd.DataFrame,
+    subject: str,
+    stimuli: str,
+    accuracy: str,
+    confidence: str,
+    nRatings: int,
+) -> Dict:
+    """Preprocess group data.
+
+    Parameters
+    ----------
+    data : :py:class:`pandas.DataFrame` or None
+        Dataframe. Note that this function can also directly be used as a
+        Pandas method, in which case this argument is no longer needed.
+    subject : string or None
+        Name of column containing the subject identifier (only required if a
+        within-subject or a between-subject factor is provided).
+    stimuli : string or None
+        Name of the column containing the stimuli.
+    accuracy : string or None
+        Name of the columns containing the accuracy.
+    confidence : string or None
+        Name of the column containing the confidence ratings.
+    nRatings : int or None
+        Number of discrete ratings. If a continuous rating scale was used, and
+        the number of unique ratings does not match `nRatings`, will convert to
+        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+
+    Return
+    ------
+    pymcData : Dict
+
+    """
     pymcData = {
         "nSubj": data[subject].nunique(),
         "subID": np.arange(data[subject].nunique(), dtype="int"),
@@ -314,8 +436,43 @@ def preprocess_group(data, subject, stimuli, accuracy, confidence, nRatings):
     return pymcData
 
 
-def preprocess_rm1way(data, subject, within, stimuli, accuracy, confidence, nRatings):
-    """Preprocess repeated measures data."""
+def preprocess_rm1way(
+    data: pd.DataFrame,
+    subject: str,
+    stimuli: str,
+    within: str,
+    accuracy: str,
+    confidence: str,
+    nRatings: int,
+) -> Dict:
+    """Preprocess repeated measures data.
+
+    Parameters
+    ----------
+    data : :py:class:`pandas.DataFrame`
+        Dataframe. Note that this function can also directly be used as a
+        Pandas method, in which case this argument is no longer needed.
+    subject : string
+        Name of column containing the subject identifier (only required if a
+        within-subject or a between-subject factor is provided).
+    stimuli : string
+        Name of the column containing the stimuli.
+    within : string
+        Name of column containing the within factor (condition comparison).
+    accuracy : string
+        Name of the columns containing the accuracy.
+    confidence : string
+        Name of the column containing the confidence ratings.
+    nRatings : int
+        Number of discrete ratings. If a continuous rating scale was used, and
+        the number of unique ratings does not match `nRatings`, will convert to
+        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+
+    Return
+    ------
+    pymcData : Dict
+
+    """
     pymcData = {
         "nSubj": data[subject].nunique(),
         "subID": [],
