@@ -265,7 +265,7 @@ def hmetad(
 
 
 def extractParameters(
-    nR_S1: Union[List[int], np.array], nR_S2: Union[List[int], np.array]
+    nR_S1: Union[List[int], np.ndarray], nR_S2: Union[List[int], np.ndarray]
 ) -> Dict:
     """Extract rates and task parameters.
 

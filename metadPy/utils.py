@@ -211,7 +211,7 @@ def trials2counts(
 
 def discreteRatings(
     ratings: Union[list, np.ndarray], nbins: int = 4, verbose: bool = True
-) -> Tuple[np.array, Dict[str, list]]:
+) -> Tuple[np.ndarray, Dict[str, list]]:
     """Convert continuous ratings to dscrete bins
 
     Resample if quantiles are equal at high or low end to ensure proper

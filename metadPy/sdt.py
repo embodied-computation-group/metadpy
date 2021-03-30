@@ -506,7 +506,7 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     ]
 
     # calculate logL
-    logL = np.sum(
+    log_temp = np.sum(
         [
             nC_rS1[i] * np.log(prC_rS1[i])
             + nI_rS1[i] * np.log(prI_rS1[i])
@@ -516,8 +516,9 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
         ]
     )
 
-    if np.isinf(logL) or np.isnan(logL):
-        logL = -1e300  # returning -inf may cause optimize.minimize() to fail
+    # returning -inf may cause optimize.minimize() to fail
+    logL: float = -1e300 if np.isinf(log_temp) or np.isnan(log_temp) else log_temp
+
     return -logL
 
 
@@ -527,9 +528,9 @@ def metad(
     nRatings: int,
     nR_S1: None,
     nR_S2: None,
-    stimuli: Union[list, np.array],
-    accuracy: Union[list, np.array],
-    confidence: Union[list, np.array],
+    stimuli: Union[list, np.ndarray],
+    accuracy: Union[list, np.ndarray],
+    confidence: Union[list, np.ndarray],
     padAmount: Optional[float] = None,
     s: int = 1,
     padding: bool = True,
@@ -546,8 +547,8 @@ def metad(
 def metad(
     data: None,
     nRatings: int,
-    nR_S1: Union[list, np.array],
-    nR_S2: Union[list, np.array],
+    nR_S1: Union[list, np.ndarray],
+    nR_S2: Union[list, np.ndarray],
     stimuli: None,
     accuracy: None,
     confidence: None,
@@ -616,8 +617,8 @@ def metad(
     nRatings : int
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`. Default
-        set to 4.
+        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+        Default is set to 4.
     stimuli : string or None
         Name of the column containing the stimuli.
     accuracy : string or None
@@ -994,8 +995,8 @@ def roc_auc(
     accuracy: None,
     confidence: None,
     nRatings: None,
-    nR_S1: Union[list, np.array],
-    nR_S2: Union[list, np.array],
+    nR_S1: Union[list, np.ndarray],
+    nR_S2: Union[list, np.ndarray],
 ) -> float:
     ...
 
@@ -1003,10 +1004,10 @@ def roc_auc(
 @overload
 def roc_auc(
     data: None,
-    stimuli: Union[list, np.array],
-    responses: Union[list, np.array],
-    accuracy: Union[list, np.array],
-    confidence: Union[list, np.array],
+    stimuli: Union[list, np.ndarray],
+    responses: Union[list, np.ndarray],
+    accuracy: Union[list, np.ndarray],
+    confidence: Union[list, np.ndarray],
     nRatings: None,
     nR_S1: None,
     nR_S2: None,

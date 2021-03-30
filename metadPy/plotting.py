@@ -9,8 +9,8 @@ from scipy.stats import norm
 
 
 def plot_confidence(
-    nR_S1: Union[list, np.array],
-    nR_S2: Union[list, np.array],
+    nR_S1: Union[list, np.ndarray],
+    nR_S2: Union[list, np.ndarray],
     fitModel: Optional[dict] = None,
     ax: Axes = None,
 ) -> Axes:
@@ -117,8 +117,8 @@ def plot_confidence(
 
 
 def plot_roc(
-    nR_S1: Union[list, np.array],
-    nR_S2: Union[list, np.array],
+    nR_S1: Union[list, np.ndarray],
+    nR_S2: Union[list, np.ndarray],
     fitModel: Optional[dict] = None,
     ax: Axes = None,
 ) -> Axes:
