@@ -506,7 +506,7 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     ]
 
     # calculate logL
-    log_temp = np.sum(
+    logL = np.sum(
         [
             nC_rS1[i] * np.log(prC_rS1[i])
             + nI_rS1[i] * np.log(prI_rS1[i])
@@ -517,7 +517,7 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     )
 
     # returning -inf may cause optimize.minimize() to fail
-    logL: float = -1e300 if np.isinf(log_temp) or np.isnan(log_temp) else log_temp
+    logL = -1e300 if np.isinf(logL) or np.isnan(logL) else logL
 
     return -logL
 
