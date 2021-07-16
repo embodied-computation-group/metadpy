@@ -27,6 +27,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
+    backend: str = "pymc3",
 ) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
@@ -44,6 +45,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
+    backend: str = "pymc3",
 ) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
@@ -61,6 +63,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
+    backend: str = "pymc3",
 ) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
@@ -78,6 +81,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
+    backend: str = "pymc3",
 ) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
     ...
 
@@ -98,6 +102,7 @@ def hmetad(
     padding=False,
     padAmount=None,
     sample_model=True,
+    backend="pymc3",
     **kwargs
 ):
     """Estimate parameters of the Hierarchical Bayesian meta-d'
@@ -144,9 +149,11 @@ def hmetad(
         Default value is 1/(2*nRatings)
     sample_model : boolean
         If `False`, only the model is returned without sampling.
+    backend : str
+        The backend used for MCMC sampling. Can be `"pymc3"` or `"numpyro"`. Defaults
+        to `"pymc3"`.
     **kwargs : keyword arguments
         All keyword arguments are passed to `func::pymc3.sampling.sample`.
-
 
     Returns
     -------
@@ -214,28 +221,51 @@ def hmetad(
 
         pymcData = extractParameters(np.asarray(nR_S1), np.asarray(nR_S2))
 
-        from subjectLevel import hmetad_subjectLevel
+        if backend == "pymc3":
 
-        output = hmetad_subjectLevel(
-            pymcData,
-            sample_model=sample_model,
-            **kwargs,
-        )
+            from subjectLevel import hmetad_subjectLevel
+
+            output = hmetad_subjectLevel(
+                pymcData,
+                sample_model=sample_model,
+                **kwargs,
+            )
+
+        elif backend == "numpyro":
+
+            from subjectLevel_numpyro import hmetad_subjectLevel
+
+            output = hmetad_subjectLevel(
+                pymcData,
+                sample_model=sample_model,
+                **kwargs,
+            )
+
+        else:
+            raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
 
     #############
     # Group level
     elif (within is None) & (between is None) & (subject is not None):
 
-        pymcData = preprocess_group(
-            data, subject, stimuli, accuracy, confidence, nRatings
-        )
-        from groupLevel import hmetad_groupLevel
+        if backend == "pymc3":
 
-        output = hmetad_groupLevel(
-            pymcData,
-            sample_model=sample_model,
-            **kwargs,
-        )
+            pymcData = preprocess_group(
+                data, subject, stimuli, accuracy, confidence, nRatings
+            )
+            from groupLevel import hmetad_groupLevel
+
+            output = hmetad_groupLevel(
+                pymcData,
+                sample_model=sample_model,
+                **kwargs,
+            )
+
+        elif backend == "numpyro":
+            raise ValueError("This model is not implemented in nupyro yet")
+
+        else:
+            raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
 
     ###################
     # Repeated-measures
@@ -245,13 +275,21 @@ def hmetad(
             data, subject, within, stimuli, accuracy, confidence, nRatings
         )
 
-        from rm1way import hmetad_rm1way
+        if backend == "pymc3":
 
-        output = hmetad_rm1way(
-            pymcData,
-            sample_model=sample_model,
-            **kwargs,
-        )
+            from rm1way import hmetad_rm1way
+
+            output = hmetad_rm1way(
+                pymcData,
+                sample_model=sample_model,
+                **kwargs,
+            )
+
+        elif backend == "numpyro":
+            raise ValueError("This model is not implemented in nupyro yet")
+
+        else:
+            raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
 
     else:
         raise ValueError("Invalid design specification provided. No model fitted.")
