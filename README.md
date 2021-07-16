@@ -39,7 +39,7 @@ For an extensive introduction to metadPy, you can navigate the following noteboo
 | Notebook | Colab | nbViewer |
 | --- | ---| --- |
 | 1. Estimating meta-d' using MLE | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%201%20-%20Fitting%20MLE.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%201%20-%20Fitting%20MLE.ipynb)
-| 2. Estimating meta-d' using Bayesian modelling | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/bob/master/notebooks/Example%202%20-%20Fitting%20Bayesian.ipynb)
+| 2. Estimating meta-d' using Bayesian modelling | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian.ipynb)
 
 
 ## Tutorials

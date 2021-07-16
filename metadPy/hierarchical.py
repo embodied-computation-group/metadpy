@@ -8,8 +8,6 @@ import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from arviz import InferenceData
-from jax import random
-from numpyro.infer import MCMC, NUTS
 from pymc3.backends.base import MultiTrace
 from pymc3.model import Model
 
@@ -303,6 +301,10 @@ def hmetad(
             model, trace = output
             return model, trace
         elif backend == "numpyro":
+
+            from jax import random
+            from numpyro.infer import MCMC, NUTS
+
             nuts_kernel = NUTS(numpyro_func)
 
             mcmc = MCMC(nuts_kernel, num_samples=1000, num_warmup=1000, num_chains=2)
