@@ -8,6 +8,8 @@ import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from arviz import InferenceData
+from jax import random
+from numpyro.infer import MCMC, NUTS
 from pymc3.backends.base import MultiTrace
 from pymc3.model import Model
 
@@ -189,7 +191,7 @@ def hmetad(
     sys.path.append(modelScript)
 
     if (nR_S1 is not None) & (nR_S2 is not None):
-        nR_S1, nR_S2 = np.asarray(nR_S1), np.asarray(nR_S1)
+        nR_S1, nR_S2 = np.asarray(nR_S1), np.asarray(nR_S2)
         nRatings = len(nR_S1) / 2
 
     if nRatings is None:
@@ -241,13 +243,7 @@ def hmetad(
 
         elif backend == "numpyro":
 
-            from subjectLevel_numpyro import hmetad_subjectLevel
-
-            output = hmetad_subjectLevel(
-                pymcData,
-                sample_model=sample_model,
-                **kwargs,
-            )
+            from subjectLevel_numpyro import hmetad_subjectLevel as numpyro_func
 
         else:
             raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
@@ -303,8 +299,23 @@ def hmetad(
         raise ValueError("Invalid design specification provided. No model fitted.")
 
     if sample_model is True:
-        model, trace = output
-        return model, trace
+        if backend == "pymc3":
+            model, trace = output
+            return model, trace
+        elif backend == "numpyro":
+            nuts_kernel = NUTS(numpyro_func)
+
+            mcmc = MCMC(nuts_kernel, num_samples=1000, num_warmup=1000, num_chains=2)
+
+            # Start from this source of randomness.
+            rng_key = random.PRNGKey(0)
+            rng_key, _ = random.split(rng_key)
+
+            mcmc.run(rng_key, data=pymcData)
+
+            trace = mcmc.get_samples(group_by_chain=True)
+
+            return numpyro_func, trace
     else:
         model = output
         return model

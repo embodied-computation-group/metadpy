@@ -58,7 +58,7 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     )
 
     # Type 2 priors
-    meta_d = numpyro.sample("meta_d", dist.Normal(d1, 1 / jnp.sqrt(2)))
+    meta_d = numpyro.sample("metad", dist.Normal(d1, 1 / jnp.sqrt(2)))
 
     # Specify ordered prior on criteria
     # bounded above and below by Type 1 c1

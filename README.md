@@ -35,7 +35,6 @@ metadPy aims to be a Python equivalent of the hMeta-d toolbox (available in Matl
 For an extensive introduction to metadPy, you can navigate the following notebooks that are Python adaptations of the introduction to the hMeta-d toolbox written in Matlab by Olivia Faul for the Zurich Computational Psychiatry course (see [this link](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial)).
 
 ## Examples 
-https://github.com/
 
 | Notebook | Colab | nbViewer |
 | --- | ---| --- |
