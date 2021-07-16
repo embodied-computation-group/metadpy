@@ -2,8 +2,8 @@
 
 import jax.numpy as jnp
 import numpyro
+import numpyro.distributions as dist
 from jax.scipy.special import erf
-from numpyro.distributions import dist
 
 
 def cumulative_normal(x):

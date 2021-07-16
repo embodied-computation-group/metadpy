@@ -157,8 +157,12 @@ def hmetad(
 
     Returns
     -------
-    model : dict
-        The fitted model.
+    model : :py:class:`pymc3.Model` instance
+        The pymc3 model. Encapsulates the variables and likelihood factors.
+    trace : :py:class:`pymc3.backends.base.MultiTrace` or
+        :py:class:`arviz.InferenceData`
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the
+        samples. Only returned if `sample_model` is set to `True`.
 
     Examples
     --------
@@ -183,6 +187,10 @@ def hmetad(
     """
     modelScript = os.path.dirname(__file__) + "/models/"
     sys.path.append(modelScript)
+
+    if (nR_S1 is not None) & (nR_S2 is not None):
+        nR_S1, nR_S2 = np.asarray(nR_S1), np.asarray(nR_S1)
+        nRatings = len(nR_S1) / 2
 
     if nRatings is None:
         raise ValueError("You should provide the number of ratings")
