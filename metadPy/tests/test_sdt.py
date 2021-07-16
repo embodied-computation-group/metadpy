@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 
 from metadPy import load_dataset
-from metadPy.sdt import criterion, dprime, metad, rates, roc_auc, scores
+from metadPy.sdt import criterion, dprime, rates, roc_auc, scores
 
 data = pd.DataFrame(
     {
@@ -50,31 +50,6 @@ class Testsdt(TestCase):
         """Test criterion function"""
         assert 0.294 == -round(criterion(hit_rate=0.8, fa_rate=0.4), 3)
         assert 0.294 == -round(data.criterion(), 3)
-
-    def test_metad(self):
-        """Test fit_meta_d_MLE function"""
-        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
-        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
-        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
-        assert round(fit["meta_da"], 3) == 1.634
-        with pytest.raises(ValueError):
-            fit = metad(nR_S1=np.zeros(7), nR_S2=nR_S2)
-        with pytest.raises(ValueError):
-            fit = metad(nR_S1=nR_S1[:1], nR_S2=nR_S2)
-        with pytest.raises(ValueError):
-            fit = metad(nR_S1=nR_S1, nR_S2=nR_S2, padding=True, collapse=2)
-        df = load_dataset("rm")
-        fit = metad(
-            data=df[df.Subject == 0],
-            nRatings=4,
-            stimuli="Stimuli",
-            accuracy="Accuracy",
-            confidence="Confidence",
-            output_df=True,
-            padding=False,
-            collapse=2,
-        )
-        assert round(fit["meta_da"].iloc[0], 1) == 0.8
 
     def test_roc_auc(self):
         """Test roc_auc function"""

@@ -1,7 +1,8 @@
 from .datasets import load_dataset
 from .hierarchical import extractParameters, hmetad
+from .mle import fit_meta_d_logL, metad
 from .plotting import plot_confidence, plot_roc
-from .sdt import criterion, dprime, fit_meta_d_logL, metad, rates, roc_auc, scores
+from .sdt import criterion, dprime, rates, roc_auc, scores
 from .utils import (
     discreteRatings,
     ratings2df,
