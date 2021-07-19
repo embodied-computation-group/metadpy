@@ -34,7 +34,7 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     """
     meta_d1 = parameters[0]
     t2c1 = parameters[1:]
-    nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv = inputObj
+    nR_S1, nR_S2, nRatings, d1, t1c1, s, fncdf, fninv = inputObj
 
     # define mean and SD of S1 and S2 distributions
     S1mu = -meta_d1 / 2
@@ -45,8 +45,8 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     # adjust so that the type 1 criterion is set at 0
     # (this is just to work with optimization toolbox constraints...
     #  to simplify defining the upper and lower bounds of type 2 criteria)
-    S1mu = S1mu - eval(constant_criterion)
-    S2mu = S2mu - eval(constant_criterion)
+    S1mu = S1mu - (meta_d1 * (t1c1 / d1))
+    S2mu = S2mu - (meta_d1 * (t1c1 / d1))
 
     t1c1 = 0
 
@@ -436,9 +436,6 @@ def metad(
     UB.extend(np.zeros((nCriteria - 1) // 2))  # criteria lower than t1c
     UB.extend(20 * np.ones((nCriteria - 1) // 2))  # criteria higher than t1c
 
-    # select constant criterion type
-    constant_criterion = "meta_d1 * (t1c1 / d1)"  # relative criterion
-
     # set up initial guess at parameter values
     ratingHR = []
     ratingFAR = []
@@ -459,10 +456,10 @@ def metad(
 
     # initial values for the minimization function
     guess = [meta_d1]
-    guess.extend(list(t2c1 - eval(constant_criterion)))
+    guess.extend(list(t2c1 - (meta_d1 * (t1c1 / d1))))
 
     # other inputs for the minimization function
-    inputObj = [nR_S1, nR_S2, nRatings, d1, t1c1, s, constant_criterion, fncdf, fninv]
+    inputObj = [nR_S1, nR_S2, nRatings, d1, t1c1, s, fncdf, fninv]
     bounds = Bounds(LB, UB)
     linear_constraint = LinearConstraint(A, lb, ub)
 
@@ -481,7 +478,7 @@ def metad(
 
     # quickly process some of the output
     meta_d1 = results.x[0]
-    t2c1 = results.x[1:] + eval(constant_criterion)
+    t2c1 = results.x[1:] + (meta_d1 * (t1c1 / d1))
     logL = -results.fun
 
     # I_nR and C_nR are rating trial counts for incorrect and correct trials
@@ -511,7 +508,7 @@ def metad(
     S2mu = meta_d1 / 2
     S2sd = S1sd / s
 
-    mt1c1 = eval(constant_criterion)
+    mt1c1 = meta_d1 * (t1c1 / d1)
 
     C_area_rS2 = 1 - fncdf(mt1c1, S2mu, S2sd)
     I_area_rS2 = 1 - fncdf(mt1c1, S1mu, S1sd)
@@ -547,7 +544,6 @@ def metad(
     fit["M_diff"] = fit["meta_da"] - fit["da"]
     fit["M_ratio"] = fit["meta_da"] / fit["da"]
 
-    mt1c1 = eval(constant_criterion)
     fit["meta_ca"] = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * mt1c1
 
     t2ca = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * np.array(t2c1)
