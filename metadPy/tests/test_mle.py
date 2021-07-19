@@ -16,7 +16,10 @@ class Testsdt(TestCase):
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         fit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
-        assert round(fit["meta_da"], 3) == 1.634
+        assert round(fit["dprime"][0], 3) == 1.535
+        assert round(fit["metad"][0], 3) == 1.634
+        assert round(fit["m_diff"][0], 3) == 0.099
+        assert round(fit["m_ratio"][0], 3) == 1.064
         with pytest.raises(ValueError):
             fit = metad(nR_S1=np.zeros(7), nR_S2=nR_S2)
         with pytest.raises(ValueError):
@@ -34,7 +37,7 @@ class Testsdt(TestCase):
             padding=False,
             collapse=2,
         )
-        assert round(fit["meta_da"].iloc[0], 1) == 0.8
+        assert round(fit["metad"][0], 1) == 0.8
 
 
 if __name__ == "__main__":
