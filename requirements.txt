@@ -10,3 +10,4 @@ black
 pytest
 coverage
 pandas_flavor==0.1.2
+numba>=0.51.2

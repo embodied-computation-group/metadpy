@@ -5,36 +5,80 @@ from typing import Callable, Optional, Union, overload
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
+import scipy.special.cython_special as cysp
+from numba import jit, vectorize
+from numba.extending import get_cython_function_address
+from numba.types import WrapperAddressProtocol, float32, float64
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 
 from metadPy.utils import trials2counts
 
+_signatures = [
+    float32(float32, float32, float32),
+    float64(float64, float64, float64),
+]
 
-def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
+
+def get(name, signature):
+    index = 1 if signature.return_type is float64 else 0
+    pyx_fuse_name = f"__pyx_fuse_{index}{name}"
+    if pyx_fuse_name in cysp.__pyx_capi__:
+        name = pyx_fuse_name
+    addr = get_cython_function_address("scipy.special.cython_special", name)
+
+    cls = type(
+        name,
+        (WrapperAddressProtocol,),
+        {"__wrapper_address__": lambda self: addr, "signature": lambda self: signature},
+    )
+    return cls()
+
+
+erf = get("erf", float64(float64))
+
+
+@vectorize(_signatures)
+def norm_cdf(x, mu, sigma):
+    """
+    Evaluate cumulative distribution function of normal distribution.
+    """
+    z = (x - mu) / sigma
+    z *= 1.0 / np.sqrt(2)
+    return 0.5 * (1.0 + erf(z))
+
+
+@jit(nopython=True)
+def fit_meta_d_logL(
+    guess: np.ndarray,
+    nR_S1: np.ndarray,
+    nR_S2: np.ndarray,
+    nRatings: int,
+    d1: float,
+    t1c1: float,
+    s: int,
+) -> float:
     """Returns negative log-likelihood of parameters given experimental data.
 
     Parameters
     ----------
-    parameters : list
-        parameters[0] = meta d'
-        parameters[1:end] = type-2 criteria locations
-    inputObj : list
-        List containing the following variables when called from
-        `:py:func:metadPy.sdt.metad`:
-            * nR_S1
-            * nR_S2
-            * nRatings
-            * d1
-            * t1c1
-            * s
-            * constant_criterion
-            * fncdf
-            * fninv
+    guess : np.ndarray
+        guess[0] = meta d'
+        guess[1:end] = type-2 criteria locations
+    nR_S1 : np.ndarray
+
+    nR_S2 : np.ndarray
+
+    nRatings : int
+
+    d1 :  float
+
+    t1c1 : float
+
+    s : int
+
     """
-    meta_d1 = parameters[0]
-    t2c1 = parameters[1:]
-    nR_S1, nR_S2, nRatings, d1, t1c1, s, fncdf, fninv = inputObj
+    meta_d1, t2c1 = guess[0], guess[1:]
 
     # define mean and SD of S1 and S2 distributions
     S1mu = -meta_d1 / 2
@@ -53,18 +97,21 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     # set up MLE analysis
     # get type 2 response counts
     # S1 responses
-    nC_rS1 = [nR_S1[i] for i in range(nRatings)]
-    nI_rS1 = [nR_S2[i] for i in range(nRatings)]
+    nC_rS1, nI_rS1 = [], []
+    for i in range(4):
+        nC_rS1.append(nR_S1[i])
+        nI_rS1.append(nR_S2[i])
+
     # S2 responses
-    nC_rS2 = [nR_S2[i + nRatings] for i in range(nRatings)]
-    nI_rS2 = [nR_S1[i + nRatings] for i in range(nRatings)]
+    nC_rS2 = [nR_S2[i + nRatings] for i in np.arange(nRatings)]
+    nI_rS2 = [nR_S1[i + nRatings] for i in np.arange(nRatings)]
 
     # get type 2 probabilities
-    C_area_rS1 = fncdf(t1c1, S1mu, S1sd)
-    I_area_rS1 = fncdf(t1c1, S2mu, S2sd)
+    C_area_rS1 = norm_cdf(t1c1, S1mu, S1sd)
+    I_area_rS1 = norm_cdf(t1c1, S2mu, S2sd)
 
-    C_area_rS2 = 1 - fncdf(t1c1, S2mu, S2sd)
-    I_area_rS2 = 1 - fncdf(t1c1, S1mu, S1sd)
+    C_area_rS2 = 1 - norm_cdf(t1c1, S2mu, S2sd)
+    I_area_rS2 = 1 - norm_cdf(t1c1, S1mu, S1sd)
 
     t2c1x = [-np.inf]
     t2c1x.extend(t2c1[0 : (nRatings - 1)])
@@ -73,44 +120,47 @@ def fit_meta_d_logL(parameters: list, inputObj: list) -> float:
     t2c1x.append(np.inf)
 
     prC_rS1 = [
-        (fncdf(t2c1x[i + 1], S1mu, S1sd) - fncdf(t2c1x[i], S1mu, S1sd)) / C_area_rS1
+        (norm_cdf(t2c1x[i + 1], S1mu, S1sd) - norm_cdf(t2c1x[i], S1mu, S1sd))
+        / C_area_rS1
         for i in range(nRatings)
     ]
     prI_rS1 = [
-        (fncdf(t2c1x[i + 1], S2mu, S2sd) - fncdf(t2c1x[i], S2mu, S2sd)) / I_area_rS1
+        (norm_cdf(t2c1x[i + 1], S2mu, S2sd) - norm_cdf(t2c1x[i], S2mu, S2sd))
+        / I_area_rS1
         for i in range(nRatings)
     ]
 
     prC_rS2 = [
         (
-            (1 - fncdf(t2c1x[nRatings + i], S2mu, S2sd))
-            - (1 - fncdf(t2c1x[nRatings + i + 1], S2mu, S2sd))
+            (1 - norm_cdf(t2c1x[nRatings + i], S2mu, S2sd))
+            - (1 - norm_cdf(t2c1x[nRatings + i + 1], S2mu, S2sd))
         )
         / C_area_rS2
         for i in range(nRatings)
     ]
     prI_rS2 = [
         (
-            (1 - fncdf(t2c1x[nRatings + i], S1mu, S1sd))
-            - (1 - fncdf(t2c1x[nRatings + i + 1], S1mu, S1sd))
+            (1 - norm_cdf(t2c1x[nRatings + i], S1mu, S1sd))
+            - (1 - norm_cdf(t2c1x[nRatings + i + 1], S1mu, S1sd))
         )
         / I_area_rS2
         for i in range(nRatings)
     ]
 
     # calculate logL
-    logL = np.sum(
-        [
-            nC_rS1[i] * np.log(prC_rS1[i])
+    logL = 0.0
+    for i in range(nRatings):
+        logL = (
+            logL
+            + nC_rS1[i] * np.log(prC_rS1[i])
             + nI_rS1[i] * np.log(prI_rS1[i])
             + nC_rS2[i] * np.log(prC_rS2[i])
             + nI_rS2[i] * np.log(prI_rS2[i])
-            for i in range(nRatings)
-        ]
-    )
+        )
 
     # returning -inf may cause optimize.minimize() to fail
-    logL = -1e300 if np.isinf(logL) or np.isnan(logL) else logL
+    if np.isinf(logL) or np.isnan(logL):
+        logL = -1e300
 
     return -logL
 
@@ -459,7 +509,6 @@ def metad(
     guess.extend(list(t2c1 - (meta_d1 * (t1c1 / d1))))
 
     # other inputs for the minimization function
-    inputObj = [nR_S1, nR_S2, nRatings, d1, t1c1, s, fncdf, fninv]
     bounds = Bounds(LB, UB)
     linear_constraint = LinearConstraint(A, lb, ub)
 
@@ -467,7 +516,7 @@ def metad(
     results = minimize(
         fit_meta_d_logL,
         guess,
-        args=(inputObj),
+        args=(nR_S1, nR_S2, nRatings, d1, t1c1, s),
         method="trust-constr",
         jac="2-point",
         hess=SR1(),
