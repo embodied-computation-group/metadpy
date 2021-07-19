@@ -173,6 +173,9 @@ def metad(
     stimuli: Union[list, np.ndarray],
     accuracy: Union[list, np.ndarray],
     confidence: Union[list, np.ndarray],
+    within=None,
+    between=None,
+    subject=None,
     padAmount: Optional[float] = None,
     s: int = 1,
     padding: bool = True,
@@ -180,7 +183,6 @@ def metad(
     fncdf: Callable[..., float] = norm.cdf,
     fninv: Callable[..., float] = norm.ppf,
     verbose: int = 1,
-    output_df: bool = False,
 ) -> Union[dict, pd.DataFrame]:
     ...
 
@@ -194,6 +196,9 @@ def metad(
     stimuli: None,
     accuracy: None,
     confidence: None,
+    within=None,
+    between=None,
+    subject=None,
     padAmount: Optional[float] = None,
     s: int = 1,
     padding: bool = True,
@@ -201,7 +206,6 @@ def metad(
     fncdf: Callable[..., float] = norm.cdf,
     fninv: Callable[..., float] = norm.ppf,
     verbose: int = 1,
-    output_df: bool = False,
 ) -> Union[dict, pd.DataFrame]:
     ...
 
@@ -215,6 +219,9 @@ def metad(
     stimuli: str = "Stimuli",
     accuracy: str = "Accuracy",
     confidence: str = "Confidence",
+    within: Optional[str] = None,
+    between: Optional[str] = None,
+    subject: Optional[str] = None,
     padAmount: Optional[float] = None,
     s: int = 1,
     padding: bool = True,
@@ -222,7 +229,6 @@ def metad(
     fncdf: Callable[..., float] = norm.cdf,
     fninv: Callable[..., float] = norm.ppf,
     verbose: int = 1,
-    output_df: bool = False,
 ) -> Union[dict, pd.DataFrame]:
     ...
 
@@ -234,6 +240,9 @@ def metad(
     stimuli="Stimuli",
     accuracy="Accuracy",
     confidence="Confidence",
+    within=None,
+    between=None,
+    subject=None,
     padAmount=None,
     nR_S1=None,
     nR_S2=None,
@@ -243,7 +252,6 @@ def metad(
     fncdf=norm_cdf,
     fninv=norm.ppf,
     verbose=0,
-    output_df=False,
 ):
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
@@ -267,6 +275,14 @@ def metad(
         Name of the columns containing the accuracy.
     confidence : string or None
         Name of the column containing the confidence ratings.
+    within : string or None
+        Name of column containing the within factor (condition comparison).
+    between : string or None
+        Name of column containing the between subject factor (group
+        comparison).
+    subject : string or None
+        Name of column containing the subject identifier (only required if a
+        within-subject or a between-subject factor is provided).
     nR_S1, nR_S2 : list, 1d array-like or None
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
@@ -314,9 +330,6 @@ def metad(
             * 1 : display a termination report.
             * 2 : display progress during iterations.
             * 3 : display progress during iterations (more complete report).
-    output_df : bool
-        If `True`, return a :py:`class:pandas:DataFrame`, otherwise will
-        return a dictionary.
 
     Returns
     -------
@@ -411,62 +424,132 @@ def metad(
       https://doi.org/10.1037/0096-3445.117.1.34
 
     """
+
     if isinstance(data, pd.DataFrame):
         if padAmount is None:
             padAmount = 1 / (2 * nRatings)
-        nR_S1, nR_S2 = trials2counts(
-            data=data,
-            stimuli=stimuli,
-            accuracy=accuracy,
-            confidence=confidence,
-            nRatings=nRatings,
-            padding=padding,
-            padAmount=padAmount,
-        )
-    if isinstance(nR_S1, list):
-        nR_S1 = np.array(nR_S1)
-    if isinstance(nR_S2, list):
-        nR_S2 = np.array(nR_S2)
-    if (len(nR_S1) % 2) != 0:
-        raise ValueError("input arrays must have an even number of elements")
-    if len(nR_S1) != len(nR_S2):
-        raise ValueError("input arrays must have the same number of elements")
-    if (padding is False) & (collapse is None):
-        if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
-            import warnings
 
-            warnings.warn(
-                (
-                    "Your inputs contain zeros and is not corrected. "
-                    " This may interfere with proper estimation of meta-d."
-                    " See docstrings for more information."
-                )
+        if subject is None:
+            subject = "Subject"
+            data[subject] = "Subject 1"
+        if within is None:
+            within = "Within"
+            data[within] = "Condition 1"
+        if between is None:
+            between = "Between"
+            data[between] = "Group 1"
+    else:
+        if (nR_S1 is not None) & (nR_S2 is not None):
+            data = pd.DataFrame(
+                {
+                    "nR_S1": [nR_S1],
+                    "nR_S2": [nR_S2],
+                }
             )
-    elif (padding is True) & (collapse is None):
-        # A small padding is required to avoid problems in model fit if any
-        # confidence ratings aren't used (see Hautus MJ, 1995 for details)
-        if padAmount is None:
-            padAmount = 1 / len(nR_S1)
-        nR_S1 = nR_S1 + padAmount
-        nR_S2 = nR_S2 + padAmount
-    elif (padding is False) & (collapse is not None):
-        # Collapse values accross ratings to avoid problems in model fit
-        nR_S1 = nR_S1.reshape(int(len(nR_S1) / collapse), 2).sum(axis=1)
-        nR_S2 = nR_S2.reshape(int(len(nR_S2) / collapse), 2).sum(axis=1)
-    elif (padding is True) & (collapse is not None):
-        raise ValueError("Both padding and collapse are True.")
+        elif (stimuli is not None) & (accuracy is not None) & (confidence is not None):
+            data = pd.DataFrame(
+                {"Stimuli": stimuli, "Accuracy": accuracy, "Confidence": confidence}
+            )
+            stimuli, accuracy, confidence = "Stimuli", "Accuracy", "Confidence"
+        subject, within, between = "Subject", "Within", "Between"
+        data[subject] = "Subject 1"
+        data[within] = "Condition 1"
+        data[between] = "Group 1"
 
-    nRatings = int(len(nR_S1) / 2)  # number of ratings in the experiment
-    nCriteria = int(2 * nRatings - 1)  # number criteria to be fitted
+    results_df = pd.DataFrame([])
 
-    results = fit_metad(nR_S1, nR_S2, nRatings, nCriteria, s, verbose, fninv, fncdf)
+    for sub in data[subject].unique():
 
-    # Filter dictionnary and convert into pd.DataFrame
-    results = pd.DataFrame(
-        {k: [results[k]] for k in ["dprime", "metad", "m_ratio", "m_diff"]}
-    )
+        for cond in data[within].unique():
 
-    return results
+            for group in data[between].unique():
+
+                if (nR_S1 is None) & (nR_S2 is None):
+                    this_df = data[
+                        (data[between] == group)
+                        & (data[within] == cond)
+                        & (data[subject] == sub)
+                    ]
+
+                    nR_S1, nR_S2 = trials2counts(
+                        data=this_df,
+                        stimuli=stimuli,
+                        accuracy=accuracy,
+                        confidence=confidence,
+                        nRatings=nRatings,
+                        padding=padding,
+                        padAmount=padAmount,
+                    )
+
+                if (len(nR_S1) % 2) != 0:
+                    raise ValueError(
+                        "input arrays must have an even number of elements"
+                    )
+                if len(nR_S1) != len(nR_S2):
+                    raise ValueError(
+                        "input arrays must have the same number of elements"
+                    )
+
+                if (padding is False) & (collapse is None):
+                    if any(np.array(nR_S1) == 0) or any(np.array(nR_S2) == 0):
+                        import warnings
+
+                        warnings.warn(
+                            (
+                                "Your inputs contain zeros and is not corrected. "
+                                " This may interfere with proper estimation of meta-d."
+                                " See docstrings for more information."
+                            )
+                        )
+                elif (padding is True) & (collapse is None):
+                    # A small padding is required to avoid problems in model fit if any
+                    # confidence ratings aren't used (see Hautus MJ, 1995 for details)
+                    if padAmount is None:
+                        padAmount = 1 / len(nR_S1)
+                    nR_S1 = nR_S1 + padAmount
+                    nR_S2 = nR_S2 + padAmount
+                elif (padding is False) & (collapse is not None):
+                    # Collapse values accross ratings to avoid problems in model fit
+                    nR_S1 = nR_S1.reshape(int(len(nR_S1) / collapse), 2).sum(axis=1)
+                    nR_S2 = nR_S2.reshape(int(len(nR_S2) / collapse), 2).sum(axis=1)
+                elif (padding is True) & (collapse is not None):
+                    raise ValueError("Both padding and collapse are True.")
+
+                if nRatings is None:
+                    nRatings = int(
+                        len(nR_S1) / 2
+                    )  # number of ratings in the experiment
+                nCriteria = int(2 * nRatings - 1)  # number criteria to be fitted
+
+                results_dict = fit_metad(
+                    nR_S1=nR_S1,
+                    nR_S2=nR_S2,
+                    nRatings=nRatings,
+                    nCriteria=nCriteria,
+                    s=s,
+                    verbose=verbose,
+                    fninv=fninv,
+                    fncdf=fncdf,
+                )
+
+                # Filter dictionnary and convert into pd.DataFrame
+                results = pd.DataFrame(
+                    {
+                        k: [results_dict[k]]
+                        for k in ["dprime", "metad", "m_ratio", "m_diff"]
+                    }
+                )
+
+                if data[subject].nunique() > 1:
+                    results[subject] = sub
+                if data[within].nunique() > 1:
+                    results[within] = cond
+                if data[between].nunique() > 1:
+                    results[between] = group
+
+                results_df = results_df.append(results)
+
+    return results_df
 
 
 def fit_metad(
@@ -474,7 +557,7 @@ def fit_metad(
     nR_S2: np.ndarray,
     nRatings: int,
     nCriteria: int,
-    s: int,
+    s: int = 1,
     verbose: int = 0,
     fninv: Callable = norm.ppf,
     fncdf: Callable = norm_cdf,
