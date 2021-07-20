@@ -40,7 +40,7 @@ def plot_confidence(
     if fitModel is not None:
         if isinstance(fitModel, dict):
             # Retrieve estimate of nRatings for correct and incorrect
-            mu1 = fitModel["meta_da"] / 2
+            mu1 = fitModel["metad"] / 2
             mean_c2 = (fitModel["t2ca_rS2"] + np.abs(np.flip(fitModel["t2ca_rS1"]))) / 2
             I_area = 1 - norm.cdf(0, -mu1, 1)
             C_area = 1 - norm.cdf(0, mu1, 1)
@@ -70,7 +70,7 @@ def plot_confidence(
     I_prop_data = obsCount[nRratings:] / sum(obsCount[nRratings:])
 
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+        _, ax = plt.subplots(1, 1, figsize=(8, 5))
     ax.bar(
         x=np.arange(0.8, nRratings),
         height=C_prop_data,
@@ -131,7 +131,7 @@ def plot_roc(
     nR_S2 : 1d array-like
         Number of ratings for signal 2 (correct and incorrect).
     fitModel : dict or None
-        Dictionnary returned by :py:func:`metadpy.std.metad()`. If
+        Dictionnary returned by :py:func:`metadpy.mle.fit_metad()`. If
         provided, the estimated ratings will be plotted toghether with the
         observed data.
     ax : `Matplotlib.Axes` or None

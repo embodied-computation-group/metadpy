@@ -7,7 +7,7 @@ import matplotlib
 import numpy as np
 import pytest
 
-from metadPy.mle import metad
+from metadPy.mle import fit_metad
 from metadPy.plotting import plot_confidence, plot_roc
 
 
@@ -20,8 +20,8 @@ class Testsdt(TestCase):
         assert isinstance(ax, matplotlib.axes.Axes)
         with pytest.raises(ValueError):
             ax = plot_confidence(nR_S1[:-1], nR_S2)
-        modelFit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
-        ax = plot_confidence(nR_S1, nR_S2, fitModel=modelFit)
+        fitModel = fit_metad(nR_S1=nR_S1, nR_S2=nR_S2, nRatings=4, nCriteria=7)
+        ax = plot_confidence(nR_S1, nR_S2, fitModel=fitModel)
         assert isinstance(ax, matplotlib.axes.Axes)
 
     def test_plot_roc(self):
@@ -30,8 +30,8 @@ class Testsdt(TestCase):
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         ax = plot_roc(nR_S1, nR_S2)
         assert isinstance(ax, matplotlib.axes.Axes)
-        modelFit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
-        ax = plot_roc(nR_S1, nR_S2, fitModel=modelFit)
+        fitModel = fit_metad(nR_S1=nR_S1, nR_S2=nR_S2, nRatings=4, nCriteria=7)
+        ax = plot_roc(nR_S1, nR_S2, fitModel=fitModel)
         assert isinstance(ax[0], matplotlib.axes.Axes)
         assert isinstance(ax[1], matplotlib.axes.Axes)
 
