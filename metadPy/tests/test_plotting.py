@@ -7,8 +7,8 @@ import matplotlib
 import numpy as np
 import pytest
 
+from metadPy.mle import metad
 from metadPy.plotting import plot_confidence, plot_roc
-from metadPy.sdt import metad
 
 
 class Testsdt(TestCase):

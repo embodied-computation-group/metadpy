@@ -1,5 +1,6 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+import warnings
 from typing import Callable, Dict, Optional, Union, overload
 
 import numpy as np
@@ -11,8 +12,13 @@ from numba.extending import get_cython_function_address
 from numba.types import WrapperAddressProtocol, float32, float64
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
+from tqdm import tqdm
 
 from metadPy.utils import trials2counts
+
+warnings.filterwarnings(
+    "ignore", message="delta_grad == 0.0. Check if the approximated function is linear."
+)
 
 _signatures = [
     float32(float32, float32, float32),
@@ -424,7 +430,7 @@ def metad(
       https://doi.org/10.1037/0096-3445.117.1.34
 
     """
-
+    print("Estimate meta-d' using maximum likelihood estimation (MLE).")
     if isinstance(data, pd.DataFrame):
         if padAmount is None:
             padAmount = 1 / (2 * nRatings)
@@ -456,9 +462,17 @@ def metad(
         data[within] = "Condition 1"
         data[between] = "Group 1"
 
+    print(f"- n Subjects: {data[subject].nunique()}")
+    print(f"- n Conditions: {data[within].nunique()}")
+    print(f"- n Groups: {data[between].nunique()}")
+
     results_df = pd.DataFrame([])
 
-    for sub in data[subject].unique():
+    pbar = tqdm(data[subject].unique(), position=0, leave=True)
+
+    for sub in pbar:
+
+        pbar.set_description(f"Fitting model on subject: {sub}")
 
         for cond in data[within].unique():
 

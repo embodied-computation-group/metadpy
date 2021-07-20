@@ -337,7 +337,7 @@ simulation.scores()
 
 
 ```python
-from metadPy.sdt import metad
+from metadPy.mle import metad
 
 metad = metad(data=simulation, nRatings=4, stimuli='Stimuli',
               accuracy='Accuracy', confidence='Confidence', verbose=0)
