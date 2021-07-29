@@ -438,13 +438,13 @@ def metad(
 
         if subject is None:
             subject = "Subject"
-            data[subject] = "Subject 1"
+            data.loc[:, subject] = "Subject 1"
         if within is None:
             within = "Within"
-            data[within] = "Condition 1"
+            data.loc[:, within] = "Condition 1"
         if between is None:
             between = "Between"
-            data[between] = "Group 1"
+            data.loc[:, between] = "Group 1"
     else:
         if (nR_S1 is not None) & (nR_S2 is not None):
             data = pd.DataFrame(
