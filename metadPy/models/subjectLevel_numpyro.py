@@ -6,7 +6,7 @@ import numpyro.distributions as dist
 from jax.scipy.special import erf
 
 
-def cumulative_normal(x):
+def phi(x):
     """Cummulative normal distribution"""
     return 0.5 + 0.5 * erf(x / jnp.sqrt(2))
 
@@ -48,8 +48,8 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     d1 = numpyro.sample("d1", dist.Normal(0.0, 1 / jnp.sqrt(0.5)))
 
     # TYPE 1 SDT BINOMIAL MODEL
-    h = cumulative_normal(d1 / 2 - c1)
-    f = cumulative_normal(-d1 / 2 - c1)
+    h = phi(d1 / 2 - c1)
+    f = phi(-d1 / 2 - c1)
     H = numpyro.sample(
         "H", dist.Binomial(probs=h, total_count=data["S"]), obs=data["H"]
     )
@@ -81,69 +81,37 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     S1mu = -meta_d / 2
 
     # Calculate normalisation constants
-    C_area_rS1 = cumulative_normal(c1 - S1mu)
-    I_area_rS1 = cumulative_normal(c1 - S2mu)
-    C_area_rS2 = 1 - cumulative_normal(c1 - S2mu)
-    I_area_rS2 = 1 - cumulative_normal(c1 - S1mu)
+    C_area_rS1 = phi(c1 - S1mu)
+    I_area_rS1 = phi(c1 - S2mu)
+    C_area_rS2 = 1 - phi(c1 - S2mu)
+    I_area_rS2 = 1 - phi(c1 - S1mu)
 
     # Get nC_rS1 probs
-    nC_rS1 = cumulative_normal(cS1 - S1mu) / C_area_rS1
-    part1 = jnp.array([cumulative_normal(cS1[0] - S1mu) / C_area_rS1])
+    nC_rS1 = phi(cS1 - S1mu) / C_area_rS1
+    part1 = jnp.array([phi(cS1[0] - S1mu) / C_area_rS1])
     part2 = nC_rS1[1:] - nC_rS1[:-1]
-    part3 = jnp.array(
-        [
-            (
-                cumulative_normal(c1 - S1mu)
-                - cumulative_normal(cS1[(nRatings - 2)] - S1mu)
-            )
-            / C_area_rS1
-        ]
-    )
+    part3 = jnp.array([(phi(c1 - S1mu) - phi(cS1[(nRatings - 2)] - S1mu)) / C_area_rS1])
     nC_rS1 = jnp.concatenate((part1, part2, part3))
 
     # Get nI_rS2 probs
-    nI_rS2 = (1 - cumulative_normal(cS2 - S1mu)) / I_area_rS2
-    part1 = jnp.array(
-        [
-            (
-                (1 - cumulative_normal(c1 - S1mu))
-                - (1 - cumulative_normal(cS2[0] - S1mu))
-            )
-            / I_area_rS2
-        ]
-    )
-    part2 = nI_rS2[:-1] - (1 - cumulative_normal(cS2[1:] - S1mu)) / I_area_rS2
-    part3 = jnp.array([(1 - cumulative_normal(cS2[nRatings - 2] - S1mu)) / I_area_rS2])
+    nI_rS2 = (1 - phi(cS2 - S1mu)) / I_area_rS2
+    part1 = jnp.array([((1 - phi(c1 - S1mu)) - (1 - phi(cS2[0] - S1mu))) / I_area_rS2])
+    part2 = nI_rS2[:-1] - (1 - phi(cS2[1:] - S1mu)) / I_area_rS2
+    part3 = jnp.array([(1 - phi(cS2[nRatings - 2] - S1mu)) / I_area_rS2])
     nI_rS2 = jnp.concatenate((part1, part2, part3))
 
     # Get nI_rS1 probs
-    nI_rS1 = (-cumulative_normal(cS1 - S2mu)) / I_area_rS1
-    part1 = jnp.array([cumulative_normal(cS1[0] - S2mu) / I_area_rS1])
-    part2 = nI_rS1[:-1] + (cumulative_normal(cS1[1:] - S2mu)) / I_area_rS1
-    part3 = jnp.array(
-        [
-            (
-                cumulative_normal(c1 - S2mu)
-                - cumulative_normal(cS1[(nRatings - 2)] - S2mu)
-            )
-            / I_area_rS1
-        ]
-    )
+    nI_rS1 = (-phi(cS1 - S2mu)) / I_area_rS1
+    part1 = jnp.array([phi(cS1[0] - S2mu) / I_area_rS1])
+    part2 = nI_rS1[:-1] + (phi(cS1[1:] - S2mu)) / I_area_rS1
+    part3 = jnp.array([(phi(c1 - S2mu) - phi(cS1[(nRatings - 2)] - S2mu)) / I_area_rS1])
     nI_rS1 = jnp.concatenate((part1, part2, part3))
 
     # Get nC_rS2 probs
-    nC_rS2 = (1 - cumulative_normal(cS2 - S2mu)) / C_area_rS2
-    part1 = jnp.array(
-        [
-            (
-                (1 - cumulative_normal(c1 - S2mu))
-                - (1 - cumulative_normal(cS2[0] - S2mu))
-            )
-            / C_area_rS2
-        ]
-    )
-    part2 = nC_rS2[:-1] - ((1 - cumulative_normal(cS2[1:] - S2mu)) / C_area_rS2)
-    part3 = jnp.array([(1 - cumulative_normal(cS2[nRatings - 2] - S2mu)) / C_area_rS2])
+    nC_rS2 = (1 - phi(cS2 - S2mu)) / C_area_rS2
+    part1 = jnp.array([((1 - phi(c1 - S2mu)) - (1 - phi(cS2[0] - S2mu))) / C_area_rS2])
+    part2 = nC_rS2[:-1] - ((1 - phi(cS2[1:] - S2mu)) / C_area_rS2)
+    part3 = jnp.array([(1 - phi(cS2[nRatings - 2] - S2mu)) / C_area_rS2])
     nC_rS2 = jnp.concatenate((part1, part2, part3))
 
     # Avoid underflow of probabilities
