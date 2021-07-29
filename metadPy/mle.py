@@ -1,5 +1,6 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
+import sys
 import warnings
 from typing import Callable, Dict, Optional, Union, overload
 
@@ -462,9 +463,9 @@ def metad(
         data[within] = "Condition 1"
         data[between] = "Group 1"
 
-    tqdm.write(f"- n Subjects: {data[subject].nunique()}")
-    tqdm.write(f"- n Conditions: {data[within].nunique()}")
-    tqdm.write(f"- n Groups: {data[between].nunique()}")
+    print(f"- n Subjects: {data[subject].nunique()}")
+    print(f"- n Conditions: {data[within].nunique()}")
+    print(f"- n Groups: {data[between].nunique()}")
     if padding is True:
         tqdm.write("... Using padding to avoid fitting errors.")
     if collapse is True:
@@ -472,7 +473,7 @@ def metad(
 
     results_df = pd.DataFrame([])
 
-    pbar = tqdm(data[subject].unique(), position=0, leave=True)
+    pbar = tqdm(data[subject].unique(), position=0, leave=True, file=sys.stdout)
 
     for sub in pbar:
 
