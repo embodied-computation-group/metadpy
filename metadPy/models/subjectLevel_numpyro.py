@@ -11,7 +11,7 @@ def phi(x):
     return 0.5 + 0.5 * erf(x / jnp.sqrt(2))
 
 
-def hmetad_subjectLevel(data, sample_model=True, **kwargs):
+def hmetad_subjectLevel(data):
     """Hierachical Bayesian modeling of meta-d' (subject level).
 
     This is an internal function. The subject level model must be
@@ -21,19 +21,6 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     ----------
     data : dict
         Response data.
-    sample_model : boolean
-        If `False`, only the model is returned without sampling.
-    **kwargs : keyword arguments
-        All keyword arguments are passed to `func::pymc3.sampling.sample`.
-
-    Returns
-    -------
-    model : :py:class:`pymc3.Model` instance
-        The pymc3 model. Encapsulates the variables and likelihood factors.
-    trace : :py:class:`pymc3.backends.base.MultiTrace` or
-        :py:class:`arviz.InferenceData`
-        A `MultiTrace` or `ArviZ InferenceData` object that contains the
-        samples.
 
     References
     ----------

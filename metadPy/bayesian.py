@@ -233,7 +233,7 @@ def hmetad(
 
         if backend == "pymc3":
 
-            from subjectLevel import hmetad_subjectLevel
+            from subjectLevel_pymc3 import hmetad_subjectLevel
 
             output = hmetad_subjectLevel(
                 pymcData,
@@ -257,7 +257,7 @@ def hmetad(
             pymcData = preprocess_group(
                 data, subject, stimuli, accuracy, confidence, nRatings
             )
-            from groupLevel import hmetad_groupLevel
+            from groupLevel_pymc3 import hmetad_groupLevel
 
             output = hmetad_groupLevel(
                 pymcData,
@@ -266,7 +266,7 @@ def hmetad(
             )
 
         elif backend == "numpyro":
-            raise ValueError("This model is not implemented in nupyro yet")
+            from groupLevel_numpyro import hmetad_groupLevel as numpyro_func
 
         else:
             raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
