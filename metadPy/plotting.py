@@ -34,8 +34,6 @@ def plot_confidence(
     ax : :class:`matplotlib.axes.Axes`
         The matplotlib axes containing the plot.
 
-    Examples
-    --------
     """
     if fitModel is not None:
         if isinstance(fitModel, dict):
@@ -142,8 +140,6 @@ def plot_roc(
     ax : :class:`matplotlib.axes.Axes`
         The matplotlib axes containing the plot.
 
-    Examples
-    --------
     """
     if fitModel is None:
 
@@ -180,7 +176,7 @@ def plot_roc(
         obs_HR2.append(0)
 
         if ax is None:
-            fig, ax = plt.subplots(1, 1, figsize=(5, 5))
+            _, ax = plt.subplots(1, 1, figsize=(5, 5))
 
         ax.plot([0, 1], [0, 1], "--", color="gray")
         ax.fill_between(x=obs_FAR2, y1=obs_HR2, color="lightgray", alpha=0.5)
@@ -195,10 +191,10 @@ def plot_roc(
         if not isinstance(fitModel, dict):
             raise ValueError(
                 "You should provided a dictionnary. "
-                "See metadpy.std.metad() for help."
+                "See metadpy.mle.metad() for help."
             )
         if ax is None:
-            fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+            _, ax = plt.subplots(1, 2, figsize=(10, 5))
 
         # Stimulus 1
         ax[0].plot([0, 1], [0, 1], "--", color="gray")
@@ -221,6 +217,7 @@ def plot_roc(
         ax[0].set_title("Stimulus 1")
         ax[0].set_ylabel("Type 2 Hit Rate")
         ax[0].set_xlabel("Type 2 False Alarm Rate")
+        ax[0].legend()
 
         # Stimulus 2
         ax[1].plot([0, 1], [0, 1], "--", color="gray")
@@ -243,5 +240,6 @@ def plot_roc(
         ax[1].set_title("Stimulus 2")
         ax[1].set_ylabel("Type 2 Hit Rate")
         ax[1].set_xlabel("Type 2 False Alarm Rate")
+        ax[1].legend()
 
     return ax
