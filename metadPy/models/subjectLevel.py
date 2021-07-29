@@ -22,7 +22,7 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     """Hierachical Bayesian modeling of meta-d' (subject level).
 
     This is an internal function. The subject level model must be
-    called using :py:func:`metadPy.hierarchical.hmetad`.
+    called using :py:func:`metadPy.bayesian.hmetad`.
 
     Parameters
     ----------

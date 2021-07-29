@@ -7,7 +7,7 @@ import numpy as np
 import pymc3 as pm
 
 from metadPy import load_dataset
-from metadPy.hierarchical import extractParameters, hmetad
+from metadPy.bayesian import extractParameters, hmetad
 
 
 class Testsdt(TestCase):

@@ -23,7 +23,7 @@ def hmetad_groupLevel(data: dict, sample_model: bool = True, **kwargs):
     """Compute hierachical meta-d' at the subject level.
 
     This is an internal function. The group level model must be
-    called using :py:func:`metadPy.hierarchical.hmetad`.
+    called using :py:func:`metadPy.bayesian.hmetad`.
 
     Parameters
     ----------

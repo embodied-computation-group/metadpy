@@ -23,7 +23,7 @@ def hmetad_rm1way(data: dict, sample_model: bool = True, **kwargs: int):
     """Compute hierachical meta-d' at the subject level.
 
     This is an internal function. The repeated measures model must be
-    called using :py:func:`metadPy.hierarchical.hmetad`.
+    called using :py:func:`metadPy.bayesian.hmetad`.
 
     Parameters
     ----------
