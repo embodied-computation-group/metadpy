@@ -103,7 +103,7 @@ def fit_meta_d_logL(
     # get type 2 response counts
     # S1 responses
     nC_rS1, nI_rS1 = [], []
-    for i in range(4):
+    for i in range(nRatings):
         nC_rS1.append(nR_S1[i])
         nI_rS1.append(nR_S2[i])
 
@@ -462,9 +462,13 @@ def metad(
         data[within] = "Condition 1"
         data[between] = "Group 1"
 
-    print(f"- n Subjects: {data[subject].nunique()}")
-    print(f"- n Conditions: {data[within].nunique()}")
-    print(f"- n Groups: {data[between].nunique()}")
+    tqdm.write(f"- n Subjects: {data[subject].nunique()}")
+    tqdm.write(f"- n Conditions: {data[within].nunique()}")
+    tqdm.write(f"- n Groups: {data[between].nunique()}")
+    if padding is True:
+        tqdm.write("... Using padding to avoid fitting errors.")
+    if collapse is True:
+        tqdm.write("... Collapse across rating categories.")
 
     results_df = pd.DataFrame([])
 
@@ -535,17 +539,35 @@ def metad(
                     )  # number of ratings in the experiment
                 nCriteria = int(2 * nRatings - 1)  # number criteria to be fitted
 
-                results_dict = fit_metad(
-                    nR_S1=nR_S1,
-                    nR_S2=nR_S2,
-                    nRatings=nRatings,
-                    nCriteria=nCriteria,
-                    s=s,
-                    verbose=verbose,
-                    fninv=fninv,
-                    fncdf=fncdf,
-                )
+                try:
+                    results_dict = fit_metad(
+                        nR_S1=nR_S1,
+                        nR_S2=nR_S2,
+                        nRatings=nRatings,
+                        nCriteria=nCriteria,
+                        s=s,
+                        verbose=verbose,
+                        fninv=fninv,
+                        fncdf=fncdf,
+                    )
+                except ValueError:
+                    import warnings
 
+                    warnings.warn(
+                        (
+                            f"Error when fitting data for subject {str(sub)} - ",
+                            f"Condition {str(cond)} - Group {str(group)}. ",
+                            "Returning NaNs as a result",
+                        )
+                    )
+                    results = pd.DataFrame(
+                        {
+                            "dprime": [None],
+                            "metad": [None],
+                            "m_ratio": [None],
+                            "m_diff": [None],
+                        }
+                    )
                 # Filter dictionnary and convert into pd.DataFrame
                 results = pd.DataFrame(
                     {
@@ -562,6 +584,8 @@ def metad(
                     results[between] = group
 
                 results_df = results_df.append(results)
+
+                nR_S1, nR_S2 = None, None
 
     return results_df
 
