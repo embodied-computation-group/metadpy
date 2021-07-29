@@ -2,17 +2,19 @@
 
 import os
 import sys
-from typing import Dict, List, Optional, Tuple, Union, overload
+from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union, overload
 
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from arviz import InferenceData
-from pymc3.backends.base import MultiTrace
-from pymc3.model import Model
 
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
+
+if TYPE_CHECKING is True:
+    from pymc3.backends.base import MultiTrace
+    from pymc3.model import Model
 
 
 @overload
@@ -28,7 +30,7 @@ def hmetad(
     padAmount: Optional[float] = None,
     sample_model: bool = True,
     backend: str = "pymc3",
-) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
+) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -46,7 +48,7 @@ def hmetad(
     padAmount: Optional[float] = None,
     sample_model: bool = True,
     backend: str = "pymc3",
-) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
+) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -64,7 +66,7 @@ def hmetad(
     padAmount: Optional[float] = None,
     sample_model: bool = True,
     backend: str = "pymc3",
-) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
+) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -82,7 +84,7 @@ def hmetad(
     padAmount: Optional[float] = None,
     sample_model: bool = True,
     backend: str = "pymc3",
-) -> Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]:
+) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
     ...
 
 
