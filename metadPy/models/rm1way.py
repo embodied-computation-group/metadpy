@@ -15,7 +15,7 @@ from pymc3 import (
 
 
 def cumulative_normal(x):
-    """Cummulative normal distribution"""
+    """Cumulative normal distribution"""
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 

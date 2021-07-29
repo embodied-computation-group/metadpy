@@ -7,7 +7,7 @@ from jax.scipy.special import erf
 
 
 def phi(x):
-    """Cummulative normal distribution"""
+    """Cumulative normal distribution"""
     return 0.5 + 0.5 * erf(x / jnp.sqrt(2))
 
 
