@@ -51,10 +51,10 @@ class Testsdt(TestCase):
             subject="Subject",
         )
         assert group_fit["Subject"].nunique() == 20
-        assert round(group_fit["metad"].mean(), 2) == 0.65
-        assert round(group_fit["dprime"].mean(), 2) == 0.91
-        assert round(group_fit["m_ratio"].mean(), 2) == 0.71
-        assert round(group_fit["m_diff"].mean(), 2) == -0.26
+        assert round(group_fit["metad"].mean(), 2) == 0.8
+        assert round(group_fit["dprime"].mean(), 2) == 0.98
+        assert round(group_fit["m_ratio"].mean(), 2) == 0.82
+        assert round(group_fit["m_diff"].mean(), 2) == -0.17
 
         # Condition level 1
         condition_fit = metad(
@@ -68,10 +68,10 @@ class Testsdt(TestCase):
         )
         assert condition_fit["Subject"].nunique() == 20
         assert condition_fit["Condition"].nunique() == 2
-        assert round(condition_fit["metad"].mean(), 2) == 0.46
-        assert round(condition_fit["dprime"].mean(), 2) == 0.7
-        assert round(condition_fit["m_ratio"].mean(), 2) == 0.65
-        assert round(condition_fit["m_diff"].mean(), 2) == -0.24
+        assert round(condition_fit["metad"].mean(), 2) == 0.78
+        assert round(condition_fit["dprime"].mean(), 2) == 0.96
+        assert round(condition_fit["m_ratio"].mean(), 2) == 0.81
+        assert round(condition_fit["m_diff"].mean(), 2) == -0.18
 
         # Condition level 2
         condition_fit_2 = metad(
@@ -85,10 +85,10 @@ class Testsdt(TestCase):
         )
         assert condition_fit_2["Subject"].nunique() == 20
         assert condition_fit_2["Condition"].nunique() == 2
-        assert round(condition_fit_2["metad"].mean(), 2) == 0.46
-        assert round(condition_fit_2["dprime"].mean(), 2) == 0.7
-        assert round(condition_fit_2["m_ratio"].mean(), 2) == 0.65
-        assert round(condition_fit_2["m_diff"].mean(), 2) == -0.24
+        assert round(condition_fit_2["metad"].mean(), 2) == 0.78
+        assert round(condition_fit_2["dprime"].mean(), 2) == 0.96
+        assert round(condition_fit_2["m_ratio"].mean(), 2) == 0.81
+        assert round(condition_fit_2["m_diff"].mean(), 2) == -0.18
 
         # From arrays
         # -----------

@@ -2,7 +2,7 @@
 
 import sys
 import warnings
-from typing import Callable, Dict, Optional, Union, overload
+from typing import Callable, Dict, List, Optional, Union, overload
 
 import numpy as np
 import pandas as pd
@@ -691,7 +691,7 @@ def fit_metad(
     # -->  t2c(i+1) >= t2c(i) + 1e-5 (i.e. very small deviation from equality)
     A, ub, lb = [], [], []
     for ii in range(nCriteria - 2):
-        tempArow = []
+        tempArow: List[int] = []
         tempArow.extend(np.zeros(ii + 1))
         tempArow.extend([1, -1])
         tempArow.extend(np.zeros((nCriteria - 2) - ii - 1))

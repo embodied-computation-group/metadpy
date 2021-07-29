@@ -281,7 +281,7 @@ def hmetad(
 
         if backend == "pymc3":
 
-            from rm1way import hmetad_rm1way
+            from rm1way_pymc3 import hmetad_rm1way
 
             output = hmetad_rm1way(
                 pymcData,

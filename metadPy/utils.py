@@ -395,10 +395,10 @@ def trialSimulation(
         )
 
     # Ensure vectors sum to 1 to avoid problems with mnrnd
-    prC_rS1 = np.array(prC_rS1) / sum(np.array(prC_rS1))
-    prI_rS1 = np.array(prI_rS1) / sum(np.array(prI_rS1))
-    prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))
-    prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))
+    prC_rS1 = np.array(prC_rS1) / sum(np.array(prC_rS1))  # type: ignore
+    prI_rS1 = np.array(prI_rS1) / sum(np.array(prI_rS1))  # type: ignore
+    prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))  # type: ignore
+    prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))  # type: ignore
 
     # Sample 4 response classes from multinomial distirbution (normalised
     # within each response class)
