@@ -7,10 +7,14 @@ import numpy as np
 import pytest
 
 from metadPy import load_dataset
-from metadPy.mle import metad
+from metadPy.mle import metad, norm_cdf
 
 
 class Testsdt(TestCase):
+    def test_norm_cdf(self):
+        """Test norm_cdf function"""
+        assert norm_cdf(0.75, 0, 1) == 0.7733726476231317
+
     def test_metad(self):
         """Test fit_meta_d_MLE function"""
 
@@ -23,6 +27,8 @@ class Testsdt(TestCase):
         assert round(fit["metad"][0], 3) == 1.634
         assert round(fit["m_diff"][0], 3) == 0.099
         assert round(fit["m_ratio"][0], 3) == 1.064
+
+        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2, collapse=2, padding=False)
 
         # From dataframes
         # ---------------
@@ -103,6 +109,14 @@ class Testsdt(TestCase):
         assert round(array_fit["m_ratio"].mean(), 2) == 0.82
         assert round(array_fit["m_diff"].mean(), 2) == -0.18
 
+        # When nRating not provided
+        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2, nRatings=None)
+
+        # Using collapse instead of padding
+        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2, padding=None, collapse=2)
+
+        with pytest.warns(UserWarning):
+            fit = metad(nR_S1=np.zeros(8), nR_S2=np.zeros(8), padding=False)
         with pytest.raises(ValueError):
             fit = metad(nR_S1=np.zeros(7), nR_S2=nR_S2)
         with pytest.raises(ValueError):

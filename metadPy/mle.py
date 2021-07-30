@@ -515,9 +515,9 @@ def metad(
 
                         warnings.warn(
                             (
-                                "Your inputs contain zeros and is not corrected. "
-                                " This may interfere with proper estimation of meta-d."
-                                " See docstrings for more information."
+                                "Your inputs contain zeros and is not corrected."
+                                "This may interfere with proper estimation of meta-d."
+                                "See docstrings for more information."
                             )
                         )
                 elif (padding is True) & (collapse is None):
@@ -551,14 +551,21 @@ def metad(
                         fninv=fninv,
                         fncdf=fncdf,
                     )
+                    # Filter dictionnary and convert into pd.DataFrame
+                    results = pd.DataFrame(
+                        {
+                            k: [results_dict[k]]
+                            for k in ["dprime", "metad", "m_ratio", "m_diff"]
+                        }
+                    )
                 except ValueError:
                     import warnings
 
                     warnings.warn(
                         (
-                            f"Error when fitting data for subject {str(sub)} - ",
-                            f"Condition {str(cond)} - Group {str(group)}. ",
-                            "Returning NaNs as a result",
+                            f"Error when fitting data for subject {str(sub)} - "
+                            f"Condition {str(cond)} - Group {str(group)}."
+                            "Returning NaNs as a result"
                         )
                     )
                     results = pd.DataFrame(
@@ -569,13 +576,6 @@ def metad(
                             "m_diff": [None],
                         }
                     )
-                # Filter dictionnary and convert into pd.DataFrame
-                results = pd.DataFrame(
-                    {
-                        k: [results_dict[k]]
-                        for k in ["dprime", "metad", "m_ratio", "m_diff"]
-                    }
-                )
 
                 if data[subject].nunique() > 1:
                     results[subject] = sub

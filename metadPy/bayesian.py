@@ -208,8 +208,10 @@ def hmetad(
             # If a continuous rating scale was used (if N unique ratings > nRatings)
             # transform confidence to discrete ratings
             print(
-                "The confidence columns contains more unique values than nRatings",
-                "The ratings are going to be discretized using discreteRatings",
+                (
+                    "The confidence columns contains more unique values than nRatings"
+                    "The ratings are going to be discretized using discreteRatings"
+                )
             )
             new_ratings, out = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
             data.loc[:, confidence] = new_ratings

@@ -40,11 +40,19 @@ class Testsdt(TestCase):
         assert (0.8, 0.4) == rates(hits=20, misses=5, fas=10, crs=15)
         rates(hits=0, misses=5, fas=0, crs=15)
         rates(hits=5, misses=5, fas=5, crs=5)
+        rates(hits=1, misses=0, fas=1, crs=0)
+
+        with pytest.raises(ValueError):
+            rates(data=None, hits=None, misses=None, fas=None, crs=None)
+        with pytest.raises(ValueError):
+            rates(data=[1, 2, 3], hits=None, misses=None, fas=None, crs=None)
 
     def test_dprime(self):
         """Test d prime function"""
         assert 1.095 == round(dprime(hit_rate=0.8, fa_rate=0.4), 3)
         assert 1.095 == round(data.dprime(), 3)
+        with pytest.raises(ValueError):
+            data.dprime(stimuli=3)
 
     def test_criterion(self):
         """Test criterion function"""

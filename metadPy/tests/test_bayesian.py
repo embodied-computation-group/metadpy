@@ -5,16 +5,17 @@ from unittest import TestCase
 
 import numpy as np
 import pymc3 as pm
+import pytest
 
 from metadPy import load_dataset
 from metadPy.bayesian import extractParameters, hmetad
 
 
 class Testsdt(TestCase):
-    def test_preprocess(self):
+    def test_extractParameters(self):
         """Test preprocess function"""
-        nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
-        nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
+        nR_S1 = [52, 32, 35, 37, 26, 12, 4, 2]
+        nR_S2 = [2, 5, 15, 22, 33, 38, 40, 45]
         data = extractParameters(nR_S1, nR_S2)
         assert round(data["d1"], 3) == 1.535
         assert round(data["c1"]) == 0
@@ -38,7 +39,34 @@ class Testsdt(TestCase):
         ####################
         # Test subject level
         ####################
+        model = hmetad(
+            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
+            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
+            nRatings=4,
+            sample_model=False,
+        )
+        assert isinstance(model, pm.Model)
+
+        with pytest.raises(ValueError):
+            model = hmetad(
+                data=None,
+                nR_S1=None,
+                nR_S2=None,
+                nRatings=4,
+                sample_model=False,
+            )
+
         this_df = group_df[(group_df.Subject == 0) & (group_df.Condition == 0)]
+        with pytest.raises(ValueError):
+            model = hmetad(
+                data=this_df,
+                nRatings=None,
+                stimuli="Stimuli",
+                accuracy="Accuracy",
+                confidence="Confidence",
+                sample_model=False,
+            )
+
         model = hmetad(
             data=this_df,
             nRatings=4,
@@ -49,10 +77,44 @@ class Testsdt(TestCase):
         )
         assert isinstance(model, pm.Model)
 
+        # Force ratings discretization
+        model = hmetad(
+            data=this_df,
+            nRatings=3,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+            sample_model=False,
+        )
+        assert isinstance(model, pm.Model)
+
+        # Using Numpyro
+        model = hmetad(
+            data=this_df,
+            nRatings=4,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+            backend="numpyro",
+        )
+        assert isinstance(model, pm.Model)
+
+        with pytest.raises(ValueError):
+            model = hmetad(
+                data=this_df,
+                nRatings=4,
+                stimuli="Stimuli",
+                accuracy="Accuracy",
+                confidence="Confidence",
+                backend="inexistent_backend",
+            )
+
         ####################
         # Test group level
         ####################
         this_df = group_df[group_df.Condition == 0]
+
+        # Using PyMC3
         model = hmetad(
             data=this_df,
             nRatings=4,
@@ -64,9 +126,22 @@ class Testsdt(TestCase):
         )
         assert isinstance(model, pm.Model)
 
+        # Using Numpyro
+        model = hmetad(
+            data=this_df,
+            nRatings=4,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+            subject="Subject",
+            backend="numpyro",
+        )
+
         #######################
         # Test repeated measure
         #######################
+
+        # Using PyMC3
         model = hmetad(
             data=group_df,
             nRatings=4,
@@ -78,6 +153,45 @@ class Testsdt(TestCase):
             sample_model=False,
         )
         assert isinstance(model, pm.Model)
+
+        # Using numpyro
+        with pytest.raises(ValueError):
+            model = hmetad(
+                data=group_df,
+                nRatings=4,
+                stimuli="Stimuli",
+                accuracy="Accuracy",
+                confidence="Confidence",
+                subject="Subject",
+                within="Condition",
+                backend="numpyro",
+            )
+
+        # Invalid backend
+        with pytest.raises(ValueError):
+            model = hmetad(
+                data=group_df,
+                nRatings=4,
+                stimuli="Stimuli",
+                accuracy="Accuracy",
+                confidence="Confidence",
+                subject="Subject",
+                within="Condition",
+                backend="inexistent_backend",
+            )
+
+        # Invalid design
+        with pytest.raises(ValueError):
+            model = hmetad(
+                data=group_df,
+                nRatings=4,
+                stimuli="Stimuli",
+                accuracy="Accuracy",
+                confidence="Confidence",
+                subject="Subject",
+                between="Condition",
+                within=None,
+            )
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coverage pytest flake8 isort tqdm
-  - pip install mypy==0.812
+  - pip install mypy==0.812 numpyro
 
 script:
   - coverage run -m pytest

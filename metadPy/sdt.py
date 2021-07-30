@@ -76,9 +76,9 @@ def scores(
         else:
             raise ValueError(
                 (
-                    "If no data is provided, `stimuli` and",
-                    " `responses` should be two boolean vectors",
-                    " with equal lengths.",
+                    "If no data is provided, `stimuli` and"
+                    " `responses` should be two boolean vectors"
+                    " with equal lengths."
                 )
             )
 
@@ -327,8 +327,10 @@ def dprime(
             responses = "Responses"
         if (not isinstance(stimuli, str)) | (not isinstance(responses, str)):
             raise ValueError(
-                "Parameters `stimuli` and `responses` must be strings",
-                "when `data` is a DataFrame.",
+                (
+                    "Parameters `stimuli` and `responses` must be strings"
+                    "when `data` is a DataFrame."
+                )
             )
         hits, misses, fas, crs = scores(data=data, stimuli=stimuli, responses=responses)
 
@@ -390,8 +392,8 @@ def criterion(
     Parameters
     ----------
     data : :py:class:`pandas.DataFrame` or None
-        Dataframe. Note that this function can also directly be used as a
-        Pandas method, in which case this argument is no longer needed.
+        Dataframe. Note that this function can also directly be used as a Pandas
+        method, in which case this argument is no longer needed.
     hit_rate : float
         Hit rate.
     fa_rate : float
