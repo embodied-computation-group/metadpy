@@ -89,7 +89,7 @@ class Testsdt(TestCase):
         assert isinstance(model, pm.Model)
 
         # Using Numpyro
-        model = hmetad(
+        model, trace = hmetad(
             data=this_df,
             nRatings=4,
             stimuli="Stimuli",
@@ -97,7 +97,6 @@ class Testsdt(TestCase):
             confidence="Confidence",
             backend="numpyro",
         )
-        assert isinstance(model, pm.Model)
 
         with pytest.raises(ValueError):
             model = hmetad(

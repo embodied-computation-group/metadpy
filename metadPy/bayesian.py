@@ -254,11 +254,12 @@ def hmetad(
     # Group level
     elif (within is None) & (between is None) & (subject is not None):
 
+        pymcData = preprocess_group(
+            data, subject, stimuli, accuracy, confidence, nRatings
+        )
+
         if backend == "pymc3":
 
-            pymcData = preprocess_group(
-                data, subject, stimuli, accuracy, confidence, nRatings
-            )
             from groupLevel_pymc3 import hmetad_groupLevel
 
             output = hmetad_groupLevel(
