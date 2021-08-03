@@ -14,8 +14,8 @@ def phi(x):
 def hmetad_subjectLevel(data):
     """Hierachical Bayesian modeling of meta-d' (subject level).
 
-    This is an internal function. The subject level model must be
-    called using :py:func:`metadPy.bayesian.hmetad`.
+    This function create the model that is later used for MCMC sampling. The subject
+    level model must be called using :py:func:`metadPy.bayesian.hmetad`.
 
     Parameters
     ----------
@@ -27,12 +27,14 @@ def hmetad_subjectLevel(data):
     .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
     of metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+
     """
+
     nRatings = data["nratings"]
 
     # Type 1 priors
-    c1 = numpyro.sample("c1", dist.Normal(0.0, 1 / jnp.sqrt(2)))
-    d1 = numpyro.sample("d1", dist.Normal(0.0, 1 / jnp.sqrt(0.5)))
+    c1 = numpyro.sample("c1", dist.Normal(0.0, 1 / jnp.sqrt(2)), obs=data["c1"])
+    d1 = numpyro.sample("d1", dist.Normal(0.0, 1 / jnp.sqrt(0.5)), obs=data["d1"])
 
     # TYPE 1 SDT BINOMIAL MODEL
     h = phi(d1 / 2 - c1)
@@ -143,5 +145,5 @@ def hmetad_subjectLevel(data):
             probs=nC_rS2,
         ),
         sample_shape=(nRatings,),
-        obs=data["counts"][nRatings * 3 : nRatings * 4],
+        obs=data["counts"][nRatings * 3 : data["nratings"] * 4],
     )

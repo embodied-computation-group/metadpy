@@ -431,6 +431,8 @@ def preprocess_group(
 
     """
     pymcData = {
+        "d1": [],
+        "c1": [],
         "nSubj": data[subject].nunique(),
         "subID": np.arange(data[subject].nunique(), dtype="int"),
         "hits": [],
@@ -454,6 +456,8 @@ def preprocess_group(
         )
 
         this_data = extractParameters(nR_S1, nR_S2)
+        pymcData["d1"].append(this_data["d1"])
+        pymcData["c1"].append(this_data["c1"])
         pymcData["s"].append(this_data["S"])
         pymcData["n"].append(this_data["N"])
         pymcData["m"].append(this_data["M"])
@@ -462,6 +466,8 @@ def preprocess_group(
         pymcData["hits"].append(this_data["H"])
         pymcData["falsealarms"].append(this_data["FA"])
 
+    pymcData["d1"] = np.array(pymcData["d1"], dtype="float")
+    pymcData["c1"] = np.array(pymcData["c1"], dtype="float")
     pymcData["s"] = np.array(pymcData["s"], dtype="int")
     pymcData["n"] = np.array(pymcData["n"], dtype="int")
     pymcData["m"] = np.array(pymcData["m"], dtype="int")
@@ -469,10 +475,8 @@ def preprocess_group(
     pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
     pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
     pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
-    pymcData["nRatings"] = 4
     pymcData["nSubj"] = data[subject].nunique()
     pymcData["subID"] = np.arange(pymcData["nSubj"], dtype="int")
-    pymcData["Tol"] = 1e-05
 
     return pymcData
 
