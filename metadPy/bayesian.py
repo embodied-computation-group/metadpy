@@ -104,8 +104,7 @@ def hmetad(
     padding=False,
     padAmount=None,
     sample_model=True,
-    backend="pymc3",
-    **kwargs
+    backend="numpyro",
 ):
     """Estimate parameters of the Hierarchical Bayesian meta-d'
 
@@ -153,9 +152,7 @@ def hmetad(
         If `False`, only the model is returned without sampling.
     backend : str
         The backend used for MCMC sampling. Can be `"pymc3"` or `"numpyro"`. Defaults
-        to `"pymc3"`.
-    **kwargs : keyword arguments
-        All keyword arguments are passed to `func::pymc3.sampling.sample`.
+        to `"numpyro"`.
 
     Returns
     -------
@@ -210,7 +207,8 @@ def hmetad(
             print(
                 (
                     "The confidence columns contains more unique values than nRatings"
-                    "The ratings are going to be discretized using discreteRatings"
+                    "The ratings are going to be discretized using "
+                    "metadPy.utils.discreteRatings()"
                 )
             )
             new_ratings, out = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
@@ -240,7 +238,6 @@ def hmetad(
             output = hmetad_subjectLevel(
                 pymcData,
                 sample_model=sample_model,
-                **kwargs,
             )
 
         elif backend == "numpyro":
@@ -258,17 +255,7 @@ def hmetad(
             data, subject, stimuli, accuracy, confidence, nRatings
         )
 
-        if backend == "pymc3":
-
-            from groupLevel_pymc3 import hmetad_groupLevel
-
-            output = hmetad_groupLevel(
-                pymcData,
-                sample_model=sample_model,
-                **kwargs,
-            )
-
-        elif backend == "numpyro":
+        if backend == "numpyro":
             from groupLevel_numpyro import hmetad_groupLevel as numpyro_func
 
         else:
@@ -282,17 +269,8 @@ def hmetad(
             data, subject, within, stimuli, accuracy, confidence, nRatings
         )
 
-        if backend == "pymc3":
+        if backend == "numpyro":
 
-            from rm1way_pymc3 import hmetad_rm1way
-
-            output = hmetad_rm1way(
-                pymcData,
-                sample_model=sample_model,
-                **kwargs,
-            )
-
-        elif backend == "numpyro":
             raise ValueError("This model is not implemented in nupyro yet")
 
         else:
