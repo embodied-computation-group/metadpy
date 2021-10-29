@@ -12,7 +12,7 @@ def phi(x):
 
 
 def hmetad_subjectLevel(data):
-    """Hierachical Bayesian modeling of meta-d' (subject level).
+    """Hierachical Bayesian modeling of meta-d' (subject level) [1]_.
 
     This function create the model that is later used for MCMC sampling. The subject
     level model must be called using :py:func:`metadPy.bayesian.hmetad`.
@@ -24,9 +24,9 @@ def hmetad_subjectLevel(data):
 
     References
     ----------
-    .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
-    of metacognitive efficiency from confidence ratings, Neuroscience of
-    Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+    .. [1] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
+      of metacognitive efficiency from confidence ratings, Neuroscience of
+      Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
 
     """
 

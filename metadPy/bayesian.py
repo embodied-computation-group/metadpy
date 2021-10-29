@@ -233,7 +233,7 @@ def hmetad(
 
         if backend == "pymc3":
 
-            from subjectLevel_pymc3 import hmetad_subjectLevel
+            from subject_level_pymc3 import hmetad_subjectLevel
 
             output = hmetad_subjectLevel(
                 pymcData,
@@ -242,7 +242,7 @@ def hmetad(
 
         elif backend == "numpyro":
 
-            from subjectLevel_numpyro import hmetad_subjectLevel as numpyro_func
+            from subject_level_numpyro import hmetad_subjectLevel as numpyro_func
 
         else:
             raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
@@ -256,7 +256,7 @@ def hmetad(
         )
 
         if backend == "numpyro":
-            from groupLevel_numpyro import hmetad_groupLevel as numpyro_func
+            from group_level_numpyro import hmetad_groupLevel as numpyro_func
 
         else:
             raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")

@@ -65,8 +65,10 @@ def hmetad_groupLevel(data: dict):
 
     c1 = jnp.expand_dims(c1, axis=0)
 
-    # Hyperpriors on mRatio
-    mu_logMratio = numpyro.sample("mu_logMratio", dist.Normal(0.0, 1.0))
+    # Hyperpriors on m_ratio
+    mu_log_m_ratio = numpyro.sample("mu_log_m_ratio", dist.Normal(0.0, 1.0))
+    mu_m_ratio = numpyro.deterministic("mu_m_ratio", jnp.exp(mu_log_m_ratio))
+    mu_meta_d = numpyro.deterministic("mu_meta_d", mu_m_ratio * mu_d1)
     sigma_delta = numpyro.sample("sigma_delta", dist.HalfNormal(1.0))
 
     delta_tilde = numpyro.sample(
@@ -74,14 +76,14 @@ def hmetad_groupLevel(data: dict):
     )
     delta = numpyro.deterministic("delta", sigma_delta * delta_tilde)
 
-    epsilon_logMratio = numpyro.sample("epsilon_logMratio", dist.Beta(1, 1))
-    logMratio = numpyro.deterministic(
-        "logMratio", mu_logMratio + (epsilon_logMratio * delta)
+    epsilon_log_m_ratio = numpyro.sample("epsilon_log_m_ratio", dist.Beta(1, 1))
+    log_m_ratio = numpyro.deterministic(
+        "log_m_ratio", mu_log_m_ratio + (epsilon_log_m_ratio * delta)
     )
-    mRatio = numpyro.deterministic("mRatio", jnp.exp(logMratio))
+    m_ratio = numpyro.deterministic("m_ratio", jnp.exp(log_m_ratio))
 
     # Type 2 priors
-    metad = numpyro.deterministic("metad", mRatio * d1)
+    meta_d = numpyro.deterministic("meta_d", m_ratio * d1)
 
     # Specify ordered prior on criteria
     # bounded above and below by Type 1 c1
@@ -106,8 +108,8 @@ def hmetad_groupLevel(data: dict):
     )
 
     # Means of SDT distributions
-    S2mu = jnp.expand_dims(metad / 2, axis=0)
-    S1mu = jnp.expand_dims(-metad / 2, axis=0)
+    S2mu = jnp.expand_dims(meta_d / 2, axis=0)
+    S1mu = jnp.expand_dims(-meta_d / 2, axis=0)
 
     # Calculate normalisation constants
     C_area_rS1 = phi(c1 - S1mu)
