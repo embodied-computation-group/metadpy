@@ -62,7 +62,7 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
         FA = Binomial("FA", data["N"], f, observed=data["FA"])
 
         # Type 2 priors
-        meta_d = Normal("metad", mu=d1, tau=2)
+        meta_d = Normal("meta_d", mu=d1, tau=2)
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
