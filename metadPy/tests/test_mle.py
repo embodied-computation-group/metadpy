@@ -24,7 +24,7 @@ class Testsdt(TestCase):
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
         fit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
         assert round(fit["dprime"][0], 3) == 1.535
-        assert round(fit["metad"][0], 3) == 1.634
+        assert round(fit["meta_d"][0], 3) == 1.634
         assert round(fit["m_diff"][0], 3) == 0.099
         assert round(fit["m_ratio"][0], 3) == 1.064
 
@@ -43,7 +43,7 @@ class Testsdt(TestCase):
             confidence="Confidence",
         )
         assert round(subject_fit["dprime"][0], 2) == 1.0
-        assert round(subject_fit["metad"][0], 2) == 0.82
+        assert round(subject_fit["meta_d"][0], 2) == 0.82
         assert round(subject_fit["m_ratio"][0], 2) == 0.82
         assert round(subject_fit["m_diff"][0], 2) == -0.18
 
@@ -57,7 +57,7 @@ class Testsdt(TestCase):
             subject="Subject",
         )
         assert group_fit["Subject"].nunique() == 20
-        assert round(group_fit["metad"].mean(), 2) == 0.8
+        assert round(group_fit["meta_d"].mean(), 2) == 0.8
         assert round(group_fit["dprime"].mean(), 2) == 0.98
         assert round(group_fit["m_ratio"].mean(), 2) == 0.82
         assert round(group_fit["m_diff"].mean(), 2) == -0.17
@@ -74,7 +74,7 @@ class Testsdt(TestCase):
         )
         assert condition_fit["Subject"].nunique() == 20
         assert condition_fit["Condition"].nunique() == 2
-        assert round(condition_fit["metad"].mean(), 2) == 0.78
+        assert round(condition_fit["meta_d"].mean(), 2) == 0.78
         assert round(condition_fit["dprime"].mean(), 2) == 0.96
         assert round(condition_fit["m_ratio"].mean(), 2) == 0.81
         assert round(condition_fit["m_diff"].mean(), 2) == -0.18
@@ -91,7 +91,7 @@ class Testsdt(TestCase):
         )
         assert condition_fit_2["Subject"].nunique() == 20
         assert condition_fit_2["Condition"].nunique() == 2
-        assert round(condition_fit_2["metad"].mean(), 2) == 0.78
+        assert round(condition_fit_2["meta_d"].mean(), 2) == 0.78
         assert round(condition_fit_2["dprime"].mean(), 2) == 0.96
         assert round(condition_fit_2["m_ratio"].mean(), 2) == 0.81
         assert round(condition_fit_2["m_diff"].mean(), 2) == -0.18
@@ -104,7 +104,7 @@ class Testsdt(TestCase):
             accuracy=df.Accuracy.to_numpy(),
             confidence=df.Confidence.to_numpy(),
         )
-        assert round(array_fit["metad"].mean(), 2) == 0.82
+        assert round(array_fit["meta_d"].mean(), 2) == 0.82
         assert round(array_fit["dprime"].mean(), 2) == 1.0
         assert round(array_fit["m_ratio"].mean(), 2) == 0.82
         assert round(array_fit["m_diff"].mean(), 2) == -0.18
