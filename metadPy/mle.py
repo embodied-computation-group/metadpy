@@ -466,18 +466,22 @@ def metad(
     print(f"- n Subjects: {data[subject].nunique()}")
     print(f"- n Conditions: {data[within].nunique()}")
     print(f"- n Groups: {data[between].nunique()}")
-    if padding is True:
+    if (padding is True) & verbose:
         tqdm.write("... Using padding to avoid fitting errors.")
-    if collapse is True:
+    if (collapse is True) & verbose:
         tqdm.write("... Collapse across rating categories.")
 
     results_df = pd.DataFrame([])
 
-    pbar = tqdm(data[subject].unique(), position=0, leave=True, file=sys.stdout)
+    if verbose:
+        pbar = tqdm(data[subject].unique(), position=0, leave=True, file=sys.stdout)
+    else:
+        pbar = data[subject].unique()
 
     for sub in pbar:
 
-        pbar.set_description(f"Fitting model on subject: {sub}")
+        if verbose:
+            pbar.set_description(f"Fitting model on subject: {sub}")
 
         for cond in data[within].unique():
 
