@@ -2,7 +2,7 @@
 
 import os
 import sys
-from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union, overload
+from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union, overload, Callable
 
 import numpy as np
 import pandas as pd
@@ -28,9 +28,8 @@ def hmetad(
     nbins: int,
     padding: bool = False,
     padAmount: Optional[float] = None,
-    sample_model: bool = True,
-    backend: str = "pymc3",
-) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
+    backend: str = "numpyro",
+) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -46,9 +45,8 @@ def hmetad(
     nbins: int,
     padding: bool = False,
     padAmount: Optional[float] = None,
-    sample_model: bool = True,
-    backend: str = "pymc3",
-) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
+    backend: str = "numpyro",
+) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -64,9 +62,8 @@ def hmetad(
     nbins: int,
     padding: bool = False,
     padAmount: Optional[float] = None,
-    sample_model: bool = True,
-    backend: str = "pymc3",
-) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
+    backend: str = "numpyro",
+) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -83,8 +80,8 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
-    backend: str = "pymc3",
-) -> "Union[Model, Tuple[Model, Union[InferenceData, MultiTrace]]]":
+    backend: str = "numpyro",
+) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
 
@@ -156,12 +153,13 @@ def hmetad(
 
     Returns
     -------
-    model : :py:class:`pymc3.Model` instance
-        The pymc3 model. Encapsulates the variables and likelihood factors.
-    trace : :py:class:`pymc3.backends.base.MultiTrace` or
-        :py:class:`arviz.InferenceData`
-        A `MultiTrace` or `ArviZ InferenceData` object that contains the
-        samples. Only returned if `sample_model` is set to `True`.
+    model : :py:class:`pymc3.Model` instance | callable
+        The model as a :py:class:`pymc3.Model` or a :py:class:`numpyro.infer.MCMC` 
+        instance.
+    trace : :py:class:`pymc3.backends.base.MultiTrace` |
+        :py:class:`arviz.InferenceData` | None
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the samples. Only
+        returned if `sample_model` is set to `True`, otherwise set to None.
 
     Examples
     --------
@@ -259,7 +257,7 @@ def hmetad(
             from group_level_numpyro import hmetad_groupLevel as numpyro_func
 
         else:
-            raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
+            raise ValueError("Invalid backend provided - This model is only implemented in numpyro")
 
     ###################
     # Repeated-measures
@@ -274,7 +272,7 @@ def hmetad(
             raise ValueError("This model is not implemented in nupyro yet")
 
         else:
-            raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
+            raise ValueError("Invalid backend provided - This model is only implemented in numpyro")
 
     else:
         raise ValueError("Invalid design specification provided. No model fitted.")
@@ -302,8 +300,10 @@ def hmetad(
 
             return numpyro_func, trace
     else:
-        model = output
-        return model
+        if backend == "pymc3":
+            return output, None
+        elif backend == "numpyro":
+            return numpyro_func, None
 
 
 def extractParameters(

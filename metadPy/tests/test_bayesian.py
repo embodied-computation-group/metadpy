@@ -2,6 +2,7 @@
 
 import unittest
 from unittest import TestCase
+from numba.core.types.functions import Function
 
 import numpy as np
 import pymc3 as pm
@@ -39,11 +40,21 @@ class Testsdt(TestCase):
         ####################
         # Test subject level
         ####################
-        model = hmetad(
+        model, _ = hmetad(
             nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
             nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
             nRatings=4,
             sample_model=False,
+            backend="numpyro"
+        )
+        assert callable(model)
+
+        model, _ = hmetad(
+            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
+            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
+            nRatings=4,
+            sample_model=False,
+            backend="pymc3"
         )
         assert isinstance(model, pm.Model)
 
@@ -58,7 +69,7 @@ class Testsdt(TestCase):
 
         this_df = group_df[(group_df.Subject == 0) & (group_df.Condition == 0)]
         with pytest.raises(ValueError):
-            model = hmetad(
+            model, _ = hmetad(
                 data=this_df,
                 nRatings=None,
                 stimuli="Stimuli",
@@ -67,7 +78,7 @@ class Testsdt(TestCase):
                 sample_model=False,
             )
 
-        model = hmetad(
+        model, _ = hmetad(
             data=this_df,
             nRatings=4,
             stimuli="Stimuli",
@@ -75,10 +86,10 @@ class Testsdt(TestCase):
             confidence="Confidence",
             sample_model=False,
         )
-        assert isinstance(model, pm.Model)
+        assert callable(model)
 
         # Force ratings discretization
-        model = hmetad(
+        model, _ = hmetad(
             data=this_df,
             nRatings=3,
             stimuli="Stimuli",
@@ -86,7 +97,7 @@ class Testsdt(TestCase):
             confidence="Confidence",
             sample_model=False,
         )
-        assert isinstance(model, pm.Model)
+        assert callable(model)
 
         # Using Numpyro
         model, trace = hmetad(
@@ -97,6 +108,8 @@ class Testsdt(TestCase):
             confidence="Confidence",
             backend="numpyro",
         )
+        assert callable(model)
+        assert isinstance(trace, dict)
 
         with pytest.raises(ValueError):
             model = hmetad(
@@ -113,45 +126,22 @@ class Testsdt(TestCase):
         ####################
         this_df = group_df[group_df.Condition == 0]
 
-        # Using PyMC3
-        model = hmetad(
-            data=this_df,
-            nRatings=4,
-            stimuli="Stimuli",
-            accuracy="Accuracy",
-            confidence="Confidence",
-            subject="Subject",
-            sample_model=False,
-        )
-        assert isinstance(model, pm.Model)
-
         # Using Numpyro
-        model = hmetad(
+        model, trace = hmetad(
             data=this_df,
             nRatings=4,
             stimuli="Stimuli",
             accuracy="Accuracy",
             confidence="Confidence",
             subject="Subject",
-            backend="numpyro",
         )
+
+        assert callable(model)
+        assert isinstance(trace, dict)
 
         #######################
         # Test repeated measure
         #######################
-
-        # Using PyMC3
-        model = hmetad(
-            data=group_df,
-            nRatings=4,
-            stimuli="Stimuli",
-            accuracy="Accuracy",
-            confidence="Confidence",
-            subject="Subject",
-            within="Condition",
-            sample_model=False,
-        )
-        assert isinstance(model, pm.Model)
 
         # Using numpyro
         with pytest.raises(ValueError):

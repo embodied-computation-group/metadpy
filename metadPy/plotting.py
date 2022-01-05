@@ -38,7 +38,7 @@ def plot_confidence(
     if fitModel is not None:
         if isinstance(fitModel, dict):
             # Retrieve estimate of nRatings for correct and incorrect
-            mu1 = fitModel["metad"] / 2
+            mu1 = fitModel["meta_d"] / 2
             mean_c2 = (fitModel["t2ca_rS2"] + np.abs(np.flip(fitModel["t2ca_rS1"]))) / 2
             I_area = 1 - norm.cdf(0, -mu1, 1)
             C_area = 1 - norm.cdf(0, mu1, 1)
