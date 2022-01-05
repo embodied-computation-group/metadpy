@@ -24,10 +24,12 @@ For most of the operations, the following packages are required:
 * [Matplotlib](https://matplotlib.org/) (>=3.0.2)
 * [Seaborn](https://seaborn.pydata.org/) (>=0.9.0)
 
-For Bayesian modelling you will need:
+For Bayesian modelling you will either need:
 
 * [Numpyro](https://num.pyro.ai/en/latest/index.html#introductory-tutorials) (>=0.8.0) - also requiers [JAX](https://jax.readthedocs.io/en/latest/)
-  or
+
+  *or*
+
 * [PyMC3](https://docs.pymc.io/>) (>=3.10.0) - only support non hierarchical modelling.
 
 # Why metadPy?
