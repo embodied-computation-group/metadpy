@@ -23,10 +23,10 @@ jobs:
           ${{ runner.os }}-pip-
     - name: Install dependencies
       run: |
-        pip install -e '.[test]'
+        pip install coverage
         pip install -r requirements-tests.txt
-    - name: Run tests
+    - name: Run tests and coverage
       run: |
-        pytest
+        coverage run -m unittest
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
