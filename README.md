@@ -1,38 +1,42 @@
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadPy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadPy.svg)](https://badge.fury.io/py/metadPy) [![travis](https://travis-ci.com/LegrandNico/metadPy.svg?branch=master)](https://travis-ci.com/LegandNico/metadPy) [![codecov](https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadPy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/) [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadPy/blob/master/LICENSE) [![codecov](https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadPy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/) [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 
 ***
 
 <img src="https://github.com/LegrandNico/metadPy/raw/master/images/logo.png" align="left" alt="metadPy" height="250" HSPACE=30>
 
-metadPy is an open-source Python package dedicated to behavioural data
-analysis for metacognition research. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) [1, 2], only provided with a data frame encoding task performances and confidence ratings at the trial level.
+**metadPy** is an open-source Python package for cognitive modelling of behavioural data with a focus on metacognition. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) [**1**, **2**, **3**]. The only input required is a data frame encoding task performances and confidence ratings at the trial level.
 
-metadPy is written in Python 3 and use mostly [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>). Computing meta-d’ using maximum likelihood estimation (MLE) is based on Scipy. Hierarchical Bayesian modelling of meta-d’ and m-ratio is based on [PyMC3](https://docs.pymc.io/>).
+**metadPy** is written in Python 3. It uses [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>) for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling of meta-d’ and m-ratio [**4**] is based on [JAX](https://jax.readthedocs.io/en/latest/) and [Numpyro](https://num.pyro.ai/en/latest/index.html#). Single subject modelling is also possible with [PyMC3](https://docs.pymc.io/>).
 
 # Installation
 
-metadPy can be installed using pip:
+The package can be installed using pip:
 
 ```shell
 pip install git+https://github.com/LegrandNico/metadPy.git
 ```
 
-The following packages are required:
+For most of the operations, the following packages are required:
 
-* Numpy (>=1.15)
-* SciPy (>=1.3.0)
-* Pandas (>=0.24)
-* Matplotlib (>=3.0.2)
-* Seaborn (>=0.9.0)
-* PyMC3 (>=3.10.0)
+* [Numpy](https://numpy.org/) (>=1.15)
+* [Scipy](https://www.scipy.org/) (>=1.3.0)
+* [Pandas](https://pandas.pydata.org/>) (>=0.24)
+* [Matplotlib](https://matplotlib.org/) (>=3.0.2)
+* [Seaborn](https://seaborn.pydata.org/) (>=0.9.0)
+
+For Bayesian modelling you will need:
+
+* [Numpyro](https://num.pyro.ai/en/latest/index.html#introductory-tutorials) (>=0.8.0) - also requiers [JAX](https://jax.readthedocs.io/en/latest/)
+  or
+* [PyMC3](https://docs.pymc.io/>) (>=3.10.0) - only support non hierarchical modelling.
 
 # Why metadPy?
 
-metadPy refers to meta-d' (meta-d prime), which is a behavioural metric commonly used in consciousness metacognition research and reflecting metacognitive efficiency (i.e the relationship between subjective reports and objective behaviour).
+metadPy stands for meta-d' (meta-d prime) in Python. meta-d' is a behavioural metric commonly used in consciousness and metacognition research. It is modelled to reflect metacognitive efficiency (i.e the relationship between subjective reports about performances and objective behaviour).
 
-metadPy aims to be a Python equivalent of the hMeta-d toolbox (available in Matlab and R). It tries to make these models available to a broader open-source ecosystem and to ease their use via modern (cloud) computing interfaces using either CPU or GPU. While several packages already exist in Python and other languages to compute signal detection theory metrics, the Bayesian modelling of confidence data, a prominent method proposed by Steve Fleming (see [2, 3]) to analyse task performance and confidence ratings, is based on JAGS, which does not support GPU computing and rely on a Gibbs sampler to explore the posterior distribution. Because it relies on PyMC3 and Theano, metadPy can easily be parallelized and use a broader variety of MCMC sampling algorithms (comprising NUTS).
+metadPy first aims to be the Python equivalent of the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) (Matlab and R). It tries to make these models available to a broader open-source ecosystem and to ease their use via cloud computing interfaces. One notable difference is that While the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) relies on JAGS for the Bayesian modelling of confidence data (see [**4**]) to analyse task performance and confidence ratings, metadPy is based on [JAX](https://jax.readthedocs.io/en/latest/) and [Numpyro](https://num.pyro.ai/en/latest/index.html#), which can easily be parallelized, flexibly uses CPU, GPU or TPU and offers a broader variety of MCMC sampling algorithms (comprising NUTS).
 
-For an extensive introduction to metadPy, you can navigate the following notebooks that are Python adaptations of the introduction to the hMeta-d toolbox written in Matlab by Olivia Faul for the Zurich Computational Psychiatry course (see [this link](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial)).
+For an extensive introduction to metadPy, you can navigate the following notebooks that are Python adaptations of the introduction to the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) written in Matlab by Olivia Faul for the [Zurich Computational Psychiatry course](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial).
 
 ## Examples 
 
@@ -55,8 +59,6 @@ For an extensive introduction to metadPy, you can navigate the following noteboo
 | 4. Comparison with the HMeta-d toolbox | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/4%20-%20Comparison%20with%20the%20hmeta-d%20toolbox.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/4%20-%20Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
 
 Or just follow the quick tour below.
-
-<div class="alert alert-block alert-warning"><b>Warning:</b> This work is still under progress. The code is continuously optimized for speed, precision, and checked for errors. Please always double-check your results with other toolboxes.</div>
 
 # Importing data
 
@@ -665,113 +667,6 @@ az.plot_posterior(trace, var_names=['mu_logMratio'], kind='hist', bins=20)
 
     
 ![png](./images/groupLevel.png)
-    
-
-
-## Repeated measures
-
-
-```python
-simulation = responseSimulation(
-    d=1, metad=1.5, c=0, nRatings=4, nTrials=200, nSubjects=10, nConditions=2)
-```
-
-
-```python
-model, trace = hmetad(
-    data=simulation, nRatings=4, stimuli='Stimuli', accuracy='Accuracy',
-    confidence='Confidence', subject='Subject', within='Condition')
-```
-
-    Auto-assigning NUTS sampler...
-    Initializing NUTS using jitter+adapt_diag...
-    Sequential sampling (2 chains in 1 job)
-    NUTS: [cS2_hn, cS1_hn, log_mRatio_tilde, tau_logMratio, Bd_Cond1, dbase_tilde, sigma_Cond1, mu_Cond1, sigma_D, mu_D, sigma_c2, mu_c2]
-    
-
-
-
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [2000/2000 01:10<00:00 Sampling chain 0, 21 divergences]
-</div>
-
-
-
-
-
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [2000/2000 00:56<00:00 Sampling chain 1, 32 divergences]
-</div>
-
-
-
-    Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 127 seconds.
-    There were 21 divergences after tuning. Increase `target_accept` or reparameterize.
-    There were 53 divergences after tuning. Increase `target_accept` or reparameterize.
-    The number of effective samples is smaller than 25% for some parameters.
-    
-
-
-```python
-az.plot_posterior(trace, var_names=['mu_Cond1'], kind='hist', bins=20)
-```
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f387f5986d8>
-
-
-
-
-    
-![png](./images/repeatedMeasures.png)
-    
-
-
-
-```python
-az.plot_forest(trace, var_names=["mRatio"])
-```
-
-
-
-
-    array([<matplotlib.axes._subplots.AxesSubplot object at 0x7f387f3d1278>],
-          dtype=object)
-
-
-
-
-    
-![png](./images/repeatedMeasures2.png)
-    
 
 
 # References
