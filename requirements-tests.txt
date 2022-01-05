@@ -3,6 +3,13 @@ scipy>=1.3.0
 pandas>=0.24
 matplotlib>=3.0.2
 seaborn>=0.9.0
+pymc3==3.10.0
+arviz==0.11.00
+theano-pymc==1.0.11
+black
+pytest
+coverage
 pandas_flavor==0.1.2
 numba>=0.51.2
 tqdm
+numpyro>=0.8.0
