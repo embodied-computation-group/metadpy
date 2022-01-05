@@ -22,7 +22,7 @@ class Testsdt(TestCase):
         # ----------------------------
         nR_S1 = np.array([52, 32, 35, 37, 26, 12, 4, 2])
         nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
-        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2)
+        fit = metad(nR_S1=nR_S1, nR_S2=nR_S2, verbose=1)
         assert round(fit["dprime"][0], 3) == 1.535
         assert round(fit["meta_d"][0], 3) == 1.634
         assert round(fit["m_diff"][0], 3) == 0.099

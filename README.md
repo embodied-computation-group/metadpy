@@ -48,7 +48,6 @@ For an extensive introduction to metadPy, you can navigate the following noteboo
 | 2. Estimating meta-d' (single subject) using Bayesian modelling - Numpyro | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(numpyro).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(numpyro).ipynb)
 | 3. Estimating meta-d' (single subject) using Bayesian modelling - PyMC3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc3).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc3).ipynb)
 | 4. Estimating meta-d' (group level) using Bayesian modelling - Numpyro | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%204%20-%20Fitting%20Bayesian%20-%20Group%20level%20(numpyro).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Group%20level%20(numpyro).ipynb)
-| 5. Estimating meta-d' (group level) using Bayesian modelling - PyMC3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Group%20level%20(pymc3).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Group%20level%20(pymc3).ipynb)
 
 
 ## Tutorials
@@ -86,24 +85,7 @@ simulation = responseSimulation(d=1, metad=1.5, c=0,
                                 nRatings=4, nTrials=200)
 simulation
 ```
-
-
-
-
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -233,9 +215,6 @@ simulation
 <p>200 rows × 7 columns</p>
 </div>
 
-
-
-
 ```python
 from metadPy.utils import trials2counts
 nR_S1, nR_S2 = trials2counts(
@@ -256,7 +235,6 @@ from metadPy.plotting import plot_confidence, plot_roc
 sns.set_context('talk')
 ```
 
-
 ```python
 fig, axs = plt.subplots(1, 2, figsize=(13, 5))
 plot_confidence(nR_S1, nR_S2, ax=axs[0])
@@ -264,14 +242,9 @@ plot_roc(nR_S1, nR_S2, ax=axs[1])
 sns.despine()
 ```
 
-
-    
 ![png](./images/confidence_ROCAUC.png)
-    
-
 
 # Signal detection theory (SDT)
-
 
 ```python
 from metadPy.sdt import criterion, dprime, rates, roc_auc, scores
@@ -279,69 +252,34 @@ from metadPy.sdt import criterion, dprime, rates, roc_auc, scores
 
 All metadPy functions are registred as Pandas flavors (see [pandas-flavor](https://pypi.org/project/pandas-flavor/)), which means that the functions can be called as a method from the result data frame. When using the default columns names (`Stimuli`, `Response`, `Accuracy`, `Confidence`), this significantly reduces the length of the function call, making your code more clean and readable.
 
-
 ```python
 simulation.criterion()
 ```
-
-
-
-
     5.551115123125783e-17
-
-
-
 
 ```python
 simulation.dprime()
 ```
-
-
-
-
     0.9917006946949065
-
-
 
 
 ```python
 simulation.rates()
 ```
-
-
-
-
     (0.69, 0.31)
-
-
 
 
 ```python
 simulation.roc_auc(nRatings=4)
 ```
-
-
-
-
     0.5797055057618438
-
-
-
 
 ```python
 simulation.scores()
 ```
-
-
-
-
     (69, 31, 31, 69)
 
-
-
 # Estimating meta dprime using Maximum Likelyhood Estimates (MLE)
-
-
 
 ```python
 from metadPy.mle import metad
@@ -350,25 +288,16 @@ metad = metad(data=simulation, nRatings=4, stimuli='Stimuli',
               accuracy='Accuracy', confidence='Confidence', verbose=0)
 print(f'meta-d\' = {str(metad["meta_da"])}')
 ```
-
-    /usr/local/lib/python3.6/dist-packages/scipy/optimize/_hessian_update_strategy.py:187: UserWarning: delta_grad == 0.0. Check if the approximated function is linear. If the function is linear better results can be obtained by defining the Hessian as zero instead of using quasi-Newton approximations.
-      'approximations.', UserWarning)
-    
-
     meta-d' = 0.5223485447196857
-    
 
 # Estimating meta-dprime using hierarchical Bayesian modeling
 
-
 ## Subject level
-
 
 ```python
 import pymc3 as pm
 from metadPy.hierarchical import hmetad
 ```
-
 
 ```python
 model, trace = hmetad(data=simulation, nRatings=4, stimuli='Stimuli',
@@ -434,20 +363,12 @@ model, trace = hmetad(data=simulation, nRatings=4, stimuli='Stimuli',
 ```python
 pm.traceplot(trace, var_names=['metad', 'cS2', 'cS1']);
 ```
-
-
-    
+ 
 ![png](./images/hmetad.png)
-    
-
-
 
 ```python
 pm.summary(trace)
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -583,16 +504,12 @@ pm.summary(trace)
 </table>
 </div>
 
-
-
 ## Group level
-
 
 ```python
 simulation = responseSimulation(d=1, metad=1.5, c=0, nRatings=4,
                                 nTrials=200, nSubjects=10)
 ```
-
 
 ```python
 model, trace = hmetad(
@@ -658,16 +575,6 @@ model, trace = hmetad(
 ```python
 az.plot_posterior(trace, var_names=['mu_logMratio'], kind='hist', bins=20)
 ```
-
-
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f38e8be6278>
-
-
-
-
-    
 ![png](./images/groupLevel.png)
 
 

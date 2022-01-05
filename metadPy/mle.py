@@ -14,7 +14,7 @@ from numba.types import WrapperAddressProtocol, float32, float64
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 from tqdm import tqdm
-
+from math import sqrt
 from metadPy.utils import trials2counts
 
 warnings.filterwarnings(
@@ -51,7 +51,7 @@ def norm_cdf(x, mu, sigma):
     Evaluate cumulative distribution function of normal distribution.
     """
     z = (x - mu) / sigma
-    z *= 1.0 / np.sqrt(2)
+    z *= 1.0 / sqrt(2)
     return 0.5 * (1.0 + erf(z))
 
 

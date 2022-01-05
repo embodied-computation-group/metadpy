@@ -2,7 +2,6 @@
 
 import unittest
 from unittest import TestCase
-from numba.core.types.functions import Function
 
 import numpy as np
 import pymc3 as pm
