@@ -24,9 +24,9 @@ def hmetad_subjectLevel(data):
 
     References
     ----------
-    .. [1] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
-      of metacognitive efficiency from confidence ratings, Neuroscience of
-      Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+    .. [1] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
+      metacognitive efficiency from confidence ratings, Neuroscience of Consciousness,
+      3(1) nix007, https://doi.org/10.1093/nc/nix007.
 
     """
 

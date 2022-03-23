@@ -2,3 +2,5 @@
 *.pyc
 mypyreports/
 .coverage
+build
+*egg-info

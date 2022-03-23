@@ -2,8 +2,9 @@
 
 import os
 import sys
-from typing import TYPE_CHECKING, Dict, List, Optional, Tuple, Union, overload, Callable
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Tuple, Union, overload
 
+import arviz as az
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
@@ -13,8 +14,8 @@ from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
 
 if TYPE_CHECKING is True:
-    from pymc3.backends.base import MultiTrace
-    from pymc3.model import Model
+    from pymc.backends.base import MultiTrace
+    from pymc.model import Model
 
 
 @overload
@@ -29,6 +30,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     backend: str = "numpyro",
+    output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
@@ -46,6 +48,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     backend: str = "numpyro",
+    output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
@@ -63,6 +66,7 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     backend: str = "numpyro",
+    output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
@@ -81,6 +85,7 @@ def hmetad(
     padAmount: Optional[float] = None,
     sample_model: bool = True,
     backend: str = "numpyro",
+    output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
 
@@ -102,34 +107,36 @@ def hmetad(
     padAmount=None,
     sample_model=True,
     backend="numpyro",
+    output: str = "model",
 ):
-    """Estimate parameters of the Hierarchical Bayesian meta-d'
+    """Estimate parameters of the Bayesian meta-d' model with hyperparametes at the
+    group level.
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
-        Dataframe. Note that this function can also directly be used as a
-        Pandas method, in which case this argument is no longer needed.
-    nR_S1 : 1d array-like, list, string or None
+    data : :py:class:`pandas.DataFrame` | None
+        Dataframe. Note that this function can also directly be used as a Pandas
+        method, in which case this argument is no longer needed.
+    nR_S1 : 1d array-like, list, string | None
         Confience ratings (stimuli 1, correct and incorrect).
-    nR_S2 : 1d array-like, list, string or None
+    nR_S2 : 1d array-like, list, string | None
         Confience ratings (stimuli 2, correct and incorrect).
-    stimuli : string or None
+    stimuli : string | None
         Name of the column containing the stimuli.
-    accuracy : string or None
+    accuracy : string | None
         Name of the columns containing the accuracy.
-    confidence : string or None
+    confidence : string | None
         Name of the column containing the confidence ratings.
-    nRatings : int or None
+    nRatings : int | None
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
         discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
-    within : string or None
+    within : string | None
         Name of column containing the within factor (condition comparison).
-    between : string or None
+    between : string | None
         Name of column containing the between subject factor (group
         comparison).
-    subject : string or None
+    subject : string | None
         Name of column containing the subject identifier (only required if a
         within-subject or a between-subject factor is provided).
     nbins : int
@@ -141,25 +148,40 @@ def hmetad(
         added to it. Padding cells is desirable if trial counts of 0 interfere
         with model fitting. If False, trial counts are not manipulated and 0s
         may be present in the response count output. Default value for padding
-        is 0.
+        is `0`.
     padAmount : float or None
         The value to add to each response count if padCells is set to 1.
         Default value is 1/(2*nRatings)
     sample_model : boolean
         If `False`, only the model is returned without sampling.
     backend : str
-        The backend used for MCMC sampling. Can be `"pymc3"` or `"numpyro"`. Defaults
+        The backend used for MCMC sampling. Can be `"pymc"` or `"numpyro"`. Defaults
         to `"numpyro"`.
+    output : str
+        The kind of outpute expected. If `"model"`, will return the model function and
+        the traces. If `"dataframe"`, will return a dataframe containing the
 
     Returns
     -------
-    model : :py:class:`pymc3.Model` instance | callable
-        The model as a :py:class:`pymc3.Model` or a :py:class:`numpyro.infer.MCMC` 
+    If `output="model"`:
+
+    model : :py:class:`pymc.Model` instance | callable
+        The model as a :py:class:`pymc.Model` or a :py:class:`numpyro.infer.MCMC`
         instance.
-    trace : :py:class:`pymc3.backends.base.MultiTrace` |
+    traces : :py:class:`pymc.backends.base.MultiTrace` |
         :py:class:`arviz.InferenceData` | None
         A `MultiTrace` or `ArviZ InferenceData` object that contains the samples. Only
         returned if `sample_model` is set to `True`, otherwise set to None.
+
+    If `output="dataframe"`:
+
+    results : pd.DataFrame
+        :py:class:`pandas.DataFrame` containing the values for the following variables:
+
+        * d-prime (d)
+        * criterion (c)
+        * meta-d' (meta_d)
+        * m-ratio (m_ratio)
 
     Examples
     --------
@@ -167,20 +189,29 @@ def hmetad(
 
     2. Group-level
 
-    3. Repeated measures
-
     Notes
     -----
-    This function will compute hierarchical Bayesian estimation of
-    metacognitive efficiency as described in [1]_. The model can be fitter at
-    the subject level, at the group level and can account for repeated measures
-    by providing the corresponding `subject`, `between` and `within` factors.
+    This function will compute hierarchical Bayesian estimation of metacognitive
+    efficiency as described in [1]_. The model can be fitter at the subject level, at
+    the group level and can account for repeated measures by providing the corresponding
+    `subject`, `between` and `within` factors.
+
+    If the confidence levels have more unique values than `nRatings`, the confience
+    column will be discretized using py:func:`metadPy.utils.discreteRatings`.
+
+    Raises
+    ------
+    ValueError
+        When the number of ratings is not provided.
+        If data is None and nR_S1 or nR_S2 not provided.
+        If the backend is not `"numpyro"` or `"pymc"`.
 
     References
     ----------
     .. [1] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
-    metacognitive efficiency from confidence ratings, Neuroscience of
-    Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+      metacognitive efficiency from confidence ratings, Neuroscience of
+      Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007.
+
     """
     modelScript = os.path.dirname(__file__) + "/models/"
     sys.path.append(modelScript)
@@ -200,6 +231,7 @@ def hmetad(
             )
     else:
         if data[confidence].nunique() > nRatings:
+
             # If a continuous rating scale was used (if N unique ratings > nRatings)
             # transform confidence to discrete ratings
             print(
@@ -229,11 +261,11 @@ def hmetad(
 
         pymcData = extractParameters(np.asarray(nR_S1), np.asarray(nR_S2))
 
-        if backend == "pymc3":
+        if backend == "pymc":
 
-            from subject_level_pymc3 import hmetad_subjectLevel
+            from subject_level_pymc import hmetad_subjectLevel
 
-            output = hmetad_subjectLevel(
+            model_output = hmetad_subjectLevel(
                 pymcData,
                 sample_model=sample_model,
             )
@@ -243,7 +275,7 @@ def hmetad(
             from subject_level_numpyro import hmetad_subjectLevel as numpyro_func
 
         else:
-            raise ValueError("Invalid backend provided - Must be pymc3 or numpyro")
+            raise ValueError("Invalid backend provided - Must be pymc or numpyro")
 
     #############
     # Group level
@@ -254,10 +286,12 @@ def hmetad(
         )
 
         if backend == "numpyro":
-            from group_level_numpyro import hmetad_groupLevel as numpyro_func
+            import group_level_numpyro.hmetad_groupLevel as numpyro_func  # type: ignore
 
         else:
-            raise ValueError("Invalid backend provided - This model is only implemented in numpyro")
+            raise ValueError(
+                "Invalid backend provided - This model is only implemented in numpyro"
+            )
 
     ###################
     # Repeated-measures
@@ -272,15 +306,22 @@ def hmetad(
             raise ValueError("This model is not implemented in nupyro yet")
 
         else:
-            raise ValueError("Invalid backend provided - This model is only implemented in numpyro")
+            raise ValueError(
+                "Invalid backend provided - This model is only implemented in numpyro"
+            )
 
     else:
         raise ValueError("Invalid design specification provided. No model fitted.")
 
     if sample_model is True:
-        if backend == "pymc3":
-            model, trace = output
-            return model, trace
+        if backend == "pymc":
+            model, trace = model_output
+
+            if output == "model":
+                return model, trace
+            elif output == "dataframe":
+                return
+
         elif backend == "numpyro":
 
             from jax import random
@@ -296,11 +337,28 @@ def hmetad(
 
             mcmc.run(rng_key, data=pymcData)
 
-            trace = mcmc.get_samples(group_by_chain=True)
+            traces = mcmc.get_samples(group_by_chain=True)
 
-            return numpyro_func, trace
+            if output == "model":
+                return numpyro_func, traces
+
+            elif output == "dataframe":
+                return pd.DataFrame(
+                    {
+                        "d": [pymcData["d1"]],
+                        "c": [pymcData["c1"]],
+                        "meta_d": [
+                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                        ],
+                        "m_ratio": [
+                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                            / pymcData["d1"]
+                        ],
+                    }
+                )
+
     else:
-        if backend == "pymc3":
+        if backend == "pymc":
             return output, None
         elif backend == "numpyro":
             return numpyro_func, None

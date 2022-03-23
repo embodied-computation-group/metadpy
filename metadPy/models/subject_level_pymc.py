@@ -1,7 +1,7 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import numpy as np
-from pymc3 import (
+from pymc import (
     Binomial,
     Deterministic,
     HalfNormal,

@@ -2,6 +2,7 @@
 
 import sys
 import warnings
+from math import sqrt
 from typing import Callable, Dict, List, Optional, Union, overload
 
 import numpy as np
@@ -14,7 +15,7 @@ from numba.types import WrapperAddressProtocol, float32, float64
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 from tqdm import tqdm
-from math import sqrt
+
 from metadPy.utils import trials2counts
 
 warnings.filterwarnings(
@@ -661,7 +662,7 @@ def fit_metad(
     Returns
     -------
     results : dict
-        In the following, S1 and S2 represent the distributions of evidence generated 
+        In the following, S1 and S2 represent the distributions of evidence generated
         by stimulus classes S1 and S2:
 
             * `'dprime'` : `mean(S2) - mean(S1)`, in root-mean-square(sd(S1), sd(S2))
@@ -671,12 +672,12 @@ def fit_metad(
             * `'m_diff'` : `meta_da - da`
             * `'m_ratio'` : `meta_da / da`
             * `'meta_ca'` : type 1 criterion for meta-d' fit, RMS units.
-            * `'t2ca_rS1'` : type 2 criteria of "S1" responses for meta-d' fit, RMS 
+            * `'t2ca_rS1'` : type 2 criteria of "S1" responses for meta-d' fit, RMS
             units.
             * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
                 RMS units.
             * `'logL'` : log likelihood of the data fit
-            * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates for S1 
+            * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates for S1
             responses.
             * `'obs_HR2_rS1'` : actual type 2 hit rates for S1 responses.
             * `'est_FAR2_rS1'` : estimated type 2 false alarm rates for S1 responses.
@@ -814,15 +815,15 @@ def fit_metad(
 
     # package output
     fit = {}
-    fit["dprime"] = np.sqrt(2 / (1 + s ** 2)) * s * d1
+    fit["dprime"] = np.sqrt(2 / (1 + s**2)) * s * d1
     fit["s"] = s
-    fit["meta_d"] = np.sqrt(2 / (1 + s ** 2)) * s * meta_d1
+    fit["meta_d"] = np.sqrt(2 / (1 + s**2)) * s * meta_d1
     fit["m_diff"] = fit["meta_d"] - fit["dprime"]
     fit["m_ratio"] = fit["meta_d"] / fit["dprime"]
 
-    fit["meta_ca"] = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * mt1c1
+    fit["meta_ca"] = (np.sqrt(2) * s / np.sqrt(1 + s**2)) * mt1c1
 
-    t2ca = (np.sqrt(2) * s / np.sqrt(1 + s ** 2)) * np.array(t2c1)
+    t2ca = (np.sqrt(2) * s / np.sqrt(1 + s**2)) * np.array(t2c1)
     fit["t2ca_rS1"] = t2ca[0 : nRatings - 1]
     fit["t2ca_rS2"] = t2ca[(nRatings - 1) :]
 
