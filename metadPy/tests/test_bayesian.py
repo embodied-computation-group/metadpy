@@ -4,7 +4,7 @@ import unittest
 from unittest import TestCase
 
 import numpy as np
-import pymc3 as pm
+import pymc as pm
 import pytest
 
 from metadPy import load_dataset
@@ -53,7 +53,7 @@ class Testsdt(TestCase):
             nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
             nRatings=4,
             sample_model=False,
-            backend="pymc3",
+            backend="pymc",
         )
         assert isinstance(model, pm.Model)
 

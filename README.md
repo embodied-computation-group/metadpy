@@ -6,7 +6,7 @@
 
 **metadPy** is an open-source Python package for cognitive modelling of behavioural data with a focus on metacognition. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) [**1**, **2**, **3**]. The only input required is a data frame encoding task performances and confidence ratings at the trial level.
 
-**metadPy** is written in Python 3. It uses [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>) for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling of meta-d’ and m-ratio [**4**] is based on [JAX](https://jax.readthedocs.io/en/latest/) and [Numpyro](https://num.pyro.ai/en/latest/index.html#). Single subject modelling is also possible with [PyMC3](https://docs.pymc.io/>).
+**metadPy** is written in Python 3. It uses [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>) for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling of meta-d’ and m-ratio [**4**] is based on [JAX](https://jax.readthedocs.io/en/latest/) and [Numpyro](https://num.pyro.ai/en/latest/index.html#). Single subject modelling is also possible with [pymc](https://docs.pymc.io/>).
 
 # Installation
 
@@ -30,7 +30,7 @@ For Bayesian modelling you will either need:
 
   *or*
 
-* [PyMC3](https://docs.pymc.io/>) (>=3.10.0) - only support non hierarchical modelling.
+* [PyMC](https://docs.pymc.io/>) (>=3.10.0) - only support non hierarchical modelling.
 
 # Why metadPy?
 
@@ -46,7 +46,7 @@ For an extensive introduction to metadPy, you can navigate the following noteboo
 | --- | ---| --- |
 | 1. Estimating meta-d' using MLE (subject and group level) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb)
 | 2. Estimating meta-d' (single subject) using Bayesian modelling - Numpyro | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(numpyro).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(numpyro).ipynb)
-| 3. Estimating meta-d' (single subject) using Bayesian modelling - PyMC3 | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc3).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc3).ipynb)
+| 3. Estimating meta-d' (single subject) using Bayesian modelling - pymc | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb)
 | 4. Estimating meta-d' (group level) using Bayesian modelling - Numpyro | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/LegrandNico/metadPy/blob/master/notebooks/Example%204%20-%20Fitting%20Bayesian%20-%20Group%20level%20(numpyro).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/LegrandNico/metadPy/blob/master/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Group%20level%20(numpyro).ipynb)
 
 
@@ -295,7 +295,7 @@ print(f'meta-d\' = {str(metad["meta_da"])}')
 ## Subject level
 
 ```python
-import pymc3 as pm
+import pymc as pm
 from metadPy.hierarchical import hmetad
 ```
 
@@ -353,7 +353,7 @@ model, trace = hmetad(data=simulation, nRatings=4, stimuli='Stimuli',
 
 
     Sampling 2 chains for 1_000 tune and 1_000 draw iterations (2_000 + 2_000 draws total) took 15 seconds.
-    /usr/local/lib/python3.6/dist-packages/arviz/data/io_pymc3.py:314: UserWarning: Could not compute log_likelihood, it will be omitted. Check your model object or set log_likelihood=False
+    /usr/local/lib/python3.6/dist-packages/arviz/data/io_pymc.py:314: UserWarning: Could not compute log_likelihood, it will be omitted. Check your model object or set log_likelihood=False
       warnings.warn(warn_msg)
     There was 1 divergence after tuning. Increase `target_accept` or reparameterize.
     There was 1 divergence after tuning. Increase `target_accept` or reparameterize.

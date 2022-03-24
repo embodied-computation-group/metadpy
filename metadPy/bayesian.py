@@ -272,7 +272,7 @@ def hmetad(
 
         elif backend == "numpyro":
 
-            from subject_level_numpyro import hmetad_subjectLevel as numpyro_func
+            from subject_level_numpyro import hmetad_subjectLevel as npr_fn
 
         else:
             raise ValueError("Invalid backend provided - Must be pymc or numpyro")
@@ -286,7 +286,7 @@ def hmetad(
         )
 
         if backend == "numpyro":
-            import group_level_numpyro.hmetad_groupLevel as numpyro_func  # type: ignore
+            from group_level_numpyro import hmetad_groupLevel as npr_fn  # type: ignore
 
         else:
             raise ValueError(
@@ -327,7 +327,7 @@ def hmetad(
             from jax import random
             from numpyro.infer import MCMC, NUTS
 
-            nuts_kernel = NUTS(numpyro_func)
+            nuts_kernel = NUTS(npr_fn)
 
             mcmc = MCMC(nuts_kernel, num_samples=1000, num_warmup=1000, num_chains=2)
 
@@ -340,7 +340,7 @@ def hmetad(
             traces = mcmc.get_samples(group_by_chain=True)
 
             if output == "model":
-                return numpyro_func, traces
+                return npr_fn, traces
 
             elif output == "dataframe":
                 return pd.DataFrame(
@@ -359,9 +359,9 @@ def hmetad(
 
     else:
         if backend == "pymc":
-            return output, None
+            return model_output, None
         elif backend == "numpyro":
-            return numpyro_func, None
+            return npr_fn, None
 
 
 def extractParameters(

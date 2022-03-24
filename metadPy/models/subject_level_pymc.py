@@ -31,13 +31,13 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
     sample_model : boolean
         If `False`, only the model is returned without sampling.
     **kwargs : keyword arguments
-        All keyword arguments are passed to `func::pymc3.sampling.sample`.
+        All keyword arguments are passed to `func::pymc.sampling.sample`.
 
     Returns
     -------
-    model : :py:class:`pymc3.Model` instance
-        The pymc3 model. Encapsulates the variables and likelihood factors.
-    trace : :py:class:`pymc3.backends.base.MultiTrace` or
+    model : :py:class:`pymc.Model` instance
+        The pymc model. Encapsulates the variables and likelihood factors.
+    trace : :py:class:`pymc.backends.base.MultiTrace` or
         :py:class:`arviz.InferenceData`
         A `MultiTrace` or `ArviZ InferenceData` object that contains the
         samples.
