@@ -591,7 +591,7 @@ def metad(
                 if data[between].nunique() > 1:
                     results[between] = group
 
-                results_df = results_df.append(results)
+                results_df = pd.concat([results_df, results])
 
                 nR_S1, nR_S2 = None, None
 
