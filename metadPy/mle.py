@@ -686,7 +686,9 @@ def fit_metad(
             * `'obs_HR2_rS2'` : actual type 2 hit rates for S2 responses.
             * `'est_FAR2_rS2'` : estimated type 2 false alarm rates for S2 responses.
             * `'obs_FAR2_rS2'` : actual type 2 false alarm rates for S2 responses.
+
     """
+
     # parameters
     # meta-d' - 1
     # t2c - nCriteria-1

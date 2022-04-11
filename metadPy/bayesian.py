@@ -236,7 +236,7 @@ def hmetad(
             # transform confidence to discrete ratings
             print(
                 (
-                    "The confidence columns contains more unique values than nRatings"
+                    "The confidence columns contains more unique values than nRatings. "
                     "The ratings are going to be discretized using "
                     "metadPy.utils.discreteRatings()"
                 )

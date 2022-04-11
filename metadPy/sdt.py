@@ -34,32 +34,37 @@ def scores(
     stimuli=None,
     responses=None,
 ):
-    """Extract hits, misses, false alarms and correct rejection from stimuli
-    and responses vectors.
+    """Extract hits, misses, false alarms and correct rejection from stimuli and
+    responses vectors.
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : pd.DataFrame | None
         Dataframe containing one `stimuli` and one `response` column.
-    stimuli : str, 1d array-like or list
-        If a string is provided, should be the name of the column used as
-        `stimuli`. If a list or an array is provided, should contain the
-        boolean vectors for `stimuli`.
-    responses : str or 1d array-like
-        If a string is provided, should be the name of the column used as
-        `responses`. If a list or an array is provided, should contain the
-        boolean vector for `responses`.
+    stimuli : str | np.ndarray | list
+        If a string is provided, should be the name of the column used as `stimuli`. If
+        a list or an array is provided, should contain the boolean vectors for
+        `stimuli`.
+    responses : str | np.ndarray
+        If a string is provided, should be the name of the column used as `responses`.
+        If a list or an array is provided, should contain the boolean vector for
+        `responses`.
 
     Returns
     -------
     hits, misses, fas, crs : int
-        Return the number of hits, misees, false alarms and correct rejections.
+        The number of hits, misees, false alarms and correct rejections.
 
     Notes
     -----
-    If a :py:class:`pandas.DataFrame` is provided, the function will search for
-    a `stimuli`and a `responses` column by default if no other column names are
-    provided.
+    If a :py:class:`pandas.DataFrame` is provided, the function will search for a
+    `stimuli`and a `responses` column by default if no other column names are provided.
+
+    Raises
+    ------
+    ValueError:
+        If no valid data is provided.
+
     """
     # Formatting checks
     if data is None:
@@ -76,9 +81,8 @@ def scores(
         else:
             raise ValueError(
                 (
-                    "If no data is provided, `stimuli` and"
-                    " `responses` should be two boolean vectors"
-                    " with equal lengths."
+                    "If no data is provided, `stimuli` and `responses` should be"
+                    " two boolean vectors with equal lengths."
                 )
             )
 
@@ -156,29 +160,29 @@ def rates(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : pd.DataFrame | None
         Dataframe containing one `stimuli` and one `response` column.
-    stimuli : str, 1d array-like or list
+    stimuli : str | np.ndarray | list
         If a string is provided, should be the name of the column used as
         `stimuli`. If a list or an array is provided, should contain the
         boolean vectors for `stimuli`. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
-    responses : str or 1d array-like
+    responses : str | np.ndarray
         If a string is provided, should be the name of the column used as
         `responses`. If a list or an array is provided, should contain the
         boolean vector for `responses`. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
-    hits : int or None
+    hits : int | None
         Hits.
-    misses :  int or None
+    misses : int | None
         Misses.
-    fas : int or None
+    fas : int | None
         False alarms.
-    crs : int or None
+    crs : int | None
         Correct rejections.
     correction : bool
-        Avoid d' infinity by correcting false alarm and hit rate vaules
-        if equal to 0 or 1 using half inverse or 1 - half inverse.
+        Avoid d' infinity by correcting false alarm and hit rate values if equal to 0
+        or 1 using half inverse or 1 - half inverse.
         Half inverses values are defined by:
             half_hit = 0.5 / (hits + misses)
             half_fa = 0.5 / (fas + crs)
@@ -214,6 +218,12 @@ def rates(
     References
     ----------
     Adapted from: https://lindeloev.net/calculating-d-in-python-and-php/
+
+    Raises
+    ------
+    ValueError:
+        If no valid data are provided.
+
     """
     if isinstance(data, pd.DataFrame):
         if stimuli is None:
@@ -297,7 +307,7 @@ def dprime(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : pd.DataFrame | None
         Dataframe. Note that this function can also directly be used as a
         Pandas method, in which case this argument is no longer needed.
     hit_rate : float
@@ -318,7 +328,14 @@ def dprime(
 
     Notes
     -----
-    The d’ is a measure of the ability to discriminate a signal from noise.
+    The d' is a measure of the ability to discriminate a signal from noise.
+
+    Raises
+    ------
+    ValueError
+        If `stimuli` and `responses` are not srings when providing a data frame.
+        If no data is provided.
+
     """
     if isinstance(data, pd.DataFrame):
         if stimuli is None:
@@ -391,7 +408,7 @@ def criterion(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : pd.DataFrame | None
         Dataframe. Note that this function can also directly be used as a Pandas
         method, in which case this argument is no longer needed.
     hit_rate : float
@@ -407,6 +424,12 @@ def criterion(
     -------
     dprime : float
         The d' value.
+
+    Raises
+    ------
+    ValueError
+        If `data` is not a pd.DataFrame.
+
     """
     if data is not None:
         if isinstance(data, pd.DataFrame):
@@ -477,14 +500,14 @@ def roc_auc(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : pd.DataFrame | None
         Dataframe containing one `stimuli` and one `response` column.
-    stimuli : str, 1d array-like or list
+    stimuli : str | np.ndarray | list
         If a string is provided, should be the name of the column used as
         `stimuli`. If a list or an array is provided, should contain the
         boolean vectors for `stimuli`. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
-    responses : str or 1d array-like
+    responses : str | np.ndarray
         If a string is provided, should be the name of the column used as
         `responses`. If a list or an array is provided, should contain the
         boolean vector for `responses`. If `None` and `data` is a
@@ -493,9 +516,9 @@ def roc_auc(
         Total of available subjective ratings available for the subject. e.g.
         if subject can rate confidence on a scale of 1-4, then nRatings = 4.
         Default is `4`.
-    nR_S1 : list or 1d array-like
+    nR_S1 : list | np.ndarray
         Confience ratings (stimuli 1).
-    nR_S2 : list or 1d array-like
+    nR_S2 : list | np.ndarray
         Confidence ratings (stimuli 2).
 
     Returns
@@ -509,6 +532,12 @@ def roc_auc(
     >>> nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]
     >>> roc_auc(nR_S1, nR_S2)
     0.6998064266356949
+
+    Raises
+    ------
+    ValueError:
+        If data and both nR_S1 and nR_S2 are missing.
+
     """
     if isinstance(data, pd.DataFrame):
         if stimuli is None:
@@ -525,11 +554,13 @@ def roc_auc(
             confidence=confidence,
             nRatings=nRatings,
         )
-
-    if isinstance(nR_S1, list):
-        nR_S1 = np.array(nR_S1)
-    if isinstance(nR_S2, list):
-        nR_S2 = np.array(nR_S2)
+    else:
+        if isinstance(nR_S1, list):
+            nR_S1 = np.array(nR_S1)
+        if isinstance(nR_S2, list):
+            nR_S2 = np.array(nR_S2)
+        if (nR_S1 is None) & (nR_S2 is None):
+            raise ValueError("Either data or nR_s1 and nR_S2 should be provided.")
 
     nRatings = int(len(nR_S1) / 2)
 
