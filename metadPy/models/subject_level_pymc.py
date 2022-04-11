@@ -70,7 +70,7 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
             "cS1_hn",
             tau=2,
             shape=nRatings - 1,
-            testval=np.linspace(1.5, 0.5, nRatings - 1),
+            initval=np.linspace(1.5, 0.5, nRatings - 1),
         )
         cS1 = Deterministic("cS1", -cS1_hn + (c1 - data["Tol"]))
 
@@ -78,7 +78,7 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
             "cS2_hn",
             tau=2,
             shape=nRatings - 1,
-            testval=np.linspace(0.5, 1.5, nRatings - 1),
+            initval=np.linspace(0.5, 1.5, nRatings - 1),
         )
         cS2 = Deterministic("cS2", cS2_hn + (c1 - data["Tol"]))
 
