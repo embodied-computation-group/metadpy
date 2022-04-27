@@ -108,6 +108,8 @@ def hmetad(
     sample_model=True,
     backend="numpyro",
     output: str = "model",
+    num_samples: int = 1000,
+    num_chains: int = 4,
 ):
     """Estimate parameters of the Bayesian meta-d' model with hyperparametes at the
     group level.
@@ -159,7 +161,12 @@ def hmetad(
         to `"numpyro"`.
     output : str
         The kind of outpute expected. If `"model"`, will return the model function and
-        the traces. If `"dataframe"`, will return a dataframe containing the
+        the traces. If `"dataframe"`, will return a dataframe containing `d` (dprime),
+        `c` (criterion), `meta_d` (the meta-d prime) and `m_ratio` (`meta_d/d`).
+    num_samples : int
+        The number of samples per chains to draw (defaults to `1000`).
+    num_chains : int
+        The number of chains (defaults to `4`).
 
     Returns
     -------
@@ -218,7 +225,10 @@ def hmetad(
 
     if (nR_S1 is not None) & (nR_S2 is not None):
         nR_S1, nR_S2 = np.asarray(nR_S1), np.asarray(nR_S2)
-        nRatings = len(nR_S1) / 2
+        if nRatings is not None:
+            assert len(nR_S1) / 2 == nRatings
+        else:
+            nRatings = len(nR_S1) / 2
 
     if nRatings is None:
         raise ValueError("You should provide the number of ratings")
@@ -241,7 +251,7 @@ def hmetad(
                     "metadPy.utils.discreteRatings()"
                 )
             )
-            new_ratings, out = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
+            new_ratings, _ = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
             data.loc[:, confidence] = new_ratings
 
     ###############
@@ -313,14 +323,28 @@ def hmetad(
     else:
         raise ValueError("Invalid design specification provided. No model fitted.")
 
+    ##########
+    # Sampling
     if sample_model is True:
         if backend == "pymc":
-            model, trace = model_output
+            model, traces = model_output
 
             if output == "model":
-                return model, trace
+                return model, traces
             elif output == "dataframe":
-                return
+                return pd.DataFrame(
+                    {
+                        "d": [pymcData["d1"]],
+                        "c": [pymcData["c1"]],
+                        "meta_d": [
+                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                        ],
+                        "m_ratio": [
+                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                            / pymcData["d1"]
+                        ],
+                    }
+                )
 
         elif backend == "numpyro":
 
@@ -329,7 +353,12 @@ def hmetad(
 
             nuts_kernel = NUTS(npr_fn)
 
-            mcmc = MCMC(nuts_kernel, num_samples=1000, num_warmup=1000, num_chains=2)
+            mcmc = MCMC(
+                nuts_kernel,
+                num_samples=num_samples,
+                num_warmup=1000,
+                num_chains=num_chains,
+            )
 
             # Start from this source of randomness.
             rng_key = random.PRNGKey(0)

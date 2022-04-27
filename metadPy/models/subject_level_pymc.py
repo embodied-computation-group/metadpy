@@ -18,7 +18,9 @@ def phi(x):
     return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
 
 
-def hmetad_subjectLevel(data, sample_model=True, **kwargs):
+def hmetad_subjectLevel(
+    data, sample_model=True, num_samples: int = 1000, num_chains: int = 4, **kwargs
+):
     """Hierachical Bayesian modeling of meta-d' (subject level).
 
     This is an internal function. The subject level model must be
@@ -30,6 +32,10 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
         Response data.
     sample_model : boolean
         If `False`, only the model is returned without sampling.
+    num_samples : int
+        The number of samples per chains to draw (defaults to `1000`).
+    num_chains : int
+        The number of chains (defaults to `4`).
     **kwargs : keyword arguments
         All keyword arguments are passed to `func::pymc.sampling.sample`.
 
@@ -198,7 +204,11 @@ def hmetad_subjectLevel(data, sample_model=True, **kwargs):
 
         if sample_model is True:
             trace = sample(
-                trace=[meta_d, cS1, cS2], return_inferencedata=True, **kwargs
+                trace=[meta_d, cS1, cS2],
+                return_inferencedata=True,
+                chains=num_chains,
+                draws=num_samples,
+                **kwargs
             )
 
             return model, trace

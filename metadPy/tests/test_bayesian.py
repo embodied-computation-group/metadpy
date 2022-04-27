@@ -98,17 +98,25 @@ class Testsdt(TestCase):
         )
         assert callable(model)
 
-        # Using Numpyro
-        model, trace = hmetad(
-            data=this_df,
+        # Compare Numpyro and PyMC results
+        numpyro_df = hmetad(
+            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
+            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
             nRatings=4,
-            stimuli="Stimuli",
-            accuracy="Accuracy",
-            confidence="Confidence",
             backend="numpyro",
+            output="dataframe",
         )
-        assert callable(model)
-        assert isinstance(trace, dict)
+
+        pymc_df = hmetad(
+            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
+            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
+            nRatings=4,
+            backend="pymc",
+            output="dataframe",
+        )
+
+        assert np.isclose(numpyro_df["d"].values, pymc_df["d"].values)
+        assert np.isclose(numpyro_df["c"].values, pymc_df["c"].values)
 
         with pytest.raises(ValueError):
             model = hmetad(
