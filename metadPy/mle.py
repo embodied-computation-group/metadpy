@@ -264,12 +264,11 @@ def metad(
     """Estimate meta-d' using maximum likelihood estimation (MLE).
 
     This function is adapted from the transcription of fit_meta_d_MLE.m
-    (Maniscalco & Lau, 2012) by Alan Lee:
-    http://www.columbia.edu/~bsm2105/type2sdt/.
+    (Maniscalco & Lau, 2012) by Alan Lee: http://www.columbia.edu/~bsm2105/type2sdt/.
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : pd.DataFrame | None
         Dataframe. Note that this function can also directly be used as a
         Pandas method, in which case this argument is no longer needed.
     nRatings : int
@@ -277,21 +276,21 @@ def metad(
         the number of unique ratings does not match `nRatings`, will convert to
         discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
         Default is set to 4.
-    stimuli : string or None
+    stimuli : string | None
         Name of the column containing the stimuli.
-    accuracy : string or None
+    accuracy : string | None
         Name of the columns containing the accuracy.
-    confidence : string or None
+    confidence : string | None
         Name of the column containing the confidence ratings.
-    within : string or None
+    within : string | None
         Name of column containing the within factor (condition comparison).
-    between : string or None
+    between : string | None
         Name of column containing the between subject factor (group
         comparison).
-    subject : string or None
+    subject : string | None
         Name of column containing the subject identifier (only required if a
         within-subject or a between-subject factor is provided).
-    nR_S1, nR_S2 : list, 1d array-like or None
+    nR_S1, nR_S2 : list | np.ndarray | None
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
         nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the
@@ -320,10 +319,10 @@ def metad(
     padding : boolean
         If `True`, a small value will be added to the counts to avoid problems
         during fit.
-    padAmount : float or None
+    padAmount : float | None
         The value to add to each response count if padding is set to 1.
         Default value is 1/(2*nRatings)
-    collapse : int or None
+    collapse : int | None
         If an integer `N` is provided, will collpase ratings to avoid zeros by
         summing every `N` consecutive ratings. Default set to `None`.
     fncdf : func
@@ -332,8 +331,8 @@ def metad(
     fninv : func
         A function handle for the inverse CDF of the type 1 distribution. If
         not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.
-    verbose : {0, 1, 2}
-        Level of algorithm’s verbosity:
+    verbose : int
+        Level of algorithm's verbosity (can be `0`, `1`, `2` or `3`):
             * 0 (default) : work silently.
             * 1 : display a termination report.
             * 2 : display progress during iterations.
