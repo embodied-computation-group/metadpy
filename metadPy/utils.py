@@ -56,20 +56,20 @@ def trials2counts(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` or None
+    data : :py:class:`pandas.DataFrame` | None
         Dataframe containing stimuli, accuracy and confidence ratings.
     stimuli : list, 1d array-like or string
         Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
         the column containing the stimuli ID. Default is `'Stimuli'`.
-    responses : list, 1d array-like or string
+    responses : list | np.ndarray | string
         Response (0 or 1). If a dataframe is provided, should be the
         name of the column containing the response accuracy. Default is
         `'Responses'`.
-    accuracy : list, 1d array-like or string
+    accuracy : list | np.ndarray | string
         Response accuracy (0 or 1). If a dataframe is provided, should be the
         name of the column containing the response accuracy. Default is
         `'Accuracy'`.
-    confidence : list or 1d array-like
+    confidence : list | np.ndarray
         Confidence ratings. If a dataframe is provided, should be the name of
         the column containing the confidence ratings. Default is
         `'Confidence'`.
@@ -89,7 +89,7 @@ def trials2counts(
 
     Returns
     -------
-    nR_S1, nR_S2 : 1d array-like
+    nR_S1, nR_S2 : np.ndarray
         Vectors containing the total number of responses in each accuracy
         category, conditional on presentation of S1 and S2.
 
@@ -141,6 +141,7 @@ def trials2counts(
         approach for estimating metacognitive sensitivity from confidence
         ratings. Consciousness and Cognition, 21(1), 422–430.
         https://doi.org/10.1016/j.concog.2011.09.021
+
     """
     if isinstance(data, pd.DataFrame):
         stimuli = data[stimuli].to_numpy()
@@ -210,7 +211,10 @@ def trials2counts(
 
 
 def discreteRatings(
-    ratings: Union[list, np.ndarray], nbins: int = 4, verbose: bool = True
+    ratings: Union[list, np.ndarray],
+    nbins: int = 4,
+    verbose: bool = True,
+    ignore_invalid: bool = False,
 ) -> Tuple[np.ndarray, Dict[str, list]]:
     """Convert continuous ratings to dscrete bins
 
@@ -219,16 +223,21 @@ def discreteRatings(
 
     Parameters
     ----------
-    ratings : list or 1d array-like
+    ratings : list | np.ndarray
         Ratings on a continuous scale.
     nbins : int
         The number of discrete ratings to resample. Defaut set to `4`.
     verbose : boolean
         If `True`, warning warnings be returned.
+    ignore_invalid : bool
+        If `False` (default), an arreor will be raised in case of impossible
+        discretisation of the confidence ratings. This is mostly due to identical
+        values and SDT values should not be extracted from the data. If `True` the
+        discretisation will process anyway. This option can be usefull for plotting.
 
     Returns
     -------
-    discreteRatings : 1d array-like
+    discreteRatings : np.ndarray
         New rating array only containing integers between 1 and `nbins`.
     out : dict
         Dictionnary containing logs of the discrization process:
@@ -244,6 +253,12 @@ def discreteRatings(
         low confidence ratings. If the first two or the last two quantiles
         have identical values, low or high confidence trials are excluded
         (respectively), and the function is run again on the remaining data.
+
+    Raises
+    ------
+    ValueError:
+        If the confidence ratings contains a lot of identical values and
+        `ignore_invalid` is `False`.
 
     Examples
     --------
@@ -261,14 +276,17 @@ def discreteRatings(
         1, 1, 2, 1, 1, 3, 3, 2, 2, 2, 3, 2, 2, 4, 4, 4, 2, 4, 1, 1, 4, 2,
         4, 2, 3, 2, 3, 4, 1, 1, 3, 3, 4, 2, 4, 3]),
     {'confBins': array([ 0., 20., 35., 60., 98.]), 'rebin': 0, 'binCount': 21})
+
     """
+
     out, temp = {}, []
     confBins = np.quantile(ratings, np.linspace(0, 1, nbins + 1))
     if (confBins[0] == confBins[1]) & (confBins[nbins - 1] == confBins[nbins]):
-        raise ValueError(
-            "The resulting rating scale contains a lot of identical"
-            " values and cannot be further analyzed"
-        )
+        if ignore_invalid is False:
+            raise ValueError(
+                "The resulting rating scale contains a lot of identical"
+                " values and cannot be further analyzed"
+            )
     elif confBins[nbins - 1] == confBins[nbins]:
         if verbose is True:
             print("Correcting for bias in high confidence ratings")
@@ -531,8 +549,8 @@ def pairedResponseSimulation(
     # Create covariance matrix for the two mRatios
     covMatrix = np.array(
         [
-            [mRatio_sigma ** 2, mRatio_rho * mRatio_sigma ** 2],
-            [mRatio_rho * mRatio_sigma ** 2, mRatio_sigma ** 2],
+            [mRatio_sigma**2, mRatio_rho * mRatio_sigma**2],
+            [mRatio_rho * mRatio_sigma**2, mRatio_sigma**2],
         ]
     )
     MVvalues = np.zeros((nSubjects, 2))
@@ -670,9 +688,9 @@ def ratings2df(nR_S1: np.ndarray, nR_S2: np.ndarray) -> pd.DataFrame:
 
     Parameters
     ----------
-    nR_S1 : 1d array-like, list or string
+    nR_S1 : np.ndarray | list | string
         Confience ratings (stimuli 1, correct and incorrect).
-    nR_S2 : 1d array-like, list or string
+    nR_S2 : np.ndarray | list | string
         Confience ratings (stimuli 2, correct and incorrect).
 
     Returns
