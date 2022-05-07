@@ -374,14 +374,14 @@ def hmetad(
             elif output == "dataframe":
                 return pd.DataFrame(
                     {
-                        "d": [pymcData["d1"]],
-                        "c": [pymcData["c1"]],
+                        "d": [az.summary(traces, var_names="d1")["mean"]["d1"]],
+                        "c": [az.summary(traces, var_names="c1")["mean"]["c1"]],
                         "meta_d": [
                             az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
                         ],
                         "m_ratio": [
                             az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
-                            / pymcData["d1"]
+                            / az.summary(traces, var_names="d1")["mean"]["d1"]
                         ],
                     }
                 )

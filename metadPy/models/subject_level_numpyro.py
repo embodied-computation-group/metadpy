@@ -33,8 +33,8 @@ def hmetad_subjectLevel(data):
     nRatings = data["nratings"]
 
     # Type 1 priors
-    c1 = numpyro.sample("c1", dist.Normal(0.0, 1 / jnp.sqrt(2)), obs=data["c1"])
-    d1 = numpyro.sample("d1", dist.Normal(0.0, 1 / jnp.sqrt(0.5)), obs=data["d1"])
+    c1 = numpyro.sample("c1", dist.Normal(0.0, 1 / jnp.sqrt(2)))
+    d1 = numpyro.sample("d1", dist.Normal(0.0, 1 / jnp.sqrt(0.5)))
 
     # TYPE 1 SDT BINOMIAL MODEL
     h = phi(d1 / 2 - c1)
