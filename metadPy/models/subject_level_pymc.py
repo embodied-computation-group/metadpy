@@ -1,21 +1,12 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import numpy as np
-from pymc import (
-    Binomial,
-    Deterministic,
-    HalfNormal,
-    Model,
-    Multinomial,
-    Normal,
-    math,
-    sample,
-)
+import aesara.tensor as at
+from pymc import Binomial, Deterministic, HalfNormal, Model, Multinomial, Normal, sample
 
 
 def phi(x):
     """Cumulative normal distribution"""
-    return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
+    return 0.5 + 0.5 * at.erf(x / at.sqrt(2))
 
 
 def hmetad_subjectLevel(
@@ -53,6 +44,7 @@ def hmetad_subjectLevel(
     .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
     of metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+
     """
     nRatings = data["nratings"]
     with Model() as model:
@@ -76,21 +68,19 @@ def hmetad_subjectLevel(
             "cS1_hn",
             tau=2,
             shape=nRatings - 1,
-            initval=np.linspace(1.5, 0.5, nRatings - 1),
         )
-        cS1 = Deterministic("cS1", -cS1_hn + (c1 - data["Tol"]))
+        cS1 = Deterministic("cS1", at.sort(-cS1_hn) + (c1 - data["Tol"]))
 
         cS2_hn = HalfNormal(
             "cS2_hn",
             tau=2,
             shape=nRatings - 1,
-            initval=np.linspace(0.5, 1.5, nRatings - 1),
         )
-        cS2 = Deterministic("cS2", cS2_hn + (c1 - data["Tol"]))
+        cS2 = Deterministic("cS2", at.sort(cS2_hn) + (c1 - data["Tol"]))
 
         # Means of SDT distributions
-        S2mu = math.flatten(meta_d / 2, 1)
-        S1mu = math.flatten(-meta_d / 2, 1)
+        S2mu = at.flatten(meta_d / 2, 1)
+        S1mu = at.flatten(-meta_d / 2, 1)
 
         # Calculate normalisation constants
         C_area_rS1 = phi(c1 - S1mu)
@@ -102,7 +92,7 @@ def hmetad_subjectLevel(
         nC_rS1 = phi(cS1 - S1mu) / C_area_rS1
         nC_rS1 = Deterministic(
             "nC_rS1",
-            math.concatenate(
+            at.concatenate(
                 (
                     [
                         phi(cS1[0] - S1mu) / C_area_rS1,
@@ -121,7 +111,7 @@ def hmetad_subjectLevel(
         nI_rS2 = (1 - phi(cS2 - S1mu)) / I_area_rS2
         nI_rS2 = Deterministic(
             "nI_rS2",
-            math.concatenate(
+            at.concatenate(
                 (
                     [
                         ((1 - phi(c1 - S1mu)) - (1 - phi(cS2[0] - S1mu))) / I_area_rS2,
@@ -137,7 +127,7 @@ def hmetad_subjectLevel(
         nI_rS1 = (-phi(cS1 - S2mu)) / I_area_rS1
         nI_rS1 = Deterministic(
             "nI_rS1",
-            math.concatenate(
+            at.concatenate(
                 (
                     [
                         phi(cS1[0] - S2mu) / I_area_rS1,
@@ -153,7 +143,7 @@ def hmetad_subjectLevel(
         nC_rS2 = (1 - phi(cS2 - S2mu)) / C_area_rS2
         nC_rS2 = Deterministic(
             "nC_rS2",
-            math.concatenate(
+            at.concatenate(
                 (
                     [
                         ((1 - phi(c1 - S2mu)) - (1 - phi(cS2[0] - S2mu))) / C_area_rS2,
@@ -166,45 +156,45 @@ def hmetad_subjectLevel(
         )
 
         # Avoid underflow of probabilities
-        nC_rS1 = math.switch(nC_rS1 < data["Tol"], data["Tol"], nC_rS1)
-        nI_rS2 = math.switch(nI_rS2 < data["Tol"], data["Tol"], nI_rS2)
-        nI_rS1 = math.switch(nI_rS1 < data["Tol"], data["Tol"], nI_rS1)
-        nC_rS2 = math.switch(nC_rS2 < data["Tol"], data["Tol"], nC_rS2)
+        nC_rS1 = at.switch(nC_rS1 < data["Tol"], data["Tol"], nC_rS1)
+        nI_rS2 = at.switch(nI_rS2 < data["Tol"], data["Tol"], nI_rS2)
+        nI_rS1 = at.switch(nI_rS1 < data["Tol"], data["Tol"], nI_rS1)
+        nC_rS2 = at.switch(nC_rS2 < data["Tol"], data["Tol"], nC_rS2)
 
         # TYPE 2 SDT MODEL (META-D)
         # Multinomial likelihood for response counts ordered as c(nR_S1,nR_S2)
         Multinomial(
             "CR_counts",
-            data["CR"],
-            nC_rS1,
+            n=data["CR"],
+            p=nC_rS1,
             shape=nRatings,
             observed=data["counts"][:nRatings],
         )
         Multinomial(
             "FA_counts",
-            FA,
-            nI_rS2,
+            n=FA,
+            p=nI_rS2,
             shape=nRatings,
             observed=data["counts"][nRatings : nRatings * 2],
         )
         Multinomial(
             "M_counts",
-            data["M"],
-            nI_rS1,
+            n=data["M"],
+            p=nI_rS1,
             shape=nRatings,
             observed=data["counts"][nRatings * 2 : nRatings * 3],
         )
         Multinomial(
             "H_counts",
-            H,
-            nC_rS2,
+            n=H,
+            p=nC_rS2,
             shape=nRatings,
             observed=data["counts"][nRatings * 3 : nRatings * 4],
         )
 
         if sample_model is True:
             trace = sample(
-                trace=[meta_d, cS1, cS2],
+                #trace=[meta_d, cS1, cS2],
                 return_inferencedata=True,
                 chains=num_chains,
                 draws=num_samples,
