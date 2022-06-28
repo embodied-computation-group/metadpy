@@ -2,14 +2,14 @@
 
 import os
 import sys
-from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Tuple, Union, overload
+from typing import (TYPE_CHECKING, Callable, Dict, List, Optional, Tuple,
+                    Union, overload)
 
 import arviz as az
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from arviz import InferenceData
-
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
 
@@ -296,7 +296,8 @@ def hmetad(
         )
 
         if backend == "numpyro":
-            from group_level_numpyro import hmetad_groupLevel as npr_fn  # type: ignore
+            from group_level_numpyro import \
+                hmetad_groupLevel as npr_fn  # type: ignore
 
         else:
             raise ValueError(

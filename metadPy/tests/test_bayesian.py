@@ -4,11 +4,11 @@ import unittest
 from unittest import TestCase
 
 import numpy as np
-import pymc as pm
 import pytest
-
 from metadPy import load_dataset
 from metadPy.bayesian import extractParameters, hmetad
+
+import pymc as pm
 
 
 class Testsdt(TestCase):
@@ -115,8 +115,10 @@ class Testsdt(TestCase):
             output="dataframe",
         )
 
-        assert np.isclose(numpyro_df["d"].values, pymc_df["d"].values)
-        assert np.isclose(numpyro_df["c"].values, pymc_df["c"].values)
+        assert np.round(numpyro_df["d"].values, 2) == np.round(pymc_df["d"].values, 2)
+        assert np.round(numpyro_df["c"].values, 1) == np.round(pymc_df["c"].values, 1)
+        assert np.round(numpyro_df["meta_d"].values, 1) == np.round(pymc_df["meta_d"].values, 1)
+        assert np.round(numpyro_df["m_ratio"].values, 1) == np.round(pymc_df["m_ratio"].values, 1)
 
         with pytest.raises(ValueError):
             model = hmetad(

@@ -1,7 +1,8 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import aesara.tensor as at
-from pymc import Binomial, Deterministic, HalfNormal, Model, Multinomial, Normal, sample
+from pymc import (Binomial, Deterministic, HalfNormal, Model, Multinomial,
+                  Normal, sample)
 
 
 def phi(x):
@@ -12,11 +13,9 @@ def phi(x):
 def hmetad_subjectLevel(
     data, sample_model=True, num_samples: int = 1000, num_chains: int = 4, **kwargs
 ):
-    """Bayesian modeling of meta-d' (subject level).
-
-    This is an internal function. The subject-level model must be called using
-    :py:func:`metadPy.bayesian.hmetad`.
-
+    """Hierachical Bayesian modeling of meta-d' (subject level).
+    This is an internal function. The subject level model must be
+    called using :py:func:`metadPy.bayesian.hmetad`.
     Parameters
     ----------
     data : dict
@@ -29,37 +28,35 @@ def hmetad_subjectLevel(
         The number of chains (defaults to `4`).
     **kwargs : keyword arguments
         All keyword arguments are passed to `func::pymc.sampling.sample`.
-
     Returns
     -------
     model : :py:class:`pymc.Model` instance
         The pymc model. Encapsulates the variables and likelihood factors.
     trace : :py:class:`pymc.backends.base.MultiTrace` or
         :py:class:`arviz.InferenceData`
-        A `MultiTrace` or `ArviZ InferenceData` object that contains the samples.
-
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the
+        samples.
     References
     ----------
     .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
     of metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
-
     """
     nRatings = data["nratings"]
     with Model() as model:
 
         # Type 1 priors
-        c1 = Normal("c1", mu=0.0, tau=2, shape=())
-        d1 = Normal("d1", mu=0.0, tau=0.5, shape=())
+        c1 = Normal("c1", mu=0.0, tau=2)
+        d1 = Normal("d1", mu=0.0, tau=0.5)
 
         # TYPE 1 SDT BINOMIAL MODEL
         h = phi(d1 / 2 - c1)
         f = phi(-d1 / 2 - c1)
-        Binomial("H", n=data["S"], p=h, observed=data["H"], shape=())
-        Binomial("FA", n=data["N"], p=f, observed=data["FA"], shape=())
+        H = Binomial("H", data["S"], h, observed=data["H"])
+        FA = Binomial("FA", data["N"], f, observed=data["FA"])
 
         # Type 2 priors
-        meta_d = Normal("meta_d", mu=d1, tau=2, shape=())
+        meta_d = Normal("meta_d", mu=d1, tau=2)
 
         # Specify ordered prior on criteria
         # bounded above and below by Type 1 c1
@@ -104,7 +101,6 @@ def hmetad_subjectLevel(
                 ),
                 axis=0,
             ),
-            axis=0,
         )
 
         # Get nI_rS2 probs
@@ -121,7 +117,6 @@ def hmetad_subjectLevel(
                 ),
                 axis=0,
             ),
-            axis=0,
         )
 
         # Get nI_rS1 probs
@@ -138,7 +133,6 @@ def hmetad_subjectLevel(
                 ),
                 axis=0,
             ),
-            axis=0,
         )
 
         # Get nC_rS2 probs
@@ -155,7 +149,6 @@ def hmetad_subjectLevel(
                 ),
                 axis=0,
             ),
-            axis=0,
         )
 
         # Avoid underflow of probabilities
@@ -171,7 +164,6 @@ def hmetad_subjectLevel(
             n=data["CR"],
             p=nC_rS1,
             shape=nRatings,
-            dims="ratings",
             observed=data["counts"][:nRatings],
         )
         Multinomial(
@@ -179,7 +171,6 @@ def hmetad_subjectLevel(
             n=FA,
             p=nI_rS2,
             shape=nRatings,
-            dims="ratings",
             observed=data["counts"][nRatings : nRatings * 2],
         )
         Multinomial(
@@ -187,7 +178,6 @@ def hmetad_subjectLevel(
             n=data["M"],
             p=nI_rS1,
             shape=nRatings,
-            dims="ratings",
             observed=data["counts"][nRatings * 2 : nRatings * 3],
         )
         Multinomial(
@@ -195,7 +185,6 @@ def hmetad_subjectLevel(
             n=H,
             p=nC_rS2,
             shape=nRatings,
-            dims="ratings",
             observed=data["counts"][nRatings * 3 : nRatings * 4],
         )
 

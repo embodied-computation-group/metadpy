@@ -487,7 +487,7 @@ def responseSimulation(
             nTrials=nTrials,
         )
         this_df["Subject"] = sub
-        output_df = output_df.append(this_df, ignore_index=True)
+        output_df = pd.concat([output_df, this_df], ignore_index=True)
 
     return output_df
 
@@ -580,7 +580,7 @@ def pairedResponseSimulation(
             )
             this_df["Subject"] = b
             this_df["Condition"] = a
-            output_df = output_df.append(this_df, ignore_index=True)
+            output_df = pd.concat([output_df, this_df], ignore_index=True)
 
     return output_df
 
