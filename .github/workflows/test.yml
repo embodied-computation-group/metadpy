@@ -23,7 +23,7 @@ jobs:
           ${{ runner.os }}-pip-
     - name: Install dependencies
       run: |
-        pip install coverage ipykernel
+        pip install coverage ipykernel watermark
         pip install -r requirements-tests.txt
         python -m ipykernel install --user --name python3
     - name: Run tests and coverage
