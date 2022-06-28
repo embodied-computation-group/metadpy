@@ -23,7 +23,7 @@ def plot_confidence(
     nR_S2 : 1d array-like
         Confidence ratings (stimuli 2).
     fitModel : dict or None
-        Dictionary returned by :py:funct:`metadpy.std.metad()`. If
+        Dictionary returned by :py:funct:`metadpy.mle.fit_metad()`. If
         provided, the estimated ratings will be plotted toghether with the
         observed data.
     ax : `Matplotlib.Axes` or None
