@@ -25,10 +25,7 @@ jobs:
       run: |
         pip install coverage
         pip install -r requirements-tests.txt
-
-        git clone https://github.com/pymc-devs/pymc/
-        cd pymc
-        pip install .
+        python -m ipykernel install --user --name python3
     - name: Run tests and coverage
       run: |
         coverage run -m unittest
