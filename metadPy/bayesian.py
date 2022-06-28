@@ -415,7 +415,7 @@ def extractParameters(
     Return
     ------
     data : dict
-        Dictionnary of rates and task parameters.
+        Dictionary of rates and task parameters.
 
     See also
     --------

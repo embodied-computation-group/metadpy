@@ -240,7 +240,7 @@ def discreteRatings(
     discreteRatings : np.ndarray
         New rating array only containing integers between 1 and `nbins`.
     out : dict
-        Dictionnary containing logs of the discrization process:
+        Dictionary containing logs of the discrization process:
             * `'confbins'`: list or 1d array-like - If the ratings were
                 reampled, a list containing the new ratings and the new low or
                 hg threshold, appened before or after the rating, respectively.
@@ -475,6 +475,7 @@ def responseSimulation(
     See also
     --------
     ratings2df
+
     """
     output_df = pd.DataFrame([])
     for sub in range(nSubjects):
@@ -702,73 +703,86 @@ def ratings2df(nR_S1: np.ndarray, nR_S2: np.ndarray) -> pd.DataFrame:
     See also
     --------
     responseSimulation, trials2counts
+
     """
     df = pd.DataFrame([])
     nRatings = int(len(nR_S1) / 2)
     for i in range(nRatings):
         if nR_S1[i]:
-            df = df.append(
-                pd.concat(
-                    [
-                        pd.DataFrame(
-                            {
-                                "Stimuli": 0,
-                                "Responses": 0,
-                                "Accuracy": 1,
-                                "Confidence": [nRatings - i],
-                            }
-                        )
-                    ]
-                    * nR_S1[i]
-                )
+            df = pd.concat(
+                [
+                    df,
+                    pd.concat(
+                        [
+                            pd.DataFrame(
+                                {
+                                    "Stimuli": 0,
+                                    "Responses": 0,
+                                    "Accuracy": 1,
+                                    "Confidence": [nRatings - i],
+                                }
+                            )
+                        ]
+                        * nR_S1[i]
+                    ),
+                ]
             )
         if nR_S2[i]:
-            df = df.append(
-                pd.concat(
-                    [
-                        pd.DataFrame(
-                            {
-                                "Stimuli": 1,
-                                "Responses": 0,
-                                "Accuracy": 0,
-                                "Confidence": [nRatings - i],
-                            }
-                        )
-                    ]
-                    * nR_S2[i]
-                )
+            df = pd.concat(
+                [
+                    df,
+                    pd.concat(
+                        [
+                            pd.DataFrame(
+                                {
+                                    "Stimuli": 1,
+                                    "Responses": 0,
+                                    "Accuracy": 0,
+                                    "Confidence": [nRatings - i],
+                                }
+                            )
+                        ]
+                        * nR_S2[i]
+                    ),
+                ]
             )
         if nR_S1[nRatings + i]:
-            df = df.append(
-                pd.concat(
-                    [
-                        pd.DataFrame(
-                            {
-                                "Stimuli": 0,
-                                "Responses": 1,
-                                "Accuracy": 0,
-                                "Confidence": [i + 1],
-                            }
-                        )
-                    ]
-                    * nR_S1[nRatings + i]
-                )
+            df = pd.concat(
+                [
+                    df,
+                    pd.concat(
+                        [
+                            pd.DataFrame(
+                                {
+                                    "Stimuli": 0,
+                                    "Responses": 1,
+                                    "Accuracy": 0,
+                                    "Confidence": [i + 1],
+                                }
+                            )
+                        ]
+                        * nR_S1[nRatings + i]
+                    ),
+                ]
             )
         if nR_S2[nRatings + i]:
-            df = df.append(
-                pd.concat(
-                    [
-                        pd.DataFrame(
-                            {
-                                "Stimuli": 1,
-                                "Responses": 1,
-                                "Accuracy": 1,
-                                "Confidence": [i + 1],
-                            }
-                        )
-                    ]
-                    * nR_S2[nRatings + i]
-                )
+            df = pd.concat(
+                [
+                    df,
+                    pd.concat(
+                        [
+                            pd.DataFrame(
+                                {
+                                    "Stimuli": 1,
+                                    "Responses": 1,
+                                    "Accuracy": 1,
+                                    "Confidence": [i + 1],
+                                }
+                            )
+                        ]
+                        * nR_S2[nRatings + i]
+                    ),
+                ]
             )
 
     # Shuffles rows before returning

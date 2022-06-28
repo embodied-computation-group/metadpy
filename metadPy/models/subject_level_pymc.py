@@ -21,10 +21,10 @@ def phi(x):
 def hmetad_subjectLevel(
     data, sample_model=True, num_samples: int = 1000, num_chains: int = 4, **kwargs
 ):
-    """Hierachical Bayesian modeling of meta-d' (subject level).
+    """Bayesian modeling of meta-d' (subject level).
 
-    This is an internal function. The subject level model must be
-    called using :py:func:`metadPy.bayesian.hmetad`.
+    This is an internal function. The subject-level model must be called using
+    :py:func:`metadPy.bayesian.hmetad`.
 
     Parameters
     ----------
@@ -45,8 +45,7 @@ def hmetad_subjectLevel(
         The pymc model. Encapsulates the variables and likelihood factors.
     trace : :py:class:`pymc.backends.base.MultiTrace` or
         :py:class:`arviz.InferenceData`
-        A `MultiTrace` or `ArviZ InferenceData` object that contains the
-        samples.
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the samples.
 
     References
     ----------
@@ -65,8 +64,8 @@ def hmetad_subjectLevel(
         # TYPE 1 SDT BINOMIAL MODEL
         h = phi(d1 / 2 - c1)
         f = phi(-d1 / 2 - c1)
-        H = Binomial("H", n=data["S"], p=h, observed=data["H"], shape=())
-        FA = Binomial("FA", n=data["N"], p=f, observed=data["FA"], shape=())
+        Binomial("H", n=data["S"], p=h, observed=data["H"], shape=())
+        Binomial("FA", n=data["N"], p=f, observed=data["FA"], shape=())
 
         # Type 2 priors
         meta_d = Normal("meta_d", mu=d1, tau=2, shape=())
@@ -159,7 +158,7 @@ def hmetad_subjectLevel(
         )
         Multinomial(
             "FA_counts",
-            n=FA,
+            n=data["FA"],
             p=nI_rS2,
             shape=nRatings,
             dims="ratings",
@@ -175,7 +174,7 @@ def hmetad_subjectLevel(
         )
         Multinomial(
             "H_counts",
-            n=H,
+            n=data["H"],
             p=nC_rS2,
             shape=nRatings,
             dims="ratings",

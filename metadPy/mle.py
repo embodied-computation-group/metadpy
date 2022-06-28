@@ -557,7 +557,7 @@ def metad(
                         fninv=fninv,
                         fncdf=fncdf,
                     )
-                    # Filter dictionnary and convert into pd.DataFrame
+                    # Filter dictionary and convert into pd.DataFrame
                     results = pd.DataFrame(
                         {
                             k: [results_dict[k]]
