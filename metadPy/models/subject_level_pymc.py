@@ -1,21 +1,12 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import aesara.tensor as at
-from pymc import (
-    Binomial,
-    Deterministic,
-    HalfNormal,
-    Model,
-    Multinomial,
-    Normal,
-    math,
-    sample,
-)
+from pymc import Binomial, Deterministic, HalfNormal, Model, Multinomial, Normal, sample
 
 
 def phi(x):
     """Cumulative normal distribution"""
-    return 0.5 + 0.5 * math.erf(x / math.sqrt(2))
+    return 0.5 + 0.5 * at.erf(x / at.sqrt(2))
 
 
 def hmetad_subjectLevel(
@@ -87,8 +78,8 @@ def hmetad_subjectLevel(
         cS2 = Deterministic("cS2", at.sort(cS2_hn) + (c1 - data["Tol"]))
 
         # Means of SDT distributions
-        S2mu = math.flatten(meta_d / 2, 1)
-        S1mu = math.flatten(-meta_d / 2, 1)
+        S2mu = at.flatten(meta_d / 2, 1)
+        S1mu = at.flatten(-meta_d / 2, 1)
 
         # Calculate normalisation constants
         C_area_rS1 = phi(c1 - S1mu)
@@ -98,44 +89,71 @@ def hmetad_subjectLevel(
 
         # Get nC_rS1 probs
         nC_rS1 = phi(cS1 - S1mu) / C_area_rS1
-        nC_rS1 = at.concatenate(
-            (
-                phi(cS1[0] - S1mu) / C_area_rS1,
-                nC_rS1[1:] - nC_rS1[:-1],
-                ((phi(c1 - S1mu) - phi(cS1[(nRatings - 2)] - S1mu)) / C_area_rS1),
+        nC_rS1 = Deterministic(
+            "nC_rS1",
+            at.concatenate(
+                (
+                    [
+                        phi(cS1[0] - S1mu) / C_area_rS1,
+                        nC_rS1[1:] - nC_rS1[:-1],
+                        (
+                            (phi(c1 - S1mu) - phi(cS1[(nRatings - 2)] - S1mu))
+                            / C_area_rS1
+                        ),
+                    ]
+                ),
+                axis=0,
             ),
             axis=0,
         )
 
         # Get nI_rS2 probs
         nI_rS2 = (1 - phi(cS2 - S1mu)) / I_area_rS2
-        nI_rS2 = at.concatenate(
-            (
-                ((1 - phi(c1 - S1mu)) - (1 - phi(cS2[0] - S1mu))) / I_area_rS2,
-                nI_rS2[:-1] - (1 - phi(cS2[1:] - S1mu)) / I_area_rS2,
-                (1 - phi(cS2[nRatings - 2] - S1mu)) / I_area_rS2,
+        nI_rS2 = Deterministic(
+            "nI_rS2",
+            at.concatenate(
+                (
+                    [
+                        ((1 - phi(c1 - S1mu)) - (1 - phi(cS2[0] - S1mu))) / I_area_rS2,
+                        nI_rS2[:-1] - (1 - phi(cS2[1:] - S1mu)) / I_area_rS2,
+                        (1 - phi(cS2[nRatings - 2] - S1mu)) / I_area_rS2,
+                    ]
+                ),
+                axis=0,
             ),
             axis=0,
         )
 
         # Get nI_rS1 probs
         nI_rS1 = (-phi(cS1 - S2mu)) / I_area_rS1
-        nI_rS1 = at.concatenate(
-            (
-                phi(cS1[0] - S2mu) / I_area_rS1,
-                nI_rS1[:-1] + (phi(cS1[1:] - S2mu)) / I_area_rS1,
-                (phi(c1 - S2mu) - phi(cS1[(nRatings - 2)] - S2mu)) / I_area_rS1,
+        nI_rS1 = Deterministic(
+            "nI_rS1",
+            at.concatenate(
+                (
+                    [
+                        phi(cS1[0] - S2mu) / I_area_rS1,
+                        nI_rS1[:-1] + (phi(cS1[1:] - S2mu)) / I_area_rS1,
+                        (phi(c1 - S2mu) - phi(cS1[(nRatings - 2)] - S2mu)) / I_area_rS1,
+                    ]
+                ),
+                axis=0,
             ),
             axis=0,
         )
 
         # Get nC_rS2 probs
         nC_rS2 = (1 - phi(cS2 - S2mu)) / C_area_rS2
-        nC_rS2 = at.concatenate(
-            (
-                ((1 - phi(c1 - S2mu)) - (1 - phi(cS2[0] - S2mu))) / C_area_rS2,
-                nC_rS2[:-1] - ((1 - phi(cS2[1:] - S2mu)) / C_area_rS2),
-                (1 - phi(cS2[nRatings - 2] - S2mu)) / C_area_rS2,
+        nC_rS2 = Deterministic(
+            "nC_rS2",
+            at.concatenate(
+                (
+                    [
+                        ((1 - phi(c1 - S2mu)) - (1 - phi(cS2[0] - S2mu))) / C_area_rS2,
+                        nC_rS2[:-1] - ((1 - phi(cS2[1:] - S2mu)) / C_area_rS2),
+                        (1 - phi(cS2[nRatings - 2] - S2mu)) / C_area_rS2,
+                    ]
+                ),
+                axis=0,
             ),
             axis=0,
         )
@@ -158,7 +176,7 @@ def hmetad_subjectLevel(
         )
         Multinomial(
             "FA_counts",
-            n=data["FA"],
+            n=FA,
             p=nI_rS2,
             shape=nRatings,
             dims="ratings",
@@ -174,7 +192,7 @@ def hmetad_subjectLevel(
         )
         Multinomial(
             "H_counts",
-            n=data["H"],
+            n=H,
             p=nC_rS2,
             shape=nRatings,
             dims="ratings",
@@ -183,7 +201,7 @@ def hmetad_subjectLevel(
 
         if sample_model is True:
             trace = sample(
-                trace=[d1, c1, meta_d, cS1, cS2],
+                #trace=[meta_d, cS1, cS2],
                 return_inferencedata=True,
                 chains=num_chains,
                 draws=num_samples,
