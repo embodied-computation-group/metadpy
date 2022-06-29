@@ -6,16 +6,9 @@ from unittest import TestCase
 import numpy as np
 import pandas as pd
 import pytest
-
-from metadPy.utils import (
-    discreteRatings,
-    pairedResponseSimulation,
-    ratings2df,
-    responseSimulation,
-    trials2counts,
-    trialSimulation,
-    type2_SDT_simuation,
-)
+from metadPy.utils import (discreteRatings, pairedResponseSimulation,
+                           ratings2df, responseSimulation, trials2counts,
+                           trialSimulation, type2_SDT_simuation)
 
 ratings = np.array(
     [

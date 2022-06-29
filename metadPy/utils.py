@@ -95,15 +95,15 @@ def trials2counts(
 
     Notes
     -----
-    All trials where `stimuli` is not 0 or 1, accuracy is not 0 or 1, or
-    confidence is not in the range [1, nRatings], are automatically omitted.
+    All trials where `stimuli` is not 0 or 1, accuracy is not 0 or 1, or confidence is
+    not in the range [1, nRatings], are automatically omitted.
 
     The inputs can be responses, accuracy or both. If both `responses` and
     `accuracy` are provided, will check for consstency. If only `accuracy` is
     provided, the responses vector will be automatically infered.
 
-    If nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was presented, the
-    subject had the following accuracy counts:
+    If nR_S1 = [100 50 20 10 5 1], then when stimulus S1 was presented, the subject had
+    the following accuracy counts:
         responded S1, confidence=3 : 100 times
         responded S1, confidence=2 : 50 times
         responded S1, confidence=1 : 20 times
@@ -111,9 +111,9 @@ def trials2counts(
         responded S2, confidence=2 : 5 times
         responded S2, confidence=3 : 1 time
 
-    The ordering of accuracy / confidence counts for S2 should be the same as
-    it is for S1. e.g. if nR_S2 = [3 7 8 12 27 89], then when stimulus S2 was
-    presented, the subject had the following accuracy counts:
+    The ordering of accuracy / confidence counts for S2 should be the same as it is for
+    S1. e.g. if nR_S2 = [3 7 8 12 27 89], then when stimulus S2 was presented, the
+    subject had the following accuracy counts:
         responded S1, confidence=3 : 3 times
         responded S1, confidence=2 : 7 times
         responded S1, confidence=1 : 8 times
@@ -342,8 +342,8 @@ def trialSimulation(
     metad : float
         Type 2 sensitivity in units of type 1 dprime.
     mRatio : float
-        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios
-        are assumed to be drawn from a repeated measures design.
+        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios are assumed to be
+        drawn from a repeated measures design.
     c : float
         Type 1 task bias (criterion).
     nRatings : int
@@ -354,9 +354,8 @@ def trialSimulation(
     Returns
     -------
     output_df : :py:class:`pandas.DataFrame`
-        A DataFrame (nRows==`nTrials`) containing the responses and
-        confidence rating for one participant given the provided
-        parameters.
+        A DataFrame (nRows==`nTrials`) containing the responses and confidence rating
+        for one participant given the provided parameters.
 
     References
     ----------
@@ -366,6 +365,7 @@ def trialSimulation(
     See also
     --------
     ratings2df
+
     """
     # Specify the confidence criterions based on the number of ratings
     c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
@@ -418,7 +418,7 @@ def trialSimulation(
     prC_rS2 = np.array(prC_rS2) / sum(np.array(prC_rS2))  # type: ignore
     prI_rS2 = np.array(prI_rS2) / sum(np.array(prI_rS2))  # type: ignore
 
-    # Sample 4 response classes from multinomial distirbution (normalised
+    # Sample 4 response classes from multinomial distirbution (normalized
     # within each response class)
     nC_rS1 = np.random.multinomial(CR, prC_rS1)
     nI_rS1 = np.random.multinomial(M, prI_rS1)
@@ -504,8 +504,8 @@ def pairedResponseSimulation(
     nTrials: int = 500,
     nSubjects: int = 20,
 ) -> pd.DataFrame:
-    """Simulate response and confidence ratings at the trial level
-    for a group of `nSubjects` participants with 2 experimental conditions.
+    """Simulate response and confidence ratings at the trial level for a group of
+    `nSubjects` participants with 2 experimental conditions.
 
     Parameters
     ----------
@@ -514,8 +514,8 @@ def pairedResponseSimulation(
     d_sigma : float
         Include some between-subject variability for d prime.
     mRatio : list
-        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios
-        are assumed to be drawn from a repeated measures design.
+        Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios are assumed to be drawn
+        from a repeated measures design.
     mRatio_sigma : float
         Include some variability in the mRatio scores.
     mRatio_rho : float
@@ -529,8 +529,7 @@ def pairedResponseSimulation(
     nTrials : int
         Set the number of trials performed.
     nSubjects : int
-        Specify the number of subject who performed the task. Default set
-        to `20`.
+        Specify the number of subject who performed the task. Defaults to `20`.
 
     Returns
     -------
