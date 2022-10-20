@@ -44,16 +44,6 @@ class Testsdt(TestCase):
             nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
             nRatings=4,
             sample_model=False,
-            backend="numpyro",
-        )
-        assert callable(model)
-
-        model, _ = hmetad(
-            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
-            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
-            nRatings=4,
-            sample_model=False,
-            backend="pymc",
         )
         assert isinstance(model, pm.Model)
 
@@ -85,7 +75,7 @@ class Testsdt(TestCase):
             confidence="Confidence",
             sample_model=False,
         )
-        assert callable(model)
+        assert isinstance(model, pm.Model)
 
         # Force ratings discretization
         model, _ = hmetad(
@@ -96,100 +86,19 @@ class Testsdt(TestCase):
             confidence="Confidence",
             sample_model=False,
         )
-        assert callable(model)
-
-        # Compare Numpyro and PyMC results
-        numpyro_df = hmetad(
-            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
-            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
-            nRatings=4,
-            backend="numpyro",
-            output="dataframe",
-        )
+        assert isinstance(model, pm.Model)
 
         pymc_df = hmetad(
             nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
             nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
             nRatings=4,
-            backend="pymc",
             output="dataframe",
         )
-
-        assert np.round(numpyro_df["d"].values, 2) == np.round(pymc_df["d"].values, 2)
-        assert np.round(numpyro_df["c"].values, 1) == np.round(pymc_df["c"].values, 1)
-        assert np.round(numpyro_df["meta_d"].values, 1) == np.round(pymc_df["meta_d"].values, 1)
-        assert np.round(numpyro_df["m_ratio"].values, 1) == np.round(pymc_df["m_ratio"].values, 1)
-
-        with pytest.raises(ValueError):
-            model = hmetad(
-                data=this_df,
-                nRatings=4,
-                stimuli="Stimuli",
-                accuracy="Accuracy",
-                confidence="Confidence",
-                backend="inexistent_backend",
-            )
-
-        ####################
-        # Test group level
-        ####################
-        this_df = group_df[group_df.Condition == 0]
-
-        # Using Numpyro
-        model, trace = hmetad(
-            data=this_df,
-            nRatings=4,
-            stimuli="Stimuli",
-            accuracy="Accuracy",
-            confidence="Confidence",
-            subject="Subject",
-        )
-
-        assert callable(model)
-        assert isinstance(trace, dict)
-
-        #######################
-        # Test repeated measure
-        #######################
-
-        # Using numpyro
-        with pytest.raises(ValueError):
-            model = hmetad(
-                data=group_df,
-                nRatings=4,
-                stimuli="Stimuli",
-                accuracy="Accuracy",
-                confidence="Confidence",
-                subject="Subject",
-                within="Condition",
-                backend="numpyro",
-            )
-
-        # Invalid backend
-        with pytest.raises(ValueError):
-            model = hmetad(
-                data=group_df,
-                nRatings=4,
-                stimuli="Stimuli",
-                accuracy="Accuracy",
-                confidence="Confidence",
-                subject="Subject",
-                within="Condition",
-                backend="inexistent_backend",
-            )
-
-        # Invalid design
-        with pytest.raises(ValueError):
-            model = hmetad(
-                data=group_df,
-                nRatings=4,
-                stimuli="Stimuli",
-                accuracy="Accuracy",
-                confidence="Confidence",
-                subject="Subject",
-                between="Condition",
-                within=None,
-            )
+        
+        assert round(pymc_df["d"].values[0], 2) == 1.53
+        assert round(pymc_df["c"].values[0], 2) == 0.0
+        assert round(pymc_df["meta_d"].values[0], 2) == 1.58
+        assert round(pymc_df["m_ratio"].values[0], 2) == 1.03
 
 
 if __name__ == "__main__":

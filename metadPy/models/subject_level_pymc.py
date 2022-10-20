@@ -14,8 +14,10 @@ def hmetad_subjectLevel(
     data, sample_model=True, num_samples: int = 1000, num_chains: int = 4, **kwargs
 ):
     """Hierachical Bayesian modeling of meta-d' (subject level).
-    This is an internal function. The subject level model must be
-    called using :py:func:`metadPy.bayesian.hmetad`.
+
+    This is an internal function. The subject level model must be called using 
+    :py:func:`metadPy.bayesian.hmetad`.
+
     Parameters
     ----------
     data : dict
@@ -28,6 +30,7 @@ def hmetad_subjectLevel(
         The number of chains (defaults to `4`).
     **kwargs : keyword arguments
         All keyword arguments are passed to `func::pymc.sampling.sample`.
+
     Returns
     -------
     model : :py:class:`pymc.Model` instance
@@ -36,12 +39,15 @@ def hmetad_subjectLevel(
         :py:class:`arviz.InferenceData`
         A `MultiTrace` or `ArviZ InferenceData` object that contains the
         samples.
+
     References
     ----------
     .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
     of metacognitive efficiency from confidence ratings, Neuroscience of
     Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+
     """
+
     nRatings = data["nratings"]
     with Model() as model:
 

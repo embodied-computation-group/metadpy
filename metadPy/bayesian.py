@@ -29,7 +29,6 @@ def hmetad(
     nbins: int,
     padding: bool = False,
     padAmount: Optional[float] = None,
-    backend: str = "numpyro",
     output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
@@ -47,7 +46,6 @@ def hmetad(
     nbins: int,
     padding: bool = False,
     padAmount: Optional[float] = None,
-    backend: str = "numpyro",
     output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
@@ -65,7 +63,6 @@ def hmetad(
     nbins: int,
     padding: bool = False,
     padAmount: Optional[float] = None,
-    backend: str = "numpyro",
     output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
@@ -84,7 +81,6 @@ def hmetad(
     padding: bool = False,
     padAmount: Optional[float] = None,
     sample_model: bool = True,
-    backend: str = "numpyro",
     output: str = "model",
 ) -> "Tuple[Union[Model, Callable], Optional[Union[InferenceData, MultiTrace]]]":
     ...
@@ -106,7 +102,6 @@ def hmetad(
     padding=False,
     padAmount=None,
     sample_model=True,
-    backend="numpyro",
     output: str = "model",
     num_samples: int = 1000,
     num_chains: int = 4,
@@ -156,9 +151,6 @@ def hmetad(
         Default value is 1/(2*nRatings)
     sample_model : boolean
         If `False`, only the model is returned without sampling.
-    backend : str
-        The backend used for MCMC sampling. Can be `"pymc"` or `"numpyro"`. Defaults
-        to `"numpyro"`.
     output : str
         The kind of outpute expected. If `"model"`, will return the model function and
         the traces. If `"dataframe"`, will return a dataframe containing `d` (dprime),
@@ -172,18 +164,18 @@ def hmetad(
     -------
     If `output="model"`:
 
-    model : :py:class:`pymc.Model` instance | callable
-        The model as a :py:class:`pymc.Model` or a :py:class:`numpyro.infer.MCMC`
-        instance.
+    model : :py:class:`pymc.Model` instance
+        The model PyMC as a :py:class:`pymc.Model`.
     traces : :py:class:`pymc.backends.base.MultiTrace` |
         :py:class:`arviz.InferenceData` | None
         A `MultiTrace` or `ArviZ InferenceData` object that contains the samples. Only
         returned if `sample_model` is set to `True`, otherwise set to None.
-
-    If `output="dataframe"`:
-
+    
+    or
+    
     results : pd.DataFrame
-        :py:class:`pandas.DataFrame` containing the values for the following variables:
+        If `output="dataframe"`, :py:class:`pandas.DataFrame` containing the values for
+        the following variables:
 
         * d-prime (d)
         * criterion (c)
@@ -193,8 +185,6 @@ def hmetad(
     Examples
     --------
     1. Subject-level
-
-    2. Group-level
 
     Notes
     -----
@@ -271,21 +261,12 @@ def hmetad(
 
         pymcData = extractParameters(np.asarray(nR_S1), np.asarray(nR_S2))
 
-        if backend == "pymc":
+        from subject_level_pymc import hmetad_subjectLevel
 
-            from subject_level_pymc import hmetad_subjectLevel
-
-            model_output = hmetad_subjectLevel(
-                pymcData,
-                sample_model=sample_model,
-            )
-
-        elif backend == "numpyro":
-
-            from subject_level_numpyro import hmetad_subjectLevel as npr_fn
-
-        else:
-            raise ValueError("Invalid backend provided - Must be pymc or numpyro")
+        model_output = hmetad_subjectLevel(
+            pymcData,
+            sample_model=sample_model,
+        )
 
     #############
     # Group level
@@ -295,14 +276,9 @@ def hmetad(
             data, subject, stimuli, accuracy, confidence, nRatings
         )
 
-        if backend == "numpyro":
-            from group_level_numpyro import \
-                hmetad_groupLevel as npr_fn  # type: ignore
-
-        else:
-            raise ValueError(
-                "Invalid backend provided - This model is only implemented in numpyro"
-            )
+        raise ValueError(
+            "Invalid backend provided - This model is not implemented yet."
+        )
 
     ###################
     # Repeated-measures
@@ -312,87 +288,33 @@ def hmetad(
             data, subject, within, stimuli, accuracy, confidence, nRatings
         )
 
-        if backend == "numpyro":
-
-            raise ValueError("This model is not implemented in nupyro yet")
-
-        else:
-            raise ValueError(
-                "Invalid backend provided - This model is only implemented in numpyro"
+        raise ValueError(
+                "Invalid backend provided - This model is not implemented yet"
             )
-
-    else:
-        raise ValueError("Invalid design specification provided. No model fitted.")
 
     ##########
     # Sampling
     if sample_model is True:
-        if backend == "pymc":
-            model, traces = model_output
+        model, traces = model_output
 
-            if output == "model":
-                return model, traces
-            elif output == "dataframe":
-                return pd.DataFrame(
-                    {
-                        "d": [pymcData["d1"]],
-                        "c": [pymcData["c1"]],
-                        "meta_d": [
-                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
-                        ],
-                        "m_ratio": [
-                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
-                            / pymcData["d1"]
-                        ],
-                    }
-                )
-
-        elif backend == "numpyro":
-
-            from jax import random
-            from numpyro.infer import MCMC, NUTS
-
-            nuts_kernel = NUTS(npr_fn)
-
-            mcmc = MCMC(
-                nuts_kernel,
-                num_samples=num_samples,
-                num_warmup=1000,
-                num_chains=num_chains,
+        if output == "model":
+            return model, traces
+        elif output == "dataframe":
+            return pd.DataFrame(
+                {
+                    "d": [pymcData["d1"]],
+                    "c": [pymcData["c1"]],
+                    "meta_d": [
+                        az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                    ],
+                    "m_ratio": [
+                        az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                        / pymcData["d1"]
+                    ],
+                }
             )
-
-            # Start from this source of randomness.
-            rng_key = random.PRNGKey(0)
-            rng_key, _ = random.split(rng_key)
-
-            mcmc.run(rng_key, data=pymcData)
-
-            traces = mcmc.get_samples(group_by_chain=True)
-
-            if output == "model":
-                return npr_fn, traces
-
-            elif output == "dataframe":
-                return pd.DataFrame(
-                    {
-                        "d": [az.summary(traces, var_names="d1")["mean"]["d1"]],
-                        "c": [az.summary(traces, var_names="c1")["mean"]["c1"]],
-                        "meta_d": [
-                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
-                        ],
-                        "m_ratio": [
-                            az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
-                            / az.summary(traces, var_names="d1")["mean"]["d1"]
-                        ],
-                    }
-                )
-
     else:
-        if backend == "pymc":
-            return model_output, None
-        elif backend == "numpyro":
-            return npr_fn, None
-
+        return model_output, None
 
 def extractParameters(
     nR_S1: Union[List[int], np.ndarray], nR_S2: Union[List[int], np.ndarray]
