@@ -95,10 +95,10 @@ class Testsdt(TestCase):
             output="dataframe",
         )
         
-        assert round(pymc_df["d"].values[0], 2) == 1.53
-        assert round(pymc_df["c"].values[0], 2) == 0.0
-        assert round(pymc_df["meta_d"].values[0], 2) == 1.58
-        assert round(pymc_df["m_ratio"].values[0], 2) == 1.03
+        assert round(pymc_df["d"].values[0], 2) - 1.53 < .01
+        assert round(pymc_df["c"].values[0], 2) - 0.0 < .01
+        assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < .01
+        assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < .01
 
 
 if __name__ == "__main__":
