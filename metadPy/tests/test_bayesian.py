@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 from metadPy import load_dataset
 from metadPy.bayesian import extractParameters, hmetad
-
+from metadPy.utils import ratings2df
 import pymc as pm
 
 
@@ -88,6 +88,7 @@ class Testsdt(TestCase):
         )
         assert isinstance(model, pm.Model)
 
+        # Using nR_S1 and nR_S2 vectors as inputs
         pymc_df = hmetad(
             nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
             nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
@@ -100,6 +101,25 @@ class Testsdt(TestCase):
         assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < .01
         assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < .01
 
+        # Using a dataframe as input
+        this_df = ratings2df(
+            nR_S1=np.array([52, 32, 35, 37, 26, 12, 4, 2]),
+            nR_S2=np.array([2, 5, 15, 22, 33, 38, 40, 45]),
+        )
+        pymc_df = hmetad(
+            data=this_df,
+            nRatings=4,
+            stimuli="Stimuli",
+            accuracy="Accuracy",
+            confidence="Confidence",
+            output="dataframe",            
+        )
+        
+        assert round(pymc_df["d"].values[0], 2) - 1.53 < .01
+        assert round(pymc_df["c"].values[0], 2) - 0.0 < .01
+        assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < .01
+        assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < .01
+        
 
 if __name__ == "__main__":
     unittest.main(argv=["first-arg-is-ignored"], exit=False)

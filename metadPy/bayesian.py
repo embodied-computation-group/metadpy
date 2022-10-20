@@ -105,6 +105,7 @@ def hmetad(
     output: str = "model",
     num_samples: int = 1000,
     num_chains: int = 4,
+    **kwargs
 ):
     """Estimate parameters of the Bayesian meta-d' model with hyperparametes at the
     group level.
@@ -159,6 +160,8 @@ def hmetad(
         The number of samples per chains to draw (defaults to `1000`).
     num_chains : int
         The number of chains (defaults to `4`).
+    **kwargs : keyword arguments
+        All keyword arguments are passed to `func::pymc.sampling.sample`.
 
     Returns
     -------
@@ -266,6 +269,8 @@ def hmetad(
         model_output = hmetad_subjectLevel(
             pymcData,
             sample_model=sample_model,
+            num_chains=num_chains,
+            num_samples=num_samples,
         )
 
     #############
