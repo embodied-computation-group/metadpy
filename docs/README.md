@@ -1,19 +1,19 @@
 ---
-jupytext:
-  formats: ipynb,md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.14.1
-kernelspec:
-  display_name: Python 3 (ipykernel)
-  language: python
-  name: python3
+jupyter:
+  jupytext:
+    formats: ipynb,md
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.14.1
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
 ---
 
-+++ {"id": "_I8iFrneRXFP"}
-
+<!-- #region id="_I8iFrneRXFP" -->
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadPy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadPy.svg)](https://badge.fury.io/py/metadPy) [![travis](https://travis-ci.com/LegrandNico/metadPy.svg?branch=master)](https://travis-ci.com/LegandNico/metadPy) [![codecov](https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadPy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 ***
@@ -43,9 +43,9 @@ For most of the operations, the following packages are required:
 For Bayesian modelling you will need:
 
 * [PyMC](https://docs.pymc.io/>) (>=4.0.0).
+<!-- #endregion -->
 
-+++ {"id": "Ptr2p3eWTxMX"}
-
+<!-- #region id="Ptr2p3eWTxMX" -->
 # Why metadPy?
 
 metadPy stands for meta-d' (meta-d prime) in Python. meta-d' is a behavioural metric commonly used in consciousness and metacognition research. It is modelled to reflect metacognitive efficiency (i.e the relationship between subjective reports about performances and objective behaviour).
@@ -69,13 +69,13 @@ For an extensive introduction to metadPy, you can navigate the following noteboo
 | 1. What metacognition looks like? | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb)
 | 2. Fitting the model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/2%20-%20Fitting%20the%20model.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/2%20-%20Fitting%20the%20model.ipynb)
 | 3. Comparison with the HMeta-d toolbox | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
+<!-- #endregion -->
 
-+++ {"id": "w0EklNnNf6Ms"}
-
+<!-- #region id="w0EklNnNf6Ms" -->
 # Importing data
+<!-- #endregion -->
 
-+++ {"id": "69r9Nrw6dsP0"}
-
+<!-- #region id="69r9Nrw6dsP0" -->
 Classical metacognition experiments contain two phases: task performance and confidence ratings. The task performance could for example be the ability to distinguish the presence of a dot on the screen. By relating trials where stimuli are present or absent and the response provided by the participant (Can you see the dot: yes/no), it is possible to obtain the accuracy. The confidence rating is proposed to the participant when the response is made and should reflect how certain the participant is about his/her judgement.
 
 An ideal observer would always associate very high confidence ratings with correct task-I responses, and very low confidence ratings with an incorrect task-1 response, while a participant with a low metacognitive efficiency will have a more mixed response pattern.
@@ -90,24 +90,16 @@ A minimal metacognition dataset will therefore consist in a data frame populated
 Due to the logical dependence between the `Stimuli`, `Responses` and `Accuracy` columns, in practice only two of those columns are necessary, the third being deduced from the others. Most of the functions in `metadPy` will accept DataFrames containing only two of these columns, and will automatically infer the missing information. Similarly, as the metacognition models described here does not incorporate the temporal dimension, the trial number is optional. 
 
 `metadPy` includes a simulation function that will let you create one such data frame for one or many participants and condition, controlling for a variety of parameters. Here, we will simulate 200 trials from  participant having `d=1` and `c=0` (task performances) and a `meta-d=1.5` (metacognitive sensibility). The confidence ratings were provided using a 1-to-4 rating scale.
+<!-- #endregion -->
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-  height: 424
-id: wOPOtKuIdrzD
-outputId: 511facb6-f4a8-4ca3-cb91-e877e49aa643
----
+```python colab={"base_uri": "https://localhost:8080/", "height": 424} id="wOPOtKuIdrzD" outputId="511facb6-f4a8-4ca3-cb91-e877e49aa643"
 from metadPy.utils import responseSimulation
 
 simulation = responseSimulation(d=1, metad=2.0, c=0, nRatings=4, nTrials=5000)
 simulation.head()
 ```
 
-```{code-cell} ipython3
-:id: F2An4oGxgbz2
-
+```python id="F2An4oGxgbz2"
 from metadPy.utils import trials2counts
 
 nR_S1, nR_S2 = trials2counts(
@@ -119,21 +111,19 @@ nR_S1, nR_S2 = trials2counts(
 )
 ```
 
-```{code-cell} ipython3
+```python
 nR_S1, nR_S2
 ```
 
-+++ {"id": "X_5VeOp-f8Hz"}
-
+<!-- #region id="X_5VeOp-f8Hz" -->
 ## Data visualization
+<!-- #endregion -->
 
-+++ {"id": "DScjwm4QgERk"}
-
+<!-- #region id="DScjwm4QgERk" -->
 You can easily visualize metacognition results using one of the plotting functions. Here, we will use the `plot_confidence` and the `plot_roc` functions to visualize the metacognitive performance of our participant.
+<!-- #endregion -->
 
-```{code-cell} ipython3
-:id: 5ulkBLZWf-zz
-
+```python id="5ulkBLZWf-zz"
 import arviz as az
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -142,89 +132,46 @@ from metadPy.plotting import plot_confidence, plot_roc
 sns.set_context("talk")
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-  height: 396
-id: MxU7AvBbgMwc
-outputId: 954a428f-be2e-40c4-9580-56e65d870fbd
----
+```python colab={"base_uri": "https://localhost:8080/", "height": 396} id="MxU7AvBbgMwc" outputId="954a428f-be2e-40c4-9580-56e65d870fbd"
 fig, axs = plt.subplots(1, 2, figsize=(13, 5))
 plot_confidence(nR_S1, nR_S2, ax=axs[0])
 plot_roc(nR_S1, nR_S2, ax=axs[1])
 sns.despine()
 ```
 
-+++ {"id": "epcdJnLUdT8e"}
-
+<!-- #region id="epcdJnLUdT8e" -->
 # Signal detection theory (SDT)
+<!-- #endregion -->
 
-+++ {"id": "EqC4DJN_6KHG"}
-
+<!-- #region id="EqC4DJN_6KHG" -->
 All metadPy functions are registred as Pandas flavors (see [pandas-flavor](https://pypi.org/project/pandas-flavor/)), which means that the functions can be called as a method from the result data frame. When using the default columns names (`Stimuli`, `Response`, `Accuracy`, `Confidence`), this significantly reduces the length of the function call, making your code more clean and readable.
+<!-- #endregion -->
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-id: peZDc-xv5Qm2
-outputId: c344e8f7-9c7b-4e35-c965-0dcf8f3303c6
----
+```python colab={"base_uri": "https://localhost:8080/"} id="peZDc-xv5Qm2" outputId="c344e8f7-9c7b-4e35-c965-0dcf8f3303c6"
 simulation.criterion()
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-id: l8IppukU5QzU
-outputId: 00f03f29-3c2a-4857-bc92-a65a2ce9c396
----
+```python colab={"base_uri": "https://localhost:8080/"} id="l8IppukU5QzU" outputId="00f03f29-3c2a-4857-bc92-a65a2ce9c396"
 simulation.dprime()
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-id: 6Ki5MBP-5aO5
-outputId: 368213aa-4dc8-44cd-b268-0e4b8ade3fb8
----
+```python colab={"base_uri": "https://localhost:8080/"} id="6Ki5MBP-5aO5" outputId="368213aa-4dc8-44cd-b268-0e4b8ade3fb8"
 simulation.rates()
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-id: XU1T7YLW5jHT
-outputId: 37688d92-b4a0-447c-ad77-22059281999a
----
+```python colab={"base_uri": "https://localhost:8080/"} id="XU1T7YLW5jHT" outputId="37688d92-b4a0-447c-ad77-22059281999a"
 simulation.roc_auc(nRatings=4)
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-id: Cr0-o9DN5Q9h
-outputId: d1df3cb6-4328-4a97-ebc5-5064d6c1b9ef
----
+```python colab={"base_uri": "https://localhost:8080/"} id="Cr0-o9DN5Q9h" outputId="d1df3cb6-4328-4a97-ebc5-5064d6c1b9ef"
 simulation.scores()
 ```
 
-+++ {"id": "ntThWcGodWNU"}
-
+<!-- #region id="ntThWcGodWNU" -->
 # Estimating meta dprime using Maximum Likelyhood Estimates (MLE)
+<!-- #endregion -->
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-id: TrsF_KUYdZzf
-outputId: 72830038-8aa7-4a13-ba29-32aa22576ca0
----
+```python colab={"base_uri": "https://localhost:8080/"} id="TrsF_KUYdZzf" outputId="72830038-8aa7-4a13-ba29-32aa22576ca0"
 from metadPy.mle import metad
 
 metad = metad(
@@ -238,28 +185,19 @@ metad = metad(
 print(f'meta-d\' = {str(metad["meta_d"])}')
 ```
 
-+++ {"id": "d6n1XEgAdbId"}
-
+<!-- #region id="d6n1XEgAdbId" -->
 # Estimating meta-dprime using hierarchical Bayesian modeling
+<!-- #endregion -->
 
-+++ {"id": "16zp_Md4qM-X"}
-
+<!-- #region id="16zp_Md4qM-X" -->
 ## Subject level
+<!-- #endregion -->
 
-```{code-cell} ipython3
-:id: I08VOEauqbsc
-
+```python id="I08VOEauqbsc"
 from metadPy.bayesian import hmetad
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-  height: 222
-id: eUCVaD0udcBc
-outputId: 58d8d546-d04e-428d-86e0-b9a08d3715a3
----
+```python colab={"base_uri": "https://localhost:8080/", "height": 222} id="eUCVaD0udcBc" outputId="58d8d546-d04e-428d-86e0-b9a08d3715a3"
 model, trace = hmetad(
     data=simulation,
     nRatings=4,
@@ -269,49 +207,33 @@ model, trace = hmetad(
 )
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-  height: 457
-id: 4GWUwuihsfpf
-outputId: f10724a7-4af2-4c9e-b082-0dc7b9911c19
----
+```python colab={"base_uri": "https://localhost:8080/", "height": 457} id="4GWUwuihsfpf" outputId="f10724a7-4af2-4c9e-b082-0dc7b9911c19"
 az.plot_trace(trace, var_names=["meta_d", "cS2", "cS1"]);
 ```
 
-```{code-cell} ipython3
----
-colab:
-  base_uri: https://localhost:8080/
-  height: 269
-id: LXP87UvjsR6O
-outputId: d817b6e0-951e-454b-f614-4fc7890d3736
----
+```python colab={"base_uri": "https://localhost:8080/", "height": 269} id="LXP87UvjsR6O" outputId="d817b6e0-951e-454b-f614-4fc7890d3736"
 az.summary(trace, var_names=["meta_d", "cS2", "cS1"])
 ```
 
-+++ {"id": "vFHmSwwzRXFo"}
-
+<!-- #region id="vFHmSwwzRXFo" -->
 # References
+<!-- #endregion -->
 
-+++ {"id": "AndtVDjLRXFo"}
-
+<!-- #region id="AndtVDjLRXFo" -->
 [1] Maniscalco, B., & Lau, H. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d′, Response-Specific Meta-d′, and the Unequal Variance SDT Model. In The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-642-45190-4_3 
 
 [2] Fleming, S. M., & Lau, H. C. (2014). How to measure metacognition. Frontiers in Human Neuroscience, 8. https://doi.org/10.3389/fnhum.2014.00443
 
 [3] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of metacognitive efficiency from confidence ratings, Neuroscience of Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
-
-+++
+<!-- #endregion -->
 
 # Watermark
 
-```{code-cell} ipython3
+```python
 %load_ext watermark
 %watermark -n -u -v -iv -w -p metadPy,pymc
 ```
 
-```{code-cell} ipython3
+```python
 
 ```
