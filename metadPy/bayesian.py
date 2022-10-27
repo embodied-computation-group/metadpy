@@ -146,7 +146,7 @@ def hmetad(
         added to it. Padding cells is desirable if trial counts of 0 interfere
         with model fitting. If False, trial counts are not manipulated and 0s
         may be present in the response count output. Default value for padding
-        is `0`.
+        is `False`.
     padAmount : float or None
         The value to add to each response count if padCells is set to 1.
         Default value is 1/(2*nRatings)

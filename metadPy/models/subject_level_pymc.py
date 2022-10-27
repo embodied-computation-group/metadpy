@@ -37,14 +37,13 @@ def hmetad_subjectLevel(
         The pymc model. Encapsulates the variables and likelihood factors.
     trace : :py:class:`pymc.backends.base.MultiTrace` or
         :py:class:`arviz.InferenceData`
-        A `MultiTrace` or `ArviZ InferenceData` object that contains the
-        samples.
+        A `MultiTrace` or `ArviZ InferenceData` object that contains the samples.
 
     References
     ----------
-    .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation
-    of metacognitive efficiency from confidence ratings, Neuroscience of
-    Consciousness, 3(1) nix007, https://doi.org/10.1093/nc/nix007
+    .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
+    metacognitive efficiency from confidence ratings, Neuroscience of Consciousness, 
+    3(1) nix007, https://doi.org/10.1093/nc/nix007
 
     """
 
@@ -64,8 +63,7 @@ def hmetad_subjectLevel(
         # Type 2 priors
         meta_d = Normal("meta_d", mu=d1, tau=2)
 
-        # Specify ordered prior on criteria
-        # bounded above and below by Type 1 c1
+        # Specify ordered prior on criteria bounded above and below by Type 1 c1
         cS1_hn = HalfNormal(
             "cS1_hn",
             tau=2,
@@ -196,7 +194,6 @@ def hmetad_subjectLevel(
 
         if sample_model is True:
             trace = sample(
-                #trace=[meta_d, cS1, cS2],
                 return_inferencedata=True,
                 chains=num_chains,
                 draws=num_samples,
