@@ -495,30 +495,30 @@ def roc_auc(
     nR_S1=None,
     nR_S2=None,
 ):
-    """Calculate the area under the type 2 ROC curve given nR_S1 and nR_S2
-    ratings counts.
+    """Calculate the area under the type 2 ROC curve given from confidence ratings.
 
     Parameters
     ----------
     data : pd.DataFrame | None
-        Dataframe containing one `stimuli` and one `response` column.
-    stimuli : str | np.ndarray | list
-        If a string is provided, should be the name of the column used as
-        `stimuli`. If a list or an array is provided, should contain the
-        boolean vectors for `stimuli`. If `None` and `data` is a
-        :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
-    responses : str | np.ndarray
-        If a string is provided, should be the name of the column used as
-        `responses`. If a list or an array is provided, should contain the
-        boolean vector for `responses`. If `None` and `data` is a
-        :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
-    nRatings : int
-        Total of available subjective ratings available for the subject. e.g.
-        if subject can rate confidence on a scale of 1-4, then nRatings = 4.
-        Default is `4`.
-    nR_S1 : list | np.ndarray
+        Dataframe containing one `"stimuli"` and one `"response"` column. Different
+        column names can also be provided using the `stimuli` and `responses`
+        parameters.
+    stimuli : str | np.ndarray | list | None
+        If a string is provided, should be the name of the column used as `stimuli`. If
+        a list or an array is provided, should contain the boolean vectors for
+        `stimuli`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,
+        will be set to `Stimuli` by default.
+    responses : str | np.ndarray | None
+        If a string is provided, should be the name of the column used as `responses`.
+        If a list or an array is provided, should contain the boolean vector for
+        `responses`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,
+        will be set to `Responses` by default.
+    nRatings : int | None
+        Total of available subjective ratings available for the subject. e.g. if subject
+        can rate confidence on a scale of 1-4, then nRatings = 4. Default is `None`.
+    nR_S1 : list | np.ndarray | None
         Confience ratings (stimuli 1).
-    nR_S2 : list | np.ndarray
+    nR_S2 : list | np.ndarray | None
         Confidence ratings (stimuli 2).
 
     Returns
@@ -547,13 +547,14 @@ def roc_auc(
         if confidence is None:
             confidence = "Confidence"
 
-        nR_S1, nR_S2 = trials2counts(
-            data=data,
-            stimuli=stimuli,
-            accuracy=accuracy,
-            confidence=confidence,
-            nRatings=nRatings,
-        )
+        # Compute accuracy
+        accuracy = (data[stimuli] == data[responses]).to_numpy()
+        conf = data[confidence].to_numpy()
+        H2, FA2 = [], []
+        for c in range(nRatings, 0, -1):
+            H2.append((accuracy & (conf==c)).sum() + 1)
+            FA2.append(((~accuracy) & (conf==c)).sum() + 1)
+
     else:
         if isinstance(nR_S1, list):
             nR_S1 = np.array(nR_S1)
@@ -562,18 +563,19 @@ def roc_auc(
         if (nR_S1 is None) & (nR_S2 is None):
             raise ValueError("Either data or nR_s1 and nR_S2 should be provided.")
 
-    nRatings = int(len(nR_S1) / 2)
+        if nRatings is None:
+            nRatings = int(len(nR_S1) / 2)
 
-    flip_nR_S1 = np.flip(nR_S1)
-    flip_nR_S2 = np.flip(nR_S2)
+        flip_nR_S1 = np.flip(nR_S1)
+        flip_nR_S2 = np.flip(nR_S2)
 
-    S1_H2 = (nR_S1 + 0.5)[:nRatings]
-    S2_H2 = (flip_nR_S2 + 0.5)[:nRatings]
-    S1_FA2 = (flip_nR_S1 + 0.5)[:nRatings]
-    S2_FA2 = (nR_S2 + 0.5)[:nRatings]
+        S1_H2 = (nR_S1 + 0.5)[:nRatings]
+        S2_H2 = (flip_nR_S2 + 0.5)[:nRatings]
+        S1_FA2 = (flip_nR_S1 + 0.5)[:nRatings]
+        S2_FA2 = (nR_S2 + 0.5)[:nRatings]
 
-    H2 = S1_H2 + S2_H2
-    FA2 = S1_FA2 + S2_FA2
+        H2 = S1_H2 + S2_H2
+        FA2 = S1_FA2 + S2_FA2
 
     H2 /= sum(H2)
     FA2 /= sum(FA2)

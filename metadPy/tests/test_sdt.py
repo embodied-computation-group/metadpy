@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from metadPy import load_dataset
+from metadPy.utils import ratings2df
 from metadPy.sdt import criterion, dprime, rates, roc_auc, scores
 
 data = pd.DataFrame(
@@ -61,13 +61,16 @@ class Testsdt(TestCase):
 
     def test_roc_auc(self):
         """Test roc_auc function"""
+        
+        # Using nR_Ss vectors
         nR_S1 = [52, 32, 35, 37, 26, 12, 4, 2]
         nR_S2 = [2, 5, 15, 22, 33, 38, 40, 45]
         auc = roc_auc(nR_S1=nR_S1, nR_S2=nR_S2)
-        assert round(auc, 3) == 0.728
-
-        df = load_dataset("rm")
-        assert round(df.roc_auc(nRatings=4), 3) == 0.621
+        assert round(auc, 4) == 0.7278  # HMeta-d : 0.7278
+        
+        # Using a dataframe
+        df = ratings2df(nR_S1=nR_S1, nR_S2=nR_S2)
+        assert round(df.roc_auc(nRatings=4), 4) == 0.7278  # HMeta-d : 0.7278
 
 
 if __name__ == "__main__":
