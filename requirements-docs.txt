@@ -8,3 +8,6 @@ numpydoc>=1.4.0
 ipympl
 myst-parser
 sphinxcontrib-bibtex>=2.4.2
+arviz>=0.12.0
+numba>=0.55.1
+pymc>=4.0.1
