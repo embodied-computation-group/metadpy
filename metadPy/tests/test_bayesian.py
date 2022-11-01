@@ -4,11 +4,12 @@ import unittest
 from unittest import TestCase
 
 import numpy as np
+import pymc as pm
 import pytest
+
 from metadPy import load_dataset
 from metadPy.bayesian import extractParameters, hmetad
 from metadPy.utils import ratings2df
-import pymc as pm
 
 
 class Testsdt(TestCase):
@@ -95,11 +96,11 @@ class Testsdt(TestCase):
             nRatings=4,
             output="dataframe",
         )
-        
-        assert round(pymc_df["d"].values[0], 2) - 1.53 < .01
-        assert round(pymc_df["c"].values[0], 2) - 0.0 < .01
-        assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < .01
-        assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < .01
+
+        assert round(pymc_df["d"].values[0], 2) - 1.53 < 0.01
+        assert round(pymc_df["c"].values[0], 2) - 0.0 < 0.01
+        assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < 0.01
+        assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < 0.01
 
         # Using a dataframe as input
         this_df = ratings2df(
@@ -112,14 +113,14 @@ class Testsdt(TestCase):
             stimuli="Stimuli",
             accuracy="Accuracy",
             confidence="Confidence",
-            output="dataframe",            
+            output="dataframe",
         )
-        
-        assert round(pymc_df["d"].values[0], 2) - 1.53 < .01
-        assert round(pymc_df["c"].values[0], 2) - 0.0 < .01
-        assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < .01
-        assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < .01
-        
+
+        assert round(pymc_df["d"].values[0], 2) - 1.53 < 0.01
+        assert round(pymc_df["c"].values[0], 2) - 0.0 < 0.01
+        assert round(pymc_df["meta_d"].values[0], 2) - 1.58 < 0.01
+        assert round(pymc_df["m_ratio"].values[0], 2) - 1.03 < 0.01
+
 
 if __name__ == "__main__":
     unittest.main(argv=["first-arg-is-ignored"], exit=False)

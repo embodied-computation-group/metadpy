@@ -216,7 +216,7 @@ def discreteRatings(
     verbose: bool = True,
     ignore_invalid: bool = False,
 ) -> Tuple[np.ndarray, Dict[str, list]]:
-    """Convert continuous ratings to dscrete bins
+    """Convert from continuous to discrete ratings.
 
     Resample if quantiles are equal at high or low end to ensure proper
     assignment of binned confidence

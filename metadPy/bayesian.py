@@ -2,14 +2,14 @@
 
 import os
 import sys
-from typing import (TYPE_CHECKING, Callable, Dict, List, Optional, Tuple,
-                    Union, overload)
+from typing import TYPE_CHECKING, Callable, Dict, List, Optional, Tuple, Union, overload
 
 import arviz as az
 import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 from arviz import InferenceData
+
 from metadPy.sdt import criterion, dprime
 from metadPy.utils import discreteRatings, trials2counts
 
@@ -173,9 +173,9 @@ def hmetad(
         :py:class:`arviz.InferenceData` | None
         A `MultiTrace` or `ArviZ InferenceData` object that contains the samples. Only
         returned if `sample_model` is set to `True`, otherwise set to None.
-    
+
     or
-    
+
     results : pd.DataFrame
         If `output="dataframe"`, :py:class:`pandas.DataFrame` containing the values for
         the following variables:
@@ -293,9 +293,7 @@ def hmetad(
             data, subject, within, stimuli, accuracy, confidence, nRatings
         )
 
-        raise ValueError(
-                "Invalid backend provided - This model is not implemented yet"
-            )
+        raise ValueError("Invalid backend provided - This model is not implemented yet")
 
     ##########
     # Sampling
@@ -320,6 +318,7 @@ def hmetad(
             )
     else:
         return model_output, None
+
 
 def extractParameters(
     nR_S1: Union[List[int], np.ndarray], nR_S2: Union[List[int], np.ndarray]

@@ -1,8 +1,7 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import aesara.tensor as at
-from pymc import (Binomial, Deterministic, HalfNormal, Model, Multinomial,
-                  Normal, sample)
+from pymc import Binomial, Deterministic, HalfNormal, Model, Multinomial, Normal, sample
 
 
 def phi(x):
@@ -15,7 +14,7 @@ def hmetad_subjectLevel(
 ):
     """Hierachical Bayesian modeling of meta-d' (subject level).
 
-    This is an internal function. The subject level model must be called using 
+    This is an internal function. The subject level model must be called using
     :py:func:`metadPy.bayesian.hmetad`.
 
     Parameters
@@ -42,7 +41,7 @@ def hmetad_subjectLevel(
     References
     ----------
     .. [#] Fleming, S.M. (2017) HMeta-d: hierarchical Bayesian estimation of
-    metacognitive efficiency from confidence ratings, Neuroscience of Consciousness, 
+    metacognitive efficiency from confidence ratings, Neuroscience of Consciousness,
     3(1) nix007, https://doi.org/10.1093/nc/nix007
 
     """

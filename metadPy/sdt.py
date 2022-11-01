@@ -7,8 +7,6 @@ import pandas as pd
 import pandas_flavor as pf
 from scipy.stats import norm
 
-from metadPy.utils import trials2counts
-
 
 @overload
 def scores(
@@ -552,8 +550,8 @@ def roc_auc(
         conf = data[confidence].to_numpy()
         H2, FA2 = [], []
         for c in range(nRatings, 0, -1):
-            H2.append((accuracy & (conf==c)).sum() + 1)
-            FA2.append(((~accuracy) & (conf==c)).sum() + 1)
+            H2.append((accuracy & (conf == c)).sum() + 1)
+            FA2.append(((~accuracy) & (conf == c)).sum() + 1)
 
     else:
         if isinstance(nR_S1, list):

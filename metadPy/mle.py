@@ -9,13 +9,14 @@ import numpy as np
 import pandas as pd
 import pandas_flavor as pf
 import scipy.special.cython_special as cysp
-from metadPy.utils import trials2counts
 from numba import jit, vectorize
 from numba.extending import get_cython_function_address
 from numba.types import WrapperAddressProtocol, float32, float64
 from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 from tqdm import tqdm
+
+from metadPy.utils import trials2counts
 
 warnings.filterwarnings(
     "ignore", message="delta_grad == 0.0. Check if the approximated function is linear."
