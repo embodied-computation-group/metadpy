@@ -54,7 +54,7 @@ SDT
    :toctree: generated/sdt
 
     scores
-    rate
+    rates
     dprime
     criterion
     roc_auc
