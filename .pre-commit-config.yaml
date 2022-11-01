@@ -20,4 +20,5 @@ repos:
     rev: 'v0.982'  # Use the sha / tag you want to point at
     hooks:
     -   id: mypy
+        files: ^metadPy/
         args: [--ignore-missing-imports]
