@@ -308,10 +308,10 @@ def hmetad(
                     "d": [pymcData["d1"]],
                     "c": [pymcData["c1"]],
                     "meta_d": [
-                        az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                        az.summary(traces, var_names=["meta_d"])["mean"]["meta_d"]
                     ],
                     "m_ratio": [
-                        az.summary(traces, var_names="meta_d")["mean"]["meta_d"]
+                        az.summary(traces, var_names=["meta_d"])["mean"]["meta_d"]
                         / pymcData["d1"]
                     ],
                 }

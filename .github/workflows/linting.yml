@@ -1,4 +1,4 @@
-name: Test
+name: Linting
 
 on: [push, pull_request]
 
@@ -23,11 +23,13 @@ jobs:
           ${{ runner.os }}-pip-
     - name: Install dependencies
       run: |
-        pip install coverage ipykernel watermark
         pip install -r requirements-tests.txt
-        python -m ipykernel install --user --name python3
+        pip install isort flake8 black
+        pip install mypy==0.982
+        pip install types-setuptools
     - name: Run tests and coverage
       run: |
-        coverage run -m unittest
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v2
+        mypy ./metadPy/ --ignore-missing-imports
+        flake8 ./metadPy/
+        black ./metadPy/
+        isort ./metadPy/
