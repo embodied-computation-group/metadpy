@@ -22,6 +22,7 @@ INSTALL_REQUIRES = [
     "matplotlib>=3.1.3",
     "seaborn>=0.10.0",
     "pandas_flavor>=0.1.2",
+    "numba>=0.55.1",
 ]
 
 PACKAGES = ["metadPy", "metadPy.datasets"]

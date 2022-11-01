@@ -7,6 +7,7 @@ arviz>=0.12.0
 black
 pytest
 coverage
+tqdm
 pandas_flavor==0.1.2
 numba>=0.51.2
 pymc>=4.0.1
