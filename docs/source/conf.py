@@ -46,7 +46,6 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
     "numpydoc",
-    "jupyter_sphinx",
     "sphinx_panels",
     "myst_nb",
     "sphinx_gallery.load_style",
