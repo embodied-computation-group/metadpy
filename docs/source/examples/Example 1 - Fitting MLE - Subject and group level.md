@@ -14,7 +14,8 @@ kernelspec:
 
 +++ {"id": "copyrighted-border"}
 
-Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
+(example_1)=
+Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
 
 ```{code-cell} ipython3
 :id: unavailable-groove
@@ -31,7 +32,7 @@ sns.set_context("talk")
 
 +++ {"id": "2oE_wkIxVPbe"}
 
-In this notebook, we are going to estimate meta-*d'* using Maximum Likelihood Estimation ([MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)) [**1**, **2**] using the function implemented in [metadPy](https://github.com/LegrandNico/metadPy). This function is directly adapted from the transcription of the Matlab `fit_meta_d_MLE.m` [**3**] by Alan Lee that can be retrieved [here](http://www.columbia.edu/~bsm2105/type2sdt/).
+In this notebook, we are going to estimate meta-*d'* using Maximum Likelihood Estimation ([MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)) {cite:p}`fleming:2014,maniscalo:2014,maniscalo:2012` using the function implemented in [metadPy](https://github.com/LegrandNico/metadPy). This function is directly adapted from the transcription of the Matlab `fit_meta_d_MLE.m` by Alan Lee that can be retrieved [here](http://www.columbia.edu/~bsm2105/type2sdt/).
 
 We are going to see, however, that [metadPy](https://github.com/LegrandNico/metadPy) greatly simplifies the preprocessing of raw data, letting the user fit the model for many participants/groups/conditions from the results data frame in a single command call. Another advantage here is that the python code supporting the model fitting is optimized using [Numba](http://numba.pydata.org/), which greatly improves its performance.
 
@@ -205,18 +206,6 @@ for i, metric in enumerate(["dprime", "meta_d", "m_ratio", "m_diff"]):
 plt.tight_layout()
 sns.despine()
 ```
-
-+++ {"id": "emvTkSU5VyTu"}
-
-# References
-
-**[1]** Maniscalco, B., & Lau, H. (2014). Signal Detection Theory Analysis of Type 1 and Type 2 Data: Meta-d′, Response-Specific Meta-d′, and the Unequal Variance SDT Model. In The Cognitive Neuroscience of Metacognition (pp. 25–66). Springer Berlin Heidelberg. https://doi.org/10.1007/978-3-642-45190-4_3 
-
-**[2]** Fleming, S. M., & Lau, H. C. (2014). How to measure metacognition. Frontiers in Human Neuroscience, 8. https://doi.org/10.3389/fnhum.2014.00443
-
-**[3]** Maniscalco, B., & Lau, H. (2012). A signal detection theoretic approach for estimating metacognitive sensitivity from confidence ratings. Consciousness and Cognition, 21(1), 422–430. doi:10.1016/j.concog.2011.09.021
-
-+++
 
 # Watermark
 

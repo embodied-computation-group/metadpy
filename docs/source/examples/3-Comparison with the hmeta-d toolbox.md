@@ -14,7 +14,9 @@ kernelspec:
 
 +++ {"id": "a3o1EnPLWeAv"}
 
-Author: Nicolas Legrand nicolas.legrand@cfin.au.dk
+(tutorial_3)=
+Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
+Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial
 
 ```{code-cell} ipython3
 :id: uSC4P5ghWTZb
@@ -43,7 +45,7 @@ nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
 
 +++ {"id": "ZOop3bjebxbZ"}
 
-## Using metadPy.
+## Using metadPy
 
 ```{code-cell} ipython3
 ---

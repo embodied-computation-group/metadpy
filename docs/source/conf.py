@@ -43,12 +43,10 @@ extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
-    "sphinx_gallery.gen_gallery",
     "matplotlib.sphinxext.plot_directive",
     "numpydoc",
     "sphinx_panels",
     "myst_nb",
-    "sphinx_gallery.load_style",
     "sphinxcontrib.bibtex",
 ]
 

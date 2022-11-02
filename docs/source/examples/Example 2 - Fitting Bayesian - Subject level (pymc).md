@@ -14,6 +14,7 @@ kernelspec:
 
 +++ {"id": "regulated-swiss"}
 
+(example_2)=  
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 ```{code-cell} ipython3

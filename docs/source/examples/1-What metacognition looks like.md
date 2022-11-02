@@ -12,10 +12,8 @@ kernelspec:
   name: python3
 ---
 
-Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
-
-+++
-
+(tutorial_1)=
+Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial
 
 ```{code-cell} ipython3
@@ -69,8 +67,9 @@ sns.despine()
 
 +++
 
-### EXERCISE 1:
+```{admonition} Exercise 1
 Run the simulation and plot again a few times. Do you get the same results every time? Why / why not?
+```
 
 +++
 
@@ -115,10 +114,12 @@ axs[1].set_title("Low task performace")
 sns.despine()
 ```
 
-**EXPLANATION:** You can see in this figure that a higher task performance (d') results in a bigger difference between the confidence distributions, despite the same amount of confidence noise. Later on we will look at how we can correct for the level of d' to get a 'relative' measure of metacognition.
+```{tip}
+You can see in this figure that a higher task performance (d') results in a bigger difference between the confidence distributions, despite the same amount of confidence noise. Later on we will look at how we can correct for the level of d' to get a 'relative' measure of metacognition.
+```
 
 +++
 
-**EXERCISE 2:** Change any of the parameters above and re-run this section to get an idea as to how each parameter may change the observed confidence scores.
-
-+++
+```{admonition} Exercise 2
+Change any of the parameters above and re-run this section to get an idea as to how each parameter may change the observed confidence scores.
+```

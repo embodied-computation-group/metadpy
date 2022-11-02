@@ -4,3 +4,4 @@ mypyreports/
 .coverage
 build
 *egg-info
+docs/source/generated/*
