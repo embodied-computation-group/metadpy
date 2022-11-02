@@ -1,0 +1,6 @@
+﻿metadPy.utils.trialSimulation
+=============================
+
+.. currentmodule:: metadPy.utils
+
+.. autofunction:: trialSimulation

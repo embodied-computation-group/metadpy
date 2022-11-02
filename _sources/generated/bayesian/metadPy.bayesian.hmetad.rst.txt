@@ -1,0 +1,6 @@
+﻿metadPy.bayesian.hmetad
+=======================
+
+.. currentmodule:: metadPy.bayesian
+
+.. autofunction:: hmetad

@@ -1,0 +1,6 @@
+﻿metadPy.plotting.plot\_roc
+==========================
+
+.. currentmodule:: metadPy.plotting
+
+.. autofunction:: plot_roc

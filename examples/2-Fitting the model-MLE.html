@@ -1,0 +1,944 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Fitting the model &#8212; metadPy 0.0.1 documentation</title>
+  <script>
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+
+  
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/2-Fitting the model-MLE';</script>
+    <link rel="shortcut icon" href="../_static/logo.svg"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="None">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="Logo image">
+    <img src="../_static/logo.svg" class="logo__image only-dark" alt="Logo image">
+  
+  
+    <p class="title logo__title">metadPy</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../api.html">
+                        API
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../references.html">
+                        References
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      <div class="navbar-end-item navbar-end__search-button-container">
+        
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/embodied-computation-group/metadPy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/systole/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fas fa-box"></i></span>
+            <label class="sr-only">Pypi</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  <div class="search-button-container--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+  </div>
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                <li class="nav-item">
+                    <a class="nav-link" href="../api.html">
+                        API
+                    </a>
+                </li>
+                
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../references.html">
+                        References
+                    </a>
+                </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
+    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/embodied-computation-group/metadPy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/systole/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fas fa-box"></i></span>
+            <label class="sr-only">Pypi</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+      </div>
+      <main class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <p id="tutorial-2">Author: Nicolas Legrand <a class="reference external" href="mailto:nicolas&#46;legrand&#37;&#52;&#48;cfin&#46;au&#46;dk">nicolas<span>&#46;</span>legrand<span>&#64;</span>cfin<span>&#46;</span>au<span>&#46;</span>dk</a><br />
+Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">metadPy.mle</span> <span class="kn">import</span> <span class="n">fit_metad</span><span class="p">,</span> <span class="n">metad</span>
+<span class="kn">from</span> <span class="nn">metadPy.plotting</span> <span class="kn">import</span> <span class="n">plot_confidence</span><span class="p">,</span> <span class="n">plot_roc</span>
+<span class="kn">from</span> <span class="nn">metadPy.sdt</span> <span class="kn">import</span> <span class="n">roc_auc</span>
+<span class="kn">from</span> <span class="nn">metadPy.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">responseSimulation</span><span class="p">,</span> <span class="n">trials2counts</span><span class="p">,</span>
+                           <span class="n">type2_SDT_simuation</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="fitting-the-model">
+<h1>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Permalink to this headline">#</a></h1>
+<section id="calculating-metacognition-the-type-2-roc-curve">
+<h2>Calculating metacognition: the type-2 ROC curve<a class="headerlink" href="#calculating-metacognition-the-type-2-roc-curve" title="Permalink to this headline">#</a></h2>
+<p>Another way of visualising type 2 performance (that will help us towards quantifying metacognition) is to plot the data using a <em>Reciever Operating Characteristic</em> (ROC) curve. Here, we plot the distribution of correct responses against the distribution of incorrect responses. The resulting type2ROC curve tells us how separate these confidence distributions are, and thus the area under the curve can be used as a measure of the level of type 2 performance. We will go through this now.</p>
+<section id="set-up-the-parameters">
+<h3>Set up the parameters<a class="headerlink" href="#set-up-the-parameters" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Set task performance(d&#39;)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Set task bias (c)</span>
+<span class="n">nTrials</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Set the number of trials performed</span>
+<span class="n">nRatings</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Choose the rating scale to use - any will do</span>
+<span class="n">lowNoise</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Set a low value for confidence noise</span>
+<span class="n">highNoise</span> <span class="o">=</span> <span class="mf">0.8</span>  <span class="c1"># Set a high value for confidence noise</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulate-the-responses-for-low-and-high-confidence-noise">
+<h3>Simulate the responses for low and high confidence noise<a class="headerlink" href="#simulate-the-responses-for-low-and-high-confidence-noise" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dHigh_nR_S1</span><span class="p">,</span> <span class="n">dHigh_nR_S2</span> <span class="o">=</span> <span class="n">type2_SDT_simuation</span><span class="p">(</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">highNoise</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span> <span class="n">nTrials</span><span class="o">=</span><span class="n">nTrials</span>
+<span class="p">)</span>
+<span class="n">dLow_nR_S1</span><span class="p">,</span> <span class="n">dLow_nR_S2</span> <span class="o">=</span> <span class="n">type2_SDT_simuation</span><span class="p">(</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">lowNoise</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span> <span class="n">nTrials</span><span class="o">=</span><span class="n">nTrials</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-the-confidence-results-for-the-two-simulations">
+<h3>Plot the confidence results for the two simulations<a class="headerlink" href="#plot-the-confidence-results-for-the-two-simulations" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[[</span><span class="n">dHigh_nR_S1</span><span class="p">,</span> <span class="n">dHigh_nR_S2</span><span class="p">],</span> <span class="p">[</span><span class="n">dLow_nR_S1</span><span class="p">,</span> <span class="n">dLow_nR_S2</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;High&quot;</span><span class="p">,</span> <span class="s2">&quot;Low&quot;</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="n">plot_confidence</span><span class="p">(</span><span class="n">nR_S1</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nR_S2</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> confidence noise&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/53c17188f23b9ad7902e98cdc0dcf5dfc460a2386411ea27165cae180ad376c9.png" src="../_images/53c17188f23b9ad7902e98cdc0dcf5dfc460a2386411ea27165cae180ad376c9.png" />
+</div>
+</div>
+</section>
+<section id="now-plot-the-observed-type2-data-in-a-type2roc-curve">
+<h3>Now plot the observed type2 data in a type2ROC curve<a class="headerlink" href="#now-plot-the-observed-type2-data-in-a-type2roc-curve" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[[</span><span class="n">dHigh_nR_S1</span><span class="p">,</span> <span class="n">dHigh_nR_S2</span><span class="p">],</span> <span class="p">[</span><span class="n">dLow_nR_S1</span><span class="p">,</span> <span class="n">dLow_nR_S2</span><span class="p">]],</span> <span class="p">[</span><span class="s2">&quot;High&quot;</span><span class="p">,</span> <span class="s2">&quot;Low&quot;</span><span class="p">]</span>
+<span class="p">):</span>
+    <span class="n">plot_roc</span><span class="p">(</span><span class="n">nR_S1</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nR_S2</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> confidence noise&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/913c04c12f78f6f3c3a628c07228de78f40e50adf077781abb4132c647341f5e.png" src="../_images/913c04c12f78f6f3c3a628c07228de78f40e50adf077781abb4132c647341f5e.png" />
+</div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>We can now compare the two types of figures (confidence distributions and type2ROC curves) from the same data to see what the type2ROC curve is plotting. The first point above zero on the curve (second from the left) is the proportion of the correct responses that used the highest confidence rating (i.e. 4 on the confidence scale) plotted against the proportion of incorrect responses that used the highest confidence rating. The next point to the right of this is the proportion of the correct responses that used the highest two confidence ratings (i.e. 3 and 4) against the the proportion of incorrect responses that used the highest two confidence ratings. This continues until we reach 1 in the top right corner of the curve, where we have accounted for all of the correct and incorrect responses across all of the confidence ratings. You can see here that when there is lower confidence noise, the type2ROC curve has a larger ‘bow’ - it extends closer towards the top left corner of the graph. This is because there is a greater proportion of the correct responses that use the higher confidence ratings, compared to the proportion of the incorrect responses that used the higher ratings. If metacognition was perfect, and a participant only used the higher rating scores when they were correct and the lower rating scores when they were incorrect (and never mixed them), the curve would be a right angle in the top left corner. If metacognition was zero, the curve would be flat and lie on the diagonal dotted line, as there would be approximately the same proportion of correct and incorrect responses no matter what confidence rating was used.</p>
+</div>
+<p>Now we will calculate the area under each of the type2ROC curves:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Low confidence AUC: </span><span class="si">{</span><span class="n">roc_auc</span><span class="p">(</span><span class="n">nR_S1</span><span class="o">=</span><span class="n">dLow_nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="o">=</span><span class="n">dLow_nR_S2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;High confidence AUC: </span><span class="si">{</span><span class="n">roc_auc</span><span class="p">(</span><span class="n">nR_S1</span><span class="o">=</span><span class="n">dHigh_nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="o">=</span><span class="n">dHigh_nR_S2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7669245579761761
+High confidence AUC: 0.6909958011507957
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Now you should be able to see that the area under the type2ROC curve with lower confidence noise is larger than when the data are produced with higher confidence noise. This metric is often used as an absolute measure of metacognition.</p>
+</div>
+<div class="highlight-{Exercise notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<ul class="simple">
+<li><p>You can plot the ROC curve using <code class="docutils literal notranslate"><span class="pre">metadPy.plotting.plot_roc()</span></code></p></li>
+<li><p>You can calculate the area using <code class="docutils literal notranslate"><span class="pre">metadPy.std.roc_auc()</span></code></p></li>
+</ul>
+</div>
+</section>
+</section>
+<section id="fitting-the-model-meta-d">
+<h2>Fitting the model: meta-d’<a class="headerlink" href="#fitting-the-model-meta-d" title="Permalink to this headline">#</a></h2>
+<p>In this step we will consider how we can quantify metacognition using meta-d’ rather than the area under a type2ROC curve. Because meta-d’ is calculated in the same units as d’, we can get rid of the effect of type 1 performance (d’) by simply creating a ratio of meta-d’ / d’, which we call the Mratio. The Mratio is then a ‘relative’ measure of metacognition, and is independent of task performance. For full details of the model please refer to the paper by <span id="id1"></span>. The key here is actually the direct relationship between type 1 and type 2 performance that we explored in steps 2 and 3, where we can predict what the type2ROC curve <em>should</em> look like for a certain type 1 d’ and bias (if no information was lost or gained between type 1 and type 2 performance). Therefore, if we take the observed type2ROC curve, we can theoretically estimate what level of d’ would cause the observed type 2 performance… And we call this meta-d’! (For details on the relationship between type 1 and type 2 performance, see <span id="id2">Galvin <em>et al.</em> [<a class="reference internal" href="../references.html#id6" title="Susan J. Galvin, John V. Podd, Vit Drga, and John Whitmore. Type 2 tasks in the theory of signal detectability: discrimination between correct and incorrect decisions. Psychonomic Bulletin &amp;amp$\mathsemicolon $ Review, 10(4):843–876, December 2003. URL: https://doi.org/10.3758/bf03196546, doi:10.3758/bf03196546.">2003</a>]</span>. Here we will plot the observed and estimated confidence values and type2ROC curves for our simulated data with different levels of metacognition, and take a closer look at the model values for meta-d.</p>
+<p><strong>Set up the parameters:</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Set task performance (d&#39;)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Set task bias (c)</span>
+<span class="n">nTrials</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Set the number of trials performed</span>
+<span class="n">nRatings</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Choose the rating scale to use</span>
+<span class="n">metadLow</span><span class="p">,</span> <span class="n">metadHigh</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>  <span class="c1"># This time we will simulate with different values of meta-d&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Simulate the responses for low and high metacognition:</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">low_noise_df</span> <span class="o">=</span> <span class="n">responseSimulation</span><span class="p">(</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">metad</span><span class="o">=</span><span class="n">metadLow</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span> <span class="n">nTrials</span><span class="o">=</span><span class="n">nTrials</span>
+<span class="p">)</span>
+<span class="n">high_noise_df</span> <span class="o">=</span> <span class="n">responseSimulation</span><span class="p">(</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">metad</span><span class="o">=</span><span class="n">metadHigh</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span> <span class="n">nTrials</span><span class="o">=</span><span class="n">nTrials</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Now we will fit the model for meta-d’:</strong></p>
+<p><strong>NOTE:</strong> nR_S1 and nR_S2 are the counts of the responses to stimulus 1 (nR_S1) and stimulus 2 (nR_S2) for each confidence level. We can compute this using the function py:func:<code class="docutils literal notranslate"><span class="pre">metadPy.utils.trials2counts()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">low_noise_nR_S1</span><span class="p">,</span> <span class="n">low_noise_nR_S2</span> <span class="o">=</span> <span class="n">trials2counts</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">low_noise_df</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+<span class="n">high_noise_nR_S1</span><span class="p">,</span> <span class="n">high_noise_nR_S2</span> <span class="o">=</span> <span class="n">trials2counts</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">high_noise_df</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitLowNoise</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span><span class="n">low_noise_nR_S1</span><span class="p">,</span> <span class="n">low_noise_nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+<span class="n">fitHighNoise</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span><span class="n">high_noise_nR_S1</span><span class="p">,</span> <span class="n">high_noise_nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Plot the model estimation of type 2 performance with high metacognition:</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_confidence</span><span class="p">(</span><span class="n">high_noise_nR_S1</span><span class="p">,</span> <span class="n">high_noise_nR_S2</span><span class="p">,</span> <span class="n">fitModel</span><span class="o">=</span><span class="n">fitHighNoise</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plot_roc</span><span class="p">(</span><span class="n">high_noise_nR_S1</span><span class="p">,</span> <span class="n">high_noise_nR_S2</span><span class="p">,</span> <span class="n">fitModel</span><span class="o">=</span><span class="n">fitHighNoise</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2a14d60962885bdf93965932b820238c7907db592ead2957f1532cc16ae19868.png" src="../_images/2a14d60962885bdf93965932b820238c7907db592ead2957f1532cc16ae19868.png" />
+</div>
+</div>
+<p><strong>Now plot the same figures for the model estimation of type 2 performance with low metacognition:</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plot_confidence</span><span class="p">(</span><span class="n">low_noise_nR_S1</span><span class="p">,</span> <span class="n">low_noise_nR_S2</span><span class="p">,</span> <span class="n">fitModel</span><span class="o">=</span><span class="n">fitLowNoise</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plot_roc</span><span class="p">(</span><span class="n">low_noise_nR_S1</span><span class="p">,</span> <span class="n">low_noise_nR_S2</span><span class="p">,</span> <span class="n">fitModel</span><span class="o">=</span><span class="n">fitLowNoise</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5ab7f2186ca34d6771400a66fdfd21b9a0156da3e4b8756f0f389d5cb3cf775e.png" src="../_images/5ab7f2186ca34d6771400a66fdfd21b9a0156da3e4b8756f0f389d5cb3cf775e.png" />
+</div>
+</div>
+<div class="highlight-{hint}You notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="highlight-{Exercise notranslate"><div class="highlight"><pre><span></span>How do the estimated (fit) Mratio values compare to the simulated Mratio values that we used?
+HINT: You can find the fitted Mratio im sim4.highMetad.fit, but you will need to calculate the simulated Mratio.
+Next, run this whole section again to simulate new data from the same parameters and re-fit the model. Do you get exactly the same meta-d&#39; and Mratio values as before? Why / why not?
+</pre></div>
+</div>
+</section>
+<section id="fitting-the-model-parameter-recovery">
+<h2>Fitting the model: parameter recovery<a class="headerlink" href="#fitting-the-model-parameter-recovery" title="Permalink to this headline">#</a></h2>
+<p>We saw in exercise 4 that the meta-d model we are using doesn’t give us a perfect estimation of meta-d. We will now take a closer look at how well this model is able to recover meta-d values, using 20 simulations at different levels of meta-d.</p>
+<section id="id3">
+<h3>Set up the parameters<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Set task performance (d&#39;)</span>
+<span class="n">d_sigma</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Include some between-subject variability</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Set task bias (c)</span>
+<span class="n">c_sigma</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Include some between-subject variability</span>
+<span class="n">nTrials</span> <span class="o">=</span> <span class="mi">1000</span>  <span class="c1"># Set the number of trials performed</span>
+<span class="n">nRatings</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Choose the rating scale to use</span>
+<span class="n">nSims</span> <span class="o">=</span> <span class="mi">40</span>  <span class="c1"># Specify the number of simulations at each meta-d value</span>
+<span class="n">meta_d</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>  <span class="c1"># Specify a range of of meta-d values</span>
+<span class="n">meta_d_sigma</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># Include some between-subject variability</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulate-the-responses-and-fit-the-model-for-different-levels-of-metacognition">
+<h3>Simulate the responses and fit the model for different levels of metacognition<a class="headerlink" href="#simulate-the-responses-and-fit-the-model-for-different-levels-of-metacognition" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
+<span class="k">for</span> <span class="n">this_meta_d</span> <span class="ow">in</span> <span class="n">meta_d</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">n_trials</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">this_simulation</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nSims</span><span class="p">):</span>
+
+            <span class="c1"># Generate dprime values</span>
+            <span class="n">sim_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d_sigma</span><span class="p">)</span>
+
+            <span class="c1"># Generate bias values</span>
+            <span class="n">sim_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">c_sigma</span><span class="p">)</span>
+
+            <span class="c1"># Generate meta-d values</span>
+            <span class="n">sim_meta_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">this_meta_d</span><span class="p">,</span> <span class="n">meta_d_sigma</span><span class="p">)</span>
+
+            <span class="c1"># Simulate dataframe of trials</span>
+            <span class="n">simulation_df</span> <span class="o">=</span> <span class="n">responseSimulation</span><span class="p">(</span>
+                <span class="n">d</span><span class="o">=</span><span class="n">sim_d</span><span class="p">,</span> <span class="n">metad</span><span class="o">=</span><span class="n">sim_meta_d</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">sim_c</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span> <span class="n">nTrials</span><span class="o">=</span><span class="n">n_trials</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">metad_df</span> <span class="o">=</span> <span class="n">metad</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">simulation_df</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+
+            <span class="n">metad_df</span><span class="p">[</span><span class="s2">&quot;n_simulation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_simulation</span>
+            <span class="n">metad_df</span><span class="p">[</span><span class="s2">&quot;true_meta_d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_meta_d</span>
+            <span class="n">metad_df</span><span class="p">[</span><span class="s2">&quot;n_trials&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_trials</span>
+
+            <span class="c1"># Store results</span>
+            <span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">results_df</span><span class="p">,</span> <span class="n">metad_df</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">20</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># Simulate dataframe of trials</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="n">simulation_df</span> <span class="o">=</span> <span class="n">responseSimulation</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span>     <span class="n">d</span><span class="o">=</span><span class="n">sim_d</span><span class="p">,</span> <span class="n">metad</span><span class="o">=</span><span class="n">sim_meta_d</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">sim_c</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span> <span class="n">nTrials</span><span class="o">=</span><span class="n">n_trials</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">20</span> <span class="n">metad_df</span> <span class="o">=</span> <span class="n">metad</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">simulation_df</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="n">metad_df</span><span class="p">[</span><span class="s2">&quot;n_simulation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_simulation</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> <span class="n">metad_df</span><span class="p">[</span><span class="s2">&quot;true_meta_d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_meta_d</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/metadPy/mle.py:550,</span> in <span class="ni">metad</span><span class="nt">(data, nRatings, stimuli, accuracy, confidence, within, between, subject, padAmount, nR_S1, nR_S2, s, padding, collapse, fncdf, fninv, verbose)</span>
+<span class="g g-Whitespace">    </span><span class="mi">547</span> <span class="n">nCriteria</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># number criteria to be fitted</span>
+<span class="g g-Whitespace">    </span><span class="mi">549</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">550</span>     <span class="n">results_dict</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">551</span>         <span class="n">nR_S1</span><span class="o">=</span><span class="n">nR_S1</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">552</span>         <span class="n">nR_S2</span><span class="o">=</span><span class="n">nR_S2</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">553</span>         <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">554</span>         <span class="n">nCriteria</span><span class="o">=</span><span class="n">nCriteria</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">555</span>         <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">556</span>         <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">557</span>         <span class="n">fninv</span><span class="o">=</span><span class="n">fninv</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">558</span>         <span class="n">fncdf</span><span class="o">=</span><span class="n">fncdf</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">559</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">560</span>     <span class="c1"># Filter dictionary and convert into pd.DataFrame</span>
+<span class="g g-Whitespace">    </span><span class="mi">561</span>     <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">562</span>         <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">563</span>             <span class="n">k</span><span class="p">:</span> <span class="p">[</span><span class="n">results_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+<span class="g g-Whitespace">    </span><span class="mi">564</span>             <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;dprime&quot;</span><span class="p">,</span> <span class="s2">&quot;meta_d&quot;</span><span class="p">,</span> <span class="s2">&quot;m_ratio&quot;</span><span class="p">,</span> <span class="s2">&quot;m_diff&quot;</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">565</span>         <span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">566</span>     <span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/metadPy/mle.py:749,</span> in <span class="ni">fit_metad</span><span class="nt">(nR_S1, nR_S2, nRatings, nCriteria, s, verbose, fninv, fncdf)</span>
+<span class="g g-Whitespace">    </span><span class="mi">746</span> <span class="n">linear_constraint</span> <span class="o">=</span> <span class="n">LinearConstraint</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">748</span> <span class="c1"># minimization of negative log-likelihood</span>
+<span class="ne">--&gt; </span><span class="mi">749</span> <span class="n">results</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">750</span>     <span class="n">fit_meta_d_logL</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">751</span>     <span class="n">guess</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">752</span>     <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">t1c1</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">753</span>     <span class="n">method</span><span class="o">=</span><span class="s2">&quot;trust-constr&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">754</span>     <span class="n">jac</span><span class="o">=</span><span class="s2">&quot;2-point&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">755</span>     <span class="n">hess</span><span class="o">=</span><span class="n">SR1</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">756</span>     <span class="n">constraints</span><span class="o">=</span><span class="p">[</span><span class="n">linear_constraint</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">757</span>     <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="n">verbose</span><span class="p">},</span>
+<span class="g g-Whitespace">    </span><span class="mi">758</span>     <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">759</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">761</span> <span class="c1"># quickly process some of the output</span>
+<span class="g g-Whitespace">    </span><span class="mi">762</span> <span class="n">meta_d1</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_minimize.py:711,</span> in <span class="ni">minimize</span><span class="nt">(fun, x0, args, method, jac, hess, hessp, bounds, constraints, tol, callback, options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">708</span>     <span class="n">res</span> <span class="o">=</span> <span class="n">_minimize_slsqp</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">bounds</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">709</span>                           <span class="n">constraints</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">710</span> <span class="k">elif</span> <span class="n">meth</span> <span class="o">==</span> <span class="s1">&#39;trust-constr&#39;</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">711</span>     <span class="n">res</span> <span class="o">=</span> <span class="n">_minimize_trustregion_constr</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">hess</span><span class="p">,</span> <span class="n">hessp</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">712</span>                                        <span class="n">bounds</span><span class="p">,</span> <span class="n">constraints</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">713</span>                                        <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">714</span> <span class="k">elif</span> <span class="n">meth</span> <span class="o">==</span> <span class="s1">&#39;dogleg&#39;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">715</span>     <span class="n">res</span> <span class="o">=</span> <span class="n">_minimize_dogleg</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">jac</span><span class="p">,</span> <span class="n">hess</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">716</span>                            <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/minimize_trustregion_constr.py:509,</span> in <span class="ni">_minimize_trustregion_constr</span><span class="nt">(fun, x0, args, grad, hess, hessp, bounds, constraints, xtol, gtol, barrier_tol, sparse_jacobian, callback, maxiter, verbose, finite_diff_rel_step, initial_constr_penalty, initial_tr_radius, initial_barrier_parameter, initial_barrier_tolerance, factorization_method, disp)</span>
+<span class="g g-Whitespace">    </span><span class="mi">500</span>     <span class="n">_</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">equality_constrained_sqp</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">501</span>         <span class="n">fun_and_constr</span><span class="p">,</span> <span class="n">grad_and_jac</span><span class="p">,</span> <span class="n">lagrangian_hess</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">502</span>         <span class="n">x0</span><span class="p">,</span> <span class="n">objective</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">objective</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">505</span>         <span class="n">initial_constr_penalty</span><span class="p">,</span> <span class="n">initial_tr_radius</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">506</span>         <span class="n">factorization_method</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">508</span> <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;tr_interior_point&#39;</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">509</span>     <span class="n">_</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tr_interior_point</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">510</span>         <span class="n">objective</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">objective</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span> <span class="n">lagrangian_hess</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">511</span>         <span class="n">n_vars</span><span class="p">,</span> <span class="n">canonical</span><span class="o">.</span><span class="n">n_ineq</span><span class="p">,</span> <span class="n">canonical</span><span class="o">.</span><span class="n">n_eq</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">512</span>         <span class="n">canonical</span><span class="o">.</span><span class="n">fun</span><span class="p">,</span> <span class="n">canonical</span><span class="o">.</span><span class="n">jac</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">513</span>         <span class="n">x0</span><span class="p">,</span> <span class="n">objective</span><span class="o">.</span><span class="n">f</span><span class="p">,</span> <span class="n">objective</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">514</span>         <span class="n">c_ineq0</span><span class="p">,</span> <span class="n">J_ineq0</span><span class="p">,</span> <span class="n">c_eq0</span><span class="p">,</span> <span class="n">J_eq0</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">515</span>         <span class="n">stop_criteria</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">516</span>         <span class="n">canonical</span><span class="o">.</span><span class="n">keep_feasible</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">517</span>         <span class="n">xtol</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">initial_barrier_parameter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">518</span>         <span class="n">initial_barrier_tolerance</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">519</span>         <span class="n">initial_constr_penalty</span><span class="p">,</span> <span class="n">initial_tr_radius</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">520</span>         <span class="n">factorization_method</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">522</span> <span class="c1"># Status 3 occurs when the callback function requests termination,</span>
+<span class="g g-Whitespace">    </span><span class="mi">523</span> <span class="c1"># this is assumed to not be a success.</span>
+<span class="g g-Whitespace">    </span><span class="mi">524</span> <span class="n">result</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">else</span> <span class="kc">False</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:321,</span> in <span class="ni">tr_interior_point</span><span class="nt">(fun, grad, lagr_hess, n_vars, n_ineq, n_eq, constr, jac, x0, fun0, grad0, constr_ineq0, jac_ineq0, constr_eq0, jac_eq0, stop_criteria, enforce_feasibility, xtol, state, initial_barrier_parameter, initial_tolerance, initial_penalty, initial_trust_radius, factorization_method)</span>
+<span class="g g-Whitespace">    </span><span class="mi">318</span> <span class="c1"># Solves a sequence of barrier problems</span>
+<span class="g g-Whitespace">    </span><span class="mi">319</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">320</span>     <span class="c1"># Solve SQP subproblem</span>
+<span class="ne">--&gt; </span><span class="mi">321</span>     <span class="n">z</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">equality_constrained_sqp</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span>         <span class="n">subprob</span><span class="o">.</span><span class="n">function_and_constraints</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">323</span>         <span class="n">subprob</span><span class="o">.</span><span class="n">gradient_and_jacobian</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">324</span>         <span class="n">subprob</span><span class="o">.</span><span class="n">lagrangian_hessian</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">325</span>         <span class="n">z</span><span class="p">,</span> <span class="n">fun0_subprob</span><span class="p">,</span> <span class="n">grad0_subprob</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">326</span>         <span class="n">constr0_subprob</span><span class="p">,</span> <span class="n">jac0_subprob</span><span class="p">,</span> <span class="n">subprob</span><span class="o">.</span><span class="n">stop_criteria</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">327</span>         <span class="n">state</span><span class="p">,</span> <span class="n">initial_penalty</span><span class="p">,</span> <span class="n">trust_radius</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">328</span>         <span class="n">factorization_method</span><span class="p">,</span> <span class="n">trust_lb</span><span class="p">,</span> <span class="n">trust_ub</span><span class="p">,</span> <span class="n">subprob</span><span class="o">.</span><span class="n">scaling</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">329</span>     <span class="k">if</span> <span class="n">subprob</span><span class="o">.</span><span class="n">terminate</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">330</span>         <span class="k">break</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:118,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="n">lb_t</span> <span class="o">=</span> <span class="n">trust_lb</span> <span class="o">-</span> <span class="n">dn</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span> <span class="n">ub_t</span> <span class="o">=</span> <span class="n">trust_ub</span> <span class="o">-</span> <span class="n">dn</span>
+<span class="ne">--&gt; </span><span class="mi">118</span> <span class="n">dt</span><span class="p">,</span> <span class="n">cg_info</span> <span class="o">=</span> <span class="n">projected_cg</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">c_t</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">b_t</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">119</span>                            <span class="n">trust_radius_t</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>                            <span class="n">lb_t</span><span class="p">,</span> <span class="n">ub_t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span> <span class="c1"># Compute update (normal + tangential steps).</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dn</span> <span class="o">+</span> <span class="n">dt</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/qp_subproblem.py:506,</span> in <span class="ni">projected_cg</span><span class="nt">(H, c, Z, Y, b, trust_radius, lb, ub, tol, max_iter, max_infeasible_iter, return_all)</span>
+<span class="g g-Whitespace">    </span><span class="mi">504</span>     <span class="n">allvecs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">505</span> <span class="c1"># Values for the first iteration</span>
+<span class="ne">--&gt; </span><span class="mi">506</span> <span class="n">H_p</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">507</span> <span class="n">rt_g</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># g.T g = r.T Z g = r.T g (ref [1]_ p.1389)</span>
+<span class="g g-Whitespace">    </span><span class="mi">509</span> <span class="c1"># If x &gt; trust-region the problem does not have a solution.</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:418,</span> in <span class="ni">LinearOperator.dot</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">418</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matmat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:232,</span> in <span class="ni">LinearOperator.matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dimension mismatch&#39;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">232</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">asmatrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:530,</span> in <span class="ni">_CustomLinearOperator._matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span> <span class="k">def</span> <span class="nf">_matvec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">530</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__matvec_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:236,</span> in <span class="ni">BarrierSubproblem.lagrangian_hessian.&lt;locals&gt;.matvec</span><span class="nt">(vec)</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="n">vec_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slack</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ineq</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">236</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Hx</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_x</span><span class="p">),</span> <span class="n">S_Hs_S</span><span class="o">*</span><span class="n">vec_s</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">238</span>     <span class="k">return</span> <span class="n">Hx</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_x</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:418,</span> in <span class="ni">LinearOperator.dot</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">418</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matmat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:232,</span> in <span class="ni">LinearOperator.matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dimension mismatch&#39;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">232</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">asmatrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:530,</span> in <span class="ni">_CustomLinearOperator._matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span> <span class="k">def</span> <span class="nf">_matvec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">530</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__matvec_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/minimize_trustregion_constr.py:54,</span> in <span class="ni">LagrangianHessian.__call__.&lt;locals&gt;.matvec</span><span class="nt">(p)</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="k">def</span> <span class="nf">matvec</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">54</span>     <span class="k">return</span> <span class="n">H_objective</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="n">H_constraints</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.15/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:217,</span> in <span class="ni">FullHessianUpdateStrategy.dot</span><span class="nt">(self, p)</span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span> <span class="sd">&quot;&quot;&quot;Compute the product of the internal matrix with the given vector.</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">205</span><span class="sd"> Parameters</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">214</span><span class="sd">     by vector p.</span>
+<span class="g g-Whitespace">    </span><span class="mi">215</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_type</span> <span class="o">==</span> <span class="s1">&#39;hess&#39;</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">217</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">218</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">219</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">results_df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;true_meta_d&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;meta_d&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;n_trials&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dodge</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Meta-d&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Estimated Meta-d&quot;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>Here we can see that there is some variance in the model fits for each value of meta-d’, even when the data were generated from the same underlying parameters. However, they are centred around the generated value, and do not appear to be biased towards being too high or too low.</p>
+</div>
+<div class="highlight-{Exercise notranslate"><div class="highlight"><pre><span></span>Drop the trial numbers (Ntrials) per simulation down to just 100, and re-run the simulation and recovery procedure you just performed. What happens to the recovered values of meta-d with lower numbers of trials per subject? Do you think this may or may not be a problem? Feel free to try other trial numbers if you are interested.
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#calculating-metacognition-the-type-2-roc-curve">
+   Calculating metacognition: the type-2 ROC curve
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-the-parameters">
+     Set up the parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simulate-the-responses-for-low-and-high-confidence-noise">
+     Simulate the responses for low and high confidence noise
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-the-confidence-results-for-the-two-simulations">
+     Plot the confidence results for the two simulations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#now-plot-the-observed-type2-data-in-a-type2roc-curve">
+     Now plot the observed type2 data in a type2ROC curve
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-the-model-meta-d">
+   Fitting the model: meta-d’
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#fitting-the-model-parameter-recovery">
+   Fitting the model: parameter recovery
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     Set up the parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#simulate-the-responses-and-fit-the-model-for-different-levels-of-metacognition">
+     Simulate the responses and fit the model for different levels of metacognition
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+<div class="tocsection sourcelink">
+    <a href="../_sources/examples/2-Fitting the model-MLE.md.txt">
+        <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+</div>
+
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022-2022, Nicolas Legrand.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>
