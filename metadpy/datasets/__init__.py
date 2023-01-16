@@ -1,7 +1,5 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import os.path as op
-
 import pandas as pd
 
 
@@ -18,5 +16,9 @@ def load_dataset(dataset):
     df : :py:class:`pandas.DataFrame`
         Pandas dataframe.
     """
-    path = "https://embodied-computation-group/metadpy/raw/" "master/metadpy/datasets/"
-    return pd.read_csv(op.join(path, "rm.txt"))
+    return pd.read_csv(
+        (
+            "https://raw.githubusercontent.com/embodied-computation-group/metadpy/"
+            "master/metadpy/datasets/rm.txt"
+        )
+    )
