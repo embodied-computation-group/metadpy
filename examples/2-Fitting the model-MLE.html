@@ -404,7 +404,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b5e3d27ce7c43d3b5fe3c1d2d646efe1b8b4a45e5f3c35ca4e118adcaa1c2f26.png" src="../_images/b5e3d27ce7c43d3b5fe3c1d2d646efe1b8b4a45e5f3c35ca4e118adcaa1c2f26.png" />
+<img alt="../_images/c61e87050cad27960adab3c860ec3cbb2f803b60893383e056095bff7684c22f.png" src="../_images/c61e87050cad27960adab3c860ec3cbb2f803b60893383e056095bff7684c22f.png" />
 </div>
 </div>
 </section>
@@ -423,7 +423,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7185bbdae3a992fb890c53e2ee8140847da2f47e2aa7090bdd2b86293005a28f.png" src="../_images/7185bbdae3a992fb890c53e2ee8140847da2f47e2aa7090bdd2b86293005a28f.png" />
+<img alt="../_images/839cfb2769e743075642a03992f0d594100e014de72ea55a4546b9f3dac5ab2b.png" src="../_images/839cfb2769e743075642a03992f0d594100e014de72ea55a4546b9f3dac5ab2b.png" />
 </div>
 </div>
 <div class="admonition hint">
@@ -439,8 +439,8 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7643410275502607
-High confidence AUC: 0.6678747361013371
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7540151621507791
+High confidence AUC: 0.6641709173575218
 </pre></div>
 </div>
 </div>
@@ -525,7 +525,7 @@ High confidence AUC: 0.6678747361013371
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f14c0898f07b7d395504258ed1ae9c695d04e2ba4cf6849c359f0d3652c21bd0.png" src="../_images/f14c0898f07b7d395504258ed1ae9c695d04e2ba4cf6849c359f0d3652c21bd0.png" />
+<img alt="../_images/4502ba13980c46053bed25bf5c066d2343aa89449802396ffdb05cb3595c4ad7.png" src="../_images/4502ba13980c46053bed25bf5c066d2343aa89449802396ffdb05cb3595c4ad7.png" />
 </div>
 </div>
 <p><strong>Now plot the same figures for the model estimation of type 2 performance with low metacognition:</strong></p>
@@ -543,7 +543,7 @@ High confidence AUC: 0.6678747361013371
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e66ade3fc09c3e676299e0919689b39eb3021d00ccba5a810c7649878ea14381.png" src="../_images/e66ade3fc09c3e676299e0919689b39eb3021d00ccba5a810c7649878ea14381.png" />
+<img alt="../_images/59bf284a620672c5741f6d8622e3ab7f1580715dc3aa5ab22149ae58f3806a3a.png" src="../_images/59bf284a620672c5741f6d8622e3ab7f1580715dc3aa5ab22149ae58f3806a3a.png" />
 </div>
 </div>
 <div class="highlight-{hint}You notranslate"><div class="highlight"><pre><span></span>
@@ -717,59 +717,36 @@ Next, run this whole section again to simulate new data from the same parameters
 <span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="c1"># Compute merit function at trial point</span>
 <span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="n">merit_function_next</span> <span class="o">=</span> <span class="n">f_next</span> <span class="o">+</span> <span class="n">penalty</span><span class="o">*</span><span class="n">norm</span><span class="p">(</span><span class="n">b_next</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:82,</span> in <span class="ni">BarrierSubproblem.function_and_constraints</span><span class="nt">(self, z)</span>
-<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slack</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:83,</span> in <span class="ni">BarrierSubproblem.function_and_constraints</span><span class="nt">(self, z)</span>
 <span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="c1"># Compute function and constraints</span>
-<span class="ne">---&gt; </span><span class="mi">82</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">83</span> <span class="n">c_eq</span><span class="p">,</span> <span class="n">c_ineq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">83</span> <span class="n">c_eq</span><span class="p">,</span> <span class="n">c_ineq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="c1"># Return objective function and constraints</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_compute_function</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">c_ineq</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_compute_constr</span><span class="p">(</span><span class="n">c_ineq</span><span class="p">,</span> <span class="n">c_eq</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:266,</span> in <span class="ni">ScalarFunction.fun</span><span class="nt">(self, x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span> <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">265</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">266</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_x_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">267</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_fun</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">268</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/canonical_constraint.py:104,</span> in <span class="ni">CanonicalConstraint.concatenate.&lt;locals&gt;.fun</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="k">if</span> <span class="n">canonical_constraints</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span>         <span class="n">eq_all</span><span class="p">,</span> <span class="n">ineq_all</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">104</span>                 <span class="o">*</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">canonical_constraints</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span>         <span class="n">eq_all</span><span class="p">,</span> <span class="n">ineq_all</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:238,</span> in <span class="ni">ScalarFunction.__init__.&lt;locals&gt;.update_x</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">236</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_updated</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_updated</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">--&gt; </span><span class="mi">238</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_hess</span><span class="p">()</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/canonical_constraint.py:104,</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span>     <span class="k">if</span> <span class="n">canonical_constraints</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span>         <span class="n">eq_all</span><span class="p">,</span> <span class="n">ineq_all</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
+<span class="ne">--&gt; </span><span class="mi">104</span>                 <span class="o">*</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">canonical_constraints</span><span class="p">])</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span>         <span class="n">eq_all</span><span class="p">,</span> <span class="n">ineq_all</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:261,</span> in <span class="ni">ScalarFunction._update_hess</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">259</span> <span class="k">def</span> <span class="nf">_update_hess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span>     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_updated</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">261</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_hess_impl</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">262</span>         <span class="bp">self</span><span class="o">.</span><span class="n">H_updated</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:223,</span> in <span class="ni">ScalarFunction.__init__.&lt;locals&gt;.update_hess</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span> <span class="k">def</span> <span class="nf">update_hess</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">222</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_grad</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">223</span>     <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_prev</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_prev</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:200,</span> in <span class="ni">FullHessianUpdateStrategy.update</span><span class="nt">(self, delta_x, delta_grad)</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span>         <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">*=</span> <span class="n">scale</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span>     <span class="bp">self</span><span class="o">.</span><span class="n">first_iteration</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">--&gt; </span><span class="mi">200</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_implementation</span><span class="p">(</span><span class="n">delta_x</span><span class="p">,</span> <span class="n">delta_grad</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:418,</span> in <span class="ni">SR1._update_implementation</span><span class="nt">(self, delta_x, delta_grad)</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span>     <span class="n">z</span> <span class="o">=</span> <span class="n">delta_x</span>
-<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="c1"># Do some common operations</span>
-<span class="ne">--&gt; </span><span class="mi">418</span> <span class="n">Mw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="n">z_minus_Mw</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="n">Mw</span>
-<span class="g g-Whitespace">    </span><span class="mi">420</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">z_minus_Mw</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:217,</span> in <span class="ni">FullHessianUpdateStrategy.dot</span><span class="nt">(self, p)</span>
-<span class="g g-Whitespace">    </span><span class="mi">203</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Compute the product of the internal matrix with the given vector.</span>
-<span class="g g-Whitespace">    </span><span class="mi">204</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">205</span><span class="sd"> Parameters</span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">214</span><span class="sd">     by vector p.</span>
-<span class="g g-Whitespace">    </span><span class="mi">215</span><span class="sd"> &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">216</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">approx_type</span> <span class="o">==</span> <span class="s1">&#39;hess&#39;</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">217</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">218</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">219</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_symv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/canonical_constraint.py:197,</span> in <span class="ni">CanonicalConstraint._less_to_canonical.&lt;locals&gt;.fun</span><span class="nt">(x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">194</span> <span class="n">n_ineq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">finite_ub</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">finite_ub</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">197</span>     <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span>         <span class="k">return</span> <span class="n">empty_fun</span><span class="p">,</span> <span class="n">cfun</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">ub</span>
+<span class="g g-Whitespace">    </span><span class="mi">200</span>     <span class="k">def</span> <span class="nf">jac</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
