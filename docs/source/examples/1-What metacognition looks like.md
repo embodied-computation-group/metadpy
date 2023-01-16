@@ -123,3 +123,7 @@ You can see in this figure that a higher task performance (d') results in a bigg
 ```{admonition} Exercise 2
 Change any of the parameters above and re-run this section to get an idea as to how each parameter may change the observed confidence scores.
 ```
+
+```{code-cell} ipython3
+
+```

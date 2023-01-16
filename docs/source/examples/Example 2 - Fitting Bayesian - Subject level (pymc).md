@@ -32,7 +32,6 @@ from metadpy.bayesian import hmetad
 +++ {"id": "operating-aerospace"}
 
 ## From response-signal arrays
-### Using pymc
 
 ```{code-cell} ipython3
 :id: worldwide-utility
@@ -83,7 +82,7 @@ az.summary(traces, var_names=["c1", "d1", "meta_d", "cS1", "cS2"])
 
 ```{code-cell} ipython3
 %load_ext watermark
-%watermark -n -u -v -iv -w -p metadpy,pymc
+%watermark -n -u -v -iv -w -p metadpy,pytensor,pymc
 ```
 
 ```{code-cell} ipython3
