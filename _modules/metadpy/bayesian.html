@@ -127,6 +127,20 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../cite.html">
+                        Cite
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../references.html">
                         References
                       </a>
@@ -238,6 +252,20 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../api.html">
                         API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../tutorials.html">
+                        Tutorials
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../cite.html">
+                        Cite
                       </a>
                     </li>
                 
@@ -614,9 +642,9 @@
     <span class="c1"># Group level</span>
     <span class="k">elif</span> <span class="p">(</span><span class="n">within</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">between</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
 
-        <span class="n">pymcData</span> <span class="o">=</span> <span class="n">preprocess_group</span><span class="p">(</span>
-            <span class="n">data</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">stimuli</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">confidence</span><span class="p">,</span> <span class="n">nRatings</span>
-        <span class="p">)</span>
+        <span class="c1"># pymcData = preprocess_group(</span>
+        <span class="c1">#     data, subject, stimuli, accuracy, confidence, nRatings</span>
+        <span class="c1"># )</span>
 
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;Invalid backend provided - This model is not implemented yet.&quot;</span>
@@ -626,9 +654,9 @@
     <span class="c1"># Repeated-measures</span>
     <span class="k">elif</span> <span class="p">(</span><span class="n">within</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">between</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
 
-        <span class="n">pymcData</span> <span class="o">=</span> <span class="n">preprocess_rm1way</span><span class="p">(</span>
-            <span class="n">data</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">within</span><span class="p">,</span> <span class="n">stimuli</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">confidence</span><span class="p">,</span> <span class="n">nRatings</span>
-        <span class="p">)</span>
+        <span class="c1"># pymcData = preprocess_rm1way(</span>
+        <span class="c1">#     data, subject, within, stimuli, accuracy, confidence, nRatings</span>
+        <span class="c1"># )</span>
 
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid backend provided - This model is not implemented yet&quot;</span><span class="p">)</span>
 
@@ -747,190 +775,191 @@
     <span class="k">return</span> <span class="n">data</span></div>
 
 
-<div class="viewcode-block" id="preprocess_group"><a class="viewcode-back" href="../../generated/bayesian/metadpy.bayesian.preprocess_group.html#metadpy.bayesian.preprocess_group">[docs]</a><span class="k">def</span> <span class="nf">preprocess_group</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-    <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">stimuli</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">accuracy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">confidence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preprocess group data.</span>
+<span class="c1"># TODO: when implementing group level fitting, the following wrapper will be usefull.</span>
+<span class="c1"># def preprocess_group(</span>
+<span class="c1">#     data: pd.DataFrame,</span>
+<span class="c1">#     subject: str,</span>
+<span class="c1">#     stimuli: str,</span>
+<span class="c1">#     accuracy: str,</span>
+<span class="c1">#     confidence: str,</span>
+<span class="c1">#     nRatings: int,</span>
+<span class="c1"># ) -&gt; Dict:</span>
+<span class="c1">#     &quot;&quot;&quot;Preprocess group data.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    data : :py:class:`pandas.DataFrame` or None</span>
-<span class="sd">        Dataframe. Note that this function can also directly be used as a</span>
-<span class="sd">        Pandas method, in which case this argument is no longer needed.</span>
-<span class="sd">    subject : string or None</span>
-<span class="sd">        Name of column containing the subject identifier (only required if a</span>
-<span class="sd">        within-subject or a between-subject factor is provided).</span>
-<span class="sd">    stimuli : string or None</span>
-<span class="sd">        Name of the column containing the stimuli.</span>
-<span class="sd">    accuracy : string or None</span>
-<span class="sd">        Name of the columns containing the accuracy.</span>
-<span class="sd">    confidence : string or None</span>
-<span class="sd">        Name of the column containing the confidence ratings.</span>
-<span class="sd">    nRatings : int or None</span>
-<span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
-<span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
-<span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     data : :py:class:`pandas.DataFrame` or None</span>
+<span class="c1">#         Dataframe. Note that this function can also directly be used as a</span>
+<span class="c1">#         Pandas method, in which case this argument is no longer needed.</span>
+<span class="c1">#     subject : string or None</span>
+<span class="c1">#         Name of column containing the subject identifier (only required if a</span>
+<span class="c1">#         within-subject or a between-subject factor is provided).</span>
+<span class="c1">#     stimuli : string or None</span>
+<span class="c1">#         Name of the column containing the stimuli.</span>
+<span class="c1">#     accuracy : string or None</span>
+<span class="c1">#         Name of the columns containing the accuracy.</span>
+<span class="c1">#     confidence : string or None</span>
+<span class="c1">#         Name of the column containing the confidence ratings.</span>
+<span class="c1">#     nRatings : int or None</span>
+<span class="c1">#         Number of discrete ratings. If a continuous rating scale was used, and</span>
+<span class="c1">#         the number of unique ratings does not match `nRatings`, will convert to</span>
+<span class="c1">#         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
 
-<span class="sd">    Return</span>
-<span class="sd">    ------</span>
-<span class="sd">    pymcData : Dict</span>
+<span class="c1">#     Return</span>
+<span class="c1">#     ------</span>
+<span class="c1">#     pymcData : Dict</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pymcData</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;d1&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;c1&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;nSubj&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
-        <span class="s2">&quot;subID&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;hits&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;falsealarms&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;nRatings&quot;</span><span class="p">:</span> <span class="n">nRatings</span><span class="p">,</span>
-        <span class="s2">&quot;Tol&quot;</span><span class="p">:</span> <span class="mf">1e-05</span><span class="p">,</span>
-        <span class="s2">&quot;cr&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="p">[],</span>
-    <span class="p">}</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     pymcData = {</span>
+<span class="c1">#         &quot;d1&quot;: [],</span>
+<span class="c1">#         &quot;c1&quot;: [],</span>
+<span class="c1">#         &quot;nSubj&quot;: data[subject].nunique(),</span>
+<span class="c1">#         &quot;subID&quot;: np.arange(data[subject].nunique(), dtype=&quot;int&quot;),</span>
+<span class="c1">#         &quot;hits&quot;: [],</span>
+<span class="c1">#         &quot;falsealarms&quot;: [],</span>
+<span class="c1">#         &quot;s&quot;: [],</span>
+<span class="c1">#         &quot;n&quot;: [],</span>
+<span class="c1">#         &quot;counts&quot;: [],</span>
+<span class="c1">#         &quot;nRatings&quot;: nRatings,</span>
+<span class="c1">#         &quot;Tol&quot;: 1e-05,</span>
+<span class="c1">#         &quot;cr&quot;: [],</span>
+<span class="c1">#         &quot;m&quot;: [],</span>
+<span class="c1">#     }</span>
 
-    <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
-        <span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span> <span class="o">=</span> <span class="n">trials2counts</span><span class="p">(</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">==</span> <span class="n">sub</span><span class="p">],</span>
-            <span class="n">stimuli</span><span class="o">=</span><span class="n">stimuli</span><span class="p">,</span>
-            <span class="n">accuracy</span><span class="o">=</span><span class="n">accuracy</span><span class="p">,</span>
-            <span class="n">confidence</span><span class="o">=</span><span class="n">confidence</span><span class="p">,</span>
-            <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span>
-        <span class="p">)</span>
+<span class="c1">#     for sub in data[subject].unique():</span>
+<span class="c1">#         nR_S1, nR_S2 = trials2counts(</span>
+<span class="c1">#             data=data[data[subject] == sub],</span>
+<span class="c1">#             stimuli=stimuli,</span>
+<span class="c1">#             accuracy=accuracy,</span>
+<span class="c1">#             confidence=confidence,</span>
+<span class="c1">#             nRatings=nRatings,</span>
+<span class="c1">#         )</span>
 
-        <span class="n">this_data</span> <span class="o">=</span> <span class="n">extractParameters</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="p">)</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;CR&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">])</span>
-        <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;FA&quot;</span><span class="p">])</span>
+<span class="c1">#         this_data = extractParameters(nR_S1, nR_S2)</span>
+<span class="c1">#         pymcData[&quot;d1&quot;].append(this_data[&quot;d1&quot;])</span>
+<span class="c1">#         pymcData[&quot;c1&quot;].append(this_data[&quot;c1&quot;])</span>
+<span class="c1">#         pymcData[&quot;s&quot;].append(this_data[&quot;S&quot;])</span>
+<span class="c1">#         pymcData[&quot;n&quot;].append(this_data[&quot;N&quot;])</span>
+<span class="c1">#         pymcData[&quot;m&quot;].append(this_data[&quot;M&quot;])</span>
+<span class="c1">#         pymcData[&quot;cr&quot;].append(this_data[&quot;CR&quot;])</span>
+<span class="c1">#         pymcData[&quot;counts&quot;].append(this_data[&quot;counts&quot;])</span>
+<span class="c1">#         pymcData[&quot;hits&quot;].append(this_data[&quot;H&quot;])</span>
+<span class="c1">#         pymcData[&quot;falsealarms&quot;].append(this_data[&quot;FA&quot;])</span>
 
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;subID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+<span class="c1">#     pymcData[&quot;d1&quot;] = np.array(pymcData[&quot;d1&quot;], dtype=&quot;float&quot;)</span>
+<span class="c1">#     pymcData[&quot;c1&quot;] = np.array(pymcData[&quot;c1&quot;], dtype=&quot;float&quot;)</span>
+<span class="c1">#     pymcData[&quot;s&quot;] = np.array(pymcData[&quot;s&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;n&quot;] = np.array(pymcData[&quot;n&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;m&quot;] = np.array(pymcData[&quot;m&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;cr&quot;] = np.array(pymcData[&quot;cr&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;counts&quot;] = np.array(pymcData[&quot;counts&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;hits&quot;] = np.array(pymcData[&quot;hits&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;falsealarms&quot;] = np.array(pymcData[&quot;falsealarms&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;nSubj&quot;] = data[subject].nunique()</span>
+<span class="c1">#     pymcData[&quot;subID&quot;] = np.arange(pymcData[&quot;nSubj&quot;], dtype=&quot;int&quot;)</span>
 
-    <span class="k">return</span> <span class="n">pymcData</span></div>
+<span class="c1">#     return pymcData</span>
 
 
-<div class="viewcode-block" id="preprocess_rm1way"><a class="viewcode-back" href="../../generated/bayesian/metadpy.bayesian.preprocess_rm1way.html#metadpy.bayesian.preprocess_rm1way">[docs]</a><span class="k">def</span> <span class="nf">preprocess_rm1way</span><span class="p">(</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
-    <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">stimuli</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">within</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">accuracy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">confidence</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Preprocess repeated measures data.</span>
+<span class="c1"># def preprocess_rm1way(</span>
+<span class="c1">#     data: pd.DataFrame,</span>
+<span class="c1">#     subject: str,</span>
+<span class="c1">#     stimuli: str,</span>
+<span class="c1">#     within: str,</span>
+<span class="c1">#     accuracy: str,</span>
+<span class="c1">#     confidence: str,</span>
+<span class="c1">#     nRatings: int,</span>
+<span class="c1"># ) -&gt; Dict:</span>
+<span class="c1">#     &quot;&quot;&quot;Preprocess repeated measures data.</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    data : :py:class:`pandas.DataFrame`</span>
-<span class="sd">        Dataframe. Note that this function can also directly be used as a</span>
-<span class="sd">        Pandas method, in which case this argument is no longer needed.</span>
-<span class="sd">    subject : string</span>
-<span class="sd">        Name of column containing the subject identifier (only required if a</span>
-<span class="sd">        within-subject or a between-subject factor is provided).</span>
-<span class="sd">    stimuli : string</span>
-<span class="sd">        Name of the column containing the stimuli.</span>
-<span class="sd">    within : string</span>
-<span class="sd">        Name of column containing the within factor (condition comparison).</span>
-<span class="sd">    accuracy : string</span>
-<span class="sd">        Name of the columns containing the accuracy.</span>
-<span class="sd">    confidence : string</span>
-<span class="sd">        Name of the column containing the confidence ratings.</span>
-<span class="sd">    nRatings : int</span>
-<span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
-<span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
-<span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
+<span class="c1">#     Parameters</span>
+<span class="c1">#     ----------</span>
+<span class="c1">#     data : :py:class:`pandas.DataFrame`</span>
+<span class="c1">#         Dataframe. Note that this function can also directly be used as a</span>
+<span class="c1">#         Pandas method, in which case this argument is no longer needed.</span>
+<span class="c1">#     subject : string</span>
+<span class="c1">#         Name of column containing the subject identifier (only required if a</span>
+<span class="c1">#         within-subject or a between-subject factor is provided).</span>
+<span class="c1">#     stimuli : string</span>
+<span class="c1">#         Name of the column containing the stimuli.</span>
+<span class="c1">#     within : string</span>
+<span class="c1">#         Name of column containing the within factor (condition comparison).</span>
+<span class="c1">#     accuracy : string</span>
+<span class="c1">#         Name of the columns containing the accuracy.</span>
+<span class="c1">#     confidence : string</span>
+<span class="c1">#         Name of the column containing the confidence ratings.</span>
+<span class="c1">#     nRatings : int</span>
+<span class="c1">#         Number of discrete ratings. If a continuous rating scale was used, and</span>
+<span class="c1">#         the number of unique ratings does not match `nRatings`, will convert to</span>
+<span class="c1">#         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
 
-<span class="sd">    Return</span>
-<span class="sd">    ------</span>
-<span class="sd">    pymcData : Dict</span>
+<span class="c1">#     Return</span>
+<span class="c1">#     ------</span>
+<span class="c1">#     pymcData : Dict</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">pymcData</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;nSubj&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
-        <span class="s2">&quot;subID&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;nCond&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">(),</span>
-        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;hits&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;falsealarms&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;nRatings&quot;</span><span class="p">:</span> <span class="n">nRatings</span><span class="p">,</span>
-        <span class="s2">&quot;Tol&quot;</span><span class="p">:</span> <span class="mf">1e-05</span><span class="p">,</span>
-        <span class="s2">&quot;cr&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="p">[],</span>
-    <span class="p">}</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nRatings&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;subID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nSubj&quot;</span><span class="p">],</span> <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;nCond&quot;</span><span class="p">]))</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     pymcData = {</span>
+<span class="c1">#         &quot;nSubj&quot;: data[subject].nunique(),</span>
+<span class="c1">#         &quot;subID&quot;: [],</span>
+<span class="c1">#         &quot;nCond&quot;: data[within].nunique(),</span>
+<span class="c1">#         &quot;condition&quot;: [],</span>
+<span class="c1">#         &quot;hits&quot;: [],</span>
+<span class="c1">#         &quot;falsealarms&quot;: [],</span>
+<span class="c1">#         &quot;s&quot;: [],</span>
+<span class="c1">#         &quot;n&quot;: [],</span>
+<span class="c1">#         &quot;nRatings&quot;: nRatings,</span>
+<span class="c1">#         &quot;Tol&quot;: 1e-05,</span>
+<span class="c1">#         &quot;cr&quot;: [],</span>
+<span class="c1">#         &quot;m&quot;: [],</span>
+<span class="c1">#     }</span>
+<span class="c1">#     pymcData[&quot;counts&quot;] = np.zeros(</span>
+<span class="c1">#         (pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;], pymcData[&quot;nRatings&quot;] * 4)</span>
+<span class="c1">#     )</span>
+<span class="c1">#     pymcData[&quot;hits&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;falsealarms&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;s&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;n&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;m&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;cr&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;condition&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;subID&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;c1&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
+<span class="c1">#     pymcData[&quot;d1&quot;] = np.zeros((pymcData[&quot;nSubj&quot;], pymcData[&quot;nCond&quot;]))</span>
 
-    <span class="k">for</span> <span class="n">nSub</span><span class="p">,</span> <span class="n">sub</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
-        <span class="k">for</span> <span class="n">nCond</span><span class="p">,</span> <span class="n">cond</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
-            <span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span> <span class="o">=</span> <span class="n">trials2counts</span><span class="p">(</span>
-                <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[(</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">==</span> <span class="n">sub</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span> <span class="o">==</span> <span class="n">cond</span><span class="p">)],</span>
-                <span class="n">stimuli</span><span class="o">=</span><span class="n">stimuli</span><span class="p">,</span>
-                <span class="n">accuracy</span><span class="o">=</span><span class="n">accuracy</span><span class="p">,</span>
-                <span class="n">confidence</span><span class="o">=</span><span class="n">confidence</span><span class="p">,</span>
-                <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span>
-            <span class="p">)</span>
+<span class="c1">#     for nSub, sub in enumerate(data[subject].unique()):</span>
+<span class="c1">#         for nCond, cond in enumerate(data[within].unique()):</span>
+<span class="c1">#             nR_S1, nR_S2 = trials2counts(</span>
+<span class="c1">#                 data=data[(data[subject] == sub) &amp; (data[within] == cond)],</span>
+<span class="c1">#                 stimuli=stimuli,</span>
+<span class="c1">#                 accuracy=accuracy,</span>
+<span class="c1">#                 confidence=confidence,</span>
+<span class="c1">#                 nRatings=nRatings,</span>
+<span class="c1">#             )</span>
 
-            <span class="n">this_data</span> <span class="o">=</span> <span class="n">extractParameters</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="p">)</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;subID&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">nSub</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCond</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;S&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;M&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;CR&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;FA&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;c1&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">]</span>
-            <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">][</span><span class="n">nSub</span><span class="p">,</span> <span class="n">nCond</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">this_data</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span>
+<span class="c1">#             this_data = extractParameters(nR_S1, nR_S2)</span>
+<span class="c1">#             pymcData[&quot;subID&quot;][nSub, nCond] = nSub</span>
+<span class="c1">#             pymcData[&quot;condition&quot;][nSub, nCond] = nCond</span>
+<span class="c1">#             pymcData[&quot;s&quot;][nSub, nCond] = this_data[&quot;S&quot;]</span>
+<span class="c1">#             pymcData[&quot;n&quot;][nSub, nCond] = this_data[&quot;N&quot;]</span>
+<span class="c1">#             pymcData[&quot;m&quot;][nSub, nCond] = this_data[&quot;M&quot;]</span>
+<span class="c1">#             pymcData[&quot;cr&quot;][nSub, nCond] = this_data[&quot;CR&quot;]</span>
+<span class="c1">#             pymcData[&quot;hits&quot;][nSub, nCond] = this_data[&quot;H&quot;]</span>
+<span class="c1">#             pymcData[&quot;falsealarms&quot;][nSub, nCond] = this_data[&quot;FA&quot;]</span>
+<span class="c1">#             pymcData[&quot;c1&quot;][nSub, nCond] = this_data[&quot;c1&quot;]</span>
+<span class="c1">#             pymcData[&quot;d1&quot;][nSub, nCond] = this_data[&quot;d1&quot;]</span>
+<span class="c1">#             pymcData[&quot;counts&quot;][nSub, nCond, :] = this_data[&quot;counts&quot;]</span>
 
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;subID&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;subID&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;n&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;m&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;cr&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;hits&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
-    <span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pymcData</span><span class="p">[</span><span class="s2">&quot;falsealarms&quot;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+<span class="c1">#     pymcData[&quot;subID&quot;] = np.array(pymcData[&quot;subID&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;condition&quot;] = np.array(pymcData[&quot;condition&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;s&quot;] = np.array(pymcData[&quot;s&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;n&quot;] = np.array(pymcData[&quot;n&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;m&quot;] = np.array(pymcData[&quot;m&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;cr&quot;] = np.array(pymcData[&quot;cr&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;counts&quot;] = np.array(pymcData[&quot;counts&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;hits&quot;] = np.array(pymcData[&quot;hits&quot;], dtype=&quot;int&quot;)</span>
+<span class="c1">#     pymcData[&quot;falsealarms&quot;] = np.array(pymcData[&quot;falsealarms&quot;], dtype=&quot;int&quot;)</span>
 
-    <span class="k">return</span> <span class="n">pymcData</span></div>
+<span class="c1">#     return pymcData</span>
 </pre></div>
 
             </article>
