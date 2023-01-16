@@ -1,0 +1,6 @@
+﻿metadpy.bayesian.preprocess\_group
+==================================
+
+.. currentmodule:: metadpy.bayesian
+
+.. autofunction:: preprocess_group

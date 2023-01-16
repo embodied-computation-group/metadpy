@@ -6,25 +6,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Single subject &#8212; metadPy 0.0.1 documentation</title>
-  <script>
+    <title>Single subject &#8212; metadpy 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=1e1de1a1873e13ef5536" rel="stylesheet">
+  <link href="../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
 
   
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/6.1.2/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -34,7 +34,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536">
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -50,6 +51,10 @@
   
   
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   
   <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
@@ -98,7 +103,7 @@
     <img src="../_static/logo.svg" class="logo__image only-dark" alt="Logo image">
   
   
-    <p class="title logo__title">metadPy</p>
+    <p class="title logo__title">metadpy</p>
   
 </a>
     
@@ -115,18 +120,18 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="../api.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
                         API
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../references.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../references.html">
                         References
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -135,19 +140,21 @@
     </div>
 
     <div id="navbar-end">
-      <div class="navbar-end-item navbar-end__search-button-container">
-        
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-      </div>
+        </div>
+      
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
       </div>
       
       <div class="navbar-end-item">
@@ -160,7 +167,7 @@
           
           
           
-          <a href="https://github.com/embodied-computation-group/metadPy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
         <li class="nav-item">
@@ -193,11 +200,13 @@
 
 
   
-  <div class="search-button-container--mobile">
-<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" data-toggle="tooltip">
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
   <i class="fa-solid fa-magnifying-glass"></i>
 </button>
-  </div>
+    </div>
+  
 
   
   <label class="sidebar-toggle secondary-toggle" for="__secondary">
@@ -227,18 +236,18 @@
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                <li class="nav-item">
-                    <a class="nav-link" href="../api.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api.html">
                         API
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../references.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../references.html">
                         References
-                    </a>
-                </li>
+                      </a>
+                    </li>
                 
     </ul>
 </nav>
@@ -252,11 +261,11 @@
     <div class="sidebar-header-items__end">
       
       <div class="navbar-end-item">
-        <span class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" data-toggle="tooltip">
-    <a class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></a>
-    <a class="theme-switch" data-mode="dark"><i class="fa-regular fa-moon"></i></a>
-    <a class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></a>
-</span>
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
       </div>
       
       <div class="navbar-end-item">
@@ -269,7 +278,7 @@
           
           
           
-          <a href="https://github.com/embodied-computation-group/metadPy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
         <li class="nav-item">
@@ -309,8 +318,11 @@
     </div>
   </div>
 
+  
+  <div id="rtd-footer-container"></div>
+
       </div>
-      <main class="bd-main">
+      <main id="main-content" class="bd-main">
         
         
         <div class="bd-content">
@@ -332,7 +344,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">metadPy.bayesian</span> <span class="kn">import</span> <span class="n">hmetad</span>
+<span class="kn">from</span> <span class="nn">metadpy.bayesian</span> <span class="kn">import</span> <span class="n">hmetad</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s2">&quot;talk&quot;</span><span class="p">)</span>
 </pre></div>
@@ -351,10 +363,387 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <section id="using-metadpy">
-<h2>Using metadPy<a class="headerlink" href="#using-metadpy" title="Permalink to this headline">#</a></h2>
+<h2>Using metadpy<a class="headerlink" href="#using-metadpy" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="p">,</span> <span class="n">traces</span> <span class="o">=</span> <span class="n">hmetad</span><span class="p">(</span><span class="n">nR_S1</span><span class="o">=</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="o">=</span><span class="n">nR_S2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">model</span><span class="p">,</span> <span class="n">traces</span> <span class="o">=</span> <span class="n">hmetad</span><span class="p">(</span><span class="n">nR_S1</span><span class="o">=</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="o">=</span><span class="n">nR_S2</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/metadpy/bayesian.py:269,</span> in <span class="ni">hmetad</span><span class="nt">(data, nR_S1, nR_S2, stimuli, accuracy, confidence, nRatings, within, between, subject, nbins, padding, padAmount, sample_model, output, num_samples, num_chains, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">265</span>     <span class="n">pymcData</span> <span class="o">=</span> <span class="n">extractParameters</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">267</span>     <span class="kn">from</span> <span class="nn">subject_level_pymc</span> <span class="kn">import</span> <span class="n">hmetad_subjectLevel</span>
+<span class="ne">--&gt; </span><span class="mi">269</span>     <span class="n">model_output</span> <span class="o">=</span> <span class="n">hmetad_subjectLevel</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">270</span>         <span class="n">pymcData</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">271</span>         <span class="n">sample_model</span><span class="o">=</span><span class="n">sample_model</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">272</span>         <span class="n">num_chains</span><span class="o">=</span><span class="n">num_chains</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">273</span>         <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">274</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span> <span class="c1">#############</span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span> <span class="c1"># Group level</span>
+<span class="g g-Whitespace">    </span><span class="mi">278</span> <span class="k">elif</span> <span class="p">(</span><span class="n">within</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">between</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/metadpy/models/subject_level_pymc.py:195,</span> in <span class="ni">hmetad_subjectLevel</span><span class="nt">(data, sample_model, num_samples, num_chains, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span> <span class="n">Multinomial</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span>     <span class="s2">&quot;H_counts&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">188</span>     <span class="n">n</span><span class="o">=</span><span class="n">H</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">191</span>     <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">][</span><span class="n">nRatings</span> <span class="o">*</span> <span class="mi">3</span> <span class="p">:</span> <span class="n">nRatings</span> <span class="o">*</span> <span class="mi">4</span><span class="p">],</span>
+<span class="g g-Whitespace">    </span><span class="mi">192</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">194</span> <span class="k">if</span> <span class="n">sample_model</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">195</span>     <span class="n">trace</span> <span class="o">=</span> <span class="n">sample</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">196</span>         <span class="n">return_inferencedata</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span>         <span class="n">chains</span><span class="o">=</span><span class="n">num_chains</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span>         <span class="n">draws</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">199</span>         <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">200</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">202</span>     <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">trace</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/sampling/mcmc.py:447,</span> in <span class="ni">sample</span><span class="nt">(draws, step, init, n_init, initvals, trace, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, keep_warning_stat, idata_kwargs, mp_ctx, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">444</span>         <span class="n">auto_nuts_init</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">    </span><span class="mi">446</span> <span class="n">initial_points</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">--&gt; </span><span class="mi">447</span> <span class="n">step</span> <span class="o">=</span> <span class="n">assign_step_methods</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">STEP_METHODS</span><span class="p">,</span> <span class="n">step_kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">449</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span>     <span class="n">step</span> <span class="o">=</span> <span class="n">CompoundStep</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/sampling/mcmc.py:189,</span> in <span class="ni">assign_step_methods</span><span class="nt">(model, step, methods, step_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">181</span>         <span class="n">selected</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">182</span>             <span class="n">methods</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span>             <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">method</span><span class="p">,</span> <span class="n">var</span><span class="o">=</span><span class="n">rv_var</span><span class="p">,</span> <span class="n">has_gradient</span><span class="o">=</span><span class="n">has_gradient</span><span class="p">:</span> <span class="n">method</span><span class="o">.</span><span class="n">_competence</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">184</span>                 <span class="n">var</span><span class="p">,</span> <span class="n">has_gradient</span>
+<span class="g g-Whitespace">    </span><span class="mi">185</span>             <span class="p">),</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span>         <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span>         <span class="n">selected_steps</span><span class="p">[</span><span class="n">selected</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">189</span> <span class="k">return</span> <span class="n">instantiate_steppers</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">selected_steps</span><span class="p">,</span> <span class="n">step_kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/sampling/mcmc.py:107,</span> in <span class="ni">instantiate_steppers</span><span class="nt">(model, steps, selected_steps, step_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>         <span class="n">args</span> <span class="o">=</span> <span class="n">step_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">step_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">{})</span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span>         <span class="n">used_keys</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">step_class</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">107</span>         <span class="n">step</span> <span class="o">=</span> <span class="n">step_class</span><span class="p">(</span><span class="nb">vars</span><span class="o">=</span><span class="nb">vars</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">args</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span>         <span class="n">steps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span> <span class="n">unused_args</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">step_kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">used_keys</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/step_methods/hmc/nuts.py:182,</span> in <span class="ni">NUTS.__init__</span><span class="nt">(self, vars, max_treedepth, early_max_treedepth, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span> <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_treedepth</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">early_max_treedepth</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span><span class="w">     </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Set up the No-U-Turn sampler.</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span><span class="sd">     Parameters</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">180</span><span class="sd">     `pm.sample` to the desired number of tuning steps.</span>
+<span class="g g-Whitespace">    </span><span class="mi">181</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">182</span>     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">184</span>     <span class="bp">self</span><span class="o">.</span><span class="n">max_treedepth</span> <span class="o">=</span> <span class="n">max_treedepth</span>
+<span class="g g-Whitespace">    </span><span class="mi">185</span>     <span class="bp">self</span><span class="o">.</span><span class="n">early_max_treedepth</span> <span class="o">=</span> <span class="n">early_max_treedepth</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/step_methods/hmc/base_hmc.py:109,</span> in <span class="ni">BaseHMC.__init__</span><span class="nt">(self, vars, scaling, step_scale, is_cov, model, blocked, potential, dtype, Emax, target_accept, gamma, k, t0, adapt_step_size, step_rand, **pytensor_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span>     <span class="nb">vars</span> <span class="o">=</span> <span class="n">get_value_vars_from_user_vars</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">109</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">blocked</span><span class="o">=</span><span class="n">blocked</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">pytensor_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span> <span class="bp">self</span><span class="o">.</span><span class="n">adapt_step_size</span> <span class="o">=</span> <span class="n">adapt_step_size</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span> <span class="bp">self</span><span class="o">.</span><span class="n">Emax</span> <span class="o">=</span> <span class="n">Emax</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/step_methods/arraystep.py:263,</span> in <span class="ni">GradientSharedStep.__init__</span><span class="nt">(self, vars, model, blocked, dtype, logp_dlogp_func, **pytensor_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="n">model</span> <span class="o">=</span> <span class="n">modelcontext</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span> <span class="k">if</span> <span class="n">logp_dlogp_func</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">263</span>     <span class="n">func</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">logp_dlogp_function</span><span class="p">(</span><span class="nb">vars</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="o">**</span><span class="n">pytensor_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">264</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">265</span>     <span class="n">func</span> <span class="o">=</span> <span class="n">logp_dlogp_func</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/model.py:648,</span> in <span class="ni">Model.logp_dlogp_function</span><span class="nt">(self, grad_vars, tempered, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">642</span> <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_point</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">643</span> <span class="n">extra_vars_and_values</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">644</span>     <span class="n">var</span><span class="p">:</span> <span class="n">ip</span><span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">645</span>     <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_vars</span>
+<span class="g g-Whitespace">    </span><span class="mi">646</span>     <span class="k">if</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">input_vars</span> <span class="ow">and</span> <span class="n">var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">grad_vars</span>
+<span class="g g-Whitespace">    </span><span class="mi">647</span> <span class="p">}</span>
+<span class="ne">--&gt; </span><span class="mi">648</span> <span class="k">return</span> <span class="n">ValueGradFunction</span><span class="p">(</span><span class="n">costs</span><span class="p">,</span> <span class="n">grad_vars</span><span class="p">,</span> <span class="n">extra_vars_and_values</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/model.py:389,</span> in <span class="ni">ValueGradFunction.__init__</span><span class="nt">(self, costs, grad_vars, extra_vars_and_values, dtype, casting, compute_grads, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">385</span>     <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">cost</span><span class="p">]</span>
+<span class="g g-Whitespace">    </span><span class="mi">387</span> <span class="n">inputs</span> <span class="o">=</span> <span class="n">grad_vars</span>
+<span class="ne">--&gt; </span><span class="mi">389</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pytensor_function</span> <span class="o">=</span> <span class="n">compile_pymc</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">givens</span><span class="o">=</span><span class="n">givens</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pymc/pytensorf.py:1121,</span> in <span class="ni">compile_pymc</span><span class="nt">(inputs, outputs, random_seed, mode, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1119</span> <span class="n">opt_qry</span> <span class="o">=</span> <span class="n">mode</span><span class="o">.</span><span class="n">provided_optimizer</span><span class="o">.</span><span class="n">including</span><span class="p">(</span><span class="s2">&quot;random_make_inplace&quot;</span><span class="p">,</span> <span class="n">check_parameter_opt</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1120</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">Mode</span><span class="p">(</span><span class="n">linker</span><span class="o">=</span><span class="n">mode</span><span class="o">.</span><span class="n">linker</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">opt_qry</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1121</span> <span class="n">pytensor_function</span> <span class="o">=</span> <span class="n">pytensor</span><span class="o">.</span><span class="n">function</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1122</span>     <span class="n">inputs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1123</span>     <span class="n">outputs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1124</span>     <span class="n">updates</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">rng_updates</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;updates&quot;</span><span class="p">,</span> <span class="p">{})},</span>
+<span class="g g-Whitespace">   </span><span class="mi">1125</span>     <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1126</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1127</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1128</span> <span class="k">return</span> <span class="n">pytensor_function</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/compile/function/__init__.py:315,</span> in <span class="ni">function</span><span class="nt">(inputs, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input)</span>
+<span class="g g-Whitespace">    </span><span class="mi">309</span>     <span class="n">fn</span> <span class="o">=</span> <span class="n">orig_function</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">310</span>         <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">accept_inplace</span><span class="o">=</span><span class="n">accept_inplace</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span>
+<span class="g g-Whitespace">    </span><span class="mi">311</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">312</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">313</span>     <span class="c1"># note: pfunc will also call orig_function -- orig_function is</span>
+<span class="g g-Whitespace">    </span><span class="mi">314</span>     <span class="c1">#      a choke point that all compilation must pass through</span>
+<span class="ne">--&gt; </span><span class="mi">315</span>     <span class="n">fn</span> <span class="o">=</span> <span class="n">pfunc</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">316</span>         <span class="n">params</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">317</span>         <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">318</span>         <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">319</span>         <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">320</span>         <span class="n">givens</span><span class="o">=</span><span class="n">givens</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">321</span>         <span class="n">no_default_updates</span><span class="o">=</span><span class="n">no_default_updates</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span>         <span class="n">accept_inplace</span><span class="o">=</span><span class="n">accept_inplace</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">323</span>         <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">324</span>         <span class="n">rebuild_strict</span><span class="o">=</span><span class="n">rebuild_strict</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">325</span>         <span class="n">allow_input_downcast</span><span class="o">=</span><span class="n">allow_input_downcast</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">326</span>         <span class="n">on_unused_input</span><span class="o">=</span><span class="n">on_unused_input</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">327</span>         <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">328</span>         <span class="n">output_keys</span><span class="o">=</span><span class="n">output_keys</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">329</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">330</span> <span class="k">return</span> <span class="n">fn</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/compile/function/pfunc.py:367,</span> in <span class="ni">pfunc</span><span class="nt">(params, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input, output_keys, fgraph)</span>
+<span class="g g-Whitespace">    </span><span class="mi">353</span>     <span class="n">profile</span> <span class="o">=</span> <span class="n">ProfileStats</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="n">profile</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">355</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">cloned_outputs</span> <span class="o">=</span> <span class="n">construct_pfunc_ins_and_outs</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">356</span>     <span class="n">params</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">357</span>     <span class="n">outputs</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">364</span>     <span class="n">fgraph</span><span class="o">=</span><span class="n">fgraph</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">365</span> <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">367</span> <span class="k">return</span> <span class="n">orig_function</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">368</span>     <span class="n">inputs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span>     <span class="n">cloned_outputs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">370</span>     <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">371</span>     <span class="n">accept_inplace</span><span class="o">=</span><span class="n">accept_inplace</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">372</span>     <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">373</span>     <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">374</span>     <span class="n">on_unused_input</span><span class="o">=</span><span class="n">on_unused_input</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">375</span>     <span class="n">output_keys</span><span class="o">=</span><span class="n">output_keys</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">376</span>     <span class="n">fgraph</span><span class="o">=</span><span class="n">fgraph</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">377</span> <span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/compile/function/types.py:1754,</span> in <span class="ni">orig_function</span><span class="nt">(inputs, outputs, mode, accept_inplace, name, profile, on_unused_input, output_keys, fgraph)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1752</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1753</span>     <span class="n">Maker</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="s2">&quot;function_maker&quot;</span><span class="p">,</span> <span class="n">FunctionMaker</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1754</span>     <span class="n">m</span> <span class="o">=</span> <span class="n">Maker</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1755</span>         <span class="n">inputs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1756</span>         <span class="n">outputs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1757</span>         <span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1758</span>         <span class="n">accept_inplace</span><span class="o">=</span><span class="n">accept_inplace</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1759</span>         <span class="n">profile</span><span class="o">=</span><span class="n">profile</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1760</span>         <span class="n">on_unused_input</span><span class="o">=</span><span class="n">on_unused_input</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1761</span>         <span class="n">output_keys</span><span class="o">=</span><span class="n">output_keys</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1762</span>         <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1763</span>         <span class="n">fgraph</span><span class="o">=</span><span class="n">fgraph</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1764</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1765</span>     <span class="k">with</span> <span class="n">config</span><span class="o">.</span><span class="n">change_flags</span><span class="p">(</span><span class="n">compute_test_value</span><span class="o">=</span><span class="s2">&quot;off&quot;</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1766</span>         <span class="n">fn</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">defaults</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/compile/function/types.py:1524,</span> in <span class="ni">FunctionMaker.__init__</span><span class="nt">(self, inputs, outputs, mode, accept_inplace, function_builder, profile, on_unused_input, fgraph, output_keys, name, no_fgraph_prep)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1521</span> <span class="bp">self</span><span class="o">.</span><span class="n">fgraph</span> <span class="o">=</span> <span class="n">fgraph</span>
+<span class="g g-Whitespace">   </span><span class="mi">1523</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">no_fgraph_prep</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1524</span>     <span class="bp">self</span><span class="o">.</span><span class="n">prepare_fgraph</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">found_updates</span><span class="p">,</span> <span class="n">fgraph</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">profile</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1526</span> <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fgraph</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span> <span class="o">+</span> <span class="n">found_updates</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1528</span> <span class="c1"># The &#39;no_borrow&#39; outputs are the ones for which that we can&#39;t</span>
+<span class="g g-Whitespace">   </span><span class="mi">1529</span> <span class="c1"># return the internal storage pointer.</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/compile/function/types.py:1416,</span> in <span class="ni">FunctionMaker.prepare_fgraph</span><span class="nt">(inputs, outputs, additional_outputs, fgraph, mode, profile)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1409</span> <span class="n">rewrite_time</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1411</span> <span class="k">with</span> <span class="n">config</span><span class="o">.</span><span class="n">change_flags</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1412</span>     <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1413</span>     <span class="n">compute_test_value</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">compute_test_value_opt</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1414</span>     <span class="n">traceback__limit</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">traceback__compile_limit</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1415</span> <span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1416</span>     <span class="n">rewriter_profile</span> <span class="o">=</span> <span class="n">rewriter</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1418</span>     <span class="n">end_rewriter</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1419</span>     <span class="n">rewrite_time</span> <span class="o">=</span> <span class="n">end_rewriter</span> <span class="o">-</span> <span class="n">start_rewriter</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:135,</span> in <span class="ni">GraphRewriter.__call__</span><span class="nt">(self, fgraph)</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fgraph</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Rewrite a `FunctionGraph`.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">135</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rewrite</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:131,</span> in <span class="ni">GraphRewriter.rewrite</span><span class="nt">(self, fgraph, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span><span class="sd"> This is meant as a shortcut for the following::</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">129</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_requirements</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">131</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:302,</span> in <span class="ni">SequentialGraphRewriter.apply</span><span class="nt">(self, fgraph)</span>
+<span class="g g-Whitespace">    </span><span class="mi">300</span> <span class="n">nb_nodes_before</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fgraph</span><span class="o">.</span><span class="n">apply_nodes</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">301</span> <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">302</span> <span class="n">sub_prof</span> <span class="o">=</span> <span class="n">rewriter</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span> <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span> <span class="n">sub_profs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_prof</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:2477,</span> in <span class="ni">EquilibriumGraphRewriter.apply</span><span class="nt">(self, fgraph, start_from)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2475</span> <span class="n">nb</span> <span class="o">=</span> <span class="n">change_tracker</span><span class="o">.</span><span class="n">nb_imported</span>
+<span class="g g-Whitespace">   </span><span class="mi">2476</span> <span class="n">t_rewrite</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="ne">-&gt; </span><span class="mi">2477</span> <span class="n">sub_prof</span> <span class="o">=</span> <span class="n">grewrite</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2478</span> <span class="n">time_rewriters</span><span class="p">[</span><span class="n">grewrite</span><span class="p">]</span> <span class="o">+=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_rewrite</span>
+<span class="g g-Whitespace">   </span><span class="mi">2479</span> <span class="n">sub_profs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_prof</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:2051,</span> in <span class="ni">WalkingGraphRewriter.apply</span><span class="nt">(self, fgraph, start_from)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2049</span>             <span class="k">continue</span>
+<span class="g g-Whitespace">   </span><span class="mi">2050</span>         <span class="n">current_node</span> <span class="o">=</span> <span class="n">node</span>
+<span class="ne">-&gt; </span><span class="mi">2051</span>         <span class="n">nb</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_node</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2052</span>     <span class="n">loop_t</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+<span class="g g-Whitespace">   </span><span class="mi">2053</span> <span class="k">finally</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:1933,</span> in <span class="ni">NodeProcessingGraphRewriter.process_node</span><span class="nt">(self, fgraph, node, node_rewriter)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1931</span> <span class="k">assert</span> <span class="n">node_rewriter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1932</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1933</span>     <span class="n">replacements</span> <span class="o">=</span> <span class="n">node_rewriter</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1934</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1935</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">failure_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/graph/rewriting/basic.py:1092,</span> in <span class="ni">FromFunctionNodeRewriter.transform</span><span class="nt">(self, fgraph, node)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1087</span>     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+<span class="nn">   1088         node.op</span> in <span class="ni">self._tracks or isinstance</span><span class="nt">(node.op, self._tracked_types)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1089</span>     <span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1090</span>         <span class="k">return</span> <span class="kc">False</span>
+<span class="ne">-&gt; </span><span class="mi">1092</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/tensor/rewriting/basic.py:1141,</span> in <span class="ni">constant_folding</span><span class="nt">(fgraph, node)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1138</span>     <span class="n">storage_map</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1139</span>     <span class="n">compute_map</span><span class="p">[</span><span class="n">o</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span>
+<span class="ne">-&gt; </span><span class="mi">1141</span> <span class="n">thunk</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">make_thunk</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">storage_map</span><span class="p">,</span> <span class="n">compute_map</span><span class="p">,</span> <span class="n">no_recycling</span><span class="o">=</span><span class="p">[])</span>
+<span class="g g-Whitespace">   </span><span class="mi">1142</span> <span class="n">required</span> <span class="o">=</span> <span class="n">thunk</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1144</span> <span class="c1"># A node whose inputs are all provided should always return successfully</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/op.py:131,</span> in <span class="ni">COp.make_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling, impl)</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_node</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="n">node</span><span class="p">,</span> <span class="n">storage_map</span><span class="o">=</span><span class="n">storage_map</span><span class="p">,</span> <span class="n">compute_map</span><span class="o">=</span><span class="n">compute_map</span><span class="p">,</span> <span class="n">impl</span><span class="o">=</span><span class="s2">&quot;c&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">129</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">131</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_c_thunk</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">storage_map</span><span class="p">,</span> <span class="n">compute_map</span><span class="p">,</span> <span class="n">no_recycling</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">132</span> <span class="k">except</span> <span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">,</span> <span class="n">MethodNotDefined</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>     <span class="c1"># We requested the c code, so don&#39;t catch the error.</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>     <span class="k">if</span> <span class="n">impl</span> <span class="o">==</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/op.py:96,</span> in <span class="ni">COp.make_c_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling)</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span>         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Disabling C code for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> due to unsupported float16&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span>         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;float16&quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">96</span> <span class="n">outputs</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">make_thunk</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="n">input_storage</span><span class="o">=</span><span class="n">node_input_storage</span><span class="p">,</span> <span class="n">output_storage</span><span class="o">=</span><span class="n">node_output_storage</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span> <span class="n">thunk</span><span class="p">,</span> <span class="n">node_input_filters</span><span class="p">,</span> <span class="n">node_output_filters</span> <span class="o">=</span> <span class="n">outputs</span>
+<span class="g g-Whitespace">    </span><span class="mi">101</span> <span class="nd">@is_cthunk_wrapper_type</span>
+<span class="g g-Whitespace">    </span><span class="mi">102</span> <span class="k">def</span> <span class="nf">rval</span><span class="p">():</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/basic.py:1202,</span> in <span class="ni">CLinker.make_thunk</span><span class="nt">(self, input_storage, output_storage, storage_map, cache, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1167</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Compile this linker&#39;s `self.fgraph` and return a function that performs the computations.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1168</span><span class="sd"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1169</span><span class="sd"> The return values can be used as follows:</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1199</span><span class="sd"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1200</span><span class="sd"> &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1201</span> <span class="n">init_tasks</span><span class="p">,</span> <span class="n">tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_init_tasks</span><span class="p">()</span>
+<span class="ne">-&gt; </span><span class="mi">1202</span> <span class="n">cthunk</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">in_storage</span><span class="p">,</span> <span class="n">out_storage</span><span class="p">,</span> <span class="n">error_storage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__compile__</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1203</span>     <span class="n">input_storage</span><span class="p">,</span> <span class="n">output_storage</span><span class="p">,</span> <span class="n">storage_map</span><span class="p">,</span> <span class="n">cache</span>
+<span class="g g-Whitespace">   </span><span class="mi">1204</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1206</span> <span class="n">res</span> <span class="o">=</span> <span class="n">_CThunk</span><span class="p">(</span><span class="n">cthunk</span><span class="p">,</span> <span class="n">init_tasks</span><span class="p">,</span> <span class="n">tasks</span><span class="p">,</span> <span class="n">error_storage</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1207</span> <span class="n">res</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_order</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/basic.py:1122,</span> in <span class="ni">CLinker.__compile__</span><span class="nt">(self, input_storage, output_storage, storage_map, cache)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1120</span> <span class="n">input_storage</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">input_storage</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1121</span> <span class="n">output_storage</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">output_storage</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1122</span> <span class="n">thunk</span><span class="p">,</span> <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cthunk_factory</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1123</span>     <span class="n">error_storage</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1124</span>     <span class="n">input_storage</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1125</span>     <span class="n">output_storage</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1126</span>     <span class="n">storage_map</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1127</span>     <span class="n">cache</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1128</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1129</span> <span class="k">return</span> <span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1130</span>     <span class="n">thunk</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1131</span>     <span class="n">module</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1140</span>     <span class="n">error_storage</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1141</span> <span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/basic.py:1647,</span> in <span class="ni">CLinker.cthunk_factory</span><span class="nt">(self, error_storage, in_storage, out_storage, storage_map, cache)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1645</span>     <span class="k">if</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1646</span>         <span class="n">cache</span> <span class="o">=</span> <span class="n">get_module_cache</span><span class="p">()</span>
+<span class="ne">-&gt; </span><span class="mi">1647</span>     <span class="n">module</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">module_from_key</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">lnk</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1649</span> <span class="nb">vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">orphans</span>
+<span class="g g-Whitespace">   </span><span class="mi">1650</span> <span class="c1"># List of indices that should be ignored when passing the arguments</span>
+<span class="g g-Whitespace">   </span><span class="mi">1651</span> <span class="c1"># (basically, everything that the previous call to uniq eliminated)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/cmodule.py:1231,</span> in <span class="ni">ModuleCache.module_from_key</span><span class="nt">(self, key, lnk)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1229</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1230</span>     <span class="n">location</span> <span class="o">=</span> <span class="n">dlimport_workdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirname</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1231</span>     <span class="n">module</span> <span class="o">=</span> <span class="n">lnk</span><span class="o">.</span><span class="n">compile_cmodule</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1232</span>     <span class="n">name</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__file__</span>
+<span class="g g-Whitespace">   </span><span class="mi">1233</span>     <span class="k">assert</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/basic.py:1546,</span> in <span class="ni">CLinker.compile_cmodule</span><span class="nt">(self, location)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1544</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1545</span>     <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LOCATION </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1546</span>     <span class="n">module</span> <span class="o">=</span> <span class="n">c_compiler</span><span class="o">.</span><span class="n">compile_str</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1547</span>         <span class="n">module_name</span><span class="o">=</span><span class="n">mod</span><span class="o">.</span><span class="n">code_hash</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1548</span>         <span class="n">src_code</span><span class="o">=</span><span class="n">src_code</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1549</span>         <span class="n">location</span><span class="o">=</span><span class="n">location</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1550</span>         <span class="n">include_dirs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">header_dirs</span><span class="p">(),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1551</span>         <span class="n">lib_dirs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lib_dirs</span><span class="p">(),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1552</span>         <span class="n">libs</span><span class="o">=</span><span class="n">libs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1553</span>         <span class="n">preargs</span><span class="o">=</span><span class="n">preargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1554</span>     <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1555</span> <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1556</span>     <span class="n">e</span><span class="o">.</span><span class="n">args</span> <span class="o">+=</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fgraph</span><span class="p">),)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/link/c/cmodule.py:2591,</span> in <span class="ni">GCC_compiler.compile_str</span><span class="nt">(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2588</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2590</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2591</span>     <span class="n">p_out</span> <span class="o">=</span> <span class="n">output_subprocess_Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2592</span>     <span class="n">compile_stderr</span> <span class="o">=</span> <span class="n">p_out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">2593</span> <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2594</span>     <span class="c1"># An exception can occur e.g. if `g++` is not found.</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pytensor/utils.py:261,</span> in <span class="ni">output_subprocess_Popen</span><span class="nt">(command, **params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span> <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess_Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">259</span> <span class="c1"># we need to use communicate to make sure we don&#39;t deadlock around</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span> <span class="c1"># the stdout/stderr pipe.</span>
+<span class="ne">--&gt; </span><span class="mi">261</span> <span class="n">out</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">262</span> <span class="k">return</span> <span class="n">out</span> <span class="o">+</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">,)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/subprocess.py:1134,</span> in <span class="ni">Popen.communicate</span><span class="nt">(self, input, timeout)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1131</span>     <span class="n">endtime</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1133</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1134</span>     <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communicate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">endtime</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1135</span> <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1136</span>     <span class="c1"># https://bugs.python.org/issue25942</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span>     <span class="c1"># See the detailed comment in .wait().</span>
+<span class="g g-Whitespace">   </span><span class="mi">1138</span>     <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/subprocess.py:1979,</span> in <span class="ni">Popen._communicate</span><span class="nt">(self, input, endtime, orig_timeout)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1972</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_check_timeout</span><span class="p">(</span><span class="n">endtime</span><span class="p">,</span> <span class="n">orig_timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1973</span>                         <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1974</span>                         <span class="n">skip_check_and_raise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1975</span>     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>  <span class="c1"># Impossible :)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1976</span>         <span class="s1">&#39;_check_timeout(..., skip_check_and_raise=True) &#39;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1977</span>         <span class="s1">&#39;failed to raise TimeoutExpired.&#39;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1979</span> <span class="n">ready</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1980</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_timeout</span><span class="p">(</span><span class="n">endtime</span><span class="p">,</span> <span class="n">orig_timeout</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1982</span> <span class="c1"># XXX Rewrite these to use non-blocking I/O on the file</span>
+<span class="g g-Whitespace">   </span><span class="mi">1983</span> <span class="c1"># objects; they are no longer using C stdio!</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/selectors.py:416,</span> in <span class="ni">_PollLikeSelector.select</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">414</span> <span class="n">ready</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">416</span>     <span class="n">fd_event_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="k">except</span> <span class="ne">InterruptedError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">418</span>     <span class="k">return</span> <span class="n">ready</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -380,7 +769,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">traces</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;meta_d&quot;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;HMeta-d&quot;</span><span class="p">)</span>
-<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;metadPy&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;metadpy&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
@@ -416,7 +805,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#using-metadpy">
-   Using metadPy
+   Using metadpy
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -470,7 +859,8 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
   
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1e1de1a1873e13ef5536"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
 
   <footer class="bd-footer"><div class="bd-footer__inner container">
   
@@ -478,10 +868,20 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
     
 <p class="copyright">
 
-    &copy; Copyright 2022-2022, Nicolas Legrand.<br>
+    &copy; Copyright 2022-2023, Nicolas Legrand.<br>
 
 </p>
 
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
   </div>
   
   <div class="footer-item">

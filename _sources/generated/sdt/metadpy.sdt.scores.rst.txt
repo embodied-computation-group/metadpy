@@ -1,0 +1,6 @@
+﻿metadpy.sdt.scores
+==================
+
+.. currentmodule:: metadpy.sdt
+
+.. autofunction:: scores

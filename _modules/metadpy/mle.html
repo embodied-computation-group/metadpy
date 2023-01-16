@@ -1,0 +1,1281 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>metadpy.mle &#8212; metadpy 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/metadpy/mle';</script>
+    <link rel="shortcut icon" href="../../_static/logo.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="None">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../index.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="Logo image">
+    <img src="../../_static/logo.svg" class="logo__image only-dark" alt="Logo image">
+  
+  
+    <p class="title logo__title">metadpy</p>
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../references.html">
+                        References
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/systole/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fas fa-box"></i></span>
+            <label class="sr-only">Pypi</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../references.html">
+                        References
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/systole/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-toggle="tooltip"><span><i class="fas fa-box"></i></span>
+            <label class="sr-only">Pypi</label></a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+            </div>
+            
+            
+            <article class="bd-article" role="main">
+              
+  <h1>Source code for metadpy.mle</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Author: Nicolas Legrand &lt;nicolas.legrand@cfin.au.dk&gt;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">overload</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pandas_flavor</span> <span class="k">as</span> <span class="nn">pf</span>
+<span class="kn">import</span> <span class="nn">scipy.special.cython_special</span> <span class="k">as</span> <span class="nn">cysp</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">vectorize</span>
+<span class="kn">from</span> <span class="nn">numba.extending</span> <span class="kn">import</span> <span class="n">get_cython_function_address</span>
+<span class="kn">from</span> <span class="nn">numba.types</span> <span class="kn">import</span> <span class="n">WrapperAddressProtocol</span><span class="p">,</span> <span class="n">float32</span><span class="p">,</span> <span class="n">float64</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">SR1</span><span class="p">,</span> <span class="n">Bounds</span><span class="p">,</span> <span class="n">LinearConstraint</span><span class="p">,</span> <span class="n">minimize</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">metadpy.utils</span> <span class="kn">import</span> <span class="n">trials2counts</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;delta_grad == 0.0. Check if the approximated function is linear.&quot;</span>
+<span class="p">)</span>
+
+<span class="n">_signatures</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">float32</span><span class="p">(</span><span class="n">float32</span><span class="p">,</span> <span class="n">float32</span><span class="p">,</span> <span class="n">float32</span><span class="p">),</span>
+    <span class="n">float64</span><span class="p">(</span><span class="n">float64</span><span class="p">,</span> <span class="n">float64</span><span class="p">,</span> <span class="n">float64</span><span class="p">),</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">signature</span><span class="p">):</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">signature</span><span class="o">.</span><span class="n">return_type</span> <span class="ow">is</span> <span class="n">float64</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">pyx_fuse_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;__pyx_fuse_</span><span class="si">{</span><span class="n">index</span><span class="si">}{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">pyx_fuse_name</span> <span class="ow">in</span> <span class="n">cysp</span><span class="o">.</span><span class="n">__pyx_capi__</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">pyx_fuse_name</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">get_cython_function_address</span><span class="p">(</span><span class="s2">&quot;scipy.special.cython_special&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span>
+        <span class="n">name</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">WrapperAddressProtocol</span><span class="p">,),</span>
+        <span class="p">{</span><span class="s2">&quot;__wrapper_address__&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span> <span class="s2">&quot;signature&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">signature</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span>
+
+
+<span class="n">erf</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s2">&quot;erf&quot;</span><span class="p">,</span> <span class="n">float64</span><span class="p">(</span><span class="n">float64</span><span class="p">))</span>
+
+
+<span class="nd">@vectorize</span><span class="p">(</span><span class="n">_signatures</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">norm_cdf</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">mu</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">sigma</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Evaluate cumulative distribution function of normal distribution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+    <span class="n">z</span> <span class="o">*=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">erf</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+
+
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">fit_meta_d_logL</span><span class="p">(</span>
+    <span class="n">guess</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">nR_S1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">nR_S2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">d1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">t1c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns negative log-likelihood of parameters given experimental data.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    guess : np.ndarray</span>
+<span class="sd">        guess[0] = meta d&#39;</span>
+<span class="sd">        guess[1:end] = type-2 criteria locations</span>
+<span class="sd">    nR_S1, nR_S2 : np.ndarray</span>
+<span class="sd">        These are vectors containing the total number of responses in each response</span>
+<span class="sd">        category, conditional on presentation of S1 and S2.</span>
+<span class="sd">    nRatings : int</span>
+<span class="sd">        Numbers of ratings.</span>
+<span class="sd">    d1 :  float</span>
+<span class="sd">        d prime.</span>
+<span class="sd">    t1c1 : float</span>
+
+<span class="sd">    s : int</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">meta_d1</span><span class="p">,</span> <span class="n">t2c1</span> <span class="o">=</span> <span class="n">guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">guess</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="c1"># define mean and SD of S1 and S2 distributions</span>
+    <span class="n">S1mu</span> <span class="o">=</span> <span class="o">-</span><span class="n">meta_d1</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">S1sd</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">S2mu</span> <span class="o">=</span> <span class="n">meta_d1</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">S2sd</span> <span class="o">=</span> <span class="n">S1sd</span> <span class="o">/</span> <span class="n">s</span>
+
+    <span class="c1"># adjust so that the type 1 criterion is set at 0</span>
+    <span class="c1"># (this is just to work with optimization toolbox constraints...</span>
+    <span class="c1">#  to simplify defining the upper and lower bounds of type 2 criteria)</span>
+    <span class="n">S1mu</span> <span class="o">=</span> <span class="n">S1mu</span> <span class="o">-</span> <span class="p">(</span><span class="n">meta_d1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1c1</span> <span class="o">/</span> <span class="n">d1</span><span class="p">))</span>
+    <span class="n">S2mu</span> <span class="o">=</span> <span class="n">S2mu</span> <span class="o">-</span> <span class="p">(</span><span class="n">meta_d1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1c1</span> <span class="o">/</span> <span class="n">d1</span><span class="p">))</span>
+
+    <span class="n">t1c1</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># set up MLE analysis</span>
+    <span class="c1"># get type 2 response counts</span>
+    <span class="c1"># S1 responses</span>
+    <span class="n">nC_rS1</span><span class="p">,</span> <span class="n">nI_rS1</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span><span class="p">):</span>
+        <span class="n">nC_rS1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">nI_rS1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="c1"># S2 responses</span>
+    <span class="n">nC_rS2</span> <span class="o">=</span> <span class="p">[</span><span class="n">nR_S2</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">nRatings</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nRatings</span><span class="p">)]</span>
+    <span class="n">nI_rS2</span> <span class="o">=</span> <span class="p">[</span><span class="n">nR_S1</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">nRatings</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nRatings</span><span class="p">)]</span>
+
+    <span class="c1"># get type 2 probabilities</span>
+    <span class="n">C_area_rS1</span> <span class="o">=</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t1c1</span><span class="p">,</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span>
+    <span class="n">I_area_rS1</span> <span class="o">=</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t1c1</span><span class="p">,</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span>
+
+    <span class="n">C_area_rS2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t1c1</span><span class="p">,</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span>
+    <span class="n">I_area_rS2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t1c1</span><span class="p">,</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span>
+
+    <span class="n">t2c1x</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">]</span>
+    <span class="n">t2c1x</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">t2c1</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)])</span>
+    <span class="n">t2c1x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t1c1</span><span class="p">)</span>
+    <span class="n">t2c1x</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">t2c1</span><span class="p">[(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span>
+    <span class="n">t2c1x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+
+    <span class="n">prC_rS1</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">))</span>
+        <span class="o">/</span> <span class="n">C_area_rS1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">prI_rS1</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">))</span>
+        <span class="o">/</span> <span class="n">I_area_rS1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="n">prC_rS2</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">nRatings</span> <span class="o">+</span> <span class="n">i</span><span class="p">],</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">))</span>
+            <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">nRatings</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="o">/</span> <span class="n">C_area_rS2</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">prI_rS2</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">nRatings</span> <span class="o">+</span> <span class="n">i</span><span class="p">],</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">))</span>
+            <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">norm_cdf</span><span class="p">(</span><span class="n">t2c1x</span><span class="p">[</span><span class="n">nRatings</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="o">/</span> <span class="n">I_area_rS2</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># calculate logL</span>
+    <span class="n">logL</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span><span class="p">):</span>
+        <span class="n">logL</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">logL</span>
+            <span class="o">+</span> <span class="n">nC_rS1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prC_rS1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">nI_rS1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prI_rS1</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">nC_rS2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prC_rS2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">nI_rS2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prI_rS2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">)</span>
+
+    <span class="c1"># returning -inf may cause optimize.minimize() to fail</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">logL</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">logL</span><span class="p">):</span>
+        <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1e300</span>
+
+    <span class="k">return</span> <span class="o">-</span><span class="n">logL</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">metad</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">nR_S1</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nR_S2</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">stimuli</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">accuracy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">within</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">between</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">subject</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">padAmount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">padding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">collapse</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fncdf</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">,</span>
+    <span class="n">fninv</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+    <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">metad</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">nR_S1</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">nR_S2</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+    <span class="n">stimuli</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">accuracy</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">within</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">between</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">subject</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">padAmount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">padding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">collapse</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fncdf</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">,</span>
+    <span class="n">fninv</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="o">...</span>
+
+
+<span class="nd">@overload</span>
+<span class="k">def</span> <span class="nf">metad</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">nR_S1</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nR_S2</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">stimuli</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Stimuli&quot;</span><span class="p">,</span>
+    <span class="n">accuracy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span>
+    <span class="n">confidence</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Confidence&quot;</span><span class="p">,</span>
+    <span class="n">within</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">between</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">subject</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">padAmount</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">padding</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">collapse</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fncdf</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">,</span>
+    <span class="n">fninv</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="o">...</span>
+
+
+<div class="viewcode-block" id="metad"><a class="viewcode-back" href="../../generated/mle/metadpy.mle.metad.html#metadpy.mle.metad">[docs]</a><span class="nd">@pf</span><span class="o">.</span><span class="n">register_dataframe_method</span>
+<span class="k">def</span> <span class="nf">metad</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">nRatings</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">stimuli</span><span class="o">=</span><span class="s2">&quot;Stimuli&quot;</span><span class="p">,</span>
+    <span class="n">accuracy</span><span class="o">=</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span>
+    <span class="n">confidence</span><span class="o">=</span><span class="s2">&quot;Confidence&quot;</span><span class="p">,</span>
+    <span class="n">within</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">between</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">subject</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">padAmount</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">nR_S1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">nR_S2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">padding</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">collapse</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">fncdf</span><span class="o">=</span><span class="n">norm_cdf</span><span class="p">,</span>
+    <span class="n">fninv</span><span class="o">=</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate meta-d&#39; using maximum likelihood estimation (MLE).</span>
+
+<span class="sd">    This function is adapted from the transcription of fit_meta_d_MLE.m</span>
+<span class="sd">    (Maniscalco &amp; Lau, 2012) by Alan Lee: http://www.columbia.edu/~bsm2105/type2sdt/.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">        Dataframe. Note that this function can also directly be used as a</span>
+<span class="sd">        Pandas method, in which case this argument is no longer needed.</span>
+<span class="sd">    nRatings : int</span>
+<span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
+<span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
+<span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
+<span class="sd">        Default is set to 4.</span>
+<span class="sd">    stimuli : string | None</span>
+<span class="sd">        Name of the column containing the stimuli.</span>
+<span class="sd">    accuracy : string | None</span>
+<span class="sd">        Name of the columns containing the accuracy.</span>
+<span class="sd">    confidence : string | None</span>
+<span class="sd">        Name of the column containing the confidence ratings.</span>
+<span class="sd">    within : string | None</span>
+<span class="sd">        Name of column containing the within factor (condition comparison).</span>
+<span class="sd">    between : string | None</span>
+<span class="sd">        Name of column containing the between subject factor (group</span>
+<span class="sd">        comparison).</span>
+<span class="sd">    subject : string | None</span>
+<span class="sd">        Name of column containing the subject identifier (only required if a</span>
+<span class="sd">        within-subject or a between-subject factor is provided).</span>
+<span class="sd">    nR_S1, nR_S2 : list | np.ndarray | None</span>
+<span class="sd">        These are vectors containing the total number of responses in</span>
+<span class="sd">        each response category, conditional on presentation of S1 and S2. If</span>
+<span class="sd">        nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the</span>
+<span class="sd">        subject had the following response counts:</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 100 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 50 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 20 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 10 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 5 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 1 time</span>
+
+<span class="sd">        The ordering of response / rating counts for S2 should be the same as</span>
+<span class="sd">        it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2</span>
+<span class="sd">        was presented, the subject had the following response counts:</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 3 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 7 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 8 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 12 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 27 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 89 times</span>
+<span class="sd">    s : int</span>
+<span class="sd">        Ratio of standard deviations for type 1 distributions as:</span>
+<span class="sd">        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default</span>
+<span class="sd">        value of 1. For most purposes, it is recommended to set `s=1`. See</span>
+<span class="sd">        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.</span>
+<span class="sd">    padding : boolean</span>
+<span class="sd">        If `True`, a small value will be added to the counts to avoid problems</span>
+<span class="sd">        during fit.</span>
+<span class="sd">    padAmount : float | None</span>
+<span class="sd">        The value to add to each response count if padding is set to 1.</span>
+<span class="sd">        Default value is 1/(2*nRatings)</span>
+<span class="sd">    collapse : int | None</span>
+<span class="sd">        If an integer `N` is provided, will collpase ratings to avoid zeros by</span>
+<span class="sd">        summing every `N` consecutive ratings. Default set to `None`.</span>
+<span class="sd">    fncdf : func</span>
+<span class="sd">        A function handle for the CDF of the type 1 distribution. If not</span>
+<span class="sd">        specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.</span>
+<span class="sd">    fninv : func</span>
+<span class="sd">        A function handle for the inverse CDF of the type 1 distribution. If</span>
+<span class="sd">        not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.</span>
+<span class="sd">    verbose : int</span>
+<span class="sd">        Level of algorithm&#39;s verbosity (can be `0`, `1`, `2` or `3`):</span>
+<span class="sd">            * 0 (default) : work silently.</span>
+<span class="sd">            * 1 : display a termination report.</span>
+<span class="sd">            * 2 : display progress during iterations.</span>
+<span class="sd">            * 3 : display progress during iterations (more complete report).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    results : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        In the following, S1 and S2 represent the distributions of evidence</span>
+<span class="sd">        generated by stimulus classes S1 and S2:</span>
+
+<span class="sd">            * `&#39;dprime&#39;` : `mean(S2) - mean(S1)`, in</span>
+<span class="sd">                root-mean-square(sd(S1), sd(S2)) units</span>
+<span class="sd">            * `&#39;s&#39;` : `sd(S1) / sd(S2)`</span>
+<span class="sd">            * `&#39;meta_da&#39;` : meta-d&#39; in RMS units</span>
+<span class="sd">            * `&#39;M_diff&#39;` : `meta_da - da`</span>
+<span class="sd">            * `&#39;M_ratio&#39;` : `meta_da / da`</span>
+<span class="sd">            * `&#39;meta_ca&#39;` : type 1 criterion for meta-d&#39; fit, RMS units.</span>
+<span class="sd">            * `&#39;t2ca_rS1&#39;` : type 2 criteria of &quot;S1&quot; responses for meta-d&#39; fit,</span>
+<span class="sd">                RMS units.</span>
+<span class="sd">            * `&#39;t2ca_rS2&#39;` : type 2 criteria of &quot;S2&quot; responses for meta-d&#39; fit,</span>
+<span class="sd">                RMS units.</span>
+<span class="sd">            * `&#39;logL&#39;` : log likelihood of the data fit</span>
+<span class="sd">            * `&#39;est_HR2_rS1&#39;` : estimated (from meta-d&#39; fit) type 2 hit rates</span>
+<span class="sd">                for S1 responses.</span>
+<span class="sd">            * `&#39;obs_HR2_rS1&#39;` : actual type 2 hit rates for S1 responses.</span>
+<span class="sd">            * `&#39;est_FAR2_rS1&#39;` : estimated type 2 false alarm rates for S1</span>
+<span class="sd">                responses.</span>
+<span class="sd">            * `&#39;obs_FAR2_rS1&#39;` : actual type 2 false alarm rates for S1</span>
+<span class="sd">                responses.</span>
+<span class="sd">            * `&#39;est_HR2_rS2&#39;` : estimated type 2 hit rates for S2 responses.</span>
+<span class="sd">            * `&#39;obs_HR2_rS2&#39;` : actual type 2 hit rates for S2 responses.</span>
+<span class="sd">            * `&#39;est_FAR2_rS2&#39;` : estimated type 2 false alarm rates for S2</span>
+<span class="sd">                responses.</span>
+<span class="sd">            * `&#39;obs_FAR2_rS2&#39;` : actual type 2 false alarm rates for S2</span>
+<span class="sd">                responses.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Given data from an experiment where an observer discriminates between two</span>
+<span class="sd">    stimulus alternatives on every trial and provides confidence ratings,</span>
+<span class="sd">    provides a type 2 SDT analysis of the data.</span>
+
+<span class="sd">    .. warning:: If nR_S1 or nR_S2 contain zeros, this may interfere with</span>
+<span class="sd">        estimation of meta-d&#39;. Some options for dealing with response cell</span>
+<span class="sd">        counts containing zeros are:</span>
+
+<span class="sd">        * Add a small adjustment factor (e.g. `1/(len(nR_S1)`, to each input</span>
+<span class="sd">            vector. This is a generalization of the correction for similar</span>
+<span class="sd">            estimation issues of type 1 d&#39; as recommended in [1]_. When using</span>
+<span class="sd">            this correction method, it is recommended to add the adjustment</span>
+<span class="sd">            factor to ALL data for all subjects, even for those subjects whose</span>
+<span class="sd">            data is not in need of such correction, in order to avoid biases in</span>
+<span class="sd">            the analysis (cf [2]_). Use `padding==True` to activate this</span>
+<span class="sd">            correction.</span>
+
+<span class="sd">        * Collapse across rating categories. e.g. if your data set has 4</span>
+<span class="sd">            possible confidence ratings such that `len(nR_S1)==8`, defining new</span>
+<span class="sd">            input vectors:</span>
+
+<span class="sd">            &gt;&gt;&gt; nR_S1 = nR_S1.reshape(int(len(nR_S1)/collapse), 2).sum(axis=1)</span>
+
+<span class="sd">            This might be sufficient to eliminate zeros from the input without</span>
+<span class="sd">            using an adjustment. Use `collapse=True` to activate this</span>
+<span class="sd">            correction.</span>
+
+<span class="sd">    If there are N ratings, then there will be N-1 type 2 hit rates and false</span>
+<span class="sd">    alarm rates.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    No correction</span>
+<span class="sd">    &gt;&gt;&gt; nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]</span>
+<span class="sd">    &gt;&gt;&gt; nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]</span>
+<span class="sd">    &gt;&gt;&gt; fit = fit_meta_d_MLE(nR_S1, nR_S2, padding=False)</span>
+
+<span class="sd">    Correction by padding values</span>
+<span class="sd">    &gt;&gt;&gt; nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]</span>
+<span class="sd">    &gt;&gt;&gt; nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]</span>
+<span class="sd">    &gt;&gt;&gt; fit = fit_meta_d_MLE(nR_S1, nR_S2, padding=True)</span>
+
+<span class="sd">    Correction by collapsing values</span>
+<span class="sd">    &gt;&gt;&gt; nR_S1 = [36, 24, 17, 20, 10, 12, 9, 2]</span>
+<span class="sd">    &gt;&gt;&gt; nR_S2 = [1, 4, 10, 11, 19, 18, 28, 39]</span>
+<span class="sd">    &gt;&gt;&gt; fit = fit_meta_d_MLE(nR_S1, nR_S2, collapse=2)</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ..[1] Hautus, M. J. (1995). Corrections for extreme proportions and their</span>
+<span class="sd">      biasing effects on estimated values of d&#39;. Behavior Research Methods,</span>
+<span class="sd">    Instruments, &amp; Computers, 27, 46-51.</span>
+
+<span class="sd">    ..[2] Snodgrass, J. G., &amp; Corwin, J. (1988). Pragmatics of measuring</span>
+<span class="sd">      recognition memory: Applications to dementia and amnesia. Journal of</span>
+<span class="sd">      Experimental Psychology: General, 117(1), 34–50.</span>
+<span class="sd">      https://doi.org/10.1037/0096-3445.117.1.34</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimate meta-d&#39; using maximum likelihood estimation (MLE).&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">padAmount</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">padAmount</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nRatings</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">subject</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">subject</span> <span class="o">=</span> <span class="s2">&quot;Subject&quot;</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Subject 1&quot;</span>
+        <span class="k">if</span> <span class="n">within</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">within</span> <span class="o">=</span> <span class="s2">&quot;Within&quot;</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">within</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Condition 1&quot;</span>
+        <span class="k">if</span> <span class="n">between</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">between</span> <span class="o">=</span> <span class="s2">&quot;Between&quot;</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">between</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Group 1&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">nR_S1</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">nR_S2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;nR_S1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">nR_S1</span><span class="p">],</span>
+                    <span class="s2">&quot;nR_S2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">nR_S2</span><span class="p">],</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">stimuli</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">accuracy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">confidence</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;Stimuli&quot;</span><span class="p">:</span> <span class="n">stimuli</span><span class="p">,</span> <span class="s2">&quot;Accuracy&quot;</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">,</span> <span class="s2">&quot;Confidence&quot;</span><span class="p">:</span> <span class="n">confidence</span><span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">stimuli</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="n">confidence</span> <span class="o">=</span> <span class="s2">&quot;Stimuli&quot;</span><span class="p">,</span> <span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;Confidence&quot;</span>
+        <span class="n">subject</span><span class="p">,</span> <span class="n">within</span><span class="p">,</span> <span class="n">between</span> <span class="o">=</span> <span class="s2">&quot;Subject&quot;</span><span class="p">,</span> <span class="s2">&quot;Within&quot;</span><span class="p">,</span> <span class="s2">&quot;Between&quot;</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Subject 1&quot;</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Condition 1&quot;</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">between</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Group 1&quot;</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- n Subjects: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- n Conditions: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- n Groups: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="n">between</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">padding</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">tqdm</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;... Using padding to avoid fitting errors.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">collapse</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">tqdm</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;... Collapse across rating categories.&quot;</span><span class="p">)</span>
+
+    <span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">position</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fitting model on subject: </span><span class="si">{</span><span class="n">sub</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+
+            <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="n">between</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">nR_S1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">nR_S2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="n">this_df</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span>
+                        <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">between</span><span class="p">]</span> <span class="o">==</span> <span class="n">group</span><span class="p">)</span>
+                        <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span> <span class="o">==</span> <span class="n">cond</span><span class="p">)</span>
+                        <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">==</span> <span class="n">sub</span><span class="p">)</span>
+                    <span class="p">]</span>
+
+                    <span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span> <span class="o">=</span> <span class="n">trials2counts</span><span class="p">(</span>
+                        <span class="n">data</span><span class="o">=</span><span class="n">this_df</span><span class="p">,</span>
+                        <span class="n">stimuli</span><span class="o">=</span><span class="n">stimuli</span><span class="p">,</span>
+                        <span class="n">accuracy</span><span class="o">=</span><span class="n">accuracy</span><span class="p">,</span>
+                        <span class="n">confidence</span><span class="o">=</span><span class="n">confidence</span><span class="p">,</span>
+                        <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span>
+                        <span class="n">padding</span><span class="o">=</span><span class="n">padding</span><span class="p">,</span>
+                        <span class="n">padAmount</span><span class="o">=</span><span class="n">padAmount</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;input arrays must have an even number of elements&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;input arrays must have the same number of elements&quot;</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">padding</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">collapse</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                        <span class="kn">import</span> <span class="nn">warnings</span>
+
+                        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                            <span class="p">(</span>
+                                <span class="s2">&quot;Your inputs contain zeros and is not corrected.&quot;</span>
+                                <span class="s2">&quot;This may interfere with proper estimation of meta-d.&quot;</span>
+                                <span class="s2">&quot;See docstrings for more information.&quot;</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">padding</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">collapse</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="c1"># A small padding is required to avoid problems in model fit if any</span>
+                    <span class="c1"># confidence ratings aren&#39;t used (see Hautus MJ, 1995 for details)</span>
+                    <span class="k">if</span> <span class="n">padAmount</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">padAmount</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">)</span>
+                    <span class="n">nR_S1</span> <span class="o">=</span> <span class="n">nR_S1</span> <span class="o">+</span> <span class="n">padAmount</span>
+                    <span class="n">nR_S2</span> <span class="o">=</span> <span class="n">nR_S2</span> <span class="o">+</span> <span class="n">padAmount</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">padding</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">collapse</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="c1"># Collapse values accross ratings to avoid problems in model fit</span>
+                    <span class="n">nR_S1</span> <span class="o">=</span> <span class="n">nR_S1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">)</span> <span class="o">/</span> <span class="n">collapse</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">nR_S2</span> <span class="o">=</span> <span class="n">nR_S2</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">)</span> <span class="o">/</span> <span class="n">collapse</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">padding</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">collapse</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Both padding and collapse are True.&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">nRatings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">nRatings</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                        <span class="nb">len</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+                    <span class="p">)</span>  <span class="c1"># number of ratings in the experiment</span>
+                <span class="n">nCriteria</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># number criteria to be fitted</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">results_dict</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span>
+                        <span class="n">nR_S1</span><span class="o">=</span><span class="n">nR_S1</span><span class="p">,</span>
+                        <span class="n">nR_S2</span><span class="o">=</span><span class="n">nR_S2</span><span class="p">,</span>
+                        <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">,</span>
+                        <span class="n">nCriteria</span><span class="o">=</span><span class="n">nCriteria</span><span class="p">,</span>
+                        <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="p">,</span>
+                        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                        <span class="n">fninv</span><span class="o">=</span><span class="n">fninv</span><span class="p">,</span>
+                        <span class="n">fncdf</span><span class="o">=</span><span class="n">fncdf</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="c1"># Filter dictionary and convert into pd.DataFrame</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="n">k</span><span class="p">:</span> <span class="p">[</span><span class="n">results_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
+                            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;dprime&quot;</span><span class="p">,</span> <span class="s2">&quot;meta_d&quot;</span><span class="p">,</span> <span class="s2">&quot;m_ratio&quot;</span><span class="p">,</span> <span class="s2">&quot;m_diff&quot;</span><span class="p">]</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="kn">import</span> <span class="nn">warnings</span>
+
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Error when fitting data for subject </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span><span class="si">}</span><span class="s2"> - &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;Condition </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">cond</span><span class="p">)</span><span class="si">}</span><span class="s2"> - Group </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>
+                            <span class="s2">&quot;Returning NaNs as a result&quot;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;dprime&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">],</span>
+                            <span class="s2">&quot;meta_d&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">],</span>
+                            <span class="s2">&quot;m_ratio&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">],</span>
+                            <span class="s2">&quot;m_diff&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">],</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">subject</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span>
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">within</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">within</span><span class="p">]</span> <span class="o">=</span> <span class="n">cond</span>
+                <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">between</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">results</span><span class="p">[</span><span class="n">between</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+
+                <span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">results_df</span><span class="p">,</span> <span class="n">results</span><span class="p">])</span>
+
+                <span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">results_df</span></div>
+
+
+<div class="viewcode-block" id="fit_metad"><a class="viewcode-back" href="../../generated/mle/metadpy.mle.fit_metad.html#metadpy.mle.fit_metad">[docs]</a><span class="k">def</span> <span class="nf">fit_metad</span><span class="p">(</span>
+    <span class="n">nR_S1</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">nR_S2</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">nRatings</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">nCriteria</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">s</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">fninv</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">,</span>
+    <span class="n">fncdf</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">norm_cdf</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fit metad model using MLE.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    nR_S1, nR_S2 : list, 1d array-like or None</span>
+<span class="sd">        These are vectors containing the total number of responses in</span>
+<span class="sd">        each response category, conditional on presentation of S1 and S2. If</span>
+<span class="sd">        nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the</span>
+<span class="sd">        subject had the following response counts:</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 100 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 50 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 20 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 10 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 5 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 1 time</span>
+
+<span class="sd">        The ordering of response / rating counts for S2 should be the same as</span>
+<span class="sd">        it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2</span>
+<span class="sd">        was presented, the subject had the following response counts:</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 3 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 7 times</span>
+<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 8 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 12 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 27 times</span>
+<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 89 times</span>
+<span class="sd">    nRatings : int</span>
+<span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
+<span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
+<span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
+<span class="sd">        Default is set to 4.</span>
+<span class="sd">    nCriteria : int | None</span>
+<span class="sd">        (Optional) Number criteria to be fitted. If `None`, the number of criteria is</span>
+<span class="sd">        set to `nCriteria = int(2 * nRatings - 1)`.</span>
+<span class="sd">    s : int</span>
+<span class="sd">        Ratio of standard deviations for type 1 distributions as:</span>
+<span class="sd">        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default</span>
+<span class="sd">        value of 1. For most purposes, it is recommended to set `s=1`. See</span>
+<span class="sd">        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.</span>
+<span class="sd">    verbose : {0, 1, 2}</span>
+<span class="sd">        Level of algorithm&#39;s verbosity:</span>
+<span class="sd">            * 0 (default) : work silently.</span>
+<span class="sd">            * 1 : display a termination report.</span>
+<span class="sd">            * 2 : display progress during iterations.</span>
+<span class="sd">            * 3 : display progress during iterations (more complete report).</span>
+<span class="sd">    fninv : func</span>
+<span class="sd">        A function handle for the inverse CDF of the type 1 distribution. If</span>
+<span class="sd">        not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.</span>
+<span class="sd">    fncdf : func</span>
+<span class="sd">        A function handle for the CDF of the type 1 distribution. If not</span>
+<span class="sd">        specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    results : dict</span>
+<span class="sd">        In the following, S1 and S2 represent the distributions of evidence generated</span>
+<span class="sd">        by stimulus classes S1 and S2:</span>
+
+<span class="sd">            * `&#39;dprime&#39;` : `mean(S2) - mean(S1)`, in root-mean-square(sd(S1), sd(S2))</span>
+<span class="sd">             units</span>
+<span class="sd">            * `&#39;s&#39;` : `sd(S1) / sd(S2)`</span>
+<span class="sd">            * `&#39;meta_d&#39;` : meta-d&#39; in RMS units</span>
+<span class="sd">            * `&#39;m_diff&#39;` : `meta_da - da`</span>
+<span class="sd">            * `&#39;m_ratio&#39;` : `meta_da / da`</span>
+<span class="sd">            * `&#39;meta_ca&#39;` : type 1 criterion for meta-d&#39; fit, RMS units.</span>
+<span class="sd">            * `&#39;t2ca_rS1&#39;` : type 2 criteria of &quot;S1&quot; responses for meta-d&#39; fit, RMS</span>
+<span class="sd">            units.</span>
+<span class="sd">            * `&#39;t2ca_rS2&#39;` : type 2 criteria of &quot;S2&quot; responses for meta-d&#39; fit,</span>
+<span class="sd">                RMS units.</span>
+<span class="sd">            * `&#39;logL&#39;` : log likelihood of the data fit</span>
+<span class="sd">            * `&#39;est_HR2_rS1&#39;` : estimated (from meta-d&#39; fit) type 2 hit rates for S1</span>
+<span class="sd">            responses.</span>
+<span class="sd">            * `&#39;obs_HR2_rS1&#39;` : actual type 2 hit rates for S1 responses.</span>
+<span class="sd">            * `&#39;est_FAR2_rS1&#39;` : estimated type 2 false alarm rates for S1 responses.</span>
+<span class="sd">            * `&#39;obs_FAR2_rS1&#39;` : actual type 2 false alarm rates for S1 responses.</span>
+<span class="sd">            * `&#39;est_HR2_rS2&#39;` : estimated type 2 hit rates for S2 responses.</span>
+<span class="sd">            * `&#39;obs_HR2_rS2&#39;` : actual type 2 hit rates for S2 responses.</span>
+<span class="sd">            * `&#39;est_FAR2_rS2&#39;` : estimated type 2 false alarm rates for S2 responses.</span>
+<span class="sd">            * `&#39;obs_FAR2_rS2&#39;` : actual type 2 false alarm rates for S2 responses.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">nCriteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nCriteria</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># parameters</span>
+    <span class="c1"># meta-d&#39; - 1</span>
+    <span class="c1"># t2c - nCriteria-1</span>
+    <span class="c1"># constrain type 2 criteria values, such that t2c(i) is always &lt;= t2c(i+1)</span>
+    <span class="c1"># --&gt;  t2c(i+1) &gt;= t2c(i) + 1e-5 (i.e. very small deviation from equality)</span>
+    <span class="n">A</span><span class="p">,</span> <span class="n">ub</span><span class="p">,</span> <span class="n">lb</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nCriteria</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="n">tempArow</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tempArow</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ii</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">tempArow</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">tempArow</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nCriteria</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">ii</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">A</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tempArow</span><span class="p">)</span>
+        <span class="n">ub</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mf">1e-5</span><span class="p">)</span>
+        <span class="n">lb</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+
+    <span class="c1"># lower bounds on parameters</span>
+    <span class="n">LB</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">LB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span><span class="mf">10.0</span><span class="p">)</span>  <span class="c1"># meta-d&#39;</span>
+    <span class="n">LB</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">nCriteria</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># criteria lower than t1c</span>
+    <span class="n">LB</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nCriteria</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># criteria higher than t1c</span>
+
+    <span class="c1"># upper bounds on parameters</span>
+    <span class="n">UB</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">UB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span>  <span class="c1"># meta-d&#39;</span>
+    <span class="n">UB</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nCriteria</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># criteria lower than t1c</span>
+    <span class="n">UB</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="mi">20</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">nCriteria</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># criteria higher than t1c</span>
+
+    <span class="c1"># set up initial guess at parameter values</span>
+    <span class="n">ratingHR</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ratingFAR</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">nRatings</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)):</span>
+        <span class="n">ratingHR</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">[</span><span class="n">c</span><span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">))</span>
+        <span class="n">ratingFAR</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">[</span><span class="n">c</span><span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">))</span>
+
+    <span class="c1"># obtain index in the criteria array to mark Type I and Type II criteria</span>
+    <span class="n">t1_index</span> <span class="o">=</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">t2_index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">set</span><span class="p">([</span><span class="n">t1_index</span><span class="p">]))</span>
+
+    <span class="n">d1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">fninv</span><span class="p">(</span><span class="n">ratingHR</span><span class="p">[</span><span class="n">t1_index</span><span class="p">])</span> <span class="o">-</span> <span class="n">fninv</span><span class="p">(</span><span class="n">ratingFAR</span><span class="p">[</span><span class="n">t1_index</span><span class="p">])</span>
+    <span class="n">meta_d1</span> <span class="o">=</span> <span class="n">d1</span>
+
+    <span class="n">c1</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">fninv</span><span class="p">(</span><span class="n">ratingHR</span><span class="p">)</span> <span class="o">+</span> <span class="n">fninv</span><span class="p">(</span><span class="n">ratingFAR</span><span class="p">))</span>
+    <span class="n">t1c1</span> <span class="o">=</span> <span class="n">c1</span><span class="p">[</span><span class="n">t1_index</span><span class="p">]</span>
+    <span class="n">t2c1</span> <span class="o">=</span> <span class="n">c1</span><span class="p">[</span><span class="n">t2_index</span><span class="p">]</span>
+
+    <span class="c1"># initial values for the minimization function</span>
+    <span class="n">guess</span> <span class="o">=</span> <span class="p">[</span><span class="n">meta_d1</span><span class="p">]</span>
+    <span class="n">guess</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">t2c1</span> <span class="o">-</span> <span class="p">(</span><span class="n">meta_d1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1c1</span> <span class="o">/</span> <span class="n">d1</span><span class="p">))))</span>
+
+    <span class="c1"># other inputs for the minimization function</span>
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">Bounds</span><span class="p">(</span><span class="n">LB</span><span class="p">,</span> <span class="n">UB</span><span class="p">)</span>
+    <span class="n">linear_constraint</span> <span class="o">=</span> <span class="n">LinearConstraint</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">)</span>
+
+    <span class="c1"># minimization of negative log-likelihood</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+        <span class="n">fit_meta_d_logL</span><span class="p">,</span>
+        <span class="n">guess</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">t1c1</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">&quot;trust-constr&quot;</span><span class="p">,</span>
+        <span class="n">jac</span><span class="o">=</span><span class="s2">&quot;2-point&quot;</span><span class="p">,</span>
+        <span class="n">hess</span><span class="o">=</span><span class="n">SR1</span><span class="p">(),</span>
+        <span class="n">constraints</span><span class="o">=</span><span class="p">[</span><span class="n">linear_constraint</span><span class="p">],</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="n">verbose</span><span class="p">},</span>
+        <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># quickly process some of the output</span>
+    <span class="n">meta_d1</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">t2c1</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">(</span><span class="n">meta_d1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1c1</span> <span class="o">/</span> <span class="n">d1</span><span class="p">))</span>
+    <span class="n">logL</span> <span class="o">=</span> <span class="o">-</span><span class="n">results</span><span class="o">.</span><span class="n">fun</span>
+
+    <span class="c1"># I_nR and C_nR are rating trial counts for incorrect and correct trials</span>
+    <span class="c1"># element i corresponds to # (in)correct w/ rating i</span>
+    <span class="n">I_nR_rS2</span> <span class="o">=</span> <span class="n">nR_S1</span><span class="p">[</span><span class="n">nRatings</span><span class="p">:]</span>
+    <span class="n">I_nR_rS1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">nR_S2</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nRatings</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">C_nR_rS2</span> <span class="o">=</span> <span class="n">nR_S2</span><span class="p">[</span><span class="n">nRatings</span><span class="p">:]</span>
+    <span class="n">C_nR_rS1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nRatings</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">obs_FAR2_rS2</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">I_nR_rS2</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">I_nR_rS2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">obs_HR2_rS2</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">C_nR_rS2</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">C_nR_rS2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">obs_FAR2_rS1</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">I_nR_rS1</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">I_nR_rS1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">obs_HR2_rS1</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">sum</span><span class="p">(</span><span class="n">C_nR_rS1</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:])</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">C_nR_rS1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">]</span>
+
+    <span class="c1"># find estimated t2FAR and t2HR</span>
+    <span class="n">S1mu</span> <span class="o">=</span> <span class="o">-</span><span class="n">meta_d1</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">S1sd</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">S2mu</span> <span class="o">=</span> <span class="n">meta_d1</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">S2sd</span> <span class="o">=</span> <span class="n">S1sd</span> <span class="o">/</span> <span class="n">s</span>
+
+    <span class="n">mt1c1</span> <span class="o">=</span> <span class="n">meta_d1</span> <span class="o">*</span> <span class="p">(</span><span class="n">t1c1</span> <span class="o">/</span> <span class="n">d1</span><span class="p">)</span>
+
+    <span class="n">C_area_rS2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">mt1c1</span><span class="p">,</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span>
+    <span class="n">I_area_rS2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">mt1c1</span><span class="p">,</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span>
+
+    <span class="n">C_area_rS1</span> <span class="o">=</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">mt1c1</span><span class="p">,</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span>
+    <span class="n">I_area_rS1</span> <span class="o">=</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">mt1c1</span><span class="p">,</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span>
+
+    <span class="n">est_FAR2_rS2</span><span class="p">,</span> <span class="n">est_HR2_rS2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="n">est_FAR2_rS1</span><span class="p">,</span> <span class="n">est_HR2_rS1</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="n">t2c1_lower</span> <span class="o">=</span> <span class="n">t2c1</span><span class="p">[(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="n">t2c1_upper</span> <span class="o">=</span> <span class="n">t2c1</span><span class="p">[(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span>
+
+        <span class="n">I_FAR_area_rS2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">t2c1_upper</span><span class="p">,</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span>
+        <span class="n">C_HR_area_rS2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">t2c1_upper</span><span class="p">,</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span>
+
+        <span class="n">I_FAR_area_rS1</span> <span class="o">=</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">t2c1_lower</span><span class="p">,</span> <span class="n">S2mu</span><span class="p">,</span> <span class="n">S2sd</span><span class="p">)</span>
+        <span class="n">C_HR_area_rS1</span> <span class="o">=</span> <span class="n">fncdf</span><span class="p">(</span><span class="n">t2c1_lower</span><span class="p">,</span> <span class="n">S1mu</span><span class="p">,</span> <span class="n">S1sd</span><span class="p">)</span>
+
+        <span class="n">est_FAR2_rS2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">I_FAR_area_rS2</span> <span class="o">/</span> <span class="n">I_area_rS2</span><span class="p">)</span>
+        <span class="n">est_HR2_rS2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">C_HR_area_rS2</span> <span class="o">/</span> <span class="n">C_area_rS2</span><span class="p">)</span>
+
+        <span class="n">est_FAR2_rS1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">I_FAR_area_rS1</span> <span class="o">/</span> <span class="n">I_area_rS1</span><span class="p">)</span>
+        <span class="n">est_HR2_rS1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">C_HR_area_rS1</span> <span class="o">/</span> <span class="n">C_area_rS1</span><span class="p">)</span>
+
+    <span class="c1"># package output</span>
+    <span class="n">fit</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;dprime&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">d1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;meta_d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">s</span> <span class="o">*</span> <span class="n">meta_d1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;m_diff&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;meta_d&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;dprime&quot;</span><span class="p">]</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;m_ratio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;meta_d&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;dprime&quot;</span><span class="p">]</span>
+
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;meta_ca&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">mt1c1</span>
+
+    <span class="n">t2ca</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">t2c1</span><span class="p">)</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;t2ca_rS1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t2ca</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;t2ca_rS2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t2ca</span><span class="p">[(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:]</span>
+
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;d1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">d1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;meta_d1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">meta_d1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;s&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;meta_c1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mt1c1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;t2c1_rS1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t2c1</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;t2c1_rS2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t2c1</span><span class="p">[(</span><span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:]</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;logL&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">logL</span>
+
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;est_HR2_rS1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">est_HR2_rS1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;obs_HR2_rS1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs_HR2_rS1</span>
+
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;est_FAR2_rS1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">est_FAR2_rS1</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;obs_FAR2_rS1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs_FAR2_rS1</span>
+
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;est_HR2_rS2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">est_HR2_rS2</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;obs_HR2_rS2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs_HR2_rS2</span>
+
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;est_FAR2_rS2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">est_FAR2_rS2</span>
+    <span class="n">fit</span><span class="p">[</span><span class="s2">&quot;obs_FAR2_rS2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs_FAR2_rS2</span>
+
+    <span class="k">return</span> <span class="n">fit</span></div>
+</pre></div>
+
+            </article>
+            
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div id="searchbox"></div>
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+<div class="toc-item">
+  
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+          </div>
+        </footer>
+        
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  <footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2022-2023, Nicolas Legrand.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="theme-version">
+    Built with the
+    <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">
+        PyData Sphinx Theme
+    </a>
+    0.12.0.
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+</p>
+
+  </div>
+  
+</div>
+  </footer>
+  </body>
+</html>

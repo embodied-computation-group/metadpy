@@ -1,6 +1,0 @@
-﻿metadPy.utils.responseSimulation
-================================
-
-.. currentmodule:: metadPy.utils
-
-.. autofunction:: responseSimulation

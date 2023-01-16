@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from metadPy.bayesian import hmetad
+from metadpy.bayesian import hmetad
 
 sns.set_context("talk")
 ```
@@ -45,7 +45,7 @@ nR_S2 = np.array([2, 5, 15, 22, 33, 38, 40, 45])
 
 +++ {"id": "ZOop3bjebxbZ"}
 
-## Using metadPy
+## Using metadpy
 
 ```{code-cell} ipython3
 ---
@@ -93,7 +93,7 @@ az.plot_posterior(hmetad_df.meta_d.to_numpy(), ax=axs[0])
 az.plot_posterior(traces, var_names=["meta_d"], ax=axs[1])
 
 axs[0].set_ylabel("HMeta-d")
-axs[1].set_ylabel("metadPy")
+axs[1].set_ylabel("metadpy")
 
 plt.tight_layout()
 ```

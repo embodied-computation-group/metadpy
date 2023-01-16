@@ -1,0 +1,6 @@
+﻿metadpy.mle.fit\_metad
+======================
+
+.. currentmodule:: metadpy.mle
+
+.. autofunction:: fit_metad

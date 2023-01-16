@@ -1,0 +1,6 @@
+﻿metadpy.bayesian.extractParameters
+==================================
+
+.. currentmodule:: metadpy.bayesian
+
+.. autofunction:: extractParameters

@@ -1,6 +1,0 @@
-﻿metadPy.mle.metad
-=================
-
-.. currentmodule:: metadPy.mle
-
-.. autofunction:: metad

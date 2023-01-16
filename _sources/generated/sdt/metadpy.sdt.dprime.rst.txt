@@ -1,0 +1,6 @@
+﻿metadpy.sdt.dprime
+==================
+
+.. currentmodule:: metadpy.sdt
+
+.. autofunction:: dprime

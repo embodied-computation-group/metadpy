@@ -1,0 +1,6 @@
+﻿metadpy.utils.pairedResponseSimulation
+======================================
+
+.. currentmodule:: metadpy.utils
+
+.. autofunction:: pairedResponseSimulation

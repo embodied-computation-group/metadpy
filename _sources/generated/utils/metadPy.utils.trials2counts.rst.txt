@@ -1,6 +1,0 @@
-﻿metadPy.utils.trials2counts
-===========================
-
-.. currentmodule:: metadPy.utils
-
-.. autofunction:: trials2counts

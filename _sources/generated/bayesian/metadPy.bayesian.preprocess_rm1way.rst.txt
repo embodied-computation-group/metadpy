@@ -1,6 +1,0 @@
-﻿metadPy.bayesian.preprocess\_rm1way
-===================================
-
-.. currentmodule:: metadPy.bayesian
-
-.. autofunction:: preprocess_rm1way

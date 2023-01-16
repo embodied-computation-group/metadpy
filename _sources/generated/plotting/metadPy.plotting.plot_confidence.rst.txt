@@ -1,6 +1,0 @@
-﻿metadPy.plotting.plot\_confidence
-=================================
-
-.. currentmodule:: metadPy.plotting
-
-.. autofunction:: plot_confidence

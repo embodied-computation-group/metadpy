@@ -22,7 +22,7 @@ Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 import arviz as az
 import numpy as np
-from metadPy.bayesian import hmetad
+from metadpy.bayesian import hmetad
 ```
 
 +++ {"id": "fewer-sister"}
@@ -83,7 +83,7 @@ az.summary(traces, var_names=["c1", "d1", "meta_d", "cS1", "cS2"])
 
 ```{code-cell} ipython3
 %load_ext watermark
-%watermark -n -u -v -iv -w -p metadPy,pymc
+%watermark -n -u -v -iv -w -p metadpy,pymc
 ```
 
 ```{code-cell} ipython3

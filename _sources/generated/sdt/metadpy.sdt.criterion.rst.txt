@@ -1,0 +1,6 @@
+﻿metadpy.sdt.criterion
+=====================
+
+.. currentmodule:: metadpy.sdt
+
+.. autofunction:: criterion

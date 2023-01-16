@@ -1,6 +1,0 @@
-﻿metadPy.utils.type2\_SDT\_simuation
-===================================
-
-.. currentmodule:: metadPy.utils
-
-.. autofunction:: type2_SDT_simuation

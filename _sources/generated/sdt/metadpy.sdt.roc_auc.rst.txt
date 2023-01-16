@@ -1,0 +1,6 @@
+﻿metadpy.sdt.roc\_auc
+====================
+
+.. currentmodule:: metadpy.sdt
+
+.. autofunction:: roc_auc

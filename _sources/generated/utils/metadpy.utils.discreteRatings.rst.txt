@@ -1,0 +1,6 @@
+﻿metadpy.utils.discreteRatings
+=============================
+
+.. currentmodule:: metadpy.utils
+
+.. autofunction:: discreteRatings

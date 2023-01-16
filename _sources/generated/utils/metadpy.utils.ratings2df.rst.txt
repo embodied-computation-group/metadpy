@@ -1,0 +1,6 @@
+﻿metadpy.utils.ratings2df
+========================
+
+.. currentmodule:: metadpy.utils
+
+.. autofunction:: ratings2df

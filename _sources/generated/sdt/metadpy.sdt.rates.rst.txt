@@ -1,0 +1,6 @@
+﻿metadpy.sdt.rates
+=================
+
+.. currentmodule:: metadpy.sdt
+
+.. autofunction:: rates
