@@ -404,7 +404,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3a07d29bfeb092d17dc69b107375af46aaa2a8007dd94290523e36867e2becc3.png" src="../_images/3a07d29bfeb092d17dc69b107375af46aaa2a8007dd94290523e36867e2becc3.png" />
+<img alt="../_images/b5e3d27ce7c43d3b5fe3c1d2d646efe1b8b4a45e5f3c35ca4e118adcaa1c2f26.png" src="../_images/b5e3d27ce7c43d3b5fe3c1d2d646efe1b8b4a45e5f3c35ca4e118adcaa1c2f26.png" />
 </div>
 </div>
 </section>
@@ -423,7 +423,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/32adafda63af85bd15b86974057b4b8ee3ead6895e9933b7b14849d88084742e.png" src="../_images/32adafda63af85bd15b86974057b4b8ee3ead6895e9933b7b14849d88084742e.png" />
+<img alt="../_images/7185bbdae3a992fb890c53e2ee8140847da2f47e2aa7090bdd2b86293005a28f.png" src="../_images/7185bbdae3a992fb890c53e2ee8140847da2f47e2aa7090bdd2b86293005a28f.png" />
 </div>
 </div>
 <div class="admonition hint">
@@ -439,8 +439,8 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7886726682008934
-High confidence AUC: 0.6588083538083538
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7643410275502607
+High confidence AUC: 0.6678747361013371
 </pre></div>
 </div>
 </div>
@@ -525,7 +525,7 @@ High confidence AUC: 0.6588083538083538
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/6e5c8b8b7fedb498f0af58930153795b44b03b16fc9f8ee0847f8ee14e23a902.png" src="../_images/6e5c8b8b7fedb498f0af58930153795b44b03b16fc9f8ee0847f8ee14e23a902.png" />
+<img alt="../_images/f14c0898f07b7d395504258ed1ae9c695d04e2ba4cf6849c359f0d3652c21bd0.png" src="../_images/f14c0898f07b7d395504258ed1ae9c695d04e2ba4cf6849c359f0d3652c21bd0.png" />
 </div>
 </div>
 <p><strong>Now plot the same figures for the model estimation of type 2 performance with low metacognition:</strong></p>
@@ -543,7 +543,7 @@ High confidence AUC: 0.6588083538083538
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2258ba7c5e4a4288420600dc60b786228fcc2fa89f65db5b555034c2e288e3b3.png" src="../_images/2258ba7c5e4a4288420600dc60b786228fcc2fa89f65db5b555034c2e288e3b3.png" />
+<img alt="../_images/e66ade3fc09c3e676299e0919689b39eb3021d00ccba5a810c7649878ea14381.png" src="../_images/e66ade3fc09c3e676299e0919689b39eb3021d00ccba5a810c7649878ea14381.png" />
 </div>
 </div>
 <div class="highlight-{hint}You notranslate"><div class="highlight"><pre><span></span>
@@ -710,12 +710,12 @@ Next, run this whole section again to simulate new data from the same parameters
 <span class="g g-Whitespace">    </span><span class="mi">329</span>     <span class="k">if</span> <span class="n">subprob</span><span class="o">.</span><span class="n">terminate</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">330</span>         <span class="k">break</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:165,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
-<span class="g g-Whitespace">    </span><span class="mi">163</span> <span class="c1"># Compute tentative point</span>
-<span class="g g-Whitespace">    </span><span class="mi">164</span> <span class="n">x_soc</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">S</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">t</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">165</span> <span class="n">f_soc</span><span class="p">,</span> <span class="n">b_soc</span> <span class="o">=</span> <span class="n">fun_and_constr</span><span class="p">(</span><span class="n">x_soc</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">166</span> <span class="c1"># Recompute actual reduction</span>
-<span class="g g-Whitespace">    </span><span class="mi">167</span> <span class="n">merit_function_soc</span> <span class="o">=</span> <span class="n">f_soc</span> <span class="o">+</span> <span class="n">penalty</span><span class="o">*</span><span class="n">norm</span><span class="p">(</span><span class="n">b_soc</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:147,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">145</span> <span class="c1"># Evaluate function and constraints at trial point</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="n">x_next</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">S</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">147</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">b_next</span> <span class="o">=</span> <span class="n">fun_and_constr</span><span class="p">(</span><span class="n">x_next</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="c1"># Compute merit function at trial point</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="n">merit_function_next</span> <span class="o">=</span> <span class="n">f_next</span> <span class="o">+</span> <span class="n">penalty</span><span class="o">*</span><span class="n">norm</span><span class="p">(</span><span class="n">b_next</span><span class="p">)</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:82,</span> in <span class="ni">BarrierSubproblem.function_and_constraints</span><span class="nt">(self, z)</span>
 <span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slack</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>

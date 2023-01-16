@@ -17,203 +17,59 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-df = load_dataset("rm")
-df.head()
+%load_ext watermark
+%watermark -n -u -v -iv -w -p metadpy,jax,numpyro,pymc
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mgaierror[0m                                  Traceback (most recent call last)
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:1346[0m, in [0;36mAbstractHTTPHandler.do_open[0;34m(self, http_class, req, **http_conn_args)[0m
-[1;32m   1345[0m [38;5;28;01mtry[39;00m:
-[0;32m-> 1346[0m     [43mh[49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m[43mreq[49m[38;5;241;43m.[39;49m[43mget_method[49m[43m([49m[43m)[49m[43m,[49m[43m [49m[43mreq[49m[38;5;241;43m.[39;49m[43mselector[49m[43m,[49m[43m [49m[43mreq[49m[38;5;241;43m.[39;49m[43mdata[49m[43m,[49m[43m [49m[43mheaders[49m[43m,[49m
-[1;32m   1347[0m [43m              [49m[43mencode_chunked[49m[38;5;241;43m=[39;49m[43mreq[49m[38;5;241;43m.[39;49m[43mhas_header[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mTransfer-encoding[39;49m[38;5;124;43m'[39;49m[43m)[49m[43m)[49m
-[1;32m   1348[0m [38;5;28;01mexcept[39;00m [38;5;167;01mOSError[39;00m [38;5;28;01mas[39;00m err: [38;5;66;03m# timeout error[39;00m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [0;32mIn[12], line 1[0m
+[0;32m----> 1[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mload_ext[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mwatermark[39;49m[38;5;124;43m'[39;49m[43m)[49m
+[1;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mwatermark[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m-n -u -v -iv -w -p metadpy,jax,numpyro,pymc[39m[38;5;124m'[39m)
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:1285[0m, in [0;36mHTTPConnection.request[0;34m(self, method, url, body, headers, encode_chunked)[0m
-[1;32m   1284[0m [38;5;250m[39m[38;5;124;03m"""Send a complete request to the server."""[39;00m
-[0;32m-> 1285[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_send_request[49m[43m([49m[43mmethod[49m[43m,[49m[43m [49m[43murl[49m[43m,[49m[43m [49m[43mbody[49m[43m,[49m[43m [49m[43mheaders[49m[43m,[49m[43m [49m[43mencode_chunked[49m[43m)[49m
+File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/IPython/core/interactiveshell.py:2369[0m, in [0;36mInteractiveShell.run_line_magic[0;34m(self, magic_name, line, _stack_depth)[0m
+[1;32m   2367[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)
+[1;32m   2368[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mbuiltin_trap:
+[0;32m-> 2369[0m     result [38;5;241m=[39m [43mfn[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
+[1;32m   2370[0m [38;5;28;01mreturn[39;00m result
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:1331[0m, in [0;36mHTTPConnection._send_request[0;34m(self, method, url, body, headers, encode_chunked)[0m
-[1;32m   1330[0m     body [38;5;241m=[39m _encode(body, [38;5;124m'[39m[38;5;124mbody[39m[38;5;124m'[39m)
-[0;32m-> 1331[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mendheaders[49m[43m([49m[43mbody[49m[43m,[49m[43m [49m[43mencode_chunked[49m[38;5;241;43m=[39;49m[43mencode_chunked[49m[43m)[49m
+File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/IPython/core/magics/extension.py:33[0m, in [0;36mExtensionMagics.load_ext[0;34m(self, module_str)[0m
+[1;32m     31[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m module_str:
+[1;32m     32[0m     [38;5;28;01mraise[39;00m UsageError([38;5;124m'[39m[38;5;124mMissing module name.[39m[38;5;124m'[39m)
+[0;32m---> 33[0m res [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mshell[49m[38;5;241;43m.[39;49m[43mextension_manager[49m[38;5;241;43m.[39;49m[43mload_extension[49m[43m([49m[43mmodule_str[49m[43m)[49m
+[1;32m     35[0m [38;5;28;01mif[39;00m res [38;5;241m==[39m [38;5;124m'[39m[38;5;124malready loaded[39m[38;5;124m'[39m:
+[1;32m     36[0m     [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mThe [39m[38;5;132;01m%s[39;00m[38;5;124m extension is already loaded. To reload it, use:[39m[38;5;124m"[39m [38;5;241m%[39m module_str)
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:1280[0m, in [0;36mHTTPConnection.endheaders[0;34m(self, message_body, encode_chunked)[0m
-[1;32m   1279[0m     [38;5;28;01mraise[39;00m CannotSendHeader()
-[0;32m-> 1280[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_send_output[49m[43m([49m[43mmessage_body[49m[43m,[49m[43m [49m[43mencode_chunked[49m[38;5;241;43m=[39;49m[43mencode_chunked[49m[43m)[49m
+File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/IPython/core/extensions.py:76[0m, in [0;36mExtensionManager.load_extension[0;34m(self, module_str)[0m
+[1;32m     69[0m [38;5;250m[39m[38;5;124;03m"""Load an IPython extension by its module name.[39;00m
+[1;32m     70[0m 
+[1;32m     71[0m [38;5;124;03mReturns the string "already loaded" if the extension is already loaded,[39;00m
+[1;32m     72[0m [38;5;124;03m"no load function" if the module doesn't have a load_ipython_extension[39;00m
+[1;32m     73[0m [38;5;124;03mfunction, or None if it succeeded.[39;00m
+[1;32m     74[0m [38;5;124;03m"""[39;00m
+[1;32m     75[0m [38;5;28;01mtry[39;00m:
+[0;32m---> 76[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_load_extension[49m[43m([49m[43mmodule_str[49m[43m)[49m
+[1;32m     77[0m [38;5;28;01mexcept[39;00m [38;5;167;01mModuleNotFoundError[39;00m:
+[1;32m     78[0m     [38;5;28;01mif[39;00m module_str [38;5;129;01min[39;00m BUILTINS_EXTS:
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:1040[0m, in [0;36mHTTPConnection._send_output[0;34m(self, message_body, encode_chunked)[0m
-[1;32m   1039[0m [38;5;28;01mdel[39;00m [38;5;28mself[39m[38;5;241m.[39m_buffer[:]
-[0;32m-> 1040[0m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43msend[49m[43m([49m[43mmsg[49m[43m)[49m
-[1;32m   1042[0m [38;5;28;01mif[39;00m message_body [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[1;32m   1043[0m 
-[1;32m   1044[0m     [38;5;66;03m# create a consistent interface to message_body[39;00m
+File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/IPython/core/extensions.py:91[0m, in [0;36mExtensionManager._load_extension[0;34m(self, module_str)[0m
+[1;32m     89[0m [38;5;28;01mwith[39;00m [38;5;28mself[39m[38;5;241m.[39mshell[38;5;241m.[39mbuiltin_trap:
+[1;32m     90[0m     [38;5;28;01mif[39;00m module_str [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m sys[38;5;241m.[39mmodules:
+[0;32m---> 91[0m         mod [38;5;241m=[39m [43mimport_module[49m[43m([49m[43mmodule_str[49m[43m)[49m
+[1;32m     92[0m     mod [38;5;241m=[39m sys[38;5;241m.[39mmodules[module_str]
+[1;32m     93[0m     [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39m_call_load_ipython_extension(mod):
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:980[0m, in [0;36mHTTPConnection.send[0;34m(self, data)[0m
-[1;32m    979[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mauto_open:
-[0;32m--> 980[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mconnect[49m[43m([49m[43m)[49m
-[1;32m    981[0m [38;5;28;01melse[39;00m:
+File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/importlib/__init__.py:127[0m, in [0;36mimport_module[0;34m(name, package)[0m
+[1;32m    125[0m             [38;5;28;01mbreak[39;00m
+[1;32m    126[0m         level [38;5;241m+[39m[38;5;241m=[39m [38;5;241m1[39m
+[0;32m--> 127[0m [38;5;28;01mreturn[39;00m [43m_bootstrap[49m[38;5;241;43m.[39;49m[43m_gcd_import[49m[43m([49m[43mname[49m[43m[[49m[43mlevel[49m[43m:[49m[43m][49m[43m,[49m[43m [49m[43mpackage[49m[43m,[49m[43m [49m[43mlevel[49m[43m)[49m
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:1447[0m, in [0;36mHTTPSConnection.connect[0;34m(self)[0m
-[1;32m   1445[0m [38;5;124m"[39m[38;5;124mConnect to a host on a given (SSL) port.[39m[38;5;124m"[39m
-[0;32m-> 1447[0m [38;5;28;43msuper[39;49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mconnect[49m[43m([49m[43m)[49m
-[1;32m   1449[0m [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39m_tunnel_host:
+File [0;32m<frozen importlib._bootstrap>:1030[0m, in [0;36m_gcd_import[0;34m(name, package, level)[0m
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/http/client.py:946[0m, in [0;36mHTTPConnection.connect[0;34m(self)[0m
-[1;32m    945[0m [38;5;250m[39m[38;5;124;03m"""Connect to the host and port specified in __init__."""[39;00m
-[0;32m--> 946[0m [38;5;28mself[39m[38;5;241m.[39msock [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_create_connection[49m[43m([49m
-[1;32m    947[0m [43m    [49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mhost[49m[43m,[49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mport[49m[43m)[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mtimeout[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43msource_address[49m[43m)[49m
-[1;32m    948[0m [38;5;66;03m# Might fail in OSs that don't implement TCP_NODELAY[39;00m
+File [0;32m<frozen importlib._bootstrap>:1007[0m, in [0;36m_find_and_load[0;34m(name, import_)[0m
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/socket.py:823[0m, in [0;36mcreate_connection[0;34m(address, timeout, source_address)[0m
-[1;32m    822[0m err [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[0;32m--> 823[0m [38;5;28;01mfor[39;00m res [38;5;129;01min[39;00m [43mgetaddrinfo[49m[43m([49m[43mhost[49m[43m,[49m[43m [49m[43mport[49m[43m,[49m[43m [49m[38;5;241;43m0[39;49m[43m,[49m[43m [49m[43mSOCK_STREAM[49m[43m)[49m:
-[1;32m    824[0m     af, socktype, proto, canonname, sa [38;5;241m=[39m res
+File [0;32m<frozen importlib._bootstrap>:984[0m, in [0;36m_find_and_load_unlocked[0;34m(name, import_)[0m
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/socket.py:954[0m, in [0;36mgetaddrinfo[0;34m(host, port, family, type, proto, flags)[0m
-[1;32m    953[0m addrlist [38;5;241m=[39m []
-[0;32m--> 954[0m [38;5;28;01mfor[39;00m res [38;5;129;01min[39;00m [43m_socket[49m[38;5;241;43m.[39;49m[43mgetaddrinfo[49m[43m([49m[43mhost[49m[43m,[49m[43m [49m[43mport[49m[43m,[49m[43m [49m[43mfamily[49m[43m,[49m[43m [49m[38;5;28;43mtype[39;49m[43m,[49m[43m [49m[43mproto[49m[43m,[49m[43m [49m[43mflags[49m[43m)[49m:
-[1;32m    955[0m     af, socktype, proto, canonname, sa [38;5;241m=[39m res
-
-[0;31mgaierror[0m: [Errno -3] Temporary failure in name resolution
-
-During handling of the above exception, another exception occurred:
-
-[0;31mURLError[0m                                  Traceback (most recent call last)
-Cell [0;32mIn[6], line 1[0m
-[0;32m----> 1[0m df [38;5;241m=[39m [43mload_dataset[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mrm[39;49m[38;5;124;43m"[39;49m[43m)[49m
-[1;32m      2[0m df[38;5;241m.[39mhead()
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/metadpy/datasets/__init__.py:22[0m, in [0;36mload_dataset[0;34m(dataset)[0m
-[1;32m      9[0m [38;5;250m[39m[38;5;124;03m"""Load simulated dataset[39;00m
-[1;32m     10[0m 
-[1;32m     11[0m [38;5;124;03mParameters[39;00m
-[0;32m   (...)[0m
-[1;32m     19[0m [38;5;124;03m    Pandas dataframe.[39;00m
-[1;32m     20[0m [38;5;124;03m"""[39;00m
-[1;32m     21[0m path [38;5;241m=[39m [38;5;124m"[39m[38;5;124mhttps://embodied-computation-group/metadpy/raw/[39m[38;5;124m"[39m [38;5;124m"[39m[38;5;124mmaster/metadpy/datasets/[39m[38;5;124m"[39m
-[0;32m---> 22[0m [38;5;28;01mreturn[39;00m [43mpd[49m[38;5;241;43m.[39;49m[43mread_csv[49m[43m([49m[43mop[49m[38;5;241;43m.[39;49m[43mjoin[49m[43m([49m[43mpath[49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mrm.txt[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/util/_decorators.py:211[0m, in [0;36mdeprecate_kwarg.<locals>._deprecate_kwarg.<locals>.wrapper[0;34m(*args, **kwargs)[0m
-[1;32m    209[0m     [38;5;28;01melse[39;00m:
-[1;32m    210[0m         kwargs[new_arg_name] [38;5;241m=[39m new_arg_value
-[0;32m--> 211[0m [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/util/_decorators.py:331[0m, in [0;36mdeprecate_nonkeyword_arguments.<locals>.decorate.<locals>.wrapper[0;34m(*args, **kwargs)[0m
-[1;32m    325[0m [38;5;28;01mif[39;00m [38;5;28mlen[39m(args) [38;5;241m>[39m num_allow_args:
-[1;32m    326[0m     warnings[38;5;241m.[39mwarn(
-[1;32m    327[0m         msg[38;5;241m.[39mformat(arguments[38;5;241m=[39m_format_argument_list(allow_args)),
-[1;32m    328[0m         [38;5;167;01mFutureWarning[39;00m,
-[1;32m    329[0m         stacklevel[38;5;241m=[39mfind_stack_level(),
-[1;32m    330[0m     )
-[0;32m--> 331[0m [38;5;28;01mreturn[39;00m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:950[0m, in [0;36mread_csv[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, squeeze, prefix, mangle_dupe_cols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, error_bad_lines, warn_bad_lines, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options)[0m
-[1;32m    935[0m kwds_defaults [38;5;241m=[39m _refine_defaults_read(
-[1;32m    936[0m     dialect,
-[1;32m    937[0m     delimiter,
-[0;32m   (...)[0m
-[1;32m    946[0m     defaults[38;5;241m=[39m{[38;5;124m"[39m[38;5;124mdelimiter[39m[38;5;124m"[39m: [38;5;124m"[39m[38;5;124m,[39m[38;5;124m"[39m},
-[1;32m    947[0m )
-[1;32m    948[0m kwds[38;5;241m.[39mupdate(kwds_defaults)
-[0;32m--> 950[0m [38;5;28;01mreturn[39;00m [43m_read[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[43mkwds[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:605[0m, in [0;36m_read[0;34m(filepath_or_buffer, kwds)[0m
-[1;32m    602[0m _validate_names(kwds[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mnames[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m))
-[1;32m    604[0m [38;5;66;03m# Create the parser.[39;00m
-[0;32m--> 605[0m parser [38;5;241m=[39m [43mTextFileReader[49m[43m([49m[43mfilepath_or_buffer[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwds[49m[43m)[49m
-[1;32m    607[0m [38;5;28;01mif[39;00m chunksize [38;5;129;01mor[39;00m iterator:
-[1;32m    608[0m     [38;5;28;01mreturn[39;00m parser
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:1442[0m, in [0;36mTextFileReader.__init__[0;34m(self, f, engine, **kwds)[0m
-[1;32m   1439[0m     [38;5;28mself[39m[38;5;241m.[39moptions[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m] [38;5;241m=[39m kwds[[38;5;124m"[39m[38;5;124mhas_index_names[39m[38;5;124m"[39m]
-[1;32m   1441[0m [38;5;28mself[39m[38;5;241m.[39mhandles: IOHandles [38;5;241m|[39m [38;5;28;01mNone[39;00m [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[0;32m-> 1442[0m [38;5;28mself[39m[38;5;241m.[39m_engine [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_make_engine[49m[43m([49m[43mf[49m[43m,[49m[43m [49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mengine[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/parsers/readers.py:1735[0m, in [0;36mTextFileReader._make_engine[0;34m(self, f, engine)[0m
-[1;32m   1733[0m     [38;5;28;01mif[39;00m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m [38;5;129;01mnot[39;00m [38;5;129;01min[39;00m mode:
-[1;32m   1734[0m         mode [38;5;241m+[39m[38;5;241m=[39m [38;5;124m"[39m[38;5;124mb[39m[38;5;124m"[39m
-[0;32m-> 1735[0m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;241m=[39m [43mget_handle[49m[43m([49m
-[1;32m   1736[0m [43m    [49m[43mf[49m[43m,[49m
-[1;32m   1737[0m [43m    [49m[43mmode[49m[43m,[49m
-[1;32m   1738[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1739[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mcompression[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1740[0m [43m    [49m[43mmemory_map[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mmemory_map[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mFalse[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1741[0m [43m    [49m[43mis_text[49m[38;5;241;43m=[39;49m[43mis_text[49m[43m,[49m
-[1;32m   1742[0m [43m    [49m[43merrors[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mencoding_errors[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;124;43m"[39;49m[38;5;124;43mstrict[39;49m[38;5;124;43m"[39;49m[43m)[49m[43m,[49m
-[1;32m   1743[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43moptions[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[38;5;124;43m"[39;49m[38;5;124;43mstorage_options[39;49m[38;5;124;43m"[39;49m[43m,[49m[43m [49m[38;5;28;43;01mNone[39;49;00m[43m)[49m[43m,[49m
-[1;32m   1744[0m [43m[49m[43m)[49m
-[1;32m   1745[0m [38;5;28;01massert[39;00m [38;5;28mself[39m[38;5;241m.[39mhandles [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m
-[1;32m   1746[0m f [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mhandles[38;5;241m.[39mhandle
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/common.py:713[0m, in [0;36mget_handle[0;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)[0m
-[1;32m    710[0m     codecs[38;5;241m.[39mlookup_error(errors)
-[1;32m    712[0m [38;5;66;03m# open URLs[39;00m
-[0;32m--> 713[0m ioargs [38;5;241m=[39m [43m_get_filepath_or_buffer[49m[43m([49m
-[1;32m    714[0m [43m    [49m[43mpath_or_buf[49m[43m,[49m
-[1;32m    715[0m [43m    [49m[43mencoding[49m[38;5;241;43m=[39;49m[43mencoding[49m[43m,[49m
-[1;32m    716[0m [43m    [49m[43mcompression[49m[38;5;241;43m=[39;49m[43mcompression[49m[43m,[49m
-[1;32m    717[0m [43m    [49m[43mmode[49m[38;5;241;43m=[39;49m[43mmode[49m[43m,[49m
-[1;32m    718[0m [43m    [49m[43mstorage_options[49m[38;5;241;43m=[39;49m[43mstorage_options[49m[43m,[49m
-[1;32m    719[0m [43m[49m[43m)[49m
-[1;32m    721[0m handle [38;5;241m=[39m ioargs[38;5;241m.[39mfilepath_or_buffer
-[1;32m    722[0m handles: [38;5;28mlist[39m[BaseBuffer]
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/common.py:363[0m, in [0;36m_get_filepath_or_buffer[0;34m(filepath_or_buffer, encoding, compression, mode, storage_options)[0m
-[1;32m    361[0m [38;5;66;03m# assuming storage_options is to be interpreted as headers[39;00m
-[1;32m    362[0m req_info [38;5;241m=[39m urllib[38;5;241m.[39mrequest[38;5;241m.[39mRequest(filepath_or_buffer, headers[38;5;241m=[39mstorage_options)
-[0;32m--> 363[0m [38;5;28;01mwith[39;00m [43murlopen[49m[43m([49m[43mreq_info[49m[43m)[49m [38;5;28;01mas[39;00m req:
-[1;32m    364[0m     content_encoding [38;5;241m=[39m req[38;5;241m.[39mheaders[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mContent-Encoding[39m[38;5;124m"[39m, [38;5;28;01mNone[39;00m)
-[1;32m    365[0m     [38;5;28;01mif[39;00m content_encoding [38;5;241m==[39m [38;5;124m"[39m[38;5;124mgzip[39m[38;5;124m"[39m:
-[1;32m    366[0m         [38;5;66;03m# Override compression based on Content-Encoding header[39;00m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/pandas/io/common.py:265[0m, in [0;36murlopen[0;34m(*args, **kwargs)[0m
-[1;32m    259[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
-[1;32m    260[0m [38;5;124;03mLazy-import wrapper for stdlib urlopen, as that imports a big chunk of[39;00m
-[1;32m    261[0m [38;5;124;03mthe stdlib.[39;00m
-[1;32m    262[0m [38;5;124;03m"""[39;00m
-[1;32m    263[0m [38;5;28;01mimport[39;00m [38;5;21;01murllib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mrequest[39;00m
-[0;32m--> 265[0m [38;5;28;01mreturn[39;00m [43murllib[49m[38;5;241;43m.[39;49m[43mrequest[49m[38;5;241;43m.[39;49m[43murlopen[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:214[0m, in [0;36murlopen[0;34m(url, data, timeout, cafile, capath, cadefault, context)[0m
-[1;32m    212[0m [38;5;28;01melse[39;00m:
-[1;32m    213[0m     opener [38;5;241m=[39m _opener
-[0;32m--> 214[0m [38;5;28;01mreturn[39;00m [43mopener[49m[38;5;241;43m.[39;49m[43mopen[49m[43m([49m[43murl[49m[43m,[49m[43m [49m[43mdata[49m[43m,[49m[43m [49m[43mtimeout[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:517[0m, in [0;36mOpenerDirector.open[0;34m(self, fullurl, data, timeout)[0m
-[1;32m    514[0m     req [38;5;241m=[39m meth(req)
-[1;32m    516[0m sys[38;5;241m.[39maudit([38;5;124m'[39m[38;5;124murllib.Request[39m[38;5;124m'[39m, req[38;5;241m.[39mfull_url, req[38;5;241m.[39mdata, req[38;5;241m.[39mheaders, req[38;5;241m.[39mget_method())
-[0;32m--> 517[0m response [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_open[49m[43m([49m[43mreq[49m[43m,[49m[43m [49m[43mdata[49m[43m)[49m
-[1;32m    519[0m [38;5;66;03m# post-process response[39;00m
-[1;32m    520[0m meth_name [38;5;241m=[39m protocol[38;5;241m+[39m[38;5;124m"[39m[38;5;124m_response[39m[38;5;124m"[39m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:534[0m, in [0;36mOpenerDirector._open[0;34m(self, req, data)[0m
-[1;32m    531[0m     [38;5;28;01mreturn[39;00m result
-[1;32m    533[0m protocol [38;5;241m=[39m req[38;5;241m.[39mtype
-[0;32m--> 534[0m result [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_call_chain[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mhandle_open[49m[43m,[49m[43m [49m[43mprotocol[49m[43m,[49m[43m [49m[43mprotocol[49m[43m [49m[38;5;241;43m+[39;49m
-[1;32m    535[0m [43m                          [49m[38;5;124;43m'[39;49m[38;5;124;43m_open[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[43mreq[49m[43m)[49m
-[1;32m    536[0m [38;5;28;01mif[39;00m result:
-[1;32m    537[0m     [38;5;28;01mreturn[39;00m result
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:494[0m, in [0;36mOpenerDirector._call_chain[0;34m(self, chain, kind, meth_name, *args)[0m
-[1;32m    492[0m [38;5;28;01mfor[39;00m handler [38;5;129;01min[39;00m handlers:
-[1;32m    493[0m     func [38;5;241m=[39m [38;5;28mgetattr[39m(handler, meth_name)
-[0;32m--> 494[0m     result [38;5;241m=[39m [43mfunc[49m[43m([49m[38;5;241;43m*[39;49m[43margs[49m[43m)[49m
-[1;32m    495[0m     [38;5;28;01mif[39;00m result [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-[1;32m    496[0m         [38;5;28;01mreturn[39;00m result
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:1389[0m, in [0;36mHTTPSHandler.https_open[0;34m(self, req)[0m
-[1;32m   1388[0m [38;5;28;01mdef[39;00m [38;5;21mhttps_open[39m([38;5;28mself[39m, req):
-[0;32m-> 1389[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mdo_open[49m[43m([49m[43mhttp[49m[38;5;241;43m.[39;49m[43mclient[49m[38;5;241;43m.[39;49m[43mHTTPSConnection[49m[43m,[49m[43m [49m[43mreq[49m[43m,[49m
-[1;32m   1390[0m [43m        [49m[43mcontext[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_context[49m[43m,[49m[43m [49m[43mcheck_hostname[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_check_hostname[49m[43m)[49m
-
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/urllib/request.py:1349[0m, in [0;36mAbstractHTTPHandler.do_open[0;34m(self, http_class, req, **http_conn_args)[0m
-[1;32m   1346[0m         h[38;5;241m.[39mrequest(req[38;5;241m.[39mget_method(), req[38;5;241m.[39mselector, req[38;5;241m.[39mdata, headers,
-[1;32m   1347[0m                   encode_chunked[38;5;241m=[39mreq[38;5;241m.[39mhas_header([38;5;124m'[39m[38;5;124mTransfer-encoding[39m[38;5;124m'[39m))
-[1;32m   1348[0m     [38;5;28;01mexcept[39;00m [38;5;167;01mOSError[39;00m [38;5;28;01mas[39;00m err: [38;5;66;03m# timeout error[39;00m
-[0;32m-> 1349[0m         [38;5;28;01mraise[39;00m URLError(err)
-[1;32m   1350[0m     r [38;5;241m=[39m h[38;5;241m.[39mgetresponse()
-[1;32m   1351[0m [38;5;28;01mexcept[39;00m:
-
-[0;31mURLError[0m: <urlopen error [Errno -3] Temporary failure in name resolution>
-URLError: <urlopen error [Errno -3] Temporary failure in name resolution>
+[0;31mModuleNotFoundError[0m: No module named 'watermark'
+ModuleNotFoundError: No module named 'watermark'
 
