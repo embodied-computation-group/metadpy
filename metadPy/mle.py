@@ -47,7 +47,11 @@ erf = get("erf", float64(float64))
 
 
 @vectorize(_signatures)
-def norm_cdf(x, mu, sigma):
+def norm_cdf(
+    x: Union[float, np.ndarray],
+    mu: Union[float, np.ndarray],
+    sigma: Union[float, np.ndarray],
+):
     """
     Evaluate cumulative distribution function of normal distribution.
     """
