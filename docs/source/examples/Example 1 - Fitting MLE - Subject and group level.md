@@ -15,6 +15,7 @@ kernelspec:
 +++ {"id": "copyrighted-border"}
 
 (example_1)=
+# Fitting at the subject level
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 ```{code-cell} ipython3
@@ -35,10 +36,6 @@ sns.set_context("talk")
 In this notebook, we are going to estimate meta-*d'* using Maximum Likelihood Estimation ([MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)) {cite:p}`fleming:2014,maniscalo:2014,maniscalo:2012` using the function implemented in [metadpy](https://github.com/LegrandNico/metadpy). This function is directly adapted from the transcription of the Matlab `fit_meta_d_MLE.m` by Alan Lee that can be retrieved [here](http://www.columbia.edu/~bsm2105/type2sdt/).
 
 We are going to see, however, that [metadpy](https://github.com/LegrandNico/metadpy) greatly simplifies the preprocessing of raw data, letting the user fit the model for many participants/groups/conditions from the results data frame in a single command call. Another advantage here is that the python code supporting the model fitting is optimized using [Numba](http://numba.pydata.org/), which greatly improves its performance.
-
-+++ {"id": "unable-tattoo"}
-
-# Fitting at the subject level
 
 +++ {"id": "current-valuation"}
 
@@ -207,7 +204,7 @@ plt.tight_layout()
 sns.despine()
 ```
 
-# Watermark
+## Watermark
 
 ```{code-cell} ipython3
 %load_ext watermark
