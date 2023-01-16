@@ -14,7 +14,8 @@ kernelspec:
 
 +++ {"id": "regulated-swiss"}
 
-(example_2)=  
+(example_2)=
+# Fitting data at the subject level
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 ```{code-cell} ipython3
@@ -24,10 +25,6 @@ import arviz as az
 import numpy as np
 from metadpy.bayesian import hmetad
 ```
-
-+++ {"id": "fewer-sister"}
-
-# Fitting data at the subject level
 
 +++ {"id": "operating-aerospace"}
 
@@ -78,7 +75,7 @@ outputId: 174b4bec-f2a1-4f33-e7e4-fbc91924f1b3
 az.summary(traces, var_names=["c1", "d1", "meta_d", "cS1", "cS2"])
 ```
 
-# Watermark
+## Watermark
 
 ```{code-cell} ipython3
 %load_ext watermark

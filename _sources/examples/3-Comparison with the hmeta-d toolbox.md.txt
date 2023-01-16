@@ -15,6 +15,7 @@ kernelspec:
 +++ {"id": "a3o1EnPLWeAv"}
 
 (tutorial_3)=
+# Single subject
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial
 
@@ -30,10 +31,6 @@ from metadpy.bayesian import hmetad
 
 sns.set_context("talk")
 ```
-
-+++ {"id": "rsAIxeFyWijX"}
-
-# Single subject
 
 ```{code-cell} ipython3
 :id: v8xhAXePWm2Y

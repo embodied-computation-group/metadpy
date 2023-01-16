@@ -12,7 +12,8 @@ kernelspec:
   name: python3
 ---
 
-(tutorial_2)=  
+(tutorial_2)=
+# Fitting the model
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial
 
@@ -29,10 +30,6 @@ from metadpy.utils import (responseSimulation, trials2counts,
 
 sns.set_context("talk")
 ```
-
-# Fitting the model
-
-+++
 
 ## Calculating metacognition: the type-2 ROC curve
 

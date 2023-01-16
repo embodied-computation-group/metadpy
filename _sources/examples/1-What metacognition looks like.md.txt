@@ -13,7 +13,8 @@ kernelspec:
 ---
 
 (tutorial_1)=
-Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
+# What metacognition looks like?
+Author: Nicolas Legrand <nicolas.legrand@cas.au.dk>  
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial
 
 ```{code-cell} ipython3
@@ -24,10 +25,6 @@ from metadpy.utils import type2_SDT_simuation
 
 sns.set_context("talk")
 ```
-
-# What metacognition looks like?
-
-+++
 
 ## Simulating ratings
 
