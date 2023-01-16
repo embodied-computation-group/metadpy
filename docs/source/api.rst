@@ -19,8 +19,6 @@ Bayesian
 
     hmetad
     extractParameters
-    preprocess_group
-    preprocess_rm1way
 
 MLE
 ---

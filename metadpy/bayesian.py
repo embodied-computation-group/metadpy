@@ -277,9 +277,9 @@ def hmetad(
     # Group level
     elif (within is None) & (between is None) & (subject is not None):
 
-        pymcData = preprocess_group(
-            data, subject, stimuli, accuracy, confidence, nRatings
-        )
+        # pymcData = preprocess_group(
+        #     data, subject, stimuli, accuracy, confidence, nRatings
+        # )
 
         raise ValueError(
             "Invalid backend provided - This model is not implemented yet."
@@ -289,9 +289,9 @@ def hmetad(
     # Repeated-measures
     elif (within is not None) & (between is None) & (subject is not None):
 
-        pymcData = preprocess_rm1way(
-            data, subject, within, stimuli, accuracy, confidence, nRatings
-        )
+        # pymcData = preprocess_rm1way(
+        #     data, subject, within, stimuli, accuracy, confidence, nRatings
+        # )
 
         raise ValueError("Invalid backend provided - This model is not implemented yet")
 
@@ -410,187 +410,188 @@ def extractParameters(
     return data
 
 
-def preprocess_group(
-    data: pd.DataFrame,
-    subject: str,
-    stimuli: str,
-    accuracy: str,
-    confidence: str,
-    nRatings: int,
-) -> Dict:
-    """Preprocess group data.
+# TODO: when implementing group level fitting, the following wrapper will be usefull.
+# def preprocess_group(
+#     data: pd.DataFrame,
+#     subject: str,
+#     stimuli: str,
+#     accuracy: str,
+#     confidence: str,
+#     nRatings: int,
+# ) -> Dict:
+#     """Preprocess group data.
 
-    Parameters
-    ----------
-    data : :py:class:`pandas.DataFrame` or None
-        Dataframe. Note that this function can also directly be used as a
-        Pandas method, in which case this argument is no longer needed.
-    subject : string or None
-        Name of column containing the subject identifier (only required if a
-        within-subject or a between-subject factor is provided).
-    stimuli : string or None
-        Name of the column containing the stimuli.
-    accuracy : string or None
-        Name of the columns containing the accuracy.
-    confidence : string or None
-        Name of the column containing the confidence ratings.
-    nRatings : int or None
-        Number of discrete ratings. If a continuous rating scale was used, and
-        the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
+#     Parameters
+#     ----------
+#     data : :py:class:`pandas.DataFrame` or None
+#         Dataframe. Note that this function can also directly be used as a
+#         Pandas method, in which case this argument is no longer needed.
+#     subject : string or None
+#         Name of column containing the subject identifier (only required if a
+#         within-subject or a between-subject factor is provided).
+#     stimuli : string or None
+#         Name of the column containing the stimuli.
+#     accuracy : string or None
+#         Name of the columns containing the accuracy.
+#     confidence : string or None
+#         Name of the column containing the confidence ratings.
+#     nRatings : int or None
+#         Number of discrete ratings. If a continuous rating scale was used, and
+#         the number of unique ratings does not match `nRatings`, will convert to
+#         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
 
-    Return
-    ------
-    pymcData : Dict
+#     Return
+#     ------
+#     pymcData : Dict
 
-    """
-    pymcData = {
-        "d1": [],
-        "c1": [],
-        "nSubj": data[subject].nunique(),
-        "subID": np.arange(data[subject].nunique(), dtype="int"),
-        "hits": [],
-        "falsealarms": [],
-        "s": [],
-        "n": [],
-        "counts": [],
-        "nRatings": nRatings,
-        "Tol": 1e-05,
-        "cr": [],
-        "m": [],
-    }
+#     """
+#     pymcData = {
+#         "d1": [],
+#         "c1": [],
+#         "nSubj": data[subject].nunique(),
+#         "subID": np.arange(data[subject].nunique(), dtype="int"),
+#         "hits": [],
+#         "falsealarms": [],
+#         "s": [],
+#         "n": [],
+#         "counts": [],
+#         "nRatings": nRatings,
+#         "Tol": 1e-05,
+#         "cr": [],
+#         "m": [],
+#     }
 
-    for sub in data[subject].unique():
-        nR_S1, nR_S2 = trials2counts(
-            data=data[data[subject] == sub],
-            stimuli=stimuli,
-            accuracy=accuracy,
-            confidence=confidence,
-            nRatings=nRatings,
-        )
+#     for sub in data[subject].unique():
+#         nR_S1, nR_S2 = trials2counts(
+#             data=data[data[subject] == sub],
+#             stimuli=stimuli,
+#             accuracy=accuracy,
+#             confidence=confidence,
+#             nRatings=nRatings,
+#         )
 
-        this_data = extractParameters(nR_S1, nR_S2)
-        pymcData["d1"].append(this_data["d1"])
-        pymcData["c1"].append(this_data["c1"])
-        pymcData["s"].append(this_data["S"])
-        pymcData["n"].append(this_data["N"])
-        pymcData["m"].append(this_data["M"])
-        pymcData["cr"].append(this_data["CR"])
-        pymcData["counts"].append(this_data["counts"])
-        pymcData["hits"].append(this_data["H"])
-        pymcData["falsealarms"].append(this_data["FA"])
+#         this_data = extractParameters(nR_S1, nR_S2)
+#         pymcData["d1"].append(this_data["d1"])
+#         pymcData["c1"].append(this_data["c1"])
+#         pymcData["s"].append(this_data["S"])
+#         pymcData["n"].append(this_data["N"])
+#         pymcData["m"].append(this_data["M"])
+#         pymcData["cr"].append(this_data["CR"])
+#         pymcData["counts"].append(this_data["counts"])
+#         pymcData["hits"].append(this_data["H"])
+#         pymcData["falsealarms"].append(this_data["FA"])
 
-    pymcData["d1"] = np.array(pymcData["d1"], dtype="float")
-    pymcData["c1"] = np.array(pymcData["c1"], dtype="float")
-    pymcData["s"] = np.array(pymcData["s"], dtype="int")
-    pymcData["n"] = np.array(pymcData["n"], dtype="int")
-    pymcData["m"] = np.array(pymcData["m"], dtype="int")
-    pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
-    pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
-    pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
-    pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
-    pymcData["nSubj"] = data[subject].nunique()
-    pymcData["subID"] = np.arange(pymcData["nSubj"], dtype="int")
+#     pymcData["d1"] = np.array(pymcData["d1"], dtype="float")
+#     pymcData["c1"] = np.array(pymcData["c1"], dtype="float")
+#     pymcData["s"] = np.array(pymcData["s"], dtype="int")
+#     pymcData["n"] = np.array(pymcData["n"], dtype="int")
+#     pymcData["m"] = np.array(pymcData["m"], dtype="int")
+#     pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
+#     pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
+#     pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
+#     pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
+#     pymcData["nSubj"] = data[subject].nunique()
+#     pymcData["subID"] = np.arange(pymcData["nSubj"], dtype="int")
 
-    return pymcData
+#     return pymcData
 
 
-def preprocess_rm1way(
-    data: pd.DataFrame,
-    subject: str,
-    stimuli: str,
-    within: str,
-    accuracy: str,
-    confidence: str,
-    nRatings: int,
-) -> Dict:
-    """Preprocess repeated measures data.
+# def preprocess_rm1way(
+#     data: pd.DataFrame,
+#     subject: str,
+#     stimuli: str,
+#     within: str,
+#     accuracy: str,
+#     confidence: str,
+#     nRatings: int,
+# ) -> Dict:
+#     """Preprocess repeated measures data.
 
-    Parameters
-    ----------
-    data : :py:class:`pandas.DataFrame`
-        Dataframe. Note that this function can also directly be used as a
-        Pandas method, in which case this argument is no longer needed.
-    subject : string
-        Name of column containing the subject identifier (only required if a
-        within-subject or a between-subject factor is provided).
-    stimuli : string
-        Name of the column containing the stimuli.
-    within : string
-        Name of column containing the within factor (condition comparison).
-    accuracy : string
-        Name of the columns containing the accuracy.
-    confidence : string
-        Name of the column containing the confidence ratings.
-    nRatings : int
-        Number of discrete ratings. If a continuous rating scale was used, and
-        the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
+#     Parameters
+#     ----------
+#     data : :py:class:`pandas.DataFrame`
+#         Dataframe. Note that this function can also directly be used as a
+#         Pandas method, in which case this argument is no longer needed.
+#     subject : string
+#         Name of column containing the subject identifier (only required if a
+#         within-subject or a between-subject factor is provided).
+#     stimuli : string
+#         Name of the column containing the stimuli.
+#     within : string
+#         Name of column containing the within factor (condition comparison).
+#     accuracy : string
+#         Name of the columns containing the accuracy.
+#     confidence : string
+#         Name of the column containing the confidence ratings.
+#     nRatings : int
+#         Number of discrete ratings. If a continuous rating scale was used, and
+#         the number of unique ratings does not match `nRatings`, will convert to
+#         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
 
-    Return
-    ------
-    pymcData : Dict
+#     Return
+#     ------
+#     pymcData : Dict
 
-    """
-    pymcData = {
-        "nSubj": data[subject].nunique(),
-        "subID": [],
-        "nCond": data[within].nunique(),
-        "condition": [],
-        "hits": [],
-        "falsealarms": [],
-        "s": [],
-        "n": [],
-        "nRatings": nRatings,
-        "Tol": 1e-05,
-        "cr": [],
-        "m": [],
-    }
-    pymcData["counts"] = np.zeros(
-        (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"] * 4)
-    )
-    pymcData["hits"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["falsealarms"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["s"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["n"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["m"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["cr"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["condition"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["subID"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["c1"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
-    pymcData["d1"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     """
+#     pymcData = {
+#         "nSubj": data[subject].nunique(),
+#         "subID": [],
+#         "nCond": data[within].nunique(),
+#         "condition": [],
+#         "hits": [],
+#         "falsealarms": [],
+#         "s": [],
+#         "n": [],
+#         "nRatings": nRatings,
+#         "Tol": 1e-05,
+#         "cr": [],
+#         "m": [],
+#     }
+#     pymcData["counts"] = np.zeros(
+#         (pymcData["nSubj"], pymcData["nCond"], pymcData["nRatings"] * 4)
+#     )
+#     pymcData["hits"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["falsealarms"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["s"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["n"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["m"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["cr"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["condition"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["subID"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["c1"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
+#     pymcData["d1"] = np.zeros((pymcData["nSubj"], pymcData["nCond"]))
 
-    for nSub, sub in enumerate(data[subject].unique()):
-        for nCond, cond in enumerate(data[within].unique()):
-            nR_S1, nR_S2 = trials2counts(
-                data=data[(data[subject] == sub) & (data[within] == cond)],
-                stimuli=stimuli,
-                accuracy=accuracy,
-                confidence=confidence,
-                nRatings=nRatings,
-            )
+#     for nSub, sub in enumerate(data[subject].unique()):
+#         for nCond, cond in enumerate(data[within].unique()):
+#             nR_S1, nR_S2 = trials2counts(
+#                 data=data[(data[subject] == sub) & (data[within] == cond)],
+#                 stimuli=stimuli,
+#                 accuracy=accuracy,
+#                 confidence=confidence,
+#                 nRatings=nRatings,
+#             )
 
-            this_data = extractParameters(nR_S1, nR_S2)
-            pymcData["subID"][nSub, nCond] = nSub
-            pymcData["condition"][nSub, nCond] = nCond
-            pymcData["s"][nSub, nCond] = this_data["S"]
-            pymcData["n"][nSub, nCond] = this_data["N"]
-            pymcData["m"][nSub, nCond] = this_data["M"]
-            pymcData["cr"][nSub, nCond] = this_data["CR"]
-            pymcData["hits"][nSub, nCond] = this_data["H"]
-            pymcData["falsealarms"][nSub, nCond] = this_data["FA"]
-            pymcData["c1"][nSub, nCond] = this_data["c1"]
-            pymcData["d1"][nSub, nCond] = this_data["d1"]
-            pymcData["counts"][nSub, nCond, :] = this_data["counts"]
+#             this_data = extractParameters(nR_S1, nR_S2)
+#             pymcData["subID"][nSub, nCond] = nSub
+#             pymcData["condition"][nSub, nCond] = nCond
+#             pymcData["s"][nSub, nCond] = this_data["S"]
+#             pymcData["n"][nSub, nCond] = this_data["N"]
+#             pymcData["m"][nSub, nCond] = this_data["M"]
+#             pymcData["cr"][nSub, nCond] = this_data["CR"]
+#             pymcData["hits"][nSub, nCond] = this_data["H"]
+#             pymcData["falsealarms"][nSub, nCond] = this_data["FA"]
+#             pymcData["c1"][nSub, nCond] = this_data["c1"]
+#             pymcData["d1"][nSub, nCond] = this_data["d1"]
+#             pymcData["counts"][nSub, nCond, :] = this_data["counts"]
 
-    pymcData["subID"] = np.array(pymcData["subID"], dtype="int")
-    pymcData["condition"] = np.array(pymcData["condition"], dtype="int")
-    pymcData["s"] = np.array(pymcData["s"], dtype="int")
-    pymcData["n"] = np.array(pymcData["n"], dtype="int")
-    pymcData["m"] = np.array(pymcData["m"], dtype="int")
-    pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
-    pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
-    pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
-    pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
+#     pymcData["subID"] = np.array(pymcData["subID"], dtype="int")
+#     pymcData["condition"] = np.array(pymcData["condition"], dtype="int")
+#     pymcData["s"] = np.array(pymcData["s"], dtype="int")
+#     pymcData["n"] = np.array(pymcData["n"], dtype="int")
+#     pymcData["m"] = np.array(pymcData["m"], dtype="int")
+#     pymcData["cr"] = np.array(pymcData["cr"], dtype="int")
+#     pymcData["counts"] = np.array(pymcData["counts"], dtype="int")
+#     pymcData["hits"] = np.array(pymcData["hits"], dtype="int")
+#     pymcData["falsealarms"] = np.array(pymcData["falsealarms"], dtype="int")
 
-    return pymcData
+#     return pymcData
