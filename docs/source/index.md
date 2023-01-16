@@ -55,21 +55,7 @@ metadpy first aims to be the Python equivalent of the [hMeta-d toolbox](https://
 
 For an extensive introduction to metadpy, you can navigate the following notebooks that are Python adaptations of the introduction to the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) written in Matlab by Olivia Faul for the [Zurich Computational Psychiatry course](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial).
 
-## Examples 
-
-| Notebook | Colab | nbViewer |
-| --- | ---| --- |
-| Example 1 - Fitting MLE - Subject and group level | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb)
-| Example 2 - Fitting Bayesian - Subject level (pymc) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb)
-
-
-## Tutorials
-
-| Notebook | Colab | nbViewer |
-| --- | ---| --- |
-| 1. What metacognition looks like? | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/1-What%20metacognition%20looks%20like.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/1-What%20metacognition%20looks%20like.ipynb)
-| 2. Fitting the model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/2-Fitting%20the%20model-MLE.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/2-Fitting%20the%20model-MLE.ipynb)
-| 3. Comparison with the HMeta-d toolbox | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
+✏️ [Tutorials and examples](https://embodied-computation-group.github.io/metadpy/tutorials.html)  
 
 +++ {"id": "w0EklNnNf6Ms"}
 
@@ -299,6 +285,7 @@ az.summary(trace, var_names=["meta_d", "cS2", "cS1"])
 hidden:
 ---
 API <api.rst>
+Tutorials <tutorials.md>
 Cite <cite.md>
 References <references.md>
 ```
