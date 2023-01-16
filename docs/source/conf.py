@@ -12,8 +12,9 @@
 #
 import time
 
-import metadpy
 import sphinx_bootstrap_theme
+
+import metadpy
 
 # -- Project information -----------------------------------------------------
 
@@ -44,7 +45,6 @@ extensions = [
     "sphinx.ext.intersphinx",
     "matplotlib.sphinxext.plot_directive",
     "numpydoc",
-    "sphinx_panels",
     "myst_nb",
     "sphinxcontrib.bibtex",
 ]

@@ -10,4 +10,4 @@ coverage
 tqdm
 pandas_flavor==0.1.2
 numba>=0.51.2
-pymc>=4.0.1
+pymc>=5.0.1
