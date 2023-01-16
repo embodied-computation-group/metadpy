@@ -1,12 +1,12 @@
 # Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
-import aesara.tensor as at
+import pytensor.tensor as pt
 from pymc import Binomial, Deterministic, HalfNormal, Model, Multinomial, Normal, sample
 
 
 def phi(x):
     """Cumulative normal distribution"""
-    return 0.5 + 0.5 * at.erf(x / at.sqrt(2))
+    return 0.5 + 0.5 * pt.erf(x / pt.sqrt(2))
 
 
 def hmetad_subjectLevel(
@@ -68,18 +68,18 @@ def hmetad_subjectLevel(
             tau=2,
             shape=nRatings - 1,
         )
-        cS1 = Deterministic("cS1", at.sort(-cS1_hn) + (c1 - data["Tol"]))
+        cS1 = Deterministic("cS1", pt.sort(-cS1_hn) + (c1 - data["Tol"]))
 
         cS2_hn = HalfNormal(
             "cS2_hn",
             tau=2,
             shape=nRatings - 1,
         )
-        cS2 = Deterministic("cS2", at.sort(cS2_hn) + (c1 - data["Tol"]))
+        cS2 = Deterministic("cS2", pt.sort(cS2_hn) + (c1 - data["Tol"]))
 
         # Means of SDT distributions
-        S2mu = at.flatten(meta_d / 2, 1)
-        S1mu = at.flatten(-meta_d / 2, 1)
+        S2mu = pt.flatten(meta_d / 2, 1)
+        S1mu = pt.flatten(-meta_d / 2, 1)
 
         # Calculate normalisation constants
         C_area_rS1 = phi(c1 - S1mu)
@@ -91,7 +91,7 @@ def hmetad_subjectLevel(
         nC_rS1 = phi(cS1 - S1mu) / C_area_rS1
         nC_rS1 = Deterministic(
             "nC_rS1",
-            at.concatenate(
+            pt.concatenate(
                 (
                     [
                         phi(cS1[0] - S1mu) / C_area_rS1,
@@ -110,7 +110,7 @@ def hmetad_subjectLevel(
         nI_rS2 = (1 - phi(cS2 - S1mu)) / I_area_rS2
         nI_rS2 = Deterministic(
             "nI_rS2",
-            at.concatenate(
+            pt.concatenate(
                 (
                     [
                         ((1 - phi(c1 - S1mu)) - (1 - phi(cS2[0] - S1mu))) / I_area_rS2,
@@ -126,7 +126,7 @@ def hmetad_subjectLevel(
         nI_rS1 = (-phi(cS1 - S2mu)) / I_area_rS1
         nI_rS1 = Deterministic(
             "nI_rS1",
-            at.concatenate(
+            pt.concatenate(
                 (
                     [
                         phi(cS1[0] - S2mu) / I_area_rS1,
@@ -142,7 +142,7 @@ def hmetad_subjectLevel(
         nC_rS2 = (1 - phi(cS2 - S2mu)) / C_area_rS2
         nC_rS2 = Deterministic(
             "nC_rS2",
-            at.concatenate(
+            pt.concatenate(
                 (
                     [
                         ((1 - phi(c1 - S2mu)) - (1 - phi(cS2[0] - S2mu))) / C_area_rS2,
@@ -155,10 +155,10 @@ def hmetad_subjectLevel(
         )
 
         # Avoid underflow of probabilities
-        nC_rS1 = at.switch(nC_rS1 < data["Tol"], data["Tol"], nC_rS1)
-        nI_rS2 = at.switch(nI_rS2 < data["Tol"], data["Tol"], nI_rS2)
-        nI_rS1 = at.switch(nI_rS1 < data["Tol"], data["Tol"], nI_rS1)
-        nC_rS2 = at.switch(nC_rS2 < data["Tol"], data["Tol"], nC_rS2)
+        nC_rS1 = pt.switch(nC_rS1 < data["Tol"], data["Tol"], nC_rS1)
+        nI_rS2 = pt.switch(nI_rS2 < data["Tol"], data["Tol"], nI_rS2)
+        nI_rS1 = pt.switch(nI_rS1 < data["Tol"], data["Tol"], nI_rS1)
+        nC_rS2 = pt.switch(nC_rS2 < data["Tol"], data["Tol"], nC_rS2)
 
         # TYPE 2 SDT MODEL (META-D)
         # Multinomial likelihood for response counts ordered as c(nR_S1,nR_S2)
