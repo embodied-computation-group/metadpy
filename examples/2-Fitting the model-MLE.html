@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Fitting the model &#8212; metadpy 0.0.1 documentation</title>
+    <title>Fitting the model &#8212; metadpy 0.1.0 documentation</title>
   
   
   
@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
@@ -40,7 +38,9 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/2-Fitting the model-MLE';</script>
     <link rel="shortcut icon" href="../_static/logo.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -48,7 +48,7 @@
     <link rel="next" title="Single subject" href="3-Comparison%20with%20the%20hmeta-d%20toolbox.html" />
     <link rel="prev" title="What metacognition looks like?" href="1-What%20metacognition%20looks%20like.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="None">
+  <meta name="docsearch:language" content="en">
   </head>
   
   
@@ -366,7 +366,7 @@
             <article class="bd-article" role="main">
               
   <section id="fitting-the-model">
-<span id="tutorial-2"></span><h1>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Permalink to this headline">#</a></h1>
+<span id="tutorial-2"></span><h1>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Permalink to this heading">#</a></h1>
 <p>Author: Nicolas Legrand <a class="reference external" href="mailto:nicolas&#46;legrand&#37;&#52;&#48;cfin&#46;au&#46;dk">nicolas<span>&#46;</span>legrand<span>&#64;</span>cfin<span>&#46;</span>au<span>&#46;</span>dk</a><br />
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial</p>
 <div class="cell docutils container">
@@ -387,10 +387,10 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <section id="calculating-metacognition-the-type-2-roc-curve">
-<h2>Calculating metacognition: the type-2 ROC curve<a class="headerlink" href="#calculating-metacognition-the-type-2-roc-curve" title="Permalink to this headline">#</a></h2>
+<h2>Calculating metacognition: the type-2 ROC curve<a class="headerlink" href="#calculating-metacognition-the-type-2-roc-curve" title="Permalink to this heading">#</a></h2>
 <p>Another way of visualising type 2 performance (that will help us towards quantifying metacognition) is to plot the data using a <em>Reciever Operating Characteristic</em> (ROC) curve. Here, we plot the distribution of correct responses against the distribution of incorrect responses. The resulting type2ROC curve tells us how separate these confidence distributions are, and thus the area under the curve can be used as a measure of the level of type 2 performance. We will go through this now.</p>
 <section id="set-up-the-parameters">
-<h3>Set up the parameters<a class="headerlink" href="#set-up-the-parameters" title="Permalink to this headline">#</a></h3>
+<h3>Set up the parameters<a class="headerlink" href="#set-up-the-parameters" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Set task performance(d&#39;)</span>
@@ -405,7 +405,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </section>
 <section id="simulate-the-responses-for-low-and-high-confidence-noise">
-<h3>Simulate the responses for low and high confidence noise<a class="headerlink" href="#simulate-the-responses-for-low-and-high-confidence-noise" title="Permalink to this headline">#</a></h3>
+<h3>Simulate the responses for low and high confidence noise<a class="headerlink" href="#simulate-the-responses-for-low-and-high-confidence-noise" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dHigh_nR_S1</span><span class="p">,</span> <span class="n">dHigh_nR_S2</span> <span class="o">=</span> <span class="n">type2_SDT_simuation</span><span class="p">(</span>
@@ -420,7 +420,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </section>
 <section id="plot-the-confidence-results-for-the-two-simulations">
-<h3>Plot the confidence results for the two simulations<a class="headerlink" href="#plot-the-confidence-results-for-the-two-simulations" title="Permalink to this headline">#</a></h3>
+<h3>Plot the confidence results for the two simulations<a class="headerlink" href="#plot-the-confidence-results-for-the-two-simulations" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -434,12 +434,12 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/08af88674784fd47ac125c6917feef70334d8df6b5e320bc5a69a7894be8554c.png" src="../_images/08af88674784fd47ac125c6917feef70334d8df6b5e320bc5a69a7894be8554c.png" />
+<img alt="../_images/b16fe5b4e0f16c096c7838d37719a0b15b17c47ba17ea6af1d1fcd38a32deb29.png" src="../_images/b16fe5b4e0f16c096c7838d37719a0b15b17c47ba17ea6af1d1fcd38a32deb29.png" />
 </div>
 </div>
 </section>
 <section id="now-plot-the-observed-type2-data-in-a-type2roc-curve">
-<h3>Now plot the observed type2 data in a type2ROC curve<a class="headerlink" href="#now-plot-the-observed-type2-data-in-a-type2roc-curve" title="Permalink to this headline">#</a></h3>
+<h3>Now plot the observed type2 data in a type2ROC curve<a class="headerlink" href="#now-plot-the-observed-type2-data-in-a-type2roc-curve" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -453,7 +453,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/7a85840e0e1e239fda2f9b7089767803a70c93d5a3ee40d7442233b1bdf928c1.png" src="../_images/7a85840e0e1e239fda2f9b7089767803a70c93d5a3ee40d7442233b1bdf928c1.png" />
+<img alt="../_images/da31facc95bd031d5f4c2e52552b1b9dc483d0341c0e75dcadcb096f41b6e06e.png" src="../_images/da31facc95bd031d5f4c2e52552b1b9dc483d0341c0e75dcadcb096f41b6e06e.png" />
 </div>
 </div>
 <div class="admonition hint">
@@ -469,8 +469,8 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.751160764175292
-High confidence AUC: 0.6707169872052788
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7711093781300976
+High confidence AUC: 0.6374714732014269
 </pre></div>
 </div>
 </div>
@@ -492,7 +492,7 @@ High confidence AUC: 0.6707169872052788
 </section>
 </section>
 <section id="fitting-the-model-meta-d">
-<h2>Fitting the model: meta-d’<a class="headerlink" href="#fitting-the-model-meta-d" title="Permalink to this headline">#</a></h2>
+<h2>Fitting the model: meta-d’<a class="headerlink" href="#fitting-the-model-meta-d" title="Permalink to this heading">#</a></h2>
 <p>In this step we will consider how we can quantify metacognition using meta-d’ rather than the area under a type2ROC curve. Because meta-d’ is calculated in the same units as d’, we can get rid of the effect of type 1 performance (d’) by simply creating a ratio of meta-d’ / d’, which we call the Mratio. The Mratio is then a ‘relative’ measure of metacognition, and is independent of task performance. For full details of the model please refer to the paper by <span id="id1"></span>. The key here is actually the direct relationship between type 1 and type 2 performance that we explored in steps 2 and 3, where we can predict what the type2ROC curve <em>should</em> look like for a certain type 1 d’ and bias (if no information was lost or gained between type 1 and type 2 performance). Therefore, if we take the observed type2ROC curve, we can theoretically estimate what level of d’ would cause the observed type 2 performance… And we call this meta-d’! (For details on the relationship between type 1 and type 2 performance, see <span id="id2">Galvin <em>et al.</em> [<a class="reference internal" href="../references.html#id6" title="Susan J. Galvin, John V. Podd, Vit Drga, and John Whitmore. Type 2 tasks in the theory of signal detectability: discrimination between correct and incorrect decisions. Psychonomic Bulletin &amp;amp$\mathsemicolon $ Review, 10(4):843–876, December 2003. URL: https://doi.org/10.3758/bf03196546, doi:10.3758/bf03196546.">2003</a>]</span>. Here we will plot the observed and estimated confidence values and type2ROC curves for our simulated data with different levels of metacognition, and take a closer look at the model values for meta-d.</p>
 <p><strong>Set up the parameters:</strong></p>
 <div class="cell docutils container">
@@ -555,7 +555,7 @@ High confidence AUC: 0.6707169872052788
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/4b534fec778cce363ffe8001cbfb567ca12d9ed892f570e92bcddc25141c0392.png" src="../_images/4b534fec778cce363ffe8001cbfb567ca12d9ed892f570e92bcddc25141c0392.png" />
+<img alt="../_images/fbbe77f6007c61a8573a53aa2b891ff692dabc5e6ee692254783f7b7cb70a742.png" src="../_images/fbbe77f6007c61a8573a53aa2b891ff692dabc5e6ee692254783f7b7cb70a742.png" />
 </div>
 </div>
 <p><strong>Now plot the same figures for the model estimation of type 2 performance with low metacognition:</strong></p>
@@ -573,7 +573,7 @@ High confidence AUC: 0.6707169872052788
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/0a112d633601f1b6a10cdf078a09ce93463489e1784726405b1ab098fd3adb45.png" src="../_images/0a112d633601f1b6a10cdf078a09ce93463489e1784726405b1ab098fd3adb45.png" />
+<img alt="../_images/2999a030297e76a9dd55ca0720a23804e4ab8e6b1d0be57acd46fc5d81d239b5.png" src="../_images/2999a030297e76a9dd55ca0720a23804e4ab8e6b1d0be57acd46fc5d81d239b5.png" />
 </div>
 </div>
 <div class="highlight-{hint}You notranslate"><div class="highlight"><pre><span></span>
@@ -586,10 +586,10 @@ Next, run this whole section again to simulate new data from the same parameters
 </div>
 </section>
 <section id="fitting-the-model-parameter-recovery">
-<h2>Fitting the model: parameter recovery<a class="headerlink" href="#fitting-the-model-parameter-recovery" title="Permalink to this headline">#</a></h2>
+<h2>Fitting the model: parameter recovery<a class="headerlink" href="#fitting-the-model-parameter-recovery" title="Permalink to this heading">#</a></h2>
 <p>We saw in exercise 4 that the meta-d model we are using doesn’t give us a perfect estimation of meta-d. We will now take a closer look at how well this model is able to recover meta-d values, using 20 simulations at different levels of meta-d.</p>
 <section id="id3">
-<h3>Set up the parameters<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<h3>Set up the parameters<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Set task performance (d&#39;)</span>
@@ -607,7 +607,7 @@ Next, run this whole section again to simulate new data from the same parameters
 </div>
 </section>
 <section id="simulate-the-responses-and-fit-the-model-for-different-levels-of-metacognition">
-<h3>Simulate the responses and fit the model for different levels of metacognition<a class="headerlink" href="#simulate-the-responses-and-fit-the-model-for-different-levels-of-metacognition" title="Permalink to this headline">#</a></h3>
+<h3>Simulate the responses and fit the model for different levels of metacognition<a class="headerlink" href="#simulate-the-responses-and-fit-the-model-for-different-levels-of-metacognition" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
@@ -740,54 +740,68 @@ Next, run this whole section again to simulate new data from the same parameters
 <span class="g g-Whitespace">    </span><span class="mi">329</span>     <span class="k">if</span> <span class="n">subprob</span><span class="o">.</span><span class="n">terminate</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">330</span>         <span class="k">break</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:147,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
-<span class="g g-Whitespace">    </span><span class="mi">145</span> <span class="c1"># Evaluate function and constraints at trial point</span>
-<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="n">x_next</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">S</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">147</span> <span class="n">f_next</span><span class="p">,</span> <span class="n">b_next</span> <span class="o">=</span> <span class="n">fun_and_constr</span><span class="p">(</span><span class="n">x_next</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">148</span> <span class="c1"># Compute merit function at trial point</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span> <span class="n">merit_function_next</span> <span class="o">=</span> <span class="n">f_next</span> <span class="o">+</span> <span class="n">penalty</span><span class="o">*</span><span class="n">norm</span><span class="p">(</span><span class="n">b_next</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:118,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="n">lb_t</span> <span class="o">=</span> <span class="n">trust_lb</span> <span class="o">-</span> <span class="n">dn</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span> <span class="n">ub_t</span> <span class="o">=</span> <span class="n">trust_ub</span> <span class="o">-</span> <span class="n">dn</span>
+<span class="ne">--&gt; </span><span class="mi">118</span> <span class="n">dt</span><span class="p">,</span> <span class="n">cg_info</span> <span class="o">=</span> <span class="n">projected_cg</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">c_t</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">b_t</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">119</span>                            <span class="n">trust_radius_t</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>                            <span class="n">lb_t</span><span class="p">,</span> <span class="n">ub_t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span> <span class="c1"># Compute update (normal + tangential steps).</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dn</span> <span class="o">+</span> <span class="n">dt</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:82,</span> in <span class="ni">BarrierSubproblem.function_and_constraints</span><span class="nt">(self, z)</span>
-<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slack</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="c1"># Compute function and constraints</span>
-<span class="ne">---&gt; </span><span class="mi">82</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">83</span> <span class="n">c_eq</span><span class="p">,</span> <span class="n">c_ineq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">constr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="c1"># Return objective function and constraints</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/qp_subproblem.py:628,</span> in <span class="ni">projected_cg</span><span class="nt">(H, c, Z, Y, b, trust_radius, lb, ub, tol, max_iter, max_infeasible_iter, return_all)</span>
+<span class="g g-Whitespace">    </span><span class="mi">626</span>     <span class="n">r</span> <span class="o">=</span> <span class="n">g_next</span>
+<span class="g g-Whitespace">    </span><span class="mi">627</span>     <span class="n">rt_g</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># g.T g = r.T Z g = r.T g (ref [1]_ p.1389)</span>
+<span class="ne">--&gt; </span><span class="mi">628</span>     <span class="n">H_p</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">630</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">inside_box_boundaries</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">631</span>     <span class="n">x</span> <span class="o">=</span> <span class="n">last_feasible_x</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:266,</span> in <span class="ni">ScalarFunction.fun</span><span class="nt">(self, x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">264</span> <span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">265</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">266</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_x_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">267</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_fun</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">268</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:418,</span> in <span class="ni">LinearOperator.dot</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">418</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matmat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:238,</span> in <span class="ni">ScalarFunction.__init__.&lt;locals&gt;.update_x</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">236</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_updated</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_updated</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">--&gt; </span><span class="mi">238</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_hess</span><span class="p">()</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:232,</span> in <span class="ni">LinearOperator.matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dimension mismatch&#39;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">232</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">asmatrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:261,</span> in <span class="ni">ScalarFunction._update_hess</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">259</span> <span class="k">def</span> <span class="nf">_update_hess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">260</span>     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_updated</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">261</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_hess_impl</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">262</span>         <span class="bp">self</span><span class="o">.</span><span class="n">H_updated</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:530,</span> in <span class="ni">_CustomLinearOperator._matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span> <span class="k">def</span> <span class="nf">_matvec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">530</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__matvec_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_differentiable_functions.py:223,</span> in <span class="ni">ScalarFunction.__init__.&lt;locals&gt;.update_hess</span><span class="nt">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span> <span class="k">def</span> <span class="nf">update_hess</span><span class="p">():</span>
-<span class="g g-Whitespace">    </span><span class="mi">222</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_grad</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">223</span>     <span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_prev</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_prev</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:236,</span> in <span class="ni">BarrierSubproblem.lagrangian_hessian.&lt;locals&gt;.matvec</span><span class="nt">(vec)</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="n">vec_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slack</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ineq</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">236</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Hx</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_x</span><span class="p">),</span> <span class="n">S_Hs_S</span><span class="o">*</span><span class="n">vec_s</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">238</span>     <span class="k">return</span> <span class="n">Hx</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_x</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:200,</span> in <span class="ni">FullHessianUpdateStrategy.update</span><span class="nt">(self, delta_x, delta_grad)</span>
-<span class="g g-Whitespace">    </span><span class="mi">198</span>         <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="o">*=</span> <span class="n">scale</span>
-<span class="g g-Whitespace">    </span><span class="mi">199</span>     <span class="bp">self</span><span class="o">.</span><span class="n">first_iteration</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="ne">--&gt; </span><span class="mi">200</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_implementation</span><span class="p">(</span><span class="n">delta_x</span><span class="p">,</span> <span class="n">delta_grad</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:418,</span> in <span class="ni">LinearOperator.dot</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">418</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matmat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:418,</span> in <span class="ni">SR1._update_implementation</span><span class="nt">(self, delta_x, delta_grad)</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span>     <span class="n">z</span> <span class="o">=</span> <span class="n">delta_x</span>
-<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="c1"># Do some common operations</span>
-<span class="ne">--&gt; </span><span class="mi">418</span> <span class="n">Mw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="n">z_minus_Mw</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="n">Mw</span>
-<span class="g g-Whitespace">    </span><span class="mi">420</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">z_minus_Mw</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:232,</span> in <span class="ni">LinearOperator.matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dimension mismatch&#39;</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">232</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">235</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">asmatrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:530,</span> in <span class="ni">_CustomLinearOperator._matvec</span><span class="nt">(self, x)</span>
+<span class="g g-Whitespace">    </span><span class="mi">529</span> <span class="k">def</span> <span class="nf">_matvec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">530</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__matvec_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/minimize_trustregion_constr.py:54,</span> in <span class="ni">LagrangianHessian.__call__.&lt;locals&gt;.matvec</span><span class="nt">(p)</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> <span class="k">def</span> <span class="nf">matvec</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">54</span>     <span class="k">return</span> <span class="n">H_objective</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="n">H_constraints</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_hessian_update_strategy.py:217,</span> in <span class="ni">FullHessianUpdateStrategy.dot</span><span class="nt">(self, p)</span>
 <span class="g g-Whitespace">    </span><span class="mi">203</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Compute the product of the internal matrix with the given vector.</span>
@@ -986,7 +1000,7 @@ Next, run this whole section again to simulate new data from the same parameters
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
 
   </div>

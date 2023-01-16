@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Fitting at the subject level &#8212; metadpy 0.0.1 documentation</title>
+    <title>Fitting at the subject level &#8212; metadpy 0.1.0 documentation</title>
   
   
   
@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
@@ -40,7 +38,9 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/Example 1 - Fitting MLE - Subject and group level';</script>
     <link rel="shortcut icon" href="../_static/logo.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -48,7 +48,7 @@
     <link rel="next" title="Fitting data at the subject level" href="Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20%28pymc%29.html" />
     <link rel="prev" title="Single subject" href="3-Comparison%20with%20the%20hmeta-d%20toolbox.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="None">
+  <meta name="docsearch:language" content="en">
   </head>
   
   
@@ -366,7 +366,7 @@
             <article class="bd-article" role="main">
               
   <section id="fitting-at-the-subject-level">
-<span id="example-1"></span><h1>Fitting at the subject level<a class="headerlink" href="#fitting-at-the-subject-level" title="Permalink to this headline">#</a></h1>
+<span id="example-1"></span><h1>Fitting at the subject level<a class="headerlink" href="#fitting-at-the-subject-level" title="Permalink to this heading">#</a></h1>
 <p>Author: Nicolas Legrand <a class="reference external" href="mailto:nicolas&#46;legrand&#37;&#52;&#48;cfin&#46;au&#46;dk">nicolas<span>&#46;</span>legrand<span>&#64;</span>cfin<span>&#46;</span>au<span>&#46;</span>dk</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -385,7 +385,7 @@
 <p>In this notebook, we are going to estimate meta-<em>d’</em> using Maximum Likelihood Estimation (<a class="reference external" href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">MLE</a>) <span id="id1">[<a class="reference internal" href="../references.html#id3" title="Stephen M. Fleming and Hakwan C. Lau. How to measure metacognition. Frontiers in Human Neuroscience, July 2014. URL: https://doi.org/10.3389/fnhum.2014.00443, doi:10.3389/fnhum.2014.00443.">Fleming and Lau, 2014</a>]</span> using the function implemented in <a class="reference external" href="https://github.com/LegrandNico/metadpy">metadpy</a>. This function is directly adapted from the transcription of the Matlab <code class="docutils literal notranslate"><span class="pre">fit_meta_d_MLE.m</span></code> by Alan Lee that can be retrieved <a class="reference external" href="http://www.columbia.edu/~bsm2105/type2sdt/">here</a>.</p>
 <p>We are going to see, however, that <a class="reference external" href="https://github.com/LegrandNico/metadpy">metadpy</a> greatly simplifies the preprocessing of raw data, letting the user fit the model for many participants/groups/conditions from the results data frame in a single command call. Another advantage here is that the python code supporting the model fitting is optimized using <a class="reference external" href="http://numba.pydata.org/">Numba</a>, which greatly improves its performance.</p>
 <section id="from-response-signal-arrays">
-<h2>From response-signal arrays<a class="headerlink" href="#from-response-signal-arrays" title="Permalink to this headline">#</a></h2>
+<h2>From response-signal arrays<a class="headerlink" href="#from-response-signal-arrays" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create responses data</span>
@@ -462,7 +462,7 @@
 <p>The function will return a data frame containng the <code class="docutils literal notranslate"><span class="pre">dprime</span></code>, <code class="docutils literal notranslate"><span class="pre">metad</span></code>, <code class="docutils literal notranslate"><span class="pre">m_ratio</span></code> and <code class="docutils literal notranslate"><span class="pre">m_diff</span></code> scores for this participant.</p>
 </section>
 <section id="from-a-data-frame">
-<h2>From a data frame<a class="headerlink" href="#from-a-data-frame" title="Permalink to this headline">#</a></h2>
+<h2>From a data frame<a class="headerlink" href="#from-a-data-frame" title="Permalink to this heading">#</a></h2>
 <p>To simplify the preprocessing steps, the model can also be fitted directly from the raw result data frame. The data frame should contain the following columns:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Stimuli</span></code>: Which of the two stimuli was presented [0 or 1].</p></li>
@@ -625,9 +625,9 @@
 </section>
 </section>
 <section id="fitting-at-the-group-level">
-<h1>Fitting at the group level<a class="headerlink" href="#fitting-at-the-group-level" title="Permalink to this headline">#</a></h1>
+<h1>Fitting at the group level<a class="headerlink" href="#fitting-at-the-group-level" title="Permalink to this heading">#</a></h1>
 <section id="using-a-dataframe">
-<h2>Using a dataframe<a class="headerlink" href="#using-a-dataframe" title="Permalink to this headline">#</a></h2>
+<h2>Using a dataframe<a class="headerlink" href="#using-a-dataframe" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">group_fit</span> <span class="o">=</span> <span class="n">metad</span><span class="p">(</span>
@@ -742,12 +742,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/21af241a06a84e161fdcd9ef3f284e7b28b57d31ba56f757ff64cac6bb7cddd8.png" src="../_images/21af241a06a84e161fdcd9ef3f284e7b28b57d31ba56f757ff64cac6bb7cddd8.png" />
+<img alt="../_images/719afc309ced2bb8fa47f442833cfe6a9c5c975c016916d8e80f6a4c8719986b.png" src="../_images/719afc309ced2bb8fa47f442833cfe6a9c5c975c016916d8e80f6a4c8719986b.png" />
 </div>
 </div>
 </section>
 <section id="watermark">
-<h2>Watermark<a class="headerlink" href="#watermark" title="Permalink to this headline">#</a></h2>
+<h2>Watermark<a class="headerlink" href="#watermark" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> watermark
@@ -954,7 +954,7 @@
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
 
   </div>

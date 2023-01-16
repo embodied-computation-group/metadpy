@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>metadpy.mle.fit_metad &#8212; metadpy 0.0.1 documentation</title>
+    <title>metadpy.mle.fit_metad &#8212; metadpy 0.1.0 documentation</title>
   
   
   
@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
@@ -40,7 +38,9 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/mle/metadpy.mle.fit_metad';</script>
     <link rel="shortcut icon" href="../../_static/logo.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -48,7 +48,7 @@
     <link rel="next" title="metadpy.plotting.plot_confidence" href="../plotting/metadpy.plotting.plot_confidence.html" />
     <link rel="prev" title="metadpy.mle.metad" href="metadpy.mle.metad.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="None">
+  <meta name="docsearch:language" content="en">
   </head>
   
   
@@ -366,13 +366,13 @@
             <article class="bd-article" role="main">
               
   <section id="metadpy-mle-fit-metad">
-<h1>metadpy.mle.fit_metad<a class="headerlink" href="#metadpy-mle-fit-metad" title="Permalink to this headline">#</a></h1>
+<h1>metadpy.mle.fit_metad<a class="headerlink" href="#metadpy-mle-fit-metad" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="metadpy.mle.fit_metad">
-<span class="sig-prename descclassname"><span class="pre">metadpy.mle.</span></span><span class="sig-name descname"><span class="pre">fit_metad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nR_S1:</span> <span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nR_S2:</span> <span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nRatings:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nCriteria:</span> <span class="pre">typing.Optional[int]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fninv:</span> <span class="pre">typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">rv_continuous.ppf</span> <span class="pre">of</span> <span class="pre">&lt;scipy.stats._continuous_distns.norm_gen</span> <span class="pre">object&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fncdf:</span> <span class="pre">typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;numba._DUFunc</span> <span class="pre">'norm_cdf'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/metadpy/mle.html#fit_metad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.mle.fit_metad" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">metadpy.mle.</span></span><span class="sig-name descname"><span class="pre">fit_metad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nR_S1:</span> <span class="pre">~numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nR_S2:</span> <span class="pre">~numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nRatings:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nCriteria:</span> <span class="pre">~typing.Optional[int]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fninv:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">rv_continuous.ppf</span> <span class="pre">of</span> <span class="pre">&lt;scipy.stats._continuous_distns.norm_gen</span> <span class="pre">object&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fncdf:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;numba._DUFunc</span> <span class="pre">'norm_cdf'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/metadpy/mle.html#fit_metad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.mle.fit_metad" title="Permalink to this definition">#</a></dt>
 <dd><p>Fit metad model using MLE.</p>
 <dl class="field-list">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><strong>nR_S1, nR_S2</strong><span class="classifier">list, 1d array-like or None</span></dt><dd><p>These are vectors containing the total number of responses in
 each response category, conditional on presentation of S1 and S2. If
@@ -433,7 +433,7 @@ specified, fncdf defaults to <code class="xref py py-func docutils literal notra
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
 <dt><strong>results</strong><span class="classifier">dict</span></dt><dd><p>In the following, S1 and S2 represent the distributions of evidence generated
 by stimulus classes S1 and S2:</p>
@@ -511,6 +511,27 @@ by stimulus classes S1 and S2:</p>
               
 <div class="toc-item">
   
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#metadpy.mle.fit_metad">
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     fit_metad()
+    </span>
+   </code>
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+<div class="toc-item">
+  
 <div id="searchbox"></div>
 </div>
 
@@ -573,7 +594,7 @@ by stimulus classes S1 and S2:</p>
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
 
   </div>

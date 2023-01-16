@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>What metacognition looks like? &#8212; metadpy 0.0.1 documentation</title>
+    <title>What metacognition looks like? &#8212; metadpy 0.1.0 documentation</title>
   
   
   
@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
@@ -40,7 +38,9 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/1-What metacognition looks like';</script>
     <link rel="shortcut icon" href="../_static/logo.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -48,7 +48,7 @@
     <link rel="next" title="Fitting the model" href="2-Fitting%20the%20model-MLE.html" />
     <link rel="prev" title="How-to" href="../tutorials.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="None">
+  <meta name="docsearch:language" content="en">
   </head>
   
   
@@ -366,7 +366,7 @@
             <article class="bd-article" role="main">
               
   <section id="what-metacognition-looks-like">
-<span id="tutorial-1"></span><h1>What metacognition looks like?<a class="headerlink" href="#what-metacognition-looks-like" title="Permalink to this headline">#</a></h1>
+<span id="tutorial-1"></span><h1>What metacognition looks like?<a class="headerlink" href="#what-metacognition-looks-like" title="Permalink to this heading">#</a></h1>
 <p>Author: Nicolas Legrand <a class="reference external" href="mailto:nicolas&#46;legrand&#37;&#52;&#48;cas&#46;au&#46;dk">nicolas<span>&#46;</span>legrand<span>&#64;</span>cas<span>&#46;</span>au<span>&#46;</span>dk</a><br />
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial</p>
 <div class="cell docutils container">
@@ -382,7 +382,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <section id="simulating-ratings">
-<h2>Simulating ratings<a class="headerlink" href="#simulating-ratings" title="Permalink to this headline">#</a></h2>
+<h2>Simulating ratings<a class="headerlink" href="#simulating-ratings" title="Permalink to this heading">#</a></h2>
 <p>First, we will simulate data with high and low confidence noise, which should lead to higher and lower metacognition. This added noise represents a potential loss of information between type 1 task discrimination and ‘metacognitive’ information, i.e. type 2 confidence scores. We will then plot what the confidence scores would look like for each of these two scenarios (high and low confidence noise).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -417,7 +417,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8e1084a33fad61338c447e67cf29c9343c7fb9eef6280d8c7eb7795fffd2ae9e.png" src="../_images/8e1084a33fad61338c447e67cf29c9343c7fb9eef6280d8c7eb7795fffd2ae9e.png" />
+<img alt="../_images/ede68178d2ec8f2cc03ae71fcacc5dbaa047094e73867330bbb5c3be3adf618e.png" src="../_images/ede68178d2ec8f2cc03ae71fcacc5dbaa047094e73867330bbb5c3be3adf618e.png" />
 </div>
 </div>
 <p><strong>EXPLANATION:</strong> You can see in the figure that the low confidence noise likely results in less overlap between the confidence distributions for correct and incorrect responses. It is actually the difference between these two distributions (one for correct responses, one for incorrect responses) that tells us how good metacognition is –&gt; If you have higher confidence scores when you are correct and lower confidence scores when you are incorrect (and not much mixing between the two), the better metacognition will be. Another way of thinking about it is that the more ‘noise’ that is added as information passes from type 1 performance (e.g. correct vs incorrect perceptions) to type 2 performance (e.g. confidence in the decision that has been made), the less ‘mixing’ will occur between these two distributions and the larger (or ‘better’) metacognition will be.</p>
@@ -427,7 +427,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </section>
 <section id="how-does-performance-change-metacognition">
-<h2>How does performance change metacognition?<a class="headerlink" href="#how-does-performance-change-metacognition" title="Permalink to this headline">#</a></h2>
+<h2>How does performance change metacognition?<a class="headerlink" href="#how-does-performance-change-metacognition" title="Permalink to this heading">#</a></h2>
 <p>It is important to note that looking at the difference between the confidence distributions is an ‘absolute’ form of metacognition, which means that it will be affected by task performance (measured by d’). For example, if d’ is higher (and the task is easier), there is more type 1 information on which to base metacognitive decisions than if d’ is lower. We will explore this here by comparing the confidence scores with higher and lower d’.</p>
 <p><strong>Set up the parameters</strong></p>
 <div class="cell docutils container">
@@ -468,7 +468,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d5d5312798019a5765bae3ee77f2911e3f0ac830c08e3ecc07cb120def9d4392.png" src="../_images/d5d5312798019a5765bae3ee77f2911e3f0ac830c08e3ecc07cb120def9d4392.png" />
+<img alt="../_images/d5ffccc1e65e05de2dfda2de682e49ee246d1ac98649d2c82c79a4c6810bd58a.png" src="../_images/d5ffccc1e65e05de2dfda2de682e49ee246d1ac98649d2c82c79a4c6810bd58a.png" />
 </div>
 </div>
 <div class="admonition tip">
@@ -599,7 +599,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
 
   </div>

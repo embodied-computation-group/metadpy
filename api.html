@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>API &#8212; metadpy 0.0.1 documentation</title>
+    <title>API &#8212; metadpy 0.1.0 documentation</title>
   
   
   
@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
@@ -40,7 +38,9 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api';</script>
     <link rel="shortcut icon" href="_static/logo.svg"/>
     <link rel="index" title="Index" href="genindex.html" />
@@ -48,7 +48,7 @@
     <link rel="next" title="metadpy.bayesian.hmetad" href="generated/bayesian/metadpy.bayesian.hmetad.html" />
     <link rel="prev" title="Installation" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="None">
+  <meta name="docsearch:language" content="en">
   </head>
   
   
@@ -365,7 +365,7 @@
             
             <article class="bd-article" role="main">
               
-  <div class="contents topic" id="table-of-contents">
+  <nav class="contents" id="table-of-contents" role="doc-toc">
 <span id="api-ref"></span><p class="topic-title">Table of Contents</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="#api" id="id1">API</a></p>
@@ -378,16 +378,12 @@
 </ul>
 </li>
 </ul>
-</div>
+</nav>
 <section id="api">
-<h1><a class="toc-backref" href="#id1">API</a><a class="headerlink" href="#api" title="Permalink to this headline">#</a></h1>
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">API</a><a class="headerlink" href="#api" title="Permalink to this heading">#</a></h1>
 <section id="bayesian">
-<h2><a class="toc-backref" href="#id2">Bayesian</a><a class="headerlink" href="#bayesian" title="Permalink to this headline">#</a></h2>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">Bayesian</a><a class="headerlink" href="#bayesian" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/bayesian/metadpy.bayesian.hmetad.html#metadpy.bayesian.hmetad" title="metadpy.bayesian.hmetad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hmetad</span></code></a>()</p></td>
 <td><p>Estimate parameters of the Bayesian meta-d' model with hyperparametes at the group level.</p></td>
@@ -399,12 +395,8 @@
 </table>
 </section>
 <section id="mle">
-<h2><a class="toc-backref" href="#id3">MLE</a><a class="headerlink" href="#mle" title="Permalink to this headline">#</a></h2>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">MLE</a><a class="headerlink" href="#mle" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/mle/metadpy.mle.metad.html#metadpy.mle.metad" title="metadpy.mle.metad"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metad</span></code></a>()</p></td>
 <td><p>Estimate meta-d' using maximum likelihood estimation (MLE).</p></td>
@@ -416,12 +408,8 @@
 </table>
 </section>
 <section id="plotting">
-<h2><a class="toc-backref" href="#id4">Plotting</a><a class="headerlink" href="#plotting" title="Permalink to this headline">#</a></h2>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Plotting</a><a class="headerlink" href="#plotting" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/plotting/metadpy.plotting.plot_confidence.html#metadpy.plotting.plot_confidence" title="metadpy.plotting.plot_confidence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_confidence</span></code></a>(nR_S1, nR_S2[, fitModel, ax])</p></td>
 <td><p>Plot nR_S1 and nR_S2 confidence ratings.</p></td>
@@ -433,12 +421,8 @@
 </table>
 </section>
 <section id="sdt">
-<h2><a class="toc-backref" href="#id5">SDT</a><a class="headerlink" href="#sdt" title="Permalink to this headline">#</a></h2>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">SDT</a><a class="headerlink" href="#sdt" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/sdt/metadpy.sdt.scores.html#metadpy.sdt.scores" title="metadpy.sdt.scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scores</span></code></a>()</p></td>
 <td><p>Extract hits, misses, false alarms and correct rejection from stimuli and responses vectors.</p></td>
@@ -459,12 +443,8 @@
 </table>
 </section>
 <section id="utils">
-<h2><a class="toc-backref" href="#id6">Utils</a><a class="headerlink" href="#utils" title="Permalink to this headline">#</a></h2>
-<table class="longtable table autosummary">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Utils</a><a class="headerlink" href="#utils" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/utils/metadpy.utils.trials2counts.html#metadpy.utils.trials2counts" title="metadpy.utils.trials2counts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trials2counts</span></code></a>()</p></td>
 <td><p>Convert raw behavioral data to nR_S1 and nR_S2 response count.</p></td>
@@ -624,7 +604,7 @@
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
 
   </div>

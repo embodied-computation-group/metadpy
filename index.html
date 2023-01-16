@@ -1,12 +1,12 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Installation &#8212; metadpy 0.0.1 documentation</title>
+    <title>Installation &#8212; metadpy 0.1.0 documentation</title>
   
   
   
@@ -30,8 +30,6 @@
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
@@ -40,14 +38,16 @@
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
     <link rel="shortcut icon" href="_static/logo.svg"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API" href="api.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="docsearch:language" content="None">
+  <meta name="docsearch:language" content="en">
   </head>
   
   
@@ -370,7 +370,7 @@
 <p><strong>metadpy</strong> is a Python implementation of standard Bayesian models of behavioural metacognition. It is aimed to provide simple yet powerful functions to compute standard indexes and metrics of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) <span id="id1">[<a class="reference internal" href="references.html#id3" title="Stephen M. Fleming and Hakwan C. Lau. How to measure metacognition. Frontiers in Human Neuroscience, July 2014. URL: https://doi.org/10.3389/fnhum.2014.00443, doi:10.3389/fnhum.2014.00443.">Fleming and Lau, 2014</a>, <a class="reference internal" href="references.html#id2" title="Stephen M Fleming. HMeta-d: hierarchical bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, January 2017. URL: https://doi.org/10.1093/nc/nix007, doi:10.1093/nc/nix007.">Fleming, 2017</a>]</span>. The only input required is a data frame encoding task performances and confidence ratings at the trial level.</p>
 <p><strong>metadpy</strong> is written in Python 3. It uses <a class="reference external" href="https://numpy.org/">Numpy</a>, <a class="reference external" href="https://www.scipy.org/">Scipy</a> and <a class="reference external" href="https://pandas.pydata.org/%3E">Pandas</a> for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling is implemented in <a class="reference external" href="https://github.com/aesara-devs/aesara">Aesara</a> (now renamed <a class="reference external" href="https://github.com/pymc-devs/pytensor">PyTensor</a> for versions of <a class="reference external" href="https://docs.pymc.io/%3E">pymc</a> &gt;5.0).</p>
 <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h1>
 <p>The package can be installed using pip:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>metadpy
 </pre></div>
@@ -390,14 +390,14 @@
 </ul>
 </section>
 <section id="why-metadpy">
-<h1>Why metadpy?<a class="headerlink" href="#why-metadpy" title="Permalink to this headline">#</a></h1>
+<h1>Why metadpy?<a class="headerlink" href="#why-metadpy" title="Permalink to this heading">#</a></h1>
 <p>metadpy stands for meta-d’ (meta-d prime) in Python. meta-d’ is a behavioural metric commonly used in consciousness and metacognition research. It is modelled to reflect metacognitive efficiency (i.e the relationship between subjective reports about performances and objective behaviour).</p>
 <p>metadpy first aims to be the Python equivalent of the <a class="reference external" href="https://github.com/metacoglab/HMeta-d">hMeta-d toolbox</a> (Matlab and R). It tries to make these models available to a broader open-source ecosystem and to ease their use via cloud computing interfaces. One notable difference is that While the <a class="reference external" href="https://github.com/metacoglab/HMeta-d">hMeta-d toolbox</a> relies on JAGS for the Bayesian modelling of confidence data (see [<strong>4</strong>]) to analyse task performance and confidence ratings, metadpy is built on the top of <a class="reference external" href="https://docs.pymc.io/%3E">pymc</a>, and uses Hamiltonina Monte Carlo methods (NUTS).</p>
 <p>For an extensive introduction to metadpy, you can navigate the following notebooks that are Python adaptations of the introduction to the <a class="reference external" href="https://github.com/metacoglab/HMeta-d">hMeta-d toolbox</a> written in Matlab by Olivia Faul for the <a class="reference external" href="https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial">Zurich Computational Psychiatry course</a>.</p>
 <p>✏️ <a class="reference external" href="https://embodied-computation-group.github.io/metadpy/tutorials.html">Tutorials and examples</a></p>
 </section>
 <section id="importing-data">
-<h1>Importing data<a class="headerlink" href="#importing-data" title="Permalink to this headline">#</a></h1>
+<h1>Importing data<a class="headerlink" href="#importing-data" title="Permalink to this heading">#</a></h1>
 <p>Classical metacognition experiments contain two phases: task performance and confidence ratings. The task performance could for example be the ability to distinguish the presence of a dot on the screen. By relating trials where stimuli are present or absent and the response provided by the participant (Can you see the dot: yes/no), it is possible to obtain the accuracy. The confidence rating is proposed to the participant when the response is made and should reflect how certain the participant is about his/her judgement.</p>
 <p>An ideal observer would always associate very high confidence ratings with correct task-I responses, and very low confidence ratings with an incorrect task-1 response, while a participant with a low metacognitive efficiency will have a more mixed response pattern.</p>
 <p>A minimal metacognition dataset will therefore consist in a data frame populated with 5 columns:</p>
@@ -458,8 +458,8 @@
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>2</td>
       <td>1</td>
@@ -467,10 +467,10 @@
     </tr>
     <tr>
       <th>2</th>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
+      <td>4</td>
       <td>2</td>
       <td>0</td>
     </tr>
@@ -485,8 +485,8 @@
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>3</td>
       <td>4</td>
@@ -518,14 +518,14 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([658, 360, 418, 293, 457, 194,  95,  25]),
- array([ 33,  94, 222, 422, 282, 390, 415, 642]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([626, 373, 435, 295, 442, 225,  78,  26]),
+ array([ 33,  83, 197, 458, 304, 377, 403, 645]))
 </pre></div>
 </div>
 </div>
 </div>
 <section id="data-visualization">
-<h2>Data visualization<a class="headerlink" href="#data-visualization" title="Permalink to this headline">#</a></h2>
+<h2>Data visualization<a class="headerlink" href="#data-visualization" title="Permalink to this heading">#</a></h2>
 <p>You can easily visualize metacognition results using one of the plotting functions. Here, we will use the <code class="docutils literal notranslate"><span class="pre">plot_confidence</span></code> and the <code class="docutils literal notranslate"><span class="pre">plot_roc</span></code> functions to visualize the metacognitive performance of our participant.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -549,13 +549,13 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/36fb9c8e7bb7aa4cdefd18cabfa91f1a826f1ba51a6088982b22359fab373838.png" src="_images/36fb9c8e7bb7aa4cdefd18cabfa91f1a826f1ba51a6088982b22359fab373838.png" />
+<img alt="_images/c6f4c7c0e2ec90a6f33d4eceabc106caebb61bc9369d52b625cae66c59516211.png" src="_images/c6f4c7c0e2ec90a6f33d4eceabc106caebb61bc9369d52b625cae66c59516211.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="signal-detection-theory-sdt">
-<h1>Signal detection theory (SDT)<a class="headerlink" href="#signal-detection-theory-sdt" title="Permalink to this headline">#</a></h1>
+<h1>Signal detection theory (SDT)<a class="headerlink" href="#signal-detection-theory-sdt" title="Permalink to this heading">#</a></h1>
 <p>All metadpy functions are registred as Pandas flavors (see <a class="reference external" href="https://pypi.org/project/pandas-flavor/">pandas-flavor</a>), which means that the functions can be called as a method from the result data frame. When using the default columns names (<code class="docutils literal notranslate"><span class="pre">Stimuli</span></code>, <code class="docutils literal notranslate"><span class="pre">Response</span></code>, <code class="docutils literal notranslate"><span class="pre">Accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">Confidence</span></code>), this significantly reduces the length of the function call, making your code more clean and readable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -600,7 +600,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7823239638193418
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7837447676230491
 </pre></div>
 </div>
 </div>
@@ -619,7 +619,7 @@
 </div>
 </section>
 <section id="estimating-meta-dprime-using-maximum-likelyhood-estimates-mle">
-<h1>Estimating meta dprime using Maximum Likelyhood Estimates (MLE)<a class="headerlink" href="#estimating-meta-dprime-using-maximum-likelyhood-estimates-mle" title="Permalink to this headline">#</a></h1>
+<h1>Estimating meta dprime using Maximum Likelyhood Estimates (MLE)<a class="headerlink" href="#estimating-meta-dprime-using-maximum-likelyhood-estimates-mle" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">metadpy.mle</span> <span class="kn">import</span> <span class="n">metad</span>
@@ -665,9 +665,9 @@
     <tr>
       <th>0</th>
       <td>0.999911</td>
-      <td>2.004527</td>
-      <td>2.004705</td>
-      <td>1.004616</td>
+      <td>2.021496</td>
+      <td>2.021675</td>
+      <td>1.021585</td>
     </tr>
   </tbody>
 </table>
@@ -675,9 +675,9 @@
 </div>
 </section>
 <section id="estimating-meta-d-using-bayesian-modeling">
-<h1>Estimating meta-d’ using Bayesian modeling<a class="headerlink" href="#estimating-meta-d-using-bayesian-modeling" title="Permalink to this headline">#</a></h1>
+<h1>Estimating meta-d’ using Bayesian modeling<a class="headerlink" href="#estimating-meta-d-using-bayesian-modeling" title="Permalink to this heading">#</a></h1>
 <section id="subject-level">
-<h2>Subject level<a class="headerlink" href="#subject-level" title="Permalink to this headline">#</a></h2>
+<h2>Subject level<a class="headerlink" href="#subject-level" title="Permalink to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">metadpy.bayesian</span> <span class="kn">import</span> <span class="n">hmetad</span>
@@ -1204,7 +1204,7 @@
   <div class="footer-item">
     
 <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.4.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.3.0.<br>
 </p>
 
   </div>
