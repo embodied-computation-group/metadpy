@@ -18,14 +18,14 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 %load_ext watermark
-%watermark -n -u -v -iv -w -p metadpy,jax,numpyro,pymc
+%watermark -n -u -v -iv -w -p metadpy,pytensor,pymc
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
 Cell [0;32mIn[12], line 1[0m
 [0;32m----> 1[0m [43mget_ipython[49m[43m([49m[43m)[49m[38;5;241;43m.[39;49m[43mrun_line_magic[49m[43m([49m[38;5;124;43m'[39;49m[38;5;124;43mload_ext[39;49m[38;5;124;43m'[39;49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mwatermark[39;49m[38;5;124;43m'[39;49m[43m)[49m
-[1;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mwatermark[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m-n -u -v -iv -w -p metadpy,jax,numpyro,pymc[39m[38;5;124m'[39m)
+[1;32m      2[0m get_ipython()[38;5;241m.[39mrun_line_magic([38;5;124m'[39m[38;5;124mwatermark[39m[38;5;124m'[39m, [38;5;124m'[39m[38;5;124m-n -u -v -iv -w -p metadpy,pytensor,pymc[39m[38;5;124m'[39m)
 
 File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/IPython/core/interactiveshell.py:2369[0m, in [0;36mInteractiveShell.run_line_magic[0;34m(self, magic_name, line, _stack_depth)[0m
 [1;32m   2367[0m     kwargs[[38;5;124m'[39m[38;5;124mlocal_ns[39m[38;5;124m'[39m] [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mget_local_scope(stack_depth)

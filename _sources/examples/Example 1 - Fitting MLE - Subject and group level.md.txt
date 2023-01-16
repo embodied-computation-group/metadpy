@@ -15,7 +15,7 @@ kernelspec:
 +++ {"id": "copyrighted-border"}
 
 (example_1)=
-Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
+Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 ```{code-cell} ipython3
 :id: unavailable-groove
@@ -211,7 +211,7 @@ sns.despine()
 
 ```{code-cell} ipython3
 %load_ext watermark
-%watermark -n -u -v -iv -w -p metadpy,jax,numpyro,pymc
+%watermark -n -u -v -iv -w -p metadpy,pytensor,pymc
 ```
 
 ```{code-cell} ipython3

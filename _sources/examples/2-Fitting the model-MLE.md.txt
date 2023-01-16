@@ -275,3 +275,7 @@ Here we can see that there is some variance in the model fits for each value of 
 ```{Exercise 5}
 Drop the trial numbers (Ntrials) per simulation down to just 100, and re-run the simulation and recovery procedure you just performed. What happens to the recovered values of meta-d with lower numbers of trials per subject? Do you think this may or may not be a problem? Feel free to try other trial numbers if you are interested.
 ```
+
+```{code-cell} ipython3
+
+```

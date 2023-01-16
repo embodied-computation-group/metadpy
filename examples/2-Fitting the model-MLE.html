@@ -434,7 +434,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3b4b95bd4bc814716ac51d660af57f2faf206e2068d49bb7bce2f0f6b5d1b953.png" src="../_images/3b4b95bd4bc814716ac51d660af57f2faf206e2068d49bb7bce2f0f6b5d1b953.png" />
+<img alt="../_images/3e3a608b561fcdd0d794370a83e3a331af719616d29129bbe3f0c49d2625b55e.png" src="../_images/3e3a608b561fcdd0d794370a83e3a331af719616d29129bbe3f0c49d2625b55e.png" />
 </div>
 </div>
 </section>
@@ -453,7 +453,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/bce33db408cd9605e11e1b2adfb92b1e5ba4b7462b2cfc351dc2081f8873e03f.png" src="../_images/bce33db408cd9605e11e1b2adfb92b1e5ba4b7462b2cfc351dc2081f8873e03f.png" />
+<img alt="../_images/03bda53ac1c6d86118e4caf69c73afe8535275e0514de32ba823600991b4e66c.png" src="../_images/03bda53ac1c6d86118e4caf69c73afe8535275e0514de32ba823600991b4e66c.png" />
 </div>
 </div>
 <div class="admonition hint">
@@ -469,8 +469,8 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.8078029434590985
-High confidence AUC: 0.6707383151149642
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7674223655946171
+High confidence AUC: 0.6575427452587482
 </pre></div>
 </div>
 </div>
@@ -555,7 +555,7 @@ High confidence AUC: 0.6707383151149642
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8f7685e9e3b99073159af7d34b52b868cfcaf2e81c9584396812873409c19f15.png" src="../_images/8f7685e9e3b99073159af7d34b52b868cfcaf2e81c9584396812873409c19f15.png" />
+<img alt="../_images/8191434026511f73a641da1a376a74b6a7edbe2bfc90f2ac23dd703de54566cc.png" src="../_images/8191434026511f73a641da1a376a74b6a7edbe2bfc90f2ac23dd703de54566cc.png" />
 </div>
 </div>
 <p><strong>Now plot the same figures for the model estimation of type 2 performance with low metacognition:</strong></p>
@@ -573,7 +573,7 @@ High confidence AUC: 0.6707383151149642
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3df82ec686ac4022ea732aa2ab6ea0b07c317746fc8f6d0b733fbdb2385fb158.png" src="../_images/3df82ec686ac4022ea732aa2ab6ea0b07c317746fc8f6d0b733fbdb2385fb158.png" />
+<img alt="../_images/5d2ccf03cf256953f9d043e608fb052b7b68c83cd9c8d761f9f90182c55877fd.png" src="../_images/5d2ccf03cf256953f9d043e608fb052b7b68c83cd9c8d761f9f90182c55877fd.png" />
 </div>
 </div>
 <div class="highlight-{hint}You notranslate"><div class="highlight"><pre><span></span>
@@ -740,62 +740,20 @@ Next, run this whole section again to simulate new data from the same parameters
 <span class="g g-Whitespace">    </span><span class="mi">329</span>     <span class="k">if</span> <span class="n">subprob</span><span class="o">.</span><span class="n">terminate</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">330</span>         <span class="k">break</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:118,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
-<span class="g g-Whitespace">    </span><span class="mi">116</span> <span class="n">lb_t</span> <span class="o">=</span> <span class="n">trust_lb</span> <span class="o">-</span> <span class="n">dn</span>
-<span class="g g-Whitespace">    </span><span class="mi">117</span> <span class="n">ub_t</span> <span class="o">=</span> <span class="n">trust_ub</span> <span class="o">-</span> <span class="n">dn</span>
-<span class="ne">--&gt; </span><span class="mi">118</span> <span class="n">dt</span><span class="p">,</span> <span class="n">cg_info</span> <span class="o">=</span> <span class="n">projected_cg</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">c_t</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">b_t</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">119</span>                            <span class="n">trust_radius_t</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span>                            <span class="n">lb_t</span><span class="p">,</span> <span class="n">ub_t</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">122</span> <span class="c1"># Compute update (normal + tangential steps).</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dn</span> <span class="o">+</span> <span class="n">dt</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/equality_constrained_sqp.py:162,</span> in <span class="ni">equality_constrained_sqp</span><span class="nt">(fun_and_constr, grad_and_jac, lagr_hess, x0, fun0, grad0, constr0, jac0, stop_criteria, state, initial_penalty, initial_trust_radius, factorization_method, trust_lb, trust_ub, scaling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">160</span> <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">Y</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b_next</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">161</span> <span class="c1"># Make sure increment is inside box constraints</span>
+<span class="ne">--&gt; </span><span class="mi">162</span> <span class="n">_</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">intersect</span> <span class="o">=</span> <span class="n">box_intersections</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">trust_lb</span><span class="p">,</span> <span class="n">trust_ub</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">163</span> <span class="c1"># Compute tentative point</span>
+<span class="g g-Whitespace">    </span><span class="mi">164</span> <span class="n">x_soc</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">S</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="n">t</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
 
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/qp_subproblem.py:498,</span> in <span class="ni">projected_cg</span><span class="nt">(H, c, Z, Y, b, trust_radius, lb, ub, tol, max_iter, max_infeasible_iter, return_all)</span>
-<span class="g g-Whitespace">    </span><span class="mi">496</span> <span class="c1"># Initial Values</span>
-<span class="g g-Whitespace">    </span><span class="mi">497</span> <span class="n">x</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">498</span> <span class="n">r</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">499</span> <span class="n">g</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">500</span> <span class="n">p</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:418,</span> in <span class="ni">LinearOperator.dot</span><span class="nt">(self, x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">415</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">417</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">418</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">419</span> <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">420</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">matmat</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:232,</span> in <span class="ni">LinearOperator.matvec</span><span class="nt">(self, x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">229</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dimension mismatch&#39;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">232</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matvec</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">235</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">asmatrix</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/linalg/_interface.py:530,</span> in <span class="ni">_CustomLinearOperator._matvec</span><span class="nt">(self, x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">529</span> <span class="k">def</span> <span class="nf">_matvec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">530</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__matvec_impl</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/tr_interior_point.py:236,</span> in <span class="ni">BarrierSubproblem.lagrangian_hessian.&lt;locals&gt;.matvec</span><span class="nt">(vec)</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span> <span class="n">vec_s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_slack</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">235</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ineq</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">236</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Hx</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_x</span><span class="p">),</span> <span class="n">S_Hs_S</span><span class="o">*</span><span class="n">vec_s</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">238</span>     <span class="k">return</span> <span class="n">Hx</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vec_x</span><span class="p">)</span>
-
-<span class="nn">File &lt;__array_function__ internals&gt;:180,</span> in <span class="ni">hstack</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/core/shape_base.py:334,</span> in <span class="ni">hstack</span><span class="nt">(tup)</span>
-<span class="g g-Whitespace">    </span><span class="mi">285</span> <span class="nd">@array_function_dispatch</span><span class="p">(</span><span class="n">_vhstack_dispatcher</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">286</span> <span class="k">def</span> <span class="nf">hstack</span><span class="p">(</span><span class="n">tup</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">287</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">288</span><span class="sd">     Stack arrays in sequence horizontally (column wise).</span>
-<span class="g g-Whitespace">    </span><span class="mi">289</span><span class="sd"> </span>
-<span class="sd">   (...)</span>
-<span class="g g-Whitespace">    </span><span class="mi">332</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">333</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">334</span>     <span class="k">if</span> <span class="ow">not</span> <span class="n">overrides</span><span class="o">.</span><span class="n">ARRAY_FUNCTION_ENABLED</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">335</span>         <span class="c1"># raise warning if necessary</span>
-<span class="g g-Whitespace">    </span><span class="mi">336</span>         <span class="n">_arrays_for_stack_dispatcher</span><span class="p">(</span><span class="n">tup</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">338</span>     <span class="n">arrs</span> <span class="o">=</span> <span class="n">atleast_1d</span><span class="p">(</span><span class="o">*</span><span class="n">tup</span><span class="p">)</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/optimize/_trustregion_constr/qp_subproblem.py:200,</span> in <span class="ni">box_intersections</span><span class="nt">(z, d, lb, ub, entire_line)</span>
+<span class="g g-Whitespace">    </span><span class="mi">197</span> <span class="n">zero_d</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">198</span> <span class="c1"># If the boundaries are not satisfied for some coordinate</span>
+<span class="g g-Whitespace">    </span><span class="mi">199</span> <span class="c1"># for which &quot;d&quot; is zero, there is no box-line intersection.</span>
+<span class="ne">--&gt; </span><span class="mi">200</span> <span class="k">if</span> <span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">zero_d</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lb</span><span class="p">[</span><span class="n">zero_d</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">zero_d</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">ub</span><span class="p">[</span><span class="n">zero_d</span><span class="p">])</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+<span class="g g-Whitespace">    </span><span class="mi">201</span>     <span class="n">intersect</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">    </span><span class="mi">202</span>     <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">intersect</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

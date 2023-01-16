@@ -367,7 +367,7 @@
   <p><a class="reference external" href="https://github.com/pre-commit/pre-commit"><img alt="pre-commit" src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&amp;logoColor=white" /></a> <a class="reference external" href="https://github.com/LegrandNico/metadpy/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/License-GPL%20v3-blue.svg" /></a> <a class="reference external" href="https://badge.fury.io/py/metadpy"><img alt="pip" src="https://badge.fury.io/py/metadpy.svg" /></a> <a class="reference external" href="https://travis-ci.com/LegandNico/metadpy"><img alt="travis" src="https://travis-ci.com/LegrandNico/metadpy.svg?branch=master" /></a> <a class="reference external" href="https://codecov.io/gh/LegrandNico/metadpy"><img alt="codecov" src="https://codecov.io/gh/LegrandNico/metadpy/branch/master/graph/badge.svg" /></a> <a class="reference external" href="https://github.com/psf/black"><img alt="black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a> <a class="reference external" href="http://mypy-lang.org/"><img alt="mypy" src="http://www.mypy-lang.org/static/mypy_badge.svg" /></a></p>
 <hr class="docutils" />
 <img src="https://github.com/LegrandNico/metadpy/raw/master/docs/source/images/logo.png" align="left" alt="metadpy" height="250" HSPACE=30>
-<p><strong>metadpy</strong> is a Python implementation of standard Bayesian models of behavioural metacognition. It is aimed to provide simple yet powerful functions to compute standard indexes and metrics of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) [<strong>1</strong>, <strong>2</strong>, <strong>3</strong>]. The only input required is a data frame encoding task performances and confidence ratings at the trial level.</p>
+<p><strong>metadpy</strong> is a Python implementation of standard Bayesian models of behavioural metacognition. It is aimed to provide simple yet powerful functions to compute standard indexes and metrics of signal detection theory (SDT) and metacognitive efficiency (meta-d’ and hierarchical meta-d’) <span id="id1">[<a class="reference internal" href="references.html#id3" title="Stephen M. Fleming and Hakwan C. Lau. How to measure metacognition. Frontiers in Human Neuroscience, July 2014. URL: https://doi.org/10.3389/fnhum.2014.00443, doi:10.3389/fnhum.2014.00443.">Fleming and Lau, 2014</a>, <a class="reference internal" href="references.html#id2" title="Stephen M Fleming. HMeta-d: hierarchical bayesian estimation of metacognitive efficiency from confidence ratings. Neuroscience of Consciousness, January 2017. URL: https://doi.org/10.1093/nc/nix007, doi:10.1093/nc/nix007.">Fleming, 2017</a>]</span>. The only input required is a data frame encoding task performances and confidence ratings at the trial level.</p>
 <p><strong>metadpy</strong> is written in Python 3. It uses <a class="reference external" href="https://numpy.org/">Numpy</a>, <a class="reference external" href="https://www.scipy.org/">Scipy</a> and <a class="reference external" href="https://pandas.pydata.org/%3E">Pandas</a> for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling is implemented in <a class="reference external" href="https://github.com/aesara-devs/aesara">Aesara</a> (now renamed <a class="reference external" href="https://github.com/pymc-devs/pytensor">PyTensor</a> for versions of <a class="reference external" href="https://docs.pymc.io/%3E">pymc</a> &gt;5.0).</p>
 <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">#</a></h1>
@@ -452,14 +452,14 @@
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>4</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
-      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>2</td>
       <td>1</td>
@@ -468,27 +468,27 @@
     <tr>
       <th>2</th>
       <td>0</td>
-      <td>1</td>
       <td>0</td>
       <td>1</td>
+      <td>2</td>
       <td>2</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
+      <td>0</td>
       <td>1</td>
       <td>3</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
+      <td>3</td>
       <td>4</td>
       <td>0</td>
     </tr>
@@ -518,8 +518,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([650, 396, 396, 287, 450, 225,  69,  27]),
- array([ 27,  67, 202, 475, 278, 405, 413, 633]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([626, 387, 387, 329, 450, 222,  65,  34]),
+ array([ 21,  80, 227, 443, 300, 393, 402, 634]))
 </pre></div>
 </div>
 </div>
@@ -549,7 +549,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7d76e56d481ac0b6b35962b06109c5bfa7da1a3e4617aad6feabd0485171d50b.png" src="_images/7d76e56d481ac0b6b35962b06109c5bfa7da1a3e4617aad6feabd0485171d50b.png" />
+<img alt="_images/593780daceef6f7f4ec06ead12748850edf0121ef8e65ca31e7400c1b9d57f39.png" src="_images/593780daceef6f7f4ec06ead12748850edf0121ef8e65ca31e7400c1b9d57f39.png" />
 </div>
 </div>
 </section>
@@ -600,7 +600,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7993489469479389
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7826942752321826
 </pre></div>
 </div>
 </div>
@@ -665,9 +665,9 @@
     <tr>
       <th>0</th>
       <td>0.999911</td>
-      <td>2.15808</td>
-      <td>2.158271</td>
-      <td>1.158169</td>
+      <td>2.02363</td>
+      <td>2.02381</td>
+      <td>1.023719</td>
     </tr>
   </tbody>
 </table>
