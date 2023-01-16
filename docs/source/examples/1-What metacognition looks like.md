@@ -19,8 +19,8 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 ```{code-cell} ipython3
 import matplotlib.pyplot as plt
 import seaborn as sns
-from metadPy.plotting import plot_confidence
-from metadPy.utils import type2_SDT_simuation
+from metadpy.plotting import plot_confidence
+from metadpy.utils import type2_SDT_simuation
 
 sns.set_context("talk")
 ```

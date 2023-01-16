@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from metadPy.utils import (
+from metadpy.utils import (
     discreteRatings,
     pairedResponseSimulation,
     ratings2df,

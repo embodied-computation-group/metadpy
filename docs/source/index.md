@@ -14,22 +14,22 @@ kernelspec:
 
 +++ {"id": "_I8iFrneRXFP"}
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadPy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadPy.svg)](https://badge.fury.io/py/metadPy) [![travis](https://travis-ci.com/LegrandNico/metadPy.svg?branch=master)](https://travis-ci.com/LegandNico/metadPy) [![codecov](https://codecov.io/gh/LegrandNico/metadPy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadPy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadpy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadpy.svg)](https://badge.fury.io/py/metadpy) [![travis](https://travis-ci.com/LegrandNico/metadpy.svg?branch=master)](https://travis-ci.com/LegandNico/metadpy) [![codecov](https://codecov.io/gh/LegrandNico/metadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadpy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 ***
 
-<img src="https://github.com/LegrandNico/metadPy/raw/master/images/logo.png" align="left" alt="metadPy" height="250" HSPACE=30>
+<img src="https://github.com/LegrandNico/metadpy/raw/master/images/logo.png" align="left" alt="metadpy" height="250" HSPACE=30>
 
-**metadPy** is an open-source Python package for cognitive modelling of behavioural data with a focus on metacognition. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ using both MLE and Bayesian estimations) {cite:p}`maniscalo:2014,fleming:2014,fleming:2017`. The only input required is a data frame encoding task performances and confidence ratings at the trial level.
+**metadpy** is an open-source Python package for cognitive modelling of behavioural data with a focus on metacognition. It is aimed to provide simple yet powerful functions to compute standard index and metric of signal detection theory (SDT) and metacognitive efficiency (meta-d’ using both MLE and Bayesian estimations) {cite:p}`maniscalo:2014,fleming:2014,fleming:2017`. The only input required is a data frame encoding task performances and confidence ratings at the trial level.
 
-**metadPy** is written in Python 3. It uses [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>) for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling of meta-d’ and m-ratio {cite:p}`fleming:2017` is based either on [PyMC v4](https://docs.pymc.io/>).
+**metadpy** is written in Python 3. It uses [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>) for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling of meta-d’ and m-ratio {cite:p}`fleming:2017` is based either on [PyMC v4](https://docs.pymc.io/>).
 
 # Installation
 
-metadPy can be installed using pip:
+metadpy can be installed using pip:
 
 ```shell
-pip install git+https://github.com/LegrandNico/metadPy.git
+pip install git+https://github.com/LegrandNico/metadpy.git
 ```
 
 For most of the operations, the following packages are required:
@@ -47,29 +47,29 @@ For Bayesian modelling you will also need:
 
 +++ {"id": "Ptr2p3eWTxMX"}
 
-# Why metadPy?
+# Why metadpy?
 
-metadPy stands for meta-d' (meta-d prime) in Python. meta-d' is a behavioural metric commonly used in consciousness and metacognition research. It is modelled to reflect metacognitive efficiency (i.e the relationship between subjective reports about performances and objective behaviour).
+metadpy stands for meta-d' (meta-d prime) in Python. meta-d' is a behavioural metric commonly used in consciousness and metacognition research. It is modelled to reflect metacognitive efficiency (i.e the relationship between subjective reports about performances and objective behaviour).
 
-metadPy first aims to be the Python equivalent of the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) (Matlab and R). It tries to make these models available to a broader open-source ecosystem and to ease their use via cloud computing interfaces. One notable difference is that While the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) relies on JAGS for the Bayesian modelling of confidence data {cite:p}`fleming:2017` to analyse task performance and confidence ratings, metadPy is based on [JAX](https://jax.readthedocs.io/en/latest/) and [Numpyro](https://num.pyro.ai/en/latest/index.html#), which can easily be parallelized, flexibly uses CPU, GPU or TPU and offers a broader variety of MCMC sampling algorithms (comprising NUTS).
+metadpy first aims to be the Python equivalent of the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) (Matlab and R). It tries to make these models available to a broader open-source ecosystem and to ease their use via cloud computing interfaces. One notable difference is that While the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) relies on JAGS for the Bayesian modelling of confidence data {cite:p}`fleming:2017` to analyse task performance and confidence ratings, metadpy is based on [JAX](https://jax.readthedocs.io/en/latest/) and [Numpyro](https://num.pyro.ai/en/latest/index.html#), which can easily be parallelized, flexibly uses CPU, GPU or TPU and offers a broader variety of MCMC sampling algorithms (comprising NUTS).
 
-For an extensive introduction to metadPy, you can navigate the following notebooks that are Python adaptations of the introduction to the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) written in Matlab by Olivia Faul for the [Zurich Computational Psychiatry course](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial).
+For an extensive introduction to metadpy, you can navigate the following notebooks that are Python adaptations of the introduction to the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) written in Matlab by Olivia Faul for the [Zurich Computational Psychiatry course](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial).
 
 ## Examples 
 
 | Notebook | Colab | nbViewer |
 | --- | ---| --- |
-| Example 1 - Fitting MLE - Subject and group level | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb)
-| Example 2 - Fitting Bayesian - Subject level (pymc) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb)
+| Example 1 - Fitting MLE - Subject and group level | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb)
+| Example 2 - Fitting Bayesian - Subject level (pymc) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb)
 
 
 ## Tutorials
 
 | Notebook | Colab | nbViewer |
 | --- | ---| --- |
-| 1. What metacognition looks like? | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb)
-| 2. Fitting the model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/2%20-%20Fitting%20the%20model.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/2%20-%20Fitting%20the%20model.ipynb)
-| 3. Comparison with the HMeta-d toolbox | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadPy/blob/master/docs/notebooks/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
+| 1. What metacognition looks like? | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/1%20-%20What%20metacognition%20looks%20like.ipynb)
+| 2. Fitting the model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/2%20-%20Fitting%20the%20model.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/2%20-%20Fitting%20the%20model.ipynb)
+| 3. Comparison with the HMeta-d toolbox | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/notebooks/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
 
 +++ {"id": "w0EklNnNf6Ms"}
 
@@ -88,9 +88,9 @@ A minimal metacognition dataset will therefore consist in a data frame populated
 * `Confidence`: The confidence level [can be continuous or discrete rating].
 * `ntrial`: The trial number.
 
-Due to the logical dependence between the `Stimuli`, `Responses` and `Accuracy` columns, in practice only two of those columns are necessary, the third being deduced from the others. Most of the functions in `metadPy` will accept DataFrames containing only two of these columns, and will automatically infer the missing information. Similarly, as the metacognition models described here does not incorporate the temporal dimension, the trial number is optional. 
+Due to the logical dependence between the `Stimuli`, `Responses` and `Accuracy` columns, in practice only two of those columns are necessary, the third being deduced from the others. Most of the functions in `metadpy` will accept DataFrames containing only two of these columns, and will automatically infer the missing information. Similarly, as the metacognition models described here does not incorporate the temporal dimension, the trial number is optional. 
 
-`metadPy` includes a simulation function that will let you create one such data frame for one or many participants and condition, controlling for a variety of parameters. Here, we will simulate 200 trials from  participant having `d=1` and `c=0` (task performances) and a `meta-d=1.5` (metacognitive sensibility). The confidence ratings were provided using a 1-to-4 rating scale.
+`metadpy` includes a simulation function that will let you create one such data frame for one or many participants and condition, controlling for a variety of parameters. Here, we will simulate 200 trials from  participant having `d=1` and `c=0` (task performances) and a `meta-d=1.5` (metacognitive sensibility). The confidence ratings were provided using a 1-to-4 rating scale.
 
 ```{code-cell} ipython3
 ---
@@ -100,7 +100,7 @@ colab:
 id: wOPOtKuIdrzD
 outputId: 511facb6-f4a8-4ca3-cb91-e877e49aa643
 ---
-from metadPy.utils import responseSimulation
+from metadpy.utils import responseSimulation
 
 simulation = responseSimulation(d=1, metad=2.0, c=0, nRatings=4, nTrials=5000)
 simulation.head()
@@ -109,7 +109,7 @@ simulation.head()
 ```{code-cell} ipython3
 :id: F2An4oGxgbz2
 
-from metadPy.utils import trials2counts
+from metadpy.utils import trials2counts
 
 nR_S1, nR_S2 = trials2counts(
     data=simulation,
@@ -138,7 +138,7 @@ You can easily visualize metacognition results using one of the plotting functio
 import arviz as az
 import matplotlib.pyplot as plt
 import seaborn as sns
-from metadPy.plotting import plot_confidence, plot_roc
+from metadpy.plotting import plot_confidence, plot_roc
 
 sns.set_context("talk")
 ```
@@ -163,7 +163,7 @@ sns.despine()
 
 +++ {"id": "EqC4DJN_6KHG"}
 
-All metadPy functions are registred as Pandas flavors (see [pandas-flavor](https://pypi.org/project/pandas-flavor/)), which means that the functions can be called as a method from the result data frame. When using the default columns names (`Stimuli`, `Response`, `Accuracy`, `Confidence`), this significantly reduces the length of the function call, making your code more clean and readable.
+All metadpy functions are registred as Pandas flavors (see [pandas-flavor](https://pypi.org/project/pandas-flavor/)), which means that the functions can be called as a method from the result data frame. When using the default columns names (`Stimuli`, `Response`, `Accuracy`, `Confidence`), this significantly reduces the length of the function call, making your code more clean and readable.
 
 ```{code-cell} ipython3
 ---
@@ -226,7 +226,7 @@ colab:
 id: TrsF_KUYdZzf
 outputId: 72830038-8aa7-4a13-ba29-32aa22576ca0
 ---
-from metadPy.mle import metad
+from metadpy.mle import metad
 
 metad = metad(
     data=simulation,
@@ -250,7 +250,7 @@ print(f'meta-d\' = {str(metad["meta_d"])}')
 ```{code-cell} ipython3
 :id: I08VOEauqbsc
 
-from metadPy.bayesian import hmetad
+from metadpy.bayesian import hmetad
 ```
 
 ```{code-cell} ipython3
@@ -292,7 +292,7 @@ outputId: d817b6e0-951e-454b-f614-4fc7890d3736
 az.summary(trace, var_names=["meta_d", "cS2", "cS1"])
 ```
 
-<img src = "https://raw.githubusercontent.com/embodied-computation-group/metadPy/master/docs/source/images/LabLogo.png" height ="100"><img src = "https://raw.githubusercontent.com/embodied-computation-group/metadPy/master/docs/source/images/AU.png" height ="100">
+<img src = "https://raw.githubusercontent.com/embodied-computation-group/metadpy/master/docs/source/images/LabLogo.png" height ="100"><img src = "https://raw.githubusercontent.com/embodied-computation-group/metadpy/master/docs/source/images/AU.png" height ="100">
 
 ```{toctree}
 ---

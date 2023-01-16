@@ -21,10 +21,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from metadPy.mle import fit_metad, metad
-from metadPy.plotting import plot_confidence, plot_roc
-from metadPy.sdt import roc_auc
-from metadPy.utils import (responseSimulation, trials2counts,
+from metadpy.mle import fit_metad, metad
+from metadpy.plotting import plot_confidence, plot_roc
+from metadpy.sdt import roc_auc
+from metadpy.utils import (responseSimulation, trials2counts,
                            type2_SDT_simuation)
 
 sns.set_context("talk")
@@ -109,8 +109,8 @@ Now you should be able to see that the area under the type2ROC curve with lower 
 ```
 
 ```{hint}
-* You can plot the ROC curve using `metadPy.plotting.plot_roc()`
-* You can calculate the area using `metadPy.std.roc_auc()`
+* You can plot the ROC curve using `metadpy.plotting.plot_roc()`
+* You can calculate the area using `metadpy.std.roc_auc()`
 ```
 
 +++
@@ -151,7 +151,7 @@ high_noise_df = responseSimulation(
 
 +++
 
-**NOTE:** nR_S1 and nR_S2 are the counts of the responses to stimulus 1 (nR_S1) and stimulus 2 (nR_S2) for each confidence level. We can compute this using the function py:func:`metadPy.utils.trials2counts()`.
+**NOTE:** nR_S1 and nR_S2 are the counts of the responses to stimulus 1 (nR_S1) and stimulus 2 (nR_S2) for each confidence level. We can compute this using the function py:func:`metadpy.utils.trials2counts()`.
 
 ```{code-cell} ipython3
 low_noise_nR_S1, low_noise_nR_S2 = trials2counts(data=low_noise_df, nRatings=nRatings)

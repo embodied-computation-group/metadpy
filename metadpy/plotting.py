@@ -51,7 +51,7 @@ def plot_confidence(
             ) / C_area
         else:
             raise ValueError(
-                "You should provided a dictionary. " "See metadPy.sdt.metad() for help."
+                "You should provided a dictionary. " "See metadpy.sdt.metad() for help."
             )
 
     if len(nR_S1) != len(nR_S2):

@@ -15,7 +15,7 @@ def hmetad_subjectLevel(
     """Hierachical Bayesian modeling of meta-d' (subject level).
 
     This is an internal function. The subject level model must be called using
-    :py:func:`metadPy.bayesian.hmetad`.
+    :py:func:`metadpy.bayesian.hmetad`.
 
     Parameters
     ----------

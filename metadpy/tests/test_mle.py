@@ -6,8 +6,8 @@ from unittest import TestCase
 import numpy as np
 import pytest
 
-from metadPy import load_dataset
-from metadPy.mle import metad, norm_cdf
+from metadpy import load_dataset
+from metadpy.mle import metad, norm_cdf
 
 
 class Testsdt(TestCase):

@@ -7,9 +7,9 @@ import numpy as np
 import pymc as pm
 import pytest
 
-from metadPy import load_dataset
-from metadPy.bayesian import extractParameters, hmetad
-from metadPy.utils import ratings2df
+from metadpy import load_dataset
+from metadpy.bayesian import extractParameters, hmetad
+from metadpy.utils import ratings2df
 
 
 class Testsdt(TestCase):

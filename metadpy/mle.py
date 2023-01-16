@@ -16,7 +16,7 @@ from scipy.optimize import SR1, Bounds, LinearConstraint, minimize
 from scipy.stats import norm
 from tqdm import tqdm
 
-from metadPy.utils import trials2counts
+from metadpy.utils import trials2counts
 
 warnings.filterwarnings(
     "ignore", message="delta_grad == 0.0. Check if the approximated function is linear."
@@ -278,7 +278,7 @@ def metad(
     nRatings : int
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
         Default is set to 4.
     stimuli : string | None
         Name of the column containing the stimuli.
@@ -640,7 +640,7 @@ def fit_metad(
     nRatings : int
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
         Default is set to 4.
     nCriteria : int | None
         (Optional) Number criteria to be fitted. If `None`, the number of criteria is

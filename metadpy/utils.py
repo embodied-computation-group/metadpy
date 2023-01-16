@@ -262,7 +262,7 @@ def discreteRatings(
 
     Examples
     --------
-    >>> from metadPy.utils import discreteRatings
+    >>> from metadpy.utils import discreteRatings
     >>> ratings = np.array([
     >>>     96, 98, 95, 90, 32, 58, 77,  6, 78, 78, 62, 60, 38, 12,
     >>>     63, 18, 15, 13, 49, 26,  2, 38, 60, 23, 25, 39, 22, 33,

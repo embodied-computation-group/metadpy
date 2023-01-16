@@ -29,7 +29,7 @@ jobs:
         pip install types-setuptools
     - name: Run tests and coverage
       run: |
-        mypy ./metadPy/ --ignore-missing-imports
-        flake8 ./metadPy/
-        black ./metadPy/
-        isort ./metadPy/
+        mypy ./metadpy/ --ignore-missing-imports
+        flake8 ./metadpy/
+        black ./metadpy/
+        isort ./metadpy/

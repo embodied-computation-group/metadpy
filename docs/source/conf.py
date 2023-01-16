@@ -12,16 +12,15 @@
 #
 import time
 
+import metadpy
 import sphinx_bootstrap_theme
-
-import metadPy
 
 # -- Project information -----------------------------------------------------
 
-project = "metadPy"
+project = "metadpy"
 copyright = "2022-{}, Nicolas Legrand".format(time.strftime("%Y"))
 author = "Nicolas Legrand"
-release = metadPy.__version__
+release = metadpy.__version__
 
 
 image_scrapers = ("matplotlib",)
@@ -86,7 +85,7 @@ html_theme_options = {
     "icon_links": [
         dict(
             name="GitHub",
-            url="https://github.com/embodied-computation-group/metadPy",
+            url="https://github.com/embodied-computation-group/metadpy",
             icon="fab fa-github-square",
         ),
         dict(
@@ -101,7 +100,7 @@ html_theme_options = {
         ),
     ],
     "logo": {
-        "text": "metadPy",
+        "text": "metadpy",
     },
 }
 

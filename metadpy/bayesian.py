@@ -10,8 +10,8 @@ import pandas as pd
 import pandas_flavor as pf
 from arviz import InferenceData
 
-from metadPy.sdt import criterion, dprime
-from metadPy.utils import discreteRatings, trials2counts
+from metadpy.sdt import criterion, dprime
+from metadpy.utils import discreteRatings, trials2counts
 
 if TYPE_CHECKING is True:
     from pymc.backends.base import MultiTrace
@@ -128,7 +128,7 @@ def hmetad(
     nRatings : int | None
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
     within : string | None
         Name of column containing the within factor (condition comparison).
     between : string | None
@@ -140,7 +140,7 @@ def hmetad(
     nbins : int
         If a continuous rating scale was using, `nbins` define the number of
         discrete ratings when converting using
-        :py:func:`metadPy.utils.discreteRatings`. The default value is `4`.
+        :py:func:`metadpy.utils.discreteRatings`. The default value is `4`.
     padding : boolean
         If `True`, each response count in the output has the value of padAmount
         added to it. Padding cells is desirable if trial counts of 0 interfere
@@ -197,7 +197,7 @@ def hmetad(
     `subject`, `between` and `within` factors.
 
     If the confidence levels have more unique values than `nRatings`, the confience
-    column will be discretized using py:func:`metadPy.utils.discreteRatings`.
+    column will be discretized using py:func:`metadpy.utils.discreteRatings`.
 
     Raises
     ------
@@ -241,7 +241,7 @@ def hmetad(
                 (
                     "The confidence columns contains more unique values than nRatings. "
                     "The ratings are going to be discretized using "
-                    "metadPy.utils.discreteRatings()"
+                    "metadpy.utils.discreteRatings()"
                 )
             )
             new_ratings, _ = discreteRatings(data[confidence].to_numpy(), nbins=nbins)
@@ -437,7 +437,7 @@ def preprocess_group(
     nRatings : int or None
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
 
     Return
     ------
@@ -525,7 +525,7 @@ def preprocess_rm1way(
     nRatings : int
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
-        discrete ratings using :py:func:`metadPy.utils.discreteRatings`.
+        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
 
     Return
     ------

@@ -1,2 +1,2 @@
 ignore:
-  - "./metadPy/tests/*"
+  - "./metadpy/tests/*"

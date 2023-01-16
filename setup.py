@@ -10,7 +10,7 @@ DESCRIPTION = (
     "Fitting behavioural and cognitive models" "of metacognitive efficiency in Python."
 )
 
-DISTNAME = "metadPy"
+DISTNAME = "metadpy"
 MAINTAINER = "Nicolas Legrand"
 MAINTAINER_EMAIL = "nicolas.legrand@cfin.au.dk"
 VERSION = "0.0.1"
@@ -25,7 +25,7 @@ INSTALL_REQUIRES = [
     "numba>=0.55.1",
 ]
 
-PACKAGES = ["metadPy", "metadPy.datasets"]
+PACKAGES = ["metadpy", "metadpy.datasets"]
 
 try:
     from setuptools import setup

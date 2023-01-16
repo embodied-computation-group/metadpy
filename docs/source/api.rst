@@ -1,6 +1,6 @@
 .. _api_ref:
 
-.. currentmodule:: metadPy
+.. currentmodule:: metadpy
 
 
 .. contents:: Table of Contents
@@ -12,7 +12,7 @@ API
 Bayesian
 --------
 
-.. currentmodule:: metadPy.bayesian
+.. currentmodule:: metadpy.bayesian
 
 .. autosummary::
    :toctree: generated/bayesian
@@ -25,7 +25,7 @@ Bayesian
 MLE
 ---
 
-.. currentmodule:: metadPy.mle
+.. currentmodule:: metadpy.mle
 
 .. autosummary::
    :toctree: generated/mle
@@ -37,7 +37,7 @@ MLE
 Plotting
 --------
 
-.. currentmodule:: metadPy.plotting
+.. currentmodule:: metadpy.plotting
 
 .. autosummary::
    :toctree: generated/plotting
@@ -48,7 +48,7 @@ Plotting
 SDT
 ---
 
-.. currentmodule:: metadPy.sdt
+.. currentmodule:: metadpy.sdt
 
 .. autosummary::
    :toctree: generated/sdt
@@ -62,7 +62,7 @@ SDT
 Utils
 -----
 
-.. currentmodule:: metadPy.utils
+.. currentmodule:: metadpy.utils
 
 .. autosummary::
    :toctree: generated/utils

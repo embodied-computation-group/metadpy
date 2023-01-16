@@ -23,18 +23,18 @@ Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-from metadPy import load_dataset
-from metadPy.mle import metad
-from metadPy.plotting import plot_confidence, plot_roc
+from metadpy import load_dataset
+from metadpy.mle import metad
+from metadpy.plotting import plot_confidence, plot_roc
 
 sns.set_context("talk")
 ```
 
 +++ {"id": "2oE_wkIxVPbe"}
 
-In this notebook, we are going to estimate meta-*d'* using Maximum Likelihood Estimation ([MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)) {cite:p}`fleming:2014,maniscalo:2014,maniscalo:2012` using the function implemented in [metadPy](https://github.com/LegrandNico/metadPy). This function is directly adapted from the transcription of the Matlab `fit_meta_d_MLE.m` by Alan Lee that can be retrieved [here](http://www.columbia.edu/~bsm2105/type2sdt/).
+In this notebook, we are going to estimate meta-*d'* using Maximum Likelihood Estimation ([MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)) {cite:p}`fleming:2014,maniscalo:2014,maniscalo:2012` using the function implemented in [metadpy](https://github.com/LegrandNico/metadpy). This function is directly adapted from the transcription of the Matlab `fit_meta_d_MLE.m` by Alan Lee that can be retrieved [here](http://www.columbia.edu/~bsm2105/type2sdt/).
 
-We are going to see, however, that [metadPy](https://github.com/LegrandNico/metadPy) greatly simplifies the preprocessing of raw data, letting the user fit the model for many participants/groups/conditions from the results data frame in a single command call. Another advantage here is that the python code supporting the model fitting is optimized using [Numba](http://numba.pydata.org/), which greatly improves its performance.
+We are going to see, however, that [metadpy](https://github.com/LegrandNico/metadpy) greatly simplifies the preprocessing of raw data, letting the user fit the model for many participants/groups/conditions from the results data frame in a single command call. Another advantage here is that the python code supporting the model fitting is optimized using [Numba](http://numba.pydata.org/), which greatly improves its performance.
 
 +++ {"id": "unable-tattoo"}
 
@@ -68,7 +68,7 @@ sns.despine()
 
 +++ {"id": "GJFs74YdcqxR"}
 
-The model is fitted using the `metadPy.mle.metad()` function. This function accepts response-signal arrays as input if the data comes from a single subject.
+The model is fitted using the `metadpy.mle.metad()` function. This function accepts response-signal arrays as input if the data comes from a single subject.
 
 ```{code-cell} ipython3
 ---
@@ -211,7 +211,7 @@ sns.despine()
 
 ```{code-cell} ipython3
 %load_ext watermark
-%watermark -n -u -v -iv -w -p metadPy,jax,numpyro,pymc
+%watermark -n -u -v -iv -w -p metadpy,jax,numpyro,pymc
 ```
 
 ```{code-cell} ipython3
