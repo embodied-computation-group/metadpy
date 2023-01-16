@@ -6,13 +6,14 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-DESCRIPTION = (
-    "Fitting behavioural and cognitive models" "of metacognitive efficiency in Python."
+DESCRIPTION = "metadpy: Metacognitive efficiency modelling in Python"
+LONG_DESCRIPTION = (
+    "Fitting behavioural and cognitive models of metacognitive efficiency in Python."
 )
 
 DISTNAME = "metadpy"
 MAINTAINER = "Nicolas Legrand"
-MAINTAINER_EMAIL = "nicolas.legrand@cfin.au.dk"
+MAINTAINER_EMAIL = "nicolas.legrand@cas.au.dk"
 VERSION = "0.1.0"
 
 INSTALL_REQUIRES = [
@@ -43,8 +44,7 @@ if __name__ == "__main__":
         maintainer=MAINTAINER,
         maintainer_email=MAINTAINER_EMAIL,
         description=DESCRIPTION,
-        long_description=open("README.md").read(),
-        long_description_content_type="text/x-rst",
+        long_description=LONG_DESCRIPTION,
         license="GPL-3.0",
         version=VERSION,
         install_requires=INSTALL_REQUIRES,

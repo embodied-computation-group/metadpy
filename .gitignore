@@ -5,3 +5,4 @@ mypyreports/
 build
 *egg-info
 docs/source/generated/*
+dist/
