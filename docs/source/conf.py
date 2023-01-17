@@ -96,7 +96,7 @@ html_theme_options = {
         ),
         dict(
             name="Pypi",
-            url="https://pypi.org/project/systole/",
+            url="https://pypi.org/project/metadpy/",
             icon="fas fa-box",
         ),
     ],
@@ -113,11 +113,6 @@ html_sidebars = {"**": []}
 html_static_path = ["_static"]
 html_logo = "images/logo.svg"
 html_favicon = "images/logo.svg"
-
-
-def setup(app):
-    app.add_css_file("style.css")
-
 
 # -- Intersphinx ------------------------------------------------
 
