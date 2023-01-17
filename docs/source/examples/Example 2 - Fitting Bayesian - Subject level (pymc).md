@@ -15,7 +15,7 @@ kernelspec:
 +++ {"id": "regulated-swiss"}
 
 (example_2)=
-# Fitting data at the subject level
+# Fitting single subject data using Bayesian estimation
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 ```{code-cell} ipython3
