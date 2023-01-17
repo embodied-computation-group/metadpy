@@ -15,7 +15,7 @@ kernelspec:
 +++ {"id": "copyrighted-border"}
 
 (example_1)=
-# Fitting at the subject level
+# Fitting single subject data using MLE
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
 
 ```{code-cell} ipython3
