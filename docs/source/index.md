@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.1
+    jupytext_version: 1.14.5
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -14,7 +14,7 @@ kernelspec:
 
 +++ {"id": "_I8iFrneRXFP"}
 
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadpy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadpy.svg)](https://badge.fury.io/py/metadpy) [![travis](https://travis-ci.com/LegrandNico/metadpy.svg?branch=master)](https://travis-ci.com/LegandNico/metadpy) [![codecov](https://codecov.io/gh/LegrandNico/metadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadpy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit) [![license](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/LegrandNico/metadpy/blob/master/LICENSE) [![pip](https://badge.fury.io/py/metadpy.svg)](https://badge.fury.io/py/metadpy) [![travis](https://travis-ci.com/LegrandNico/metadpy.svg?branch=master)](https://travis-ci.com/LegandNico/metadpy) [![codecov](https://codecov.io/gh/LegrandNico/metadpy/branch/master/graph/badge.svg)](https://codecov.io/gh/LegrandNico/metadpy) [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/) [![pip](https://badge.fury.io/py/metadpy.svg)](https://badge.fury.io/py/metadpy)
 
 ***
 
@@ -55,7 +55,7 @@ metadpy first aims to be the Python equivalent of the [hMeta-d toolbox](https://
 
 For an extensive introduction to metadpy, you can navigate the following notebooks that are Python adaptations of the introduction to the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) written in Matlab by Olivia Faul for the [Zurich Computational Psychiatry course](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial).
 
-✏️ [Tutorials and examples](https://embodied-computation-group.github.io/metadpy/tutorials.html)  
+✏️ [Tutorials and examples](https://embodied-computation-group.github.io/metadpy/tutorials.html)
 
 +++ {"id": "w0EklNnNf6Ms"}
 
