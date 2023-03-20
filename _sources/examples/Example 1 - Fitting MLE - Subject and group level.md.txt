@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.1
+    jupytext_version: 1.14.5
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -17,6 +17,15 @@ kernelspec:
 (example_1)=
 # Fitting single subject data using MLE
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
+
+```{code-cell} ipython3
+:tags: [hide-cell]
+
+%%capture
+import sys
+if 'google.colab' in sys.modules:
+    ! pip install metadpy
+```
 
 ```{code-cell} ipython3
 :id: unavailable-groove

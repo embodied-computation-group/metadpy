@@ -429,6 +429,22 @@ document.write(`
 <span id="tutorial-1"></span><h1>What metacognition looks like?<a class="headerlink" href="#what-metacognition-looks-like" title="Permalink to this heading">#</a></h1>
 <p>Author: Nicolas Legrand <a class="reference external" href="mailto:nicolas&#46;legrand&#37;&#52;&#48;cas&#46;au&#46;dk">nicolas<span>&#46;</span>legrand<span>&#64;</span>cas<span>&#46;</span>au<span>&#46;</span>dk</a><br />
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial</p>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%capture
+import sys
+if &#39;google.colab&#39; in sys.modules:
+    ! pip install metadpy
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -477,7 +493,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/3b35c6680ad7968e819d1f685548bfc0273bb8f343c6dd5295abe556260f2553.png" src="../_images/3b35c6680ad7968e819d1f685548bfc0273bb8f343c6dd5295abe556260f2553.png" />
+<img alt="../_images/c81be59136d8d78972a2818d0954b76aab6bf5b6829bd08cb1de6080143a024c.png" src="../_images/c81be59136d8d78972a2818d0954b76aab6bf5b6829bd08cb1de6080143a024c.png" />
 </div>
 </div>
 <p><strong>EXPLANATION:</strong> You can see in the figure that the low confidence noise likely results in less overlap between the confidence distributions for correct and incorrect responses. It is actually the difference between these two distributions (one for correct responses, one for incorrect responses) that tells us how good metacognition is –&gt; If you have higher confidence scores when you are correct and lower confidence scores when you are incorrect (and not much mixing between the two), the better metacognition will be. Another way of thinking about it is that the more ‘noise’ that is added as information passes from type 1 performance (e.g. correct vs incorrect perceptions) to type 2 performance (e.g. confidence in the decision that has been made), the less ‘mixing’ will occur between these two distributions and the larger (or ‘better’) metacognition will be.</p>
@@ -528,7 +544,7 @@ Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/me
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/05fd8caece04c50d087502321e3c663b271770b37fab6f37d2aaf3bd3ccfacf3.png" src="../_images/05fd8caece04c50d087502321e3c663b271770b37fab6f37d2aaf3bd3ccfacf3.png" />
+<img alt="../_images/420cfb412da3b515e4d806fadb46643de6eab6f579a575d1b2ce1b462d118c2e.png" src="../_images/420cfb412da3b515e4d806fadb46643de6eab6f579a575d1b2ce1b462d118c2e.png" />
 </div>
 </div>
 <div class="admonition tip">
