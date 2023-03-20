@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.1
+    jupytext_version: 1.14.5
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -18,6 +18,15 @@ kernelspec:
 # Single subject
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>  
 Adapted from the tutorial proposed by the HMeta-d toolbox: https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial
+
+```{code-cell} ipython3
+:tags: [hide-cell]
+
+%%capture
+import sys
+if 'google.colab' in sys.modules:
+    ! pip install metadpy
+```
 
 ```{code-cell} ipython3
 :id: uSC4P5ghWTZb

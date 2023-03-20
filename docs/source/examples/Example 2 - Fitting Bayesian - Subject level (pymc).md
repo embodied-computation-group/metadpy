@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.14.1
+    jupytext_version: 1.14.5
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -17,6 +17,13 @@ kernelspec:
 (example_2)=
 # Fitting single subject data using Bayesian estimation
 Author: Nicolas Legrand <nicolas.legrand@cfin.au.dk>
+
+```{code-cell} ipython3
+%%capture
+import sys
+if 'google.colab' in sys.modules:
+    ! pip install metadpy
+```
 
 ```{code-cell} ipython3
 :id: relevant-market
