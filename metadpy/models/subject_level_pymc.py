@@ -5,7 +5,7 @@ from pymc import Binomial, Deterministic, HalfNormal, Model, Multinomial, Normal
 
 
 def phi(x):
-    """Cumulative normal distribution"""
+    """Cumulative normal distribution."""
     return 0.5 + 0.5 * pt.erf(x / pt.sqrt(2))
 
 
@@ -45,7 +45,6 @@ def hmetad_subjectLevel(
     3(1) nix007, https://doi.org/10.1093/nc/nix007
 
     """
-
     nRatings = data["nratings"]
     with Model() as model:
 
