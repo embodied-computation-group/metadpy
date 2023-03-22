@@ -528,58 +528,57 @@ document.write(`
     <span class="n">num_chains</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Estimate parameters of the Bayesian meta-d&#39; model with hyperparametes at the</span>
-<span class="sd">    group level.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Bayesian meta-d&#39; model with hyperparametes at the group level.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : :py:class:`pandas.DataFrame` | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe. Note that this function can also directly be used as a Pandas</span>
 <span class="sd">        method, in which case this argument is no longer needed.</span>
-<span class="sd">    nR_S1 : 1d array-like, list, string | None</span>
+<span class="sd">    nR_S1 :</span>
 <span class="sd">        Confience ratings (stimuli 1, correct and incorrect).</span>
-<span class="sd">    nR_S2 : 1d array-like, list, string | None</span>
+<span class="sd">    nR_S2 :</span>
 <span class="sd">        Confience ratings (stimuli 2, correct and incorrect).</span>
-<span class="sd">    stimuli : string | None</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        Name of the column containing the stimuli.</span>
-<span class="sd">    accuracy : string | None</span>
+<span class="sd">    accuracy :</span>
 <span class="sd">        Name of the columns containing the accuracy.</span>
-<span class="sd">    confidence : string | None</span>
+<span class="sd">    confidence :</span>
 <span class="sd">        Name of the column containing the confidence ratings.</span>
-<span class="sd">    nRatings : int | None</span>
+<span class="sd">    nRatings :</span>
 <span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
 <span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
 <span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
-<span class="sd">    within : string | None</span>
+<span class="sd">    within :</span>
 <span class="sd">        Name of column containing the within factor (condition comparison).</span>
-<span class="sd">    between : string | None</span>
+<span class="sd">    between :</span>
 <span class="sd">        Name of column containing the between subject factor (group</span>
 <span class="sd">        comparison).</span>
-<span class="sd">    subject : string | None</span>
+<span class="sd">    subject :</span>
 <span class="sd">        Name of column containing the subject identifier (only required if a</span>
 <span class="sd">        within-subject or a between-subject factor is provided).</span>
-<span class="sd">    nbins : int</span>
+<span class="sd">    nbins :</span>
 <span class="sd">        If a continuous rating scale was using, `nbins` define the number of</span>
 <span class="sd">        discrete ratings when converting using</span>
 <span class="sd">        :py:func:`metadpy.utils.discreteRatings`. The default value is `4`.</span>
-<span class="sd">    padding : boolean</span>
+<span class="sd">    padding :</span>
 <span class="sd">        If `True`, each response count in the output has the value of padAmount</span>
 <span class="sd">        added to it. Padding cells is desirable if trial counts of 0 interfere</span>
 <span class="sd">        with model fitting. If False, trial counts are not manipulated and 0s</span>
 <span class="sd">        may be present in the response count output. Default value for padding</span>
 <span class="sd">        is `False`.</span>
-<span class="sd">    padAmount : float or None</span>
+<span class="sd">    padAmount :</span>
 <span class="sd">        The value to add to each response count if padCells is set to 1.</span>
 <span class="sd">        Default value is 1/(2*nRatings)</span>
-<span class="sd">    sample_model : boolean</span>
+<span class="sd">    sample_model :</span>
 <span class="sd">        If `False`, only the model is returned without sampling.</span>
-<span class="sd">    output : str</span>
+<span class="sd">    output :</span>
 <span class="sd">        The kind of outpute expected. If `&quot;model&quot;`, will return the model function and</span>
 <span class="sd">        the traces. If `&quot;dataframe&quot;`, will return a dataframe containing `d` (dprime),</span>
 <span class="sd">        `c` (criterion), `meta_d` (the meta-d prime) and `m_ratio` (`meta_d/d`).</span>
-<span class="sd">    num_samples : int</span>
+<span class="sd">    num_samples :</span>
 <span class="sd">        The number of samples per chains to draw (defaults to `1000`).</span>
-<span class="sd">    num_chains : int</span>
+<span class="sd">    num_chains :</span>
 <span class="sd">        The number of chains (defaults to `4`).</span>
 <span class="sd">    **kwargs : keyword arguments</span>
 <span class="sd">        All keyword arguments are passed to `func::pymc.sampling.sample`.</span>
@@ -588,16 +587,15 @@ document.write(`
 <span class="sd">    -------</span>
 <span class="sd">    If `output=&quot;model&quot;`:</span>
 
-<span class="sd">    model : :py:class:`pymc.Model` instance</span>
+<span class="sd">    model :</span>
 <span class="sd">        The model PyMC as a :py:class:`pymc.Model`.</span>
-<span class="sd">    traces : :py:class:`pymc.backends.base.MultiTrace` |</span>
-<span class="sd">        :py:class:`arviz.InferenceData` | None</span>
+<span class="sd">    traces :</span>
 <span class="sd">        A `MultiTrace` or `ArviZ InferenceData` object that contains the samples. Only</span>
 <span class="sd">        returned if `sample_model` is set to `True`, otherwise set to None.</span>
 
 <span class="sd">    or</span>
 
-<span class="sd">    results : pd.DataFrame</span>
+<span class="sd">    results :</span>
 <span class="sd">        If `output=&quot;dataframe&quot;`, :py:class:`pandas.DataFrame` containing the values for</span>
 <span class="sd">        the following variables:</span>
 
@@ -748,26 +746,27 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    nR_S1, nR_S2 : 1d array-like or list</span>
+<span class="sd">    nR_S1, nR_S2 :</span>
 <span class="sd">        Total number of responses in each response category, conditional on</span>
 <span class="sd">        presentation of S1 and S2. e.g. if `nR_S1 = [100 50 20 10 5 1]`, then</span>
 <span class="sd">        when stimulus S1 was presented, the subject had the following response</span>
 <span class="sd">        counts:</span>
-<span class="sd">            * responded S1, rating=3 : 100 times</span>
-<span class="sd">            * responded S1, rating=2 : 50 times</span>
-<span class="sd">            * responded S1, rating=1 : 20 times</span>
-<span class="sd">            * responded S2, rating=1 : 10 times</span>
-<span class="sd">            * responded S2, rating=2 : 5 times</span>
-<span class="sd">            * responded S2, rating=3 : 1 time</span>
+<span class="sd">        * responded S1, rating=3 : 100 times</span>
+<span class="sd">        * responded S1, rating=2 : 50 times</span>
+<span class="sd">        * responded S1, rating=1 : 20 times</span>
+<span class="sd">        * responded S2, rating=1 : 10 times</span>
+<span class="sd">        * responded S2, rating=2 : 5 times</span>
+<span class="sd">        * responded S2, rating=3 : 1 time</span>
 
 <span class="sd">    Return</span>
 <span class="sd">    ------</span>
-<span class="sd">    data : dict</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dictionary of rates and task parameters.</span>
 
-<span class="sd">    See also</span>
+<span class="sd">    See Also</span>
 <span class="sd">    --------</span>
 <span class="sd">    hmetad</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">nR_S1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">nR_S1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>

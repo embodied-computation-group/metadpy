@@ -432,18 +432,17 @@ document.write(`
 <span class="sig-prename descclassname"><span class="pre">metadpy.sdt.</span></span><span class="sig-name descname"><span class="pre">scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimuli</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">responses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/metadpy/sdt.html#scores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.sdt.scores" title="Permalink to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <span class="sig-prename descclassname"><span class="pre">metadpy.sdt.</span></span><span class="sig-name descname"><span class="pre">scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimuli</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">responses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span></dt>
-<dd><p>Extract hits, misses, false alarms and correct rejection from stimuli and
-responses vectors.</p>
+<dd><p>Hits, misses, false alarms and correct rejection from stimuli and responses.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>data</strong><span class="classifier">pd.DataFrame | None</span></dt><dd><p>Dataframe containing one <cite>stimuli</cite> and one <cite>response</cite> column.</p>
+<dt><strong>data</strong></dt><dd><p>Dataframe containing one <cite>stimuli</cite> and one <cite>response</cite> column.</p>
 </dd>
-<dt><strong>stimuli</strong><span class="classifier">str | np.ndarray | list</span></dt><dd><p>If a string is provided, should be the name of the column used as <cite>stimuli</cite>. If
+<dt><strong>stimuli</strong></dt><dd><p>If a string is provided, should be the name of the column used as <cite>stimuli</cite>. If
 a list or an array is provided, should contain the boolean vectors for
 <cite>stimuli</cite>.</p>
 </dd>
-<dt><strong>responses</strong><span class="classifier">str | np.ndarray</span></dt><dd><p>If a string is provided, should be the name of the column used as <cite>responses</cite>.
+<dt><strong>responses</strong></dt><dd><p>If a string is provided, should be the name of the column used as <cite>responses</cite>.
 If a list or an array is provided, should contain the boolean vector for
 <cite>responses</cite>.</p>
 </dd>
@@ -451,7 +450,7 @@ If a list or an array is provided, should contain the boolean vector for
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>hits, misses, fas, crs</strong><span class="classifier">int</span></dt><dd><p>The number of hits, misees, false alarms and correct rejections.</p>
+<dt>hits, misses, fas, crs</dt><dd><p>The number of hits, misees, false alarms and correct rejections.</p>
 </dd>
 </dl>
 </dd>

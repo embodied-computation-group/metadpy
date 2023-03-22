@@ -430,25 +430,25 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="metadpy.plotting.plot_roc">
 <span class="sig-prename descclassname"><span class="pre">metadpy.plotting.</span></span><span class="sig-name descname"><span class="pre">plot_roc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nR_S1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nR_S2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitModel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.7.1)"><span class="pre">Axes</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.7.1)"><span class="pre">Axes</span></a></span></span><a class="reference internal" href="../../_modules/metadpy/plotting.html#plot_roc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.plotting.plot_roc" title="Permalink to this definition">#</a></dt>
-<dd><p>Function to plot type2 ROC curve from observed an estimated data fit.</p>
-<dl class="field-list">
+<dd><p>Type2 ROC curve from observed an estimated data fit.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl>
-<dt><strong>nR_S1</strong><span class="classifier">1d array-like</span></dt><dd><p>Number of ratings for signal 1 (correct and incorrect).</p>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>nR_S1</strong></dt><dd><p>Number of ratings for signal 1 (correct and incorrect).</p>
 </dd>
-<dt><strong>nR_S2</strong><span class="classifier">1d array-like</span></dt><dd><p>Number of ratings for signal 2 (correct and incorrect).</p>
+<dt><strong>nR_S2</strong></dt><dd><p>Number of ratings for signal 2 (correct and incorrect).</p>
 </dd>
-<dt><strong>fitModel</strong><span class="classifier">dict or None</span></dt><dd><p>Dictionary returned by <a class="reference internal" href="../mle/metadpy.mle.fit_metad.html#metadpy.mle.fit_metad" title="metadpy.mle.fit_metad"><code class="xref py py-func docutils literal notranslate"><span class="pre">metadpy.mle.fit_metad()</span></code></a>. If
+<dt><strong>fitModel</strong></dt><dd><p>Dictionary returned by <a class="reference internal" href="../mle/metadpy.mle.fit_metad.html#metadpy.mle.fit_metad" title="metadpy.mle.fit_metad"><code class="xref py py-func docutils literal notranslate"><span class="pre">metadpy.mle.fit_metad()</span></code></a>. If
 provided, the estimated ratings will be plotted toghether with the
 observed data.</p>
 </dd>
-<dt><strong>ax</strong><span class="classifier"><cite>Matplotlib.Axes</cite> or None</span></dt><dd><p>Where to draw the plot. Default is <cite>None</cite> (create a new figure).</p>
+<dt><strong>ax</strong></dt><dd><p>Where to draw the plot. Default is <cite>None</cite> (create a new figure).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl>
-<dt><strong>ax</strong><span class="classifier"><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="(in Matplotlib v3.7.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes.Axes</span></code></a></span></dt><dd><p>The matplotlib axes containing the plot.</p>
+<dd class="field-even"><dl class="simple">
+<dt>ax</dt><dd><p>The matplotlib axes containing the plot.</p>
 </dd>
 </dl>
 </dd>

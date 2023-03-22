@@ -431,23 +431,19 @@ document.write(`
 <dt class="sig sig-object py" id="metadpy.bayesian.extractParameters">
 <span class="sig-prename descclassname"><span class="pre">metadpy.bayesian.</span></span><span class="sig-name descname"><span class="pre">extractParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nR_S1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nR_S2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../../_modules/metadpy/bayesian.html#extractParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.bayesian.extractParameters" title="Permalink to this definition">#</a></dt>
 <dd><p>Extract rates and task parameters.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl>
-<dt><strong>nR_S1, nR_S2</strong><span class="classifier">1d array-like or list</span></dt><dd><p>Total number of responses in each response category, conditional on
+<dd class="field-odd"><dl class="simple">
+<dt><strong>nR_S1, nR_S2</strong></dt><dd><p>Total number of responses in each response category, conditional on
 presentation of S1 and S2. e.g. if <cite>nR_S1 = [100 50 20 10 5 1]</cite>, then
 when stimulus S1 was presented, the subject had the following response
-counts:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>responded S1, rating=3 : 100 times</p></li>
-<li><p>responded S1, rating=2 : 50 times</p></li>
-<li><p>responded S1, rating=1 : 20 times</p></li>
-<li><p>responded S2, rating=1 : 10 times</p></li>
-<li><p>responded S2, rating=2 : 5 times</p></li>
-<li><p>responded S2, rating=3 : 1 time</p></li>
-</ul>
-</div></blockquote>
+counts:
+* responded S1, rating=3 : 100 times
+* responded S1, rating=2 : 50 times
+* responded S1, rating=1 : 20 times
+* responded S2, rating=1 : 10 times
+* responded S2, rating=2 : 5 times
+* responded S2, rating=3 : 1 time</p>
 </dd>
 </dl>
 </dd>

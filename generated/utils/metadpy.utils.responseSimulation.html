@@ -430,28 +430,27 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="metadpy.utils.responseSimulation">
 <span class="sig-prename descclassname"><span class="pre">metadpy.utils.</span></span><span class="sig-name descname"><span class="pre">responseSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metad</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nRatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nTrials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nSubjects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><span class="pre">DataFrame</span></a></span></span><a class="reference internal" href="../../_modules/metadpy/utils.html#responseSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.utils.responseSimulation" title="Permalink to this definition">#</a></dt>
-<dd><p>Simulate response and confidence ratings at the trial level for one
-or a group of participants.</p>
-<dl class="field-list">
+<dd><p>Simulate response and confidence ratings for one or a group of participants.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>d</strong><span class="classifier">float</span></dt><dd><p>Type 1 task performance (d prime).</p>
+<dt><strong>d</strong></dt><dd><p>Type 1 task performance (d prime).</p>
 </dd>
 <dt><strong>metad</strong><span class="classifier">float</span></dt><dd><p>Type 2 sensitivity in units of type 1 dprime.</p>
 </dd>
-<dt><strong>c</strong><span class="classifier">float</span></dt><dd><p>Type 1 task bias (criterion).</p>
+<dt><strong>c</strong></dt><dd><p>Type 1 task bias (criterion).</p>
 </dd>
-<dt><strong>nRatings</strong><span class="classifier">int</span></dt><dd><p>Number of ratings.</p>
+<dt><strong>nRatings</strong></dt><dd><p>Number of ratings.</p>
 </dd>
-<dt><strong>nTrials</strong><span class="classifier">int</span></dt><dd><p>Set the number of trials performed.</p>
+<dt><strong>nTrials</strong></dt><dd><p>Set the number of trials performed.</p>
 </dd>
-<dt><strong>nSubjects</strong><span class="classifier">int</span></dt><dd><p>Specify the number of subject who performed the task.</p>
+<dt><strong>nSubjects</strong></dt><dd><p>Specify the number of subject who performed the task.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl>
-<dt><strong>output_df</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>A DataFrame (nRows==`nTrials`) containing the responses and
+<dd class="field-even"><dl class="simple">
+<dt>output_df</dt><dd><p>A DataFrame (nRows==`nTrials`) containing the responses and
 confidence rating for one or many participants given the provided
 parameters.</p>
 </dd>

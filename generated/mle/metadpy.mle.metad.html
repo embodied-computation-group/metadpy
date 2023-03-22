@@ -440,99 +440,85 @@ document.write(`
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier">pd.DataFrame | None</span></dt><dd><p>Dataframe. Note that this function can also directly be used as a
+<dt><strong>data</strong></dt><dd><p>Dataframe. Note that this function can also directly be used as a
 Pandas method, in which case this argument is no longer needed.</p>
 </dd>
-<dt><strong>nRatings</strong><span class="classifier">int</span></dt><dd><p>Number of discrete ratings. If a continuous rating scale was used, and
+<dt><strong>nRatings</strong></dt><dd><p>Number of discrete ratings. If a continuous rating scale was used, and
 the number of unique ratings does not match <cite>nRatings</cite>, will convert to
 discrete ratings using <a class="reference internal" href="../utils/metadpy.utils.discreteRatings.html#metadpy.utils.discreteRatings" title="metadpy.utils.discreteRatings"><code class="xref py py-func docutils literal notranslate"><span class="pre">metadpy.utils.discreteRatings()</span></code></a>.
 Default is set to 4.</p>
 </dd>
-<dt><strong>stimuli</strong><span class="classifier">string | None</span></dt><dd><p>Name of the column containing the stimuli.</p>
+<dt><strong>stimuli</strong></dt><dd><p>Name of the column containing the stimuli.</p>
 </dd>
-<dt><strong>accuracy</strong><span class="classifier">string | None</span></dt><dd><p>Name of the columns containing the accuracy.</p>
+<dt><strong>accuracy</strong></dt><dd><p>Name of the columns containing the accuracy.</p>
 </dd>
-<dt><strong>confidence</strong><span class="classifier">string | None</span></dt><dd><p>Name of the column containing the confidence ratings.</p>
+<dt><strong>confidence</strong></dt><dd><p>Name of the column containing the confidence ratings.</p>
 </dd>
-<dt><strong>within</strong><span class="classifier">string | None</span></dt><dd><p>Name of column containing the within factor (condition comparison).</p>
+<dt><strong>within</strong></dt><dd><p>Name of column containing the within factor (condition comparison).</p>
 </dd>
-<dt><strong>between</strong><span class="classifier">string | None</span></dt><dd><p>Name of column containing the between subject factor (group
+<dt><strong>between</strong></dt><dd><p>Name of column containing the between subject factor (group
 comparison).</p>
 </dd>
-<dt><strong>subject</strong><span class="classifier">string | None</span></dt><dd><p>Name of column containing the subject identifier (only required if a
+<dt><strong>subject</strong></dt><dd><p>Name of column containing the subject identifier (only required if a
 within-subject or a between-subject factor is provided).</p>
 </dd>
-<dt><strong>nR_S1, nR_S2</strong><span class="classifier">list | np.ndarray | None</span></dt><dd><p>These are vectors containing the total number of responses in
+<dt><strong>nR_S1, nR_S2</strong></dt><dd><p>These are vectors containing the total number of responses in
 each response category, conditional on presentation of S1 and S2. If
 nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the
-subject had the following response counts:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>responded <cite>‘S1’</cite>, rating=`3` : 100 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`2` : 50 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`1` : 20 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`1` : 10 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`2` : 5 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`3` : 1 time</p></li>
-</ul>
-</div></blockquote>
+subject had the following response counts:
+* responded <cite>‘S1’</cite>, rating=`3` : 100 times
+* responded <cite>‘S1’</cite>, rating=`2` : 50 times
+* responded <cite>‘S1’</cite>, rating=`1` : 20 times
+* responded <cite>‘S2’</cite>, rating=`1` : 10 times
+* responded <cite>‘S2’</cite>, rating=`2` : 5 times
+* responded <cite>‘S2’</cite>, rating=`3` : 1 time</p>
 <p>The ordering of response / rating counts for S2 should be the same as
 it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2
-was presented, the subject had the following response counts:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>responded <cite>‘S1’</cite>, rating=`3` : 3 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`2` : 7 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`1` : 8 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`1` : 12 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`2` : 27 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`3` : 89 times</p></li>
-</ul>
-</div></blockquote>
+was presented, the subject had the following response counts:
+* responded <cite>‘S1’</cite>, rating=`3` : 3 times
+* responded <cite>‘S1’</cite>, rating=`2` : 7 times
+* responded <cite>‘S1’</cite>, rating=`1` : 8 times
+* responded <cite>‘S2’</cite>, rating=`1` : 12 times
+* responded <cite>‘S2’</cite>, rating=`2` : 27 times
+* responded <cite>‘S2’</cite>, rating=`3` : 89 times</p>
 </dd>
-<dt><strong>s</strong><span class="classifier">int</span></dt><dd><p>Ratio of standard deviations for type 1 distributions as:
+<dt><strong>s</strong></dt><dd><p>Ratio of standard deviations for type 1 distributions as:
 <cite>s = np.std(S1) / np.std(S2)</cite>. If not specified, s is set to a default
 value of 1. For most purposes, it is recommended to set <cite>s=1</cite>. See
 <a class="reference external" href="http://www.columbia.edu/~bsm2105/type2sdt">http://www.columbia.edu/~bsm2105/type2sdt</a> for further discussion.</p>
 </dd>
-<dt><strong>padding</strong><span class="classifier">boolean</span></dt><dd><p>If <cite>True</cite>, a small value will be added to the counts to avoid problems
+<dt><strong>padding</strong></dt><dd><p>If <cite>True</cite>, a small value will be added to the counts to avoid problems
 during fit.</p>
 </dd>
-<dt><strong>padAmount</strong><span class="classifier">float | None</span></dt><dd><p>The value to add to each response count if padding is set to 1.
+<dt><strong>padAmount</strong></dt><dd><p>The value to add to each response count if padding is set to 1.
 Default value is 1/(2*nRatings)</p>
 </dd>
-<dt><strong>collapse</strong><span class="classifier">int | None</span></dt><dd><p>If an integer <cite>N</cite> is provided, will collpase ratings to avoid zeros by
+<dt><strong>collapse</strong></dt><dd><p>If an integer <cite>N</cite> is provided, will collpase ratings to avoid zeros by
 summing every <cite>N</cite> consecutive ratings. Default set to <cite>None</cite>.</p>
 </dd>
-<dt><strong>fncdf</strong><span class="classifier">func</span></dt><dd><p>A function handle for the CDF of the type 1 distribution. If not
+<dt><strong>fncdf</strong></dt><dd><p>A function handle for the CDF of the type 1 distribution. If not
 specified, fncdf defaults to <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.stats.norm.cdf()</span></code>.</p>
 </dd>
-<dt><strong>fninv</strong><span class="classifier">func</span></dt><dd><p>A function handle for the inverse CDF of the type 1 distribution. If
+<dt><strong>fninv</strong></dt><dd><p>A function handle for the inverse CDF of the type 1 distribution. If
 not specified, fninv defaults to <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.stats.norm.ppf()</span></code>.</p>
 </dd>
-<dt><strong>verbose</strong><span class="classifier">int</span></dt><dd><dl class="simple">
-<dt>Level of algorithm’s verbosity (can be <cite>0</cite>, <cite>1</cite>, <cite>2</cite> or <cite>3</cite>):</dt><dd><ul class="simple">
-<li><p>0 (default) : work silently.</p></li>
-<li><p>1 : display a termination report.</p></li>
-<li><p>2 : display progress during iterations.</p></li>
-<li><p>3 : display progress during iterations (more complete report).</p></li>
-</ul>
-</dd>
-</dl>
+<dt><strong>verbose</strong></dt><dd><p>Level of algorithm’s verbosity (can be <cite>0</cite>, <cite>1</cite>, <cite>2</cite> or <cite>3</cite>):
+* 0 (default) : work silently.
+* 1 : display a termination report.
+* 2 : display progress during iterations.
+* 3 : display progress during iterations (more complete report).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>results</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>In the following, S1 and S2 represent the distributions of evidence
-generated by stimulus classes S1 and S2:</p>
+<dt>results</dt><dd><p>In the following, S1 and S2 represent the distributions of evidence
+generated by stimulus classes S1 and S2:
+* <cite>‘dprime’</cite> : <cite>mean(S2) - mean(S1)</cite>, in</p>
 <blockquote>
-<div><ul>
-<li><dl>
-<dt><cite>‘dprime’</cite><span class="classifier"><cite>mean(S2) - mean(S1)</cite>, in</span></dt><dd><p>root-mean-square(sd(S1), sd(S2)) units</p>
-</dd>
-</dl>
-</li>
+<div><p>root-mean-square(sd(S1), sd(S2)) units</p>
+</div></blockquote>
+<ul class="simple">
 <li><p><cite>‘s’</cite> : <cite>sd(S1) / sd(S2)</cite></p></li>
 <li><p><cite>‘meta_da’</cite> : meta-d’ in RMS units</p></li>
 <li><p><cite>‘M_diff’</cite> : <cite>meta_da - da</cite></p></li>
@@ -578,7 +564,6 @@ generated by stimulus classes S1 and S2:</p>
 </dl>
 </li>
 </ul>
-</div></blockquote>
 </dd>
 </dl>
 </dd>

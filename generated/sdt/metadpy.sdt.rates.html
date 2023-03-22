@@ -439,27 +439,27 @@ document.write(`
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier">pd.DataFrame | None</span></dt><dd><p>Dataframe containing one <cite>stimuli</cite> and one <cite>response</cite> column.</p>
+<dt><strong>data</strong></dt><dd><p>Dataframe containing one <cite>stimuli</cite> and one <cite>response</cite> column.</p>
 </dd>
-<dt><strong>stimuli</strong><span class="classifier">str | np.ndarray | list</span></dt><dd><p>If a string is provided, should be the name of the column used as
+<dt><strong>stimuli</strong></dt><dd><p>If a string is provided, should be the name of the column used as
 <cite>stimuli</cite>. If a list or an array is provided, should contain the
 boolean vectors for <cite>stimuli</cite>. If <cite>None</cite> and <cite>data</cite> is a
 <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, will be set to <cite>Stimuli</cite> by default.</p>
 </dd>
-<dt><strong>responses</strong><span class="classifier">str | np.ndarray</span></dt><dd><p>If a string is provided, should be the name of the column used as
+<dt><strong>responses</strong></dt><dd><p>If a string is provided, should be the name of the column used as
 <cite>responses</cite>. If a list or an array is provided, should contain the
 boolean vector for <cite>responses</cite>. If <cite>None</cite> and <cite>data</cite> is a
 <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, will be set to <cite>Responses</cite> by default.</p>
 </dd>
-<dt><strong>hits</strong><span class="classifier">int | None</span></dt><dd><p>Hits.</p>
+<dt><strong>hits</strong></dt><dd><p>Hits.</p>
 </dd>
-<dt><strong>misses</strong><span class="classifier">int | None</span></dt><dd><p>Misses.</p>
+<dt><strong>misses</strong></dt><dd><p>Misses.</p>
 </dd>
-<dt><strong>fas</strong><span class="classifier">int | None</span></dt><dd><p>False alarms.</p>
+<dt><strong>fas</strong></dt><dd><p>False alarms.</p>
 </dd>
-<dt><strong>crs</strong><span class="classifier">int | None</span></dt><dd><p>Correct rejections.</p>
+<dt><strong>crs</strong></dt><dd><p>Correct rejections.</p>
 </dd>
-<dt><strong>correction</strong><span class="classifier">bool</span></dt><dd><p>Avoid d’ infinity by correcting false alarm and hit rate values if equal to 0
+<dt><strong>correction</strong></dt><dd><p>Avoid d’ infinity by correcting false alarm and hit rate values if equal to 0
 or 1 using half inverse or 1 - half inverse.
 Half inverses values are defined by:</p>
 <blockquote>
@@ -472,9 +472,9 @@ half_fa = 0.5 / (fas + crs)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>hit_rate: float</dt><dd><p>Hit rate.</p>
+<dt>hit_rate:</dt><dd><p>Hit rate.</p>
 </dd>
-<dt><strong>fa_rate</strong><span class="classifier">float</span></dt><dd><p>False alarm rate.</p>
+<dt>fa_rate</dt><dd><p>False alarm rate.</p>
 </dd>
 </dl>
 </dd>

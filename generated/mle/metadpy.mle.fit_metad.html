@@ -434,48 +434,40 @@ document.write(`
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>nR_S1, nR_S2</strong><span class="classifier">list, 1d array-like or None</span></dt><dd><p>These are vectors containing the total number of responses in
+<dt><strong>nR_S1, nR_S2</strong></dt><dd><p>These are vectors containing the total number of responses in
 each response category, conditional on presentation of S1 and S2. If
 nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the
-subject had the following response counts:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>responded <cite>‘S1’</cite>, rating=`3` : 100 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`2` : 50 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`1` : 20 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`1` : 10 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`2` : 5 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`3` : 1 time</p></li>
-</ul>
-</div></blockquote>
+subject had the following response counts:
+* responded <cite>‘S1’</cite>, rating=`3` : 100 times
+* responded <cite>‘S1’</cite>, rating=`2` : 50 times
+* responded <cite>‘S1’</cite>, rating=`1` : 20 times
+* responded <cite>‘S2’</cite>, rating=`1` : 10 times
+* responded <cite>‘S2’</cite>, rating=`2` : 5 times
+* responded <cite>‘S2’</cite>, rating=`3` : 1 time</p>
 <p>The ordering of response / rating counts for S2 should be the same as
 it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2
-was presented, the subject had the following response counts:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>responded <cite>‘S1’</cite>, rating=`3` : 3 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`2` : 7 times</p></li>
-<li><p>responded <cite>‘S1’</cite>, rating=`1` : 8 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`1` : 12 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`2` : 27 times</p></li>
-<li><p>responded <cite>‘S2’</cite>, rating=`3` : 89 times</p></li>
-</ul>
-</div></blockquote>
+was presented, the subject had the following response counts:
+* responded <cite>‘S1’</cite>, rating=`3` : 3 times
+* responded <cite>‘S1’</cite>, rating=`2` : 7 times
+* responded <cite>‘S1’</cite>, rating=`1` : 8 times
+* responded <cite>‘S2’</cite>, rating=`1` : 12 times
+* responded <cite>‘S2’</cite>, rating=`2` : 27 times
+* responded <cite>‘S2’</cite>, rating=`3` : 89 times</p>
 </dd>
-<dt><strong>nRatings</strong><span class="classifier">int</span></dt><dd><p>Number of discrete ratings. If a continuous rating scale was used, and
+<dt><strong>nRatings</strong></dt><dd><p>Number of discrete ratings. If a continuous rating scale was used, and
 the number of unique ratings does not match <cite>nRatings</cite>, will convert to
 discrete ratings using <a class="reference internal" href="../utils/metadpy.utils.discreteRatings.html#metadpy.utils.discreteRatings" title="metadpy.utils.discreteRatings"><code class="xref py py-func docutils literal notranslate"><span class="pre">metadpy.utils.discreteRatings()</span></code></a>.
 Default is set to 4.</p>
 </dd>
-<dt><strong>nCriteria</strong><span class="classifier">int | None</span></dt><dd><p>(Optional) Number criteria to be fitted. If <cite>None</cite>, the number of criteria is
+<dt><strong>nCriteria</strong></dt><dd><p>(Optional) Number criteria to be fitted. If <cite>None</cite>, the number of criteria is
 set to <cite>nCriteria = int(2 * nRatings - 1)</cite>.</p>
 </dd>
-<dt><strong>s</strong><span class="classifier">int</span></dt><dd><p>Ratio of standard deviations for type 1 distributions as:
+<dt><strong>s</strong></dt><dd><p>Ratio of standard deviations for type 1 distributions as:
 <cite>s = np.std(S1) / np.std(S2)</cite>. If not specified, s is set to a default
 value of 1. For most purposes, it is recommended to set <cite>s=1</cite>. See
 <a class="reference external" href="http://www.columbia.edu/~bsm2105/type2sdt">http://www.columbia.edu/~bsm2105/type2sdt</a> for further discussion.</p>
 </dd>
-<dt><strong>verbose</strong><span class="classifier">{0, 1, 2}</span></dt><dd><dl class="simple">
+<dt><strong>verbose</strong></dt><dd><dl class="simple">
 <dt>Level of algorithm’s verbosity:</dt><dd><ul class="simple">
 <li><p>0 (default) : work silently.</p></li>
 <li><p>1 : display a termination report.</p></li>
@@ -485,22 +477,19 @@ value of 1. For most purposes, it is recommended to set <cite>s=1</cite>. See
 </dd>
 </dl>
 </dd>
-<dt><strong>fninv</strong><span class="classifier">func</span></dt><dd><p>A function handle for the inverse CDF of the type 1 distribution. If
+<dt><strong>fninv</strong></dt><dd><p>A function handle for the inverse CDF of the type 1 distribution. If
 not specified, fninv defaults to <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.stats.norm.ppf()</span></code>.</p>
 </dd>
-<dt><strong>fncdf</strong><span class="classifier">func</span></dt><dd><p>A function handle for the CDF of the type 1 distribution. If not
+<dt><strong>fncdf</strong></dt><dd><p>A function handle for the CDF of the type 1 distribution. If not
 specified, fncdf defaults to <code class="xref py py-func docutils literal notranslate"><span class="pre">scipy.stats.norm.cdf()</span></code>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
-<dt><strong>results</strong><span class="classifier">dict</span></dt><dd><p>In the following, S1 and S2 represent the distributions of evidence generated
-by stimulus classes S1 and S2:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p><cite>‘dprime’</cite> : <cite>mean(S2) - mean(S1)</cite>, in root-mean-square(sd(S1), sd(S2))</p></li>
-</ul>
+<dt>results</dt><dd><p>In the following, S1 and S2 represent the distributions of evidence generated
+by stimulus classes S1 and S2:
+* <cite>‘dprime’</cite> : <cite>mean(S2) - mean(S1)</cite>, in root-mean-square(sd(S1), sd(S2))</p>
 <blockquote>
 <div><p>units</p>
 </div></blockquote>
@@ -529,7 +518,6 @@ by stimulus classes S1 and S2:</p>
 * <cite>‘obs_HR2_rS2’</cite> : actual type 2 hit rates for S2 responses.
 * <cite>‘est_FAR2_rS2’</cite> : estimated type 2 false alarm rates for S2 responses.
 * <cite>‘obs_FAR2_rS2’</cite> : actual type 2 false alarm rates for S2 responses.</p>
-</div></blockquote>
 </dd>
 </dl>
 </dd>

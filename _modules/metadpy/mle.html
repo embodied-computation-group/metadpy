@@ -450,6 +450,7 @@ document.write(`
 
 
 <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">signature</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get Scipy Cython function.&quot;&quot;&quot;</span>
     <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">signature</span><span class="o">.</span><span class="n">return_type</span> <span class="ow">is</span> <span class="n">float64</span> <span class="k">else</span> <span class="mi">0</span>
     <span class="n">pyx_fuse_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;__pyx_fuse_</span><span class="si">{</span><span class="n">index</span><span class="si">}{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">if</span> <span class="n">pyx_fuse_name</span> <span class="ow">in</span> <span class="n">cysp</span><span class="o">.</span><span class="n">__pyx_capi__</span><span class="p">:</span>
@@ -473,9 +474,7 @@ document.write(`
     <span class="n">mu</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
     <span class="n">sigma</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Evaluate cumulative distribution function of normal distribution.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluate cumulative distribution function of normal distribution.&quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
     <span class="n">z</span> <span class="o">*=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">erf</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
@@ -491,23 +490,27 @@ document.write(`
     <span class="n">t1c1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns negative log-likelihood of parameters given experimental data.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Negative log-likelihood of parameters given experimental data.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    guess : np.ndarray</span>
+<span class="sd">    guess :</span>
 <span class="sd">        guess[0] = meta d&#39;</span>
 <span class="sd">        guess[1:end] = type-2 criteria locations</span>
-<span class="sd">    nR_S1, nR_S2 : np.ndarray</span>
+<span class="sd">    nR_S1, nR_S2 :</span>
 <span class="sd">        These are vectors containing the total number of responses in each response</span>
 <span class="sd">        category, conditional on presentation of S1 and S2.</span>
-<span class="sd">    nRatings : int</span>
+<span class="sd">    nRatings :</span>
 <span class="sd">        Numbers of ratings.</span>
-<span class="sd">    d1 :  float</span>
+<span class="sd">    d1 :</span>
 <span class="sd">        d prime.</span>
-<span class="sd">    t1c1 : float</span>
-
-<span class="sd">    s : int</span>
+<span class="sd">    t1c1 :</span>
+<span class="sd">        The type-1 criterion.</span>
+<span class="sd">    s :</span>
+<span class="sd">        Ratio of standard deviations for type 1 distributions as:</span>
+<span class="sd">        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default</span>
+<span class="sd">        value of 1. For most purposes, it is recommended to set `s=1`. See</span>
+<span class="sd">        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">meta_d1</span><span class="p">,</span> <span class="n">t2c1</span> <span class="o">=</span> <span class="n">guess</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">guess</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
@@ -693,107 +696,107 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe. Note that this function can also directly be used as a</span>
 <span class="sd">        Pandas method, in which case this argument is no longer needed.</span>
-<span class="sd">    nRatings : int</span>
+<span class="sd">    nRatings :</span>
 <span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
 <span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
 <span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
 <span class="sd">        Default is set to 4.</span>
-<span class="sd">    stimuli : string | None</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        Name of the column containing the stimuli.</span>
-<span class="sd">    accuracy : string | None</span>
+<span class="sd">    accuracy :</span>
 <span class="sd">        Name of the columns containing the accuracy.</span>
-<span class="sd">    confidence : string | None</span>
+<span class="sd">    confidence :</span>
 <span class="sd">        Name of the column containing the confidence ratings.</span>
-<span class="sd">    within : string | None</span>
+<span class="sd">    within :</span>
 <span class="sd">        Name of column containing the within factor (condition comparison).</span>
-<span class="sd">    between : string | None</span>
+<span class="sd">    between :</span>
 <span class="sd">        Name of column containing the between subject factor (group</span>
 <span class="sd">        comparison).</span>
-<span class="sd">    subject : string | None</span>
+<span class="sd">    subject :</span>
 <span class="sd">        Name of column containing the subject identifier (only required if a</span>
 <span class="sd">        within-subject or a between-subject factor is provided).</span>
-<span class="sd">    nR_S1, nR_S2 : list | np.ndarray | None</span>
+<span class="sd">    nR_S1, nR_S2 :</span>
 <span class="sd">        These are vectors containing the total number of responses in</span>
 <span class="sd">        each response category, conditional on presentation of S1 and S2. If</span>
 <span class="sd">        nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the</span>
 <span class="sd">        subject had the following response counts:</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 100 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 50 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 20 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 10 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 5 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 1 time</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`3` : 100 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`2` : 50 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`1` : 20 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`1` : 10 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`2` : 5 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`3` : 1 time</span>
 
 <span class="sd">        The ordering of response / rating counts for S2 should be the same as</span>
 <span class="sd">        it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2</span>
 <span class="sd">        was presented, the subject had the following response counts:</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 3 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 7 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 8 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 12 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 27 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 89 times</span>
-<span class="sd">    s : int</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`3` : 3 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`2` : 7 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`1` : 8 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`1` : 12 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`2` : 27 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`3` : 89 times</span>
+
+<span class="sd">    s :</span>
 <span class="sd">        Ratio of standard deviations for type 1 distributions as:</span>
 <span class="sd">        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default</span>
 <span class="sd">        value of 1. For most purposes, it is recommended to set `s=1`. See</span>
 <span class="sd">        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.</span>
-<span class="sd">    padding : boolean</span>
+<span class="sd">    padding :</span>
 <span class="sd">        If `True`, a small value will be added to the counts to avoid problems</span>
 <span class="sd">        during fit.</span>
-<span class="sd">    padAmount : float | None</span>
+<span class="sd">    padAmount :</span>
 <span class="sd">        The value to add to each response count if padding is set to 1.</span>
 <span class="sd">        Default value is 1/(2*nRatings)</span>
-<span class="sd">    collapse : int | None</span>
+<span class="sd">    collapse :</span>
 <span class="sd">        If an integer `N` is provided, will collpase ratings to avoid zeros by</span>
 <span class="sd">        summing every `N` consecutive ratings. Default set to `None`.</span>
-<span class="sd">    fncdf : func</span>
+<span class="sd">    fncdf :</span>
 <span class="sd">        A function handle for the CDF of the type 1 distribution. If not</span>
 <span class="sd">        specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.</span>
-<span class="sd">    fninv : func</span>
+<span class="sd">    fninv :</span>
 <span class="sd">        A function handle for the inverse CDF of the type 1 distribution. If</span>
 <span class="sd">        not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.</span>
-<span class="sd">    verbose : int</span>
+<span class="sd">    verbose :</span>
 <span class="sd">        Level of algorithm&#39;s verbosity (can be `0`, `1`, `2` or `3`):</span>
-<span class="sd">            * 0 (default) : work silently.</span>
-<span class="sd">            * 1 : display a termination report.</span>
-<span class="sd">            * 2 : display progress during iterations.</span>
-<span class="sd">            * 3 : display progress during iterations (more complete report).</span>
+<span class="sd">        * 0 (default) : work silently.</span>
+<span class="sd">        * 1 : display a termination report.</span>
+<span class="sd">        * 2 : display progress during iterations.</span>
+<span class="sd">        * 3 : display progress during iterations (more complete report).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    results : :py:class:`pandas.DataFrame`</span>
+<span class="sd">    results :</span>
 <span class="sd">        In the following, S1 and S2 represent the distributions of evidence</span>
 <span class="sd">        generated by stimulus classes S1 and S2:</span>
-
-<span class="sd">            * `&#39;dprime&#39;` : `mean(S2) - mean(S1)`, in</span>
-<span class="sd">                root-mean-square(sd(S1), sd(S2)) units</span>
-<span class="sd">            * `&#39;s&#39;` : `sd(S1) / sd(S2)`</span>
-<span class="sd">            * `&#39;meta_da&#39;` : meta-d&#39; in RMS units</span>
-<span class="sd">            * `&#39;M_diff&#39;` : `meta_da - da`</span>
-<span class="sd">            * `&#39;M_ratio&#39;` : `meta_da / da`</span>
-<span class="sd">            * `&#39;meta_ca&#39;` : type 1 criterion for meta-d&#39; fit, RMS units.</span>
-<span class="sd">            * `&#39;t2ca_rS1&#39;` : type 2 criteria of &quot;S1&quot; responses for meta-d&#39; fit,</span>
-<span class="sd">                RMS units.</span>
-<span class="sd">            * `&#39;t2ca_rS2&#39;` : type 2 criteria of &quot;S2&quot; responses for meta-d&#39; fit,</span>
-<span class="sd">                RMS units.</span>
-<span class="sd">            * `&#39;logL&#39;` : log likelihood of the data fit</span>
-<span class="sd">            * `&#39;est_HR2_rS1&#39;` : estimated (from meta-d&#39; fit) type 2 hit rates</span>
-<span class="sd">                for S1 responses.</span>
-<span class="sd">            * `&#39;obs_HR2_rS1&#39;` : actual type 2 hit rates for S1 responses.</span>
-<span class="sd">            * `&#39;est_FAR2_rS1&#39;` : estimated type 2 false alarm rates for S1</span>
-<span class="sd">                responses.</span>
-<span class="sd">            * `&#39;obs_FAR2_rS1&#39;` : actual type 2 false alarm rates for S1</span>
-<span class="sd">                responses.</span>
-<span class="sd">            * `&#39;est_HR2_rS2&#39;` : estimated type 2 hit rates for S2 responses.</span>
-<span class="sd">            * `&#39;obs_HR2_rS2&#39;` : actual type 2 hit rates for S2 responses.</span>
-<span class="sd">            * `&#39;est_FAR2_rS2&#39;` : estimated type 2 false alarm rates for S2</span>
-<span class="sd">                responses.</span>
-<span class="sd">            * `&#39;obs_FAR2_rS2&#39;` : actual type 2 false alarm rates for S2</span>
-<span class="sd">                responses.</span>
+<span class="sd">        * `&#39;dprime&#39;` : `mean(S2) - mean(S1)`, in</span>
+<span class="sd">            root-mean-square(sd(S1), sd(S2)) units</span>
+<span class="sd">        * `&#39;s&#39;` : `sd(S1) / sd(S2)`</span>
+<span class="sd">        * `&#39;meta_da&#39;` : meta-d&#39; in RMS units</span>
+<span class="sd">        * `&#39;M_diff&#39;` : `meta_da - da`</span>
+<span class="sd">        * `&#39;M_ratio&#39;` : `meta_da / da`</span>
+<span class="sd">        * `&#39;meta_ca&#39;` : type 1 criterion for meta-d&#39; fit, RMS units.</span>
+<span class="sd">        * `&#39;t2ca_rS1&#39;` : type 2 criteria of &quot;S1&quot; responses for meta-d&#39; fit,</span>
+<span class="sd">            RMS units.</span>
+<span class="sd">        * `&#39;t2ca_rS2&#39;` : type 2 criteria of &quot;S2&quot; responses for meta-d&#39; fit,</span>
+<span class="sd">            RMS units.</span>
+<span class="sd">        * `&#39;logL&#39;` : log likelihood of the data fit</span>
+<span class="sd">        * `&#39;est_HR2_rS1&#39;` : estimated (from meta-d&#39; fit) type 2 hit rates</span>
+<span class="sd">            for S1 responses.</span>
+<span class="sd">        * `&#39;obs_HR2_rS1&#39;` : actual type 2 hit rates for S1 responses.</span>
+<span class="sd">        * `&#39;est_FAR2_rS1&#39;` : estimated type 2 false alarm rates for S1</span>
+<span class="sd">            responses.</span>
+<span class="sd">        * `&#39;obs_FAR2_rS1&#39;` : actual type 2 false alarm rates for S1</span>
+<span class="sd">            responses.</span>
+<span class="sd">        * `&#39;est_HR2_rS2&#39;` : estimated type 2 hit rates for S2 responses.</span>
+<span class="sd">        * `&#39;obs_HR2_rS2&#39;` : actual type 2 hit rates for S2 responses.</span>
+<span class="sd">        * `&#39;est_FAR2_rS2&#39;` : estimated type 2 false alarm rates for S2</span>
+<span class="sd">            responses.</span>
+<span class="sd">        * `&#39;obs_FAR2_rS2&#39;` : actual type 2 false alarm rates for S2</span>
+<span class="sd">            responses.</span>
 
 <span class="sd">    Notes</span>
 <span class="sd">    -----</span>
@@ -1032,88 +1035,85 @@ document.write(`
     <span class="n">fninv</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">,</span>
     <span class="n">fncdf</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">norm_cdf</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Fit metad model using MLE.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Fit metad model using MLE.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    nR_S1, nR_S2 : list, 1d array-like or None</span>
+<span class="sd">    nR_S1, nR_S2 :</span>
 <span class="sd">        These are vectors containing the total number of responses in</span>
 <span class="sd">        each response category, conditional on presentation of S1 and S2. If</span>
 <span class="sd">        nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the</span>
 <span class="sd">        subject had the following response counts:</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 100 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 50 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 20 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 10 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 5 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 1 time</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`3` : 100 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`2` : 50 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`1` : 20 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`1` : 10 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`2` : 5 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`3` : 1 time</span>
 
 <span class="sd">        The ordering of response / rating counts for S2 should be the same as</span>
 <span class="sd">        it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2</span>
 <span class="sd">        was presented, the subject had the following response counts:</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`3` : 3 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`2` : 7 times</span>
-<span class="sd">            * responded `&#39;S1&#39;`, rating=`1` : 8 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`1` : 12 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`2` : 27 times</span>
-<span class="sd">            * responded `&#39;S2&#39;`, rating=`3` : 89 times</span>
-<span class="sd">    nRatings : int</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`3` : 3 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`2` : 7 times</span>
+<span class="sd">        * responded `&#39;S1&#39;`, rating=`1` : 8 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`1` : 12 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`2` : 27 times</span>
+<span class="sd">        * responded `&#39;S2&#39;`, rating=`3` : 89 times</span>
+<span class="sd">    nRatings :</span>
 <span class="sd">        Number of discrete ratings. If a continuous rating scale was used, and</span>
 <span class="sd">        the number of unique ratings does not match `nRatings`, will convert to</span>
 <span class="sd">        discrete ratings using :py:func:`metadpy.utils.discreteRatings`.</span>
 <span class="sd">        Default is set to 4.</span>
-<span class="sd">    nCriteria : int | None</span>
+<span class="sd">    nCriteria :</span>
 <span class="sd">        (Optional) Number criteria to be fitted. If `None`, the number of criteria is</span>
 <span class="sd">        set to `nCriteria = int(2 * nRatings - 1)`.</span>
-<span class="sd">    s : int</span>
+<span class="sd">    s :</span>
 <span class="sd">        Ratio of standard deviations for type 1 distributions as:</span>
 <span class="sd">        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default</span>
 <span class="sd">        value of 1. For most purposes, it is recommended to set `s=1`. See</span>
 <span class="sd">        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.</span>
-<span class="sd">    verbose : {0, 1, 2}</span>
+<span class="sd">    verbose :</span>
 <span class="sd">        Level of algorithm&#39;s verbosity:</span>
 <span class="sd">            * 0 (default) : work silently.</span>
 <span class="sd">            * 1 : display a termination report.</span>
 <span class="sd">            * 2 : display progress during iterations.</span>
 <span class="sd">            * 3 : display progress during iterations (more complete report).</span>
-<span class="sd">    fninv : func</span>
+<span class="sd">    fninv :</span>
 <span class="sd">        A function handle for the inverse CDF of the type 1 distribution. If</span>
 <span class="sd">        not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.</span>
-<span class="sd">    fncdf : func</span>
+<span class="sd">    fncdf :</span>
 <span class="sd">        A function handle for the CDF of the type 1 distribution. If not</span>
 <span class="sd">        specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    results : dict</span>
+<span class="sd">    results :</span>
 <span class="sd">        In the following, S1 and S2 represent the distributions of evidence generated</span>
 <span class="sd">        by stimulus classes S1 and S2:</span>
-
-<span class="sd">            * `&#39;dprime&#39;` : `mean(S2) - mean(S1)`, in root-mean-square(sd(S1), sd(S2))</span>
-<span class="sd">             units</span>
-<span class="sd">            * `&#39;s&#39;` : `sd(S1) / sd(S2)`</span>
-<span class="sd">            * `&#39;meta_d&#39;` : meta-d&#39; in RMS units</span>
-<span class="sd">            * `&#39;m_diff&#39;` : `meta_da - da`</span>
-<span class="sd">            * `&#39;m_ratio&#39;` : `meta_da / da`</span>
-<span class="sd">            * `&#39;meta_ca&#39;` : type 1 criterion for meta-d&#39; fit, RMS units.</span>
-<span class="sd">            * `&#39;t2ca_rS1&#39;` : type 2 criteria of &quot;S1&quot; responses for meta-d&#39; fit, RMS</span>
-<span class="sd">            units.</span>
-<span class="sd">            * `&#39;t2ca_rS2&#39;` : type 2 criteria of &quot;S2&quot; responses for meta-d&#39; fit,</span>
-<span class="sd">                RMS units.</span>
-<span class="sd">            * `&#39;logL&#39;` : log likelihood of the data fit</span>
-<span class="sd">            * `&#39;est_HR2_rS1&#39;` : estimated (from meta-d&#39; fit) type 2 hit rates for S1</span>
-<span class="sd">            responses.</span>
-<span class="sd">            * `&#39;obs_HR2_rS1&#39;` : actual type 2 hit rates for S1 responses.</span>
-<span class="sd">            * `&#39;est_FAR2_rS1&#39;` : estimated type 2 false alarm rates for S1 responses.</span>
-<span class="sd">            * `&#39;obs_FAR2_rS1&#39;` : actual type 2 false alarm rates for S1 responses.</span>
-<span class="sd">            * `&#39;est_HR2_rS2&#39;` : estimated type 2 hit rates for S2 responses.</span>
-<span class="sd">            * `&#39;obs_HR2_rS2&#39;` : actual type 2 hit rates for S2 responses.</span>
-<span class="sd">            * `&#39;est_FAR2_rS2&#39;` : estimated type 2 false alarm rates for S2 responses.</span>
-<span class="sd">            * `&#39;obs_FAR2_rS2&#39;` : actual type 2 false alarm rates for S2 responses.</span>
+<span class="sd">        * `&#39;dprime&#39;` : `mean(S2) - mean(S1)`, in root-mean-square(sd(S1), sd(S2))</span>
+<span class="sd">            units</span>
+<span class="sd">        * `&#39;s&#39;` : `sd(S1) / sd(S2)`</span>
+<span class="sd">        * `&#39;meta_d&#39;` : meta-d&#39; in RMS units</span>
+<span class="sd">        * `&#39;m_diff&#39;` : `meta_da - da`</span>
+<span class="sd">        * `&#39;m_ratio&#39;` : `meta_da / da`</span>
+<span class="sd">        * `&#39;meta_ca&#39;` : type 1 criterion for meta-d&#39; fit, RMS units.</span>
+<span class="sd">        * `&#39;t2ca_rS1&#39;` : type 2 criteria of &quot;S1&quot; responses for meta-d&#39; fit, RMS</span>
+<span class="sd">        units.</span>
+<span class="sd">        * `&#39;t2ca_rS2&#39;` : type 2 criteria of &quot;S2&quot; responses for meta-d&#39; fit,</span>
+<span class="sd">            RMS units.</span>
+<span class="sd">        * `&#39;logL&#39;` : log likelihood of the data fit</span>
+<span class="sd">        * `&#39;est_HR2_rS1&#39;` : estimated (from meta-d&#39; fit) type 2 hit rates for S1</span>
+<span class="sd">        responses.</span>
+<span class="sd">        * `&#39;obs_HR2_rS1&#39;` : actual type 2 hit rates for S1 responses.</span>
+<span class="sd">        * `&#39;est_FAR2_rS1&#39;` : estimated type 2 false alarm rates for S1 responses.</span>
+<span class="sd">        * `&#39;obs_FAR2_rS1&#39;` : actual type 2 false alarm rates for S1 responses.</span>
+<span class="sd">        * `&#39;est_HR2_rS2&#39;` : estimated type 2 hit rates for S2 responses.</span>
+<span class="sd">        * `&#39;obs_HR2_rS2&#39;` : actual type 2 hit rates for S2 responses.</span>
+<span class="sd">        * `&#39;est_FAR2_rS2&#39;` : estimated type 2 false alarm rates for S2 responses.</span>
+<span class="sd">        * `&#39;obs_FAR2_rS2&#39;` : actual type 2 false alarm rates for S2 responses.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
     <span class="k">if</span> <span class="n">nCriteria</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">nCriteria</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">nRatings</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 

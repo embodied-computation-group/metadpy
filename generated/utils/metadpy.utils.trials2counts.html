@@ -437,44 +437,44 @@ document.write(`
 stimulus alternatives on every trial and provides confidence ratings,
 converts trial by trial experimental information for N trials into response
 counts.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> | None</span></dt><dd><p>Dataframe containing stimuli, accuracy and confidence ratings.</p>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong></dt><dd><p>Dataframe containing stimuli, accuracy and confidence ratings.</p>
 </dd>
-<dt><strong>stimuli</strong><span class="classifier">list, 1d array-like or string</span></dt><dd><p>Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
+<dt><strong>stimuli</strong></dt><dd><p>Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
 the column containing the stimuli ID. Default is <cite>‘Stimuli’</cite>.</p>
 </dd>
-<dt><strong>responses</strong><span class="classifier">list | np.ndarray | string</span></dt><dd><p>Response (0 or 1). If a dataframe is provided, should be the
+<dt><strong>responses</strong></dt><dd><p>Response (0 or 1). If a dataframe is provided, should be the
 name of the column containing the response accuracy. Default is
 <cite>‘Responses’</cite>.</p>
 </dd>
-<dt><strong>accuracy</strong><span class="classifier">list | np.ndarray | string</span></dt><dd><p>Response accuracy (0 or 1). If a dataframe is provided, should be the
+<dt><strong>accuracy</strong></dt><dd><p>Response accuracy (0 or 1). If a dataframe is provided, should be the
 name of the column containing the response accuracy. Default is
 <cite>‘Accuracy’</cite>.</p>
 </dd>
-<dt><strong>confidence</strong><span class="classifier">list | np.ndarray</span></dt><dd><p>Confidence ratings. If a dataframe is provided, should be the name of
+<dt><strong>confidence</strong></dt><dd><p>Confidence ratings. If a dataframe is provided, should be the name of
 the column containing the confidence ratings. Default is
 <cite>‘Confidence’</cite>.</p>
 </dd>
-<dt><strong>nRatings</strong><span class="classifier">int</span></dt><dd><p>Total of available subjective ratings available for the subject. e.g.
+<dt><strong>nRatings</strong></dt><dd><p>Total of available subjective ratings available for the subject. e.g.
 if subject can rate confidence on a scale of 1-4, then nRatings = 4.
 Default is <cite>4</cite>.</p>
 </dd>
-<dt><strong>padding</strong><span class="classifier">boolean</span></dt><dd><p>If <cite>True</cite>, each response count in the output has the value of padAmount
+<dt><strong>padding</strong></dt><dd><p>If <cite>True</cite>, each response count in the output has the value of padAmount
 added to it. Padding cells is desirable if trial counts of 0 interfere
 with model fitting. If False, trial counts are not manipulated and 0s
 may be present in the response count output. Default value for padding
 is 0.</p>
 </dd>
-<dt><strong>padAmount</strong><span class="classifier">float</span></dt><dd><p>The value to add to each response count if padding is set to 1.
+<dt><strong>padAmount</strong></dt><dd><p>The value to add to each response count if padding is set to 1.
 Default value is 1/(2*nRatings)</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>nR_S1, nR_S2</strong><span class="classifier">np.ndarray</span></dt><dd><p>Vectors containing the total number of responses in each accuracy
+<dt>nR_S1, nR_S2</dt><dd><p>Vectors containing the total number of responses in each accuracy
 category, conditional on presentation of S1 and S2.</p>
 </dd>
 </dl>

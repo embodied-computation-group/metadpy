@@ -453,25 +453,24 @@ document.write(`
     <span class="n">stimuli</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract hits, misses, false alarms and correct rejection from stimuli and</span>
-<span class="sd">    responses vectors.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hits, misses, false alarms and correct rejection from stimuli and responses.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe containing one `stimuli` and one `response` column.</span>
-<span class="sd">    stimuli : str | np.ndarray | list</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        If a string is provided, should be the name of the column used as `stimuli`. If</span>
 <span class="sd">        a list or an array is provided, should contain the boolean vectors for</span>
 <span class="sd">        `stimuli`.</span>
-<span class="sd">    responses : str | np.ndarray</span>
+<span class="sd">    responses :</span>
 <span class="sd">        If a string is provided, should be the name of the column used as `responses`.</span>
 <span class="sd">        If a list or an array is provided, should contain the boolean vector for</span>
 <span class="sd">        `responses`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    hits, misses, fas, crs : int</span>
+<span class="sd">    hits, misses, fas, crs :</span>
 <span class="sd">        The number of hits, misees, false alarms and correct rejections.</span>
 
 <span class="sd">    Notes</span>
@@ -573,33 +572,33 @@ document.write(`
     <span class="n">responses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">correction</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute hit and false alarm rates.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute hit and false alarm rates.</span>
 
 <span class="sd">    The values are automatically corrected to avoid d&#39; infinity (see below).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe containing one `stimuli` and one `response` column.</span>
-<span class="sd">    stimuli : str | np.ndarray | list</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        If a string is provided, should be the name of the column used as</span>
 <span class="sd">        `stimuli`. If a list or an array is provided, should contain the</span>
 <span class="sd">        boolean vectors for `stimuli`. If `None` and `data` is a</span>
 <span class="sd">        :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.</span>
-<span class="sd">    responses : str | np.ndarray</span>
+<span class="sd">    responses :</span>
 <span class="sd">        If a string is provided, should be the name of the column used as</span>
 <span class="sd">        `responses`. If a list or an array is provided, should contain the</span>
 <span class="sd">        boolean vector for `responses`. If `None` and `data` is a</span>
 <span class="sd">        :py:class:`pandas.DataFrame`, will be set to `Responses` by default.</span>
-<span class="sd">    hits : int | None</span>
+<span class="sd">    hits :</span>
 <span class="sd">        Hits.</span>
-<span class="sd">    misses : int | None</span>
+<span class="sd">    misses :</span>
 <span class="sd">        Misses.</span>
-<span class="sd">    fas : int | None</span>
+<span class="sd">    fas :</span>
 <span class="sd">        False alarms.</span>
-<span class="sd">    crs : int | None</span>
+<span class="sd">    crs :</span>
 <span class="sd">        Correct rejections.</span>
-<span class="sd">    correction : bool</span>
+<span class="sd">    correction :</span>
 <span class="sd">        Avoid d&#39; infinity by correcting false alarm and hit rate values if equal to 0</span>
 <span class="sd">        or 1 using half inverse or 1 - half inverse.</span>
 <span class="sd">        Half inverses values are defined by:</span>
@@ -609,9 +608,9 @@ document.write(`
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    hit_rate: float</span>
+<span class="sd">    hit_rate:</span>
 <span class="sd">        Hit rate.</span>
-<span class="sd">    fa_rate : float</span>
+<span class="sd">    fa_rate :</span>
 <span class="sd">        False alarm rate.</span>
 
 <span class="sd">    Info</span>
@@ -630,7 +629,7 @@ document.write(`
 <span class="sd">        which can bias d&#39; estimates. Use `corretion=False` to compute</span>
 <span class="sd">        uncorrected hits and false alarm rates.</span>
 
-<span class="sd">    See also</span>
+<span class="sd">    See Also</span>
 <span class="sd">    --------</span>
 <span class="sd">    dprime, criterion, scores</span>
 
@@ -726,23 +725,23 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe. Note that this function can also directly be used as a</span>
 <span class="sd">        Pandas method, in which case this argument is no longer needed.</span>
-<span class="sd">    hit_rate : float</span>
+<span class="sd">    hit_rate :</span>
 <span class="sd">        Hit rate.</span>
-<span class="sd">    fa_rate : float</span>
+<span class="sd">    fa_rate :</span>
 <span class="sd">        False alarm rate.</span>
-<span class="sd">    stimuli : string</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        Name of the column containing the stimuli. If `None` and `data` is a</span>
 <span class="sd">        :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.</span>
-<span class="sd">    responses : string</span>
+<span class="sd">    responses :</span>
 <span class="sd">        Name of the column containing the responses. If `None` and `data` is a</span>
 <span class="sd">        :py:class:`pandas.DataFrame`, will be set to `Responses` by default.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    dprime : float</span>
+<span class="sd">    dprime :</span>
 <span class="sd">        The d&#39; value.</span>
 
 <span class="sd">    Notes</span>
@@ -827,21 +826,21 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe. Note that this function can also directly be used as a Pandas</span>
 <span class="sd">        method, in which case this argument is no longer needed.</span>
-<span class="sd">    hit_rate : float</span>
+<span class="sd">    hit_rate :</span>
 <span class="sd">        Hit rate.</span>
-<span class="sd">    fa_rate : float</span>
+<span class="sd">    fa_rate :</span>
 <span class="sd">        False alarm rate.</span>
-<span class="sd">    stimuli : string</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        Name of the column containing the stimuli.</span>
-<span class="sd">    responses : string</span>
+<span class="sd">    responses :</span>
 <span class="sd">        Name of the column containing the responses.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    dprime : float</span>
+<span class="sd">    dprime :</span>
 <span class="sd">        The d&#39; value.</span>
 
 <span class="sd">    Raises</span>
@@ -918,31 +917,43 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    data : pd.DataFrame | None</span>
+<span class="sd">    data :</span>
 <span class="sd">        Dataframe containing one `&quot;stimuli&quot;` and one `&quot;response&quot;` column. Different</span>
 <span class="sd">        column names can also be provided using the `stimuli` and `responses`</span>
 <span class="sd">        parameters.</span>
-<span class="sd">    stimuli : str | np.ndarray | list | None</span>
+<span class="sd">    stimuli :</span>
 <span class="sd">        If a string is provided, should be the name of the column used as `stimuli`. If</span>
 <span class="sd">        a list or an array is provided, should contain the boolean vectors for</span>
 <span class="sd">        `stimuli`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,</span>
 <span class="sd">        will be set to `Stimuli` by default.</span>
-<span class="sd">    responses : str | np.ndarray | None</span>
+<span class="sd">    responses :</span>
 <span class="sd">        If a string is provided, should be the name of the column used as `responses`.</span>
 <span class="sd">        If a list or an array is provided, should contain the boolean vector for</span>
 <span class="sd">        `responses`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,</span>
 <span class="sd">        will be set to `Responses` by default.</span>
-<span class="sd">    nRatings : int | None</span>
+<span class="sd">    accuracy :</span>
+<span class="sd">        If a string is provided, should be the name of the column used as `accuracy`.</span>
+<span class="sd">        If a list or an array is provided, should contain the boolean vector for</span>
+<span class="sd">        `accuracy`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,</span>
+<span class="sd">        will be set to `Accuracy` by default. This parameter is optional if `stimuli`</span>
+<span class="sd">        and `responses` are known.</span>
+<span class="sd">    confidence :</span>
+<span class="sd">        If a string is provided, should be the name of the column used as `confidence`.</span>
+<span class="sd">        If a list or an array is provided, should contain the confidence ratings,</span>
+<span class="sd">        matching the number of discret ratings provided in the `nRatings` parameter.</span>
+<span class="sd">        If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,</span>
+<span class="sd">        will be set to `Confidence` by default.</span>
+<span class="sd">    nRatings :</span>
 <span class="sd">        Total of available subjective ratings available for the subject. e.g. if subject</span>
 <span class="sd">        can rate confidence on a scale of 1-4, then nRatings = 4. Default is `None`.</span>
-<span class="sd">    nR_S1 : list | np.ndarray | None</span>
+<span class="sd">    nR_S1 :</span>
 <span class="sd">        Confience ratings (stimuli 1).</span>
-<span class="sd">    nR_S2 : list | np.ndarray | None</span>
+<span class="sd">    nR_S2 :</span>
 <span class="sd">        Confidence ratings (stimuli 2).</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    auc : float</span>
+<span class="sd">    auc :</span>
 <span class="sd">        Area under the type 2 ROC curve.</span>
 
 <span class="sd">    Examples</span>

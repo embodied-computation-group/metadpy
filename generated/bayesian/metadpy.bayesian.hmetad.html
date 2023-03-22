@@ -436,74 +436,72 @@ document.write(`
 <span class="sig-prename descclassname"><span class="pre">metadpy.bayesian.</span></span><span class="sig-name descname"><span class="pre">hmetad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimuli</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nRatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">within</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padAmount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'model'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Model</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">InferenceData</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">MultiTrace</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
 <dt class="sig sig-object py">
 <span class="sig-prename descclassname"><span class="pre">metadpy.bayesian.</span></span><span class="sig-name descname"><span class="pre">hmetad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><span class="pre">DataFrame</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimuli</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nRatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">within</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbins</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padAmount</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'model'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Model</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">InferenceData</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">MultiTrace</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span></dt>
-<dd><p>Estimate parameters of the Bayesian meta-d’ model with hyperparametes at the
-group level.</p>
-<dl class="field-list">
+<dd><p>Bayesian meta-d’ model with hyperparametes at the group level.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> | None</span></dt><dd><p>Dataframe. Note that this function can also directly be used as a Pandas
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong></dt><dd><p>Dataframe. Note that this function can also directly be used as a Pandas
 method, in which case this argument is no longer needed.</p>
 </dd>
-<dt><strong>nR_S1</strong><span class="classifier">1d array-like, list, string | None</span></dt><dd><p>Confience ratings (stimuli 1, correct and incorrect).</p>
+<dt><strong>nR_S1</strong></dt><dd><p>Confience ratings (stimuli 1, correct and incorrect).</p>
 </dd>
-<dt><strong>nR_S2</strong><span class="classifier">1d array-like, list, string | None</span></dt><dd><p>Confience ratings (stimuli 2, correct and incorrect).</p>
+<dt><strong>nR_S2</strong></dt><dd><p>Confience ratings (stimuli 2, correct and incorrect).</p>
 </dd>
-<dt><strong>stimuli</strong><span class="classifier">string | None</span></dt><dd><p>Name of the column containing the stimuli.</p>
+<dt><strong>stimuli</strong></dt><dd><p>Name of the column containing the stimuli.</p>
 </dd>
-<dt><strong>accuracy</strong><span class="classifier">string | None</span></dt><dd><p>Name of the columns containing the accuracy.</p>
+<dt><strong>accuracy</strong></dt><dd><p>Name of the columns containing the accuracy.</p>
 </dd>
-<dt><strong>confidence</strong><span class="classifier">string | None</span></dt><dd><p>Name of the column containing the confidence ratings.</p>
+<dt><strong>confidence</strong></dt><dd><p>Name of the column containing the confidence ratings.</p>
 </dd>
-<dt><strong>nRatings</strong><span class="classifier">int | None</span></dt><dd><p>Number of discrete ratings. If a continuous rating scale was used, and
+<dt><strong>nRatings</strong></dt><dd><p>Number of discrete ratings. If a continuous rating scale was used, and
 the number of unique ratings does not match <cite>nRatings</cite>, will convert to
 discrete ratings using <a class="reference internal" href="../utils/metadpy.utils.discreteRatings.html#metadpy.utils.discreteRatings" title="metadpy.utils.discreteRatings"><code class="xref py py-func docutils literal notranslate"><span class="pre">metadpy.utils.discreteRatings()</span></code></a>.</p>
 </dd>
-<dt><strong>within</strong><span class="classifier">string | None</span></dt><dd><p>Name of column containing the within factor (condition comparison).</p>
+<dt><strong>within</strong></dt><dd><p>Name of column containing the within factor (condition comparison).</p>
 </dd>
-<dt><strong>between</strong><span class="classifier">string | None</span></dt><dd><p>Name of column containing the between subject factor (group
+<dt><strong>between</strong></dt><dd><p>Name of column containing the between subject factor (group
 comparison).</p>
 </dd>
-<dt><strong>subject</strong><span class="classifier">string | None</span></dt><dd><p>Name of column containing the subject identifier (only required if a
+<dt><strong>subject</strong></dt><dd><p>Name of column containing the subject identifier (only required if a
 within-subject or a between-subject factor is provided).</p>
 </dd>
-<dt><strong>nbins</strong><span class="classifier">int</span></dt><dd><p>If a continuous rating scale was using, <cite>nbins</cite> define the number of
+<dt><strong>nbins</strong></dt><dd><p>If a continuous rating scale was using, <cite>nbins</cite> define the number of
 discrete ratings when converting using
 <a class="reference internal" href="../utils/metadpy.utils.discreteRatings.html#metadpy.utils.discreteRatings" title="metadpy.utils.discreteRatings"><code class="xref py py-func docutils literal notranslate"><span class="pre">metadpy.utils.discreteRatings()</span></code></a>. The default value is <cite>4</cite>.</p>
 </dd>
-<dt><strong>padding</strong><span class="classifier">boolean</span></dt><dd><p>If <cite>True</cite>, each response count in the output has the value of padAmount
+<dt><strong>padding</strong></dt><dd><p>If <cite>True</cite>, each response count in the output has the value of padAmount
 added to it. Padding cells is desirable if trial counts of 0 interfere
 with model fitting. If False, trial counts are not manipulated and 0s
 may be present in the response count output. Default value for padding
 is <cite>False</cite>.</p>
 </dd>
-<dt><strong>padAmount</strong><span class="classifier">float or None</span></dt><dd><p>The value to add to each response count if padCells is set to 1.
+<dt><strong>padAmount</strong></dt><dd><p>The value to add to each response count if padCells is set to 1.
 Default value is 1/(2*nRatings)</p>
 </dd>
-<dt><strong>sample_model</strong><span class="classifier">boolean</span></dt><dd><p>If <cite>False</cite>, only the model is returned without sampling.</p>
+<dt><strong>sample_model</strong></dt><dd><p>If <cite>False</cite>, only the model is returned without sampling.</p>
 </dd>
-<dt><strong>output</strong><span class="classifier">str</span></dt><dd><p>The kind of outpute expected. If <cite>“model”</cite>, will return the model function and
+<dt><strong>output</strong></dt><dd><p>The kind of outpute expected. If <cite>“model”</cite>, will return the model function and
 the traces. If <cite>“dataframe”</cite>, will return a dataframe containing <cite>d</cite> (dprime),
 <cite>c</cite> (criterion), <cite>meta_d</cite> (the meta-d prime) and <cite>m_ratio</cite> (<cite>meta_d/d</cite>).</p>
 </dd>
-<dt><strong>num_samples</strong><span class="classifier">int</span></dt><dd><p>The number of samples per chains to draw (defaults to <cite>1000</cite>).</p>
+<dt><strong>num_samples</strong></dt><dd><p>The number of samples per chains to draw (defaults to <cite>1000</cite>).</p>
 </dd>
-<dt><strong>num_chains</strong><span class="classifier">int</span></dt><dd><p>The number of chains (defaults to <cite>4</cite>).</p>
+<dt><strong>num_chains</strong></dt><dd><p>The number of chains (defaults to <cite>4</cite>).</p>
 </dd>
 <dt><strong>**kwargs</strong><span class="classifier">keyword arguments</span></dt><dd><p>All keyword arguments are passed to <cite>func::pymc.sampling.sample</cite>.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl>
+<dd class="field-even"><dl class="simple">
 <dt>If <cite>output=”model”</cite>:</dt><dd></dd>
-<dt><strong>model</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymc.Model</span></code> instance</span></dt><dd><p>The model PyMC as a <code class="xref py py-class docutils literal notranslate"><span class="pre">pymc.Model</span></code>.</p>
+<dt>model</dt><dd><p>The model PyMC as a <code class="xref py py-class docutils literal notranslate"><span class="pre">pymc.Model</span></code>.</p>
 </dd>
-<dt><strong>traces</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">pymc.backends.base.MultiTrace</span></code> |</span></dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">arviz.InferenceData</span></code> | None
-A <cite>MultiTrace</cite> or <cite>ArviZ InferenceData</cite> object that contains the samples. Only
+<dt>traces</dt><dd><p>A <cite>MultiTrace</cite> or <cite>ArviZ InferenceData</cite> object that contains the samples. Only
 returned if <cite>sample_model</cite> is set to <cite>True</cite>, otherwise set to None.</p>
 </dd>
 <dt>or</dt><dd></dd>
-<dt><strong>results</strong><span class="classifier">pd.DataFrame</span></dt><dd><p>If <cite>output=”dataframe”</cite>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> containing the values for
+<dt>results</dt><dd><p>If <cite>output=”dataframe”</cite>, <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> containing the values for
 the following variables:</p>
 <ul class="simple">
 <li><p>d-prime (d)</p></li>

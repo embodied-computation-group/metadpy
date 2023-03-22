@@ -438,32 +438,44 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>data</strong><span class="classifier">pd.DataFrame | None</span></dt><dd><p>Dataframe containing one <cite>“stimuli”</cite> and one <cite>“response”</cite> column. Different
+<dt><strong>data</strong></dt><dd><p>Dataframe containing one <cite>“stimuli”</cite> and one <cite>“response”</cite> column. Different
 column names can also be provided using the <cite>stimuli</cite> and <cite>responses</cite>
 parameters.</p>
 </dd>
-<dt><strong>stimuli</strong><span class="classifier">str | np.ndarray | list | None</span></dt><dd><p>If a string is provided, should be the name of the column used as <cite>stimuli</cite>. If
+<dt><strong>stimuli</strong></dt><dd><p>If a string is provided, should be the name of the column used as <cite>stimuli</cite>. If
 a list or an array is provided, should contain the boolean vectors for
 <cite>stimuli</cite>. If <cite>None</cite> (default) and <cite>data</cite> is a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>,
 will be set to <cite>Stimuli</cite> by default.</p>
 </dd>
-<dt><strong>responses</strong><span class="classifier">str | np.ndarray | None</span></dt><dd><p>If a string is provided, should be the name of the column used as <cite>responses</cite>.
+<dt><strong>responses</strong></dt><dd><p>If a string is provided, should be the name of the column used as <cite>responses</cite>.
 If a list or an array is provided, should contain the boolean vector for
 <cite>responses</cite>. If <cite>None</cite> (default) and <cite>data</cite> is a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>,
 will be set to <cite>Responses</cite> by default.</p>
 </dd>
-<dt><strong>nRatings</strong><span class="classifier">int | None</span></dt><dd><p>Total of available subjective ratings available for the subject. e.g. if subject
+<dt><strong>accuracy</strong></dt><dd><p>If a string is provided, should be the name of the column used as <cite>accuracy</cite>.
+If a list or an array is provided, should contain the boolean vector for
+<cite>accuracy</cite>. If <cite>None</cite> (default) and <cite>data</cite> is a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>,
+will be set to <cite>Accuracy</cite> by default. This parameter is optional if <cite>stimuli</cite>
+and <cite>responses</cite> are known.</p>
+</dd>
+<dt><strong>confidence</strong></dt><dd><p>If a string is provided, should be the name of the column used as <cite>confidence</cite>.
+If a list or an array is provided, should contain the confidence ratings,
+matching the number of discret ratings provided in the <cite>nRatings</cite> parameter.
+If <cite>None</cite> (default) and <cite>data</cite> is a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>,
+will be set to <cite>Confidence</cite> by default.</p>
+</dd>
+<dt><strong>nRatings</strong></dt><dd><p>Total of available subjective ratings available for the subject. e.g. if subject
 can rate confidence on a scale of 1-4, then nRatings = 4. Default is <cite>None</cite>.</p>
 </dd>
-<dt><strong>nR_S1</strong><span class="classifier">list | np.ndarray | None</span></dt><dd><p>Confience ratings (stimuli 1).</p>
+<dt><strong>nR_S1</strong></dt><dd><p>Confience ratings (stimuli 1).</p>
 </dd>
-<dt><strong>nR_S2</strong><span class="classifier">list | np.ndarray | None</span></dt><dd><p>Confidence ratings (stimuli 2).</p>
+<dt><strong>nR_S2</strong></dt><dd><p>Confidence ratings (stimuli 2).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>auc</strong><span class="classifier">float</span></dt><dd><p>Area under the type 2 ROC curve.</p>
+<dt>auc</dt><dd><p>Area under the type 2 ROC curve.</p>
 </dd>
 </dl>
 </dd>

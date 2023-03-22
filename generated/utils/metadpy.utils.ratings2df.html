@@ -431,18 +431,18 @@ document.write(`
 <dt class="sig sig-object py" id="metadpy.utils.ratings2df">
 <span class="sig-prename descclassname"><span class="pre">metadpy.utils.</span></span><span class="sig-name descname"><span class="pre">ratings2df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nR_S1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">nR_S2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.24)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><span class="pre">DataFrame</span></a></span></span><a class="reference internal" href="../../_modules/metadpy/utils.html#ratings2df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#metadpy.utils.ratings2df" title="Permalink to this definition">#</a></dt>
 <dd><p>Convert response count to dataframe.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>nR_S1</strong><span class="classifier">np.ndarray | list | string</span></dt><dd><p>Confience ratings (stimuli 1, correct and incorrect).</p>
+<dt><strong>nR_S1</strong></dt><dd><p>Confience ratings (stimuli 1, correct and incorrect).</p>
 </dd>
-<dt><strong>nR_S2</strong><span class="classifier">np.ndarray | list | string</span></dt><dd><p>Confience ratings (stimuli 2, correct and incorrect).</p>
+<dt><strong>nR_S2</strong></dt><dd><p>Confience ratings (stimuli 2, correct and incorrect).</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.5.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>A DataFrame (nRows==`nTrials`) containing the responses, accuracy and
+<dd class="field-even"><dl class="simple">
+<dt>df</dt><dd><p>A DataFrame (nRows==`nTrials`) containing the responses, accuracy and
 confidence rating for one participant given <cite>nR_s1</cite> and <cite>nR_S2</cite>.</p>
 </dd>
 </dl>
