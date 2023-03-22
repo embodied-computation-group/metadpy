@@ -1,35 +1,23 @@
 name: Linting
 
-on: [push, pull_request]
-
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - "*"
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9]
+        python-version: ["3.10"]
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - uses: actions/cache@v2
-      name: Configure pip caching
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.py') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-    - name: Install dependencies
-      run: |
-        pip install -r requirements-tests.txt
-        pip install isort flake8 black
-        pip install mypy==0.982
-        pip install types-setuptools
-    - name: Run tests and coverage
-      run: |
-        mypy ./metadpy/ --ignore-missing-imports
-        flake8 ./metadpy/
-        black ./metadpy/
-        isort ./metadpy/
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run lint
+        uses: pre-commit/action@v3.0.0

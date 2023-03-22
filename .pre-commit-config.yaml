@@ -22,3 +22,9 @@ repos:
     -   id: mypy
         files: ^metadpy/
         args: [--ignore-missing-imports]
+-   repo: https://github.com/pycqa/pydocstyle
+    rev: 6.3.0
+    hooks:
+    -   id: pydocstyle
+        args: ['--ignore', 'D213,D100,D203,D104']
+        files: ^metadpy/
