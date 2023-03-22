@@ -8,7 +8,8 @@
 
 **metadpy** is written in Python 3. It uses [Numpy](https://numpy.org/), [Scipy](https://www.scipy.org/) and [Pandas](https://pandas.pydata.org/>) for most of its operation, comprizing meta-d’ estimation using maximum likelihood estimation (MLE). The (Hierarchical) Bayesian modelling is implemented in [Aesara](https://github.com/aesara-devs/aesara) (now renamed [PyTensor](https://github.com/pymc-devs/pytensor) for versions of [pymc](https://docs.pymc.io/>) >=5.0).
 
-📖 [Documentation](https://embodied-computation-group.github.io/metadpy/)  
+* 📖 [Documentation](https://embodied-computation-group.github.io/metadpy/)  
+* ✏️ [Tutorials](https://embodied-computation-group.github.io/metadpy/tutorials.html)  
 
 # Installation
 
@@ -40,24 +41,20 @@ metadpy first aims to be the Python equivalent of the [hMeta-d toolbox](https://
 
 For an extensive introduction to metadpy, you can navigate the following notebooks that are Python adaptations of the introduction to the [hMeta-d toolbox](https://github.com/metacoglab/HMeta-d) written in Matlab by Olivia Faul for the [Zurich Computational Psychiatry course](https://github.com/metacoglab/HMeta-d/tree/master/CPC_metacog_tutorial).
 
-## Examples
+# Tutorials
 
-| Notebook | Colab | nbViewer |
-| --- | ---| --- |
-| 1. Estimating meta-d' using MLE (subject and group level) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb)
-| 2. Estimating meta-d' (single subject) using Bayesian modelling - Numpyro | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(numpyro).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(numpyro).ipynb)
-| 3. Estimating meta-d' (single subject) using Bayesian modelling - pymc | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb)
-| 4. Estimating meta-d' (group level) using Bayesian modelling - Numpyro | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%204%20-%20Fitting%20Bayesian%20-%20Group%20level%20(numpyro).ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Group%20level%20(numpyro).ipynb)
+| Notebook | Colab |
+| --- | ---|
+| {ref}`tutorial_1` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/1-What%20metacognition%20looks%20like.ipynb)
+| {ref}`tutorial_2` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/2-Fitting%20the%20model-MLE.ipynb)
+| {ref}`tutorial_3` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/3-Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
 
+# Examples
 
-## Tutorials
-
-| Notebook | Colab | nbViewer |
-| --- | ---| --- |
-| 1. What metacognition looks like? | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/1%20-%20What%20metacognition%20looks%20like.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/1%20-%20What%20metacognition%20looks%20like.ipynb)
-| 2. Fitting the model | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/2%20-%20Fitting%20the%20model.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/2%20-%20Fitting%20the%20model.ipynb)
-| 3. Hierarchical Bayesian models of metacognition (in prep) | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/3%20-%20Hierarchical%20Bayesian%20models%20of%20metacognition.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/4%20-%20Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
-| 4. Comparison with the HMeta-d toolbox | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/4%20-%20Comparison%20with%20the%20hmeta-d%20toolbox.ipynb) | [![View the notebook](https://img.shields.io/badge/render-nbviewer-orange.svg)](https://nbviewer.jupyter.org/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/4%20-%20Comparison%20with%20the%20hmeta-d%20toolbox.ipynb)
+| Notebook | Colab |
+| --- | ---|
+| {ref}`example_1` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.ipynb)
+| {ref}`example_2` | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/embodied-computation-group/metadpy/blob/master/docs/source/examples/Example%202%20-%20Fitting%20Bayesian%20-%20Subject%20level%20(pymc).ipynb)
 
 Or just follow the quick tour below.
 
