@@ -18,20 +18,20 @@ def plot_confidence(
 
     Parameters
     ----------
-    nR_S1 : 1d array-like
+    nR_S1 :
         Confience ratings (stimuli 1).
-    nR_S2 : 1d array-like
+    nR_S2 :
         Confidence ratings (stimuli 2).
-    fitModel : dict or None
+    fitModel :
         Dictionary returned by :py:funct:`metadpy.mle.fit_metad()`. If
         provided, the estimated ratings will be plotted toghether with the
         observed data.
-    ax : `Matplotlib.Axes` or None
+    ax :
         Where to draw the plot. Default is `None` (create a new figure).
 
     Returns
     -------
-    ax : :class:`matplotlib.axes.Axes`
+    ax :
         The matplotlib axes containing the plot.
 
     """
@@ -119,24 +119,24 @@ def plot_roc(
     fitModel: Optional[dict] = None,
     ax: Axes = None,
 ) -> Axes:
-    """Function to plot type2 ROC curve from observed an estimated data fit.
+    """Type2 ROC curve from observed an estimated data fit.
 
     Parameters
     ----------
-    nR_S1 : 1d array-like
+    nR_S1 :
         Number of ratings for signal 1 (correct and incorrect).
-    nR_S2 : 1d array-like
+    nR_S2 :
         Number of ratings for signal 2 (correct and incorrect).
-    fitModel : dict or None
+    fitModel :
         Dictionary returned by :py:func:`metadpy.mle.fit_metad()`. If
         provided, the estimated ratings will be plotted toghether with the
         observed data.
-    ax : `Matplotlib.Axes` or None
+    ax :
         Where to draw the plot. Default is `None` (create a new figure).
 
     Returns
     -------
-    ax : :class:`matplotlib.axes.Axes`
+    ax :
         The matplotlib axes containing the plot.
 
     """

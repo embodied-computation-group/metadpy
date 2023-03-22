@@ -29,6 +29,7 @@ _signatures = [
 
 
 def get(name, signature):
+    """Get Scipy Cython function."""
     index = 1 if signature.return_type is float64 else 0
     pyx_fuse_name = f"__pyx_fuse_{index}{name}"
     if pyx_fuse_name in cysp.__pyx_capi__:
@@ -52,9 +53,7 @@ def norm_cdf(
     mu: Union[float, np.ndarray],
     sigma: Union[float, np.ndarray],
 ):
-    """
-    Evaluate cumulative distribution function of normal distribution.
-    """
+    """Evaluate cumulative distribution function of normal distribution."""
     z = (x - mu) / sigma
     z *= 1.0 / sqrt(2)
     return 0.5 * (1.0 + erf(z))
@@ -70,23 +69,27 @@ def fit_meta_d_logL(
     t1c1: float,
     s: int,
 ) -> float:
-    """Returns negative log-likelihood of parameters given experimental data.
+    """Negative log-likelihood of parameters given experimental data.
 
     Parameters
     ----------
-    guess : np.ndarray
+    guess :
         guess[0] = meta d'
         guess[1:end] = type-2 criteria locations
-    nR_S1, nR_S2 : np.ndarray
+    nR_S1, nR_S2 :
         These are vectors containing the total number of responses in each response
         category, conditional on presentation of S1 and S2.
-    nRatings : int
+    nRatings :
         Numbers of ratings.
-    d1 :  float
+    d1 :
         d prime.
-    t1c1 : float
-
-    s : int
+    t1c1 :
+        The type-1 criterion.
+    s :
+        Ratio of standard deviations for type 1 distributions as:
+        `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default
+        value of 1. For most purposes, it is recommended to set `s=1`. See
+        http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
 
     """
     meta_d1, t2c1 = guess[0], guess[1:]
@@ -272,107 +275,107 @@ def metad(
 
     Parameters
     ----------
-    data : pd.DataFrame | None
+    data :
         Dataframe. Note that this function can also directly be used as a
         Pandas method, in which case this argument is no longer needed.
-    nRatings : int
+    nRatings :
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
         Default is set to 4.
-    stimuli : string | None
+    stimuli :
         Name of the column containing the stimuli.
-    accuracy : string | None
+    accuracy :
         Name of the columns containing the accuracy.
-    confidence : string | None
+    confidence :
         Name of the column containing the confidence ratings.
-    within : string | None
+    within :
         Name of column containing the within factor (condition comparison).
-    between : string | None
+    between :
         Name of column containing the between subject factor (group
         comparison).
-    subject : string | None
+    subject :
         Name of column containing the subject identifier (only required if a
         within-subject or a between-subject factor is provided).
-    nR_S1, nR_S2 : list | np.ndarray | None
+    nR_S1, nR_S2 :
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
         nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the
         subject had the following response counts:
-            * responded `'S1'`, rating=`3` : 100 times
-            * responded `'S1'`, rating=`2` : 50 times
-            * responded `'S1'`, rating=`1` : 20 times
-            * responded `'S2'`, rating=`1` : 10 times
-            * responded `'S2'`, rating=`2` : 5 times
-            * responded `'S2'`, rating=`3` : 1 time
+        * responded `'S1'`, rating=`3` : 100 times
+        * responded `'S1'`, rating=`2` : 50 times
+        * responded `'S1'`, rating=`1` : 20 times
+        * responded `'S2'`, rating=`1` : 10 times
+        * responded `'S2'`, rating=`2` : 5 times
+        * responded `'S2'`, rating=`3` : 1 time
 
         The ordering of response / rating counts for S2 should be the same as
         it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2
         was presented, the subject had the following response counts:
-            * responded `'S1'`, rating=`3` : 3 times
-            * responded `'S1'`, rating=`2` : 7 times
-            * responded `'S1'`, rating=`1` : 8 times
-            * responded `'S2'`, rating=`1` : 12 times
-            * responded `'S2'`, rating=`2` : 27 times
-            * responded `'S2'`, rating=`3` : 89 times
-    s : int
+        * responded `'S1'`, rating=`3` : 3 times
+        * responded `'S1'`, rating=`2` : 7 times
+        * responded `'S1'`, rating=`1` : 8 times
+        * responded `'S2'`, rating=`1` : 12 times
+        * responded `'S2'`, rating=`2` : 27 times
+        * responded `'S2'`, rating=`3` : 89 times
+
+    s :
         Ratio of standard deviations for type 1 distributions as:
         `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default
         value of 1. For most purposes, it is recommended to set `s=1`. See
         http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
-    padding : boolean
+    padding :
         If `True`, a small value will be added to the counts to avoid problems
         during fit.
-    padAmount : float | None
+    padAmount :
         The value to add to each response count if padding is set to 1.
         Default value is 1/(2*nRatings)
-    collapse : int | None
+    collapse :
         If an integer `N` is provided, will collpase ratings to avoid zeros by
         summing every `N` consecutive ratings. Default set to `None`.
-    fncdf : func
+    fncdf :
         A function handle for the CDF of the type 1 distribution. If not
         specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.
-    fninv : func
+    fninv :
         A function handle for the inverse CDF of the type 1 distribution. If
         not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.
-    verbose : int
+    verbose :
         Level of algorithm's verbosity (can be `0`, `1`, `2` or `3`):
-            * 0 (default) : work silently.
-            * 1 : display a termination report.
-            * 2 : display progress during iterations.
-            * 3 : display progress during iterations (more complete report).
+        * 0 (default) : work silently.
+        * 1 : display a termination report.
+        * 2 : display progress during iterations.
+        * 3 : display progress during iterations (more complete report).
 
     Returns
     -------
-    results : :py:class:`pandas.DataFrame`
+    results :
         In the following, S1 and S2 represent the distributions of evidence
         generated by stimulus classes S1 and S2:
-
-            * `'dprime'` : `mean(S2) - mean(S1)`, in
-                root-mean-square(sd(S1), sd(S2)) units
-            * `'s'` : `sd(S1) / sd(S2)`
-            * `'meta_da'` : meta-d' in RMS units
-            * `'M_diff'` : `meta_da - da`
-            * `'M_ratio'` : `meta_da / da`
-            * `'meta_ca'` : type 1 criterion for meta-d' fit, RMS units.
-            * `'t2ca_rS1'` : type 2 criteria of "S1" responses for meta-d' fit,
-                RMS units.
-            * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
-                RMS units.
-            * `'logL'` : log likelihood of the data fit
-            * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates
-                for S1 responses.
-            * `'obs_HR2_rS1'` : actual type 2 hit rates for S1 responses.
-            * `'est_FAR2_rS1'` : estimated type 2 false alarm rates for S1
-                responses.
-            * `'obs_FAR2_rS1'` : actual type 2 false alarm rates for S1
-                responses.
-            * `'est_HR2_rS2'` : estimated type 2 hit rates for S2 responses.
-            * `'obs_HR2_rS2'` : actual type 2 hit rates for S2 responses.
-            * `'est_FAR2_rS2'` : estimated type 2 false alarm rates for S2
-                responses.
-            * `'obs_FAR2_rS2'` : actual type 2 false alarm rates for S2
-                responses.
+        * `'dprime'` : `mean(S2) - mean(S1)`, in
+            root-mean-square(sd(S1), sd(S2)) units
+        * `'s'` : `sd(S1) / sd(S2)`
+        * `'meta_da'` : meta-d' in RMS units
+        * `'M_diff'` : `meta_da - da`
+        * `'M_ratio'` : `meta_da / da`
+        * `'meta_ca'` : type 1 criterion for meta-d' fit, RMS units.
+        * `'t2ca_rS1'` : type 2 criteria of "S1" responses for meta-d' fit,
+            RMS units.
+        * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
+            RMS units.
+        * `'logL'` : log likelihood of the data fit
+        * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates
+            for S1 responses.
+        * `'obs_HR2_rS1'` : actual type 2 hit rates for S1 responses.
+        * `'est_FAR2_rS1'` : estimated type 2 false alarm rates for S1
+            responses.
+        * `'obs_FAR2_rS1'` : actual type 2 false alarm rates for S1
+            responses.
+        * `'est_HR2_rS2'` : estimated type 2 hit rates for S2 responses.
+        * `'obs_HR2_rS2'` : actual type 2 hit rates for S2 responses.
+        * `'est_FAR2_rS2'` : estimated type 2 false alarm rates for S2
+            responses.
+        * `'obs_FAR2_rS2'` : actual type 2 false alarm rates for S2
+            responses.
 
     Notes
     -----
@@ -611,88 +614,85 @@ def fit_metad(
     fninv: Callable = norm.ppf,
     fncdf: Callable = norm_cdf,
 ) -> Dict:
-    """
-    Fit metad model using MLE.
+    """Fit metad model using MLE.
 
     Parameters
     ----------
-    nR_S1, nR_S2 : list, 1d array-like or None
+    nR_S1, nR_S2 :
         These are vectors containing the total number of responses in
         each response category, conditional on presentation of S1 and S2. If
         nR_S1 = [100, 50, 20, 10, 5, 1], then when stimulus S1 was presented, the
         subject had the following response counts:
-            * responded `'S1'`, rating=`3` : 100 times
-            * responded `'S1'`, rating=`2` : 50 times
-            * responded `'S1'`, rating=`1` : 20 times
-            * responded `'S2'`, rating=`1` : 10 times
-            * responded `'S2'`, rating=`2` : 5 times
-            * responded `'S2'`, rating=`3` : 1 time
+        * responded `'S1'`, rating=`3` : 100 times
+        * responded `'S1'`, rating=`2` : 50 times
+        * responded `'S1'`, rating=`1` : 20 times
+        * responded `'S2'`, rating=`1` : 10 times
+        * responded `'S2'`, rating=`2` : 5 times
+        * responded `'S2'`, rating=`3` : 1 time
 
         The ordering of response / rating counts for S2 should be the same as
         it is for S1. e.g. if nR_S2 = [3, 7, 8, 12, 27, 89], then when stimulus S2
         was presented, the subject had the following response counts:
-            * responded `'S1'`, rating=`3` : 3 times
-            * responded `'S1'`, rating=`2` : 7 times
-            * responded `'S1'`, rating=`1` : 8 times
-            * responded `'S2'`, rating=`1` : 12 times
-            * responded `'S2'`, rating=`2` : 27 times
-            * responded `'S2'`, rating=`3` : 89 times
-    nRatings : int
+        * responded `'S1'`, rating=`3` : 3 times
+        * responded `'S1'`, rating=`2` : 7 times
+        * responded `'S1'`, rating=`1` : 8 times
+        * responded `'S2'`, rating=`1` : 12 times
+        * responded `'S2'`, rating=`2` : 27 times
+        * responded `'S2'`, rating=`3` : 89 times
+    nRatings :
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
         Default is set to 4.
-    nCriteria : int | None
+    nCriteria :
         (Optional) Number criteria to be fitted. If `None`, the number of criteria is
         set to `nCriteria = int(2 * nRatings - 1)`.
-    s : int
+    s :
         Ratio of standard deviations for type 1 distributions as:
         `s = np.std(S1) / np.std(S2)`. If not specified, s is set to a default
         value of 1. For most purposes, it is recommended to set `s=1`. See
         http://www.columbia.edu/~bsm2105/type2sdt for further discussion.
-    verbose : {0, 1, 2}
+    verbose :
         Level of algorithm's verbosity:
             * 0 (default) : work silently.
             * 1 : display a termination report.
             * 2 : display progress during iterations.
             * 3 : display progress during iterations (more complete report).
-    fninv : func
+    fninv :
         A function handle for the inverse CDF of the type 1 distribution. If
         not specified, fninv defaults to :py:func:`scipy.stats.norm.ppf()`.
-    fncdf : func
+    fncdf :
         A function handle for the CDF of the type 1 distribution. If not
         specified, fncdf defaults to :py:func:`scipy.stats.norm.cdf()`.
 
     Returns
     -------
-    results : dict
+    results :
         In the following, S1 and S2 represent the distributions of evidence generated
         by stimulus classes S1 and S2:
-
-            * `'dprime'` : `mean(S2) - mean(S1)`, in root-mean-square(sd(S1), sd(S2))
-             units
-            * `'s'` : `sd(S1) / sd(S2)`
-            * `'meta_d'` : meta-d' in RMS units
-            * `'m_diff'` : `meta_da - da`
-            * `'m_ratio'` : `meta_da / da`
-            * `'meta_ca'` : type 1 criterion for meta-d' fit, RMS units.
-            * `'t2ca_rS1'` : type 2 criteria of "S1" responses for meta-d' fit, RMS
-            units.
-            * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
-                RMS units.
-            * `'logL'` : log likelihood of the data fit
-            * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates for S1
-            responses.
-            * `'obs_HR2_rS1'` : actual type 2 hit rates for S1 responses.
-            * `'est_FAR2_rS1'` : estimated type 2 false alarm rates for S1 responses.
-            * `'obs_FAR2_rS1'` : actual type 2 false alarm rates for S1 responses.
-            * `'est_HR2_rS2'` : estimated type 2 hit rates for S2 responses.
-            * `'obs_HR2_rS2'` : actual type 2 hit rates for S2 responses.
-            * `'est_FAR2_rS2'` : estimated type 2 false alarm rates for S2 responses.
-            * `'obs_FAR2_rS2'` : actual type 2 false alarm rates for S2 responses.
+        * `'dprime'` : `mean(S2) - mean(S1)`, in root-mean-square(sd(S1), sd(S2))
+            units
+        * `'s'` : `sd(S1) / sd(S2)`
+        * `'meta_d'` : meta-d' in RMS units
+        * `'m_diff'` : `meta_da - da`
+        * `'m_ratio'` : `meta_da / da`
+        * `'meta_ca'` : type 1 criterion for meta-d' fit, RMS units.
+        * `'t2ca_rS1'` : type 2 criteria of "S1" responses for meta-d' fit, RMS
+        units.
+        * `'t2ca_rS2'` : type 2 criteria of "S2" responses for meta-d' fit,
+            RMS units.
+        * `'logL'` : log likelihood of the data fit
+        * `'est_HR2_rS1'` : estimated (from meta-d' fit) type 2 hit rates for S1
+        responses.
+        * `'obs_HR2_rS1'` : actual type 2 hit rates for S1 responses.
+        * `'est_FAR2_rS1'` : estimated type 2 false alarm rates for S1 responses.
+        * `'obs_FAR2_rS1'` : actual type 2 false alarm rates for S1 responses.
+        * `'est_HR2_rS2'` : estimated type 2 hit rates for S2 responses.
+        * `'obs_HR2_rS2'` : actual type 2 hit rates for S2 responses.
+        * `'est_FAR2_rS2'` : estimated type 2 false alarm rates for S2 responses.
+        * `'obs_FAR2_rS2'` : actual type 2 false alarm rates for S2 responses.
 
     """
-
     if nCriteria is None:
         nCriteria = int(2 * nRatings - 1)
 

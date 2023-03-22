@@ -32,25 +32,24 @@ def scores(
     stimuli=None,
     responses=None,
 ):
-    """Extract hits, misses, false alarms and correct rejection from stimuli and
-    responses vectors.
+    """Hits, misses, false alarms and correct rejection from stimuli and responses.
 
     Parameters
     ----------
-    data : pd.DataFrame | None
+    data :
         Dataframe containing one `stimuli` and one `response` column.
-    stimuli : str | np.ndarray | list
+    stimuli :
         If a string is provided, should be the name of the column used as `stimuli`. If
         a list or an array is provided, should contain the boolean vectors for
         `stimuli`.
-    responses : str | np.ndarray
+    responses :
         If a string is provided, should be the name of the column used as `responses`.
         If a list or an array is provided, should contain the boolean vector for
         `responses`.
 
     Returns
     -------
-    hits, misses, fas, crs : int
+    hits, misses, fas, crs :
         The number of hits, misees, false alarms and correct rejections.
 
     Notes
@@ -152,33 +151,33 @@ def rates(
     responses=None,
     correction=True,
 ):
-    """Compute hit and false alarm rates.
+    r"""Compute hit and false alarm rates.
 
     The values are automatically corrected to avoid d' infinity (see below).
 
     Parameters
     ----------
-    data : pd.DataFrame | None
+    data :
         Dataframe containing one `stimuli` and one `response` column.
-    stimuli : str | np.ndarray | list
+    stimuli :
         If a string is provided, should be the name of the column used as
         `stimuli`. If a list or an array is provided, should contain the
         boolean vectors for `stimuli`. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
-    responses : str | np.ndarray
+    responses :
         If a string is provided, should be the name of the column used as
         `responses`. If a list or an array is provided, should contain the
         boolean vector for `responses`. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
-    hits : int | None
+    hits :
         Hits.
-    misses : int | None
+    misses :
         Misses.
-    fas : int | None
+    fas :
         False alarms.
-    crs : int | None
+    crs :
         Correct rejections.
-    correction : bool
+    correction :
         Avoid d' infinity by correcting false alarm and hit rate values if equal to 0
         or 1 using half inverse or 1 - half inverse.
         Half inverses values are defined by:
@@ -188,9 +187,9 @@ def rates(
 
     Returns
     -------
-    hit_rate: float
+    hit_rate:
         Hit rate.
-    fa_rate : float
+    fa_rate :
         False alarm rate.
 
     Info
@@ -209,7 +208,7 @@ def rates(
         which can bias d' estimates. Use `corretion=False` to compute
         uncorrected hits and false alarm rates.
 
-    See also
+    See Also
     --------
     dprime, criterion, scores
 
@@ -305,23 +304,23 @@ def dprime(
 
     Parameters
     ----------
-    data : pd.DataFrame | None
+    data :
         Dataframe. Note that this function can also directly be used as a
         Pandas method, in which case this argument is no longer needed.
-    hit_rate : float
+    hit_rate :
         Hit rate.
-    fa_rate : float
+    fa_rate :
         False alarm rate.
-    stimuli : string
+    stimuli :
         Name of the column containing the stimuli. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Stimuli` by default.
-    responses : string
+    responses :
         Name of the column containing the responses. If `None` and `data` is a
         :py:class:`pandas.DataFrame`, will be set to `Responses` by default.
 
     Returns
     -------
-    dprime : float
+    dprime :
         The d' value.
 
     Notes
@@ -406,21 +405,21 @@ def criterion(
 
     Parameters
     ----------
-    data : pd.DataFrame | None
+    data :
         Dataframe. Note that this function can also directly be used as a Pandas
         method, in which case this argument is no longer needed.
-    hit_rate : float
+    hit_rate :
         Hit rate.
-    fa_rate : float
+    fa_rate :
         False alarm rate.
-    stimuli : string
+    stimuli :
         Name of the column containing the stimuli.
-    responses : string
+    responses :
         Name of the column containing the responses.
 
     Returns
     -------
-    dprime : float
+    dprime :
         The d' value.
 
     Raises
@@ -497,31 +496,43 @@ def roc_auc(
 
     Parameters
     ----------
-    data : pd.DataFrame | None
+    data :
         Dataframe containing one `"stimuli"` and one `"response"` column. Different
         column names can also be provided using the `stimuli` and `responses`
         parameters.
-    stimuli : str | np.ndarray | list | None
+    stimuli :
         If a string is provided, should be the name of the column used as `stimuli`. If
         a list or an array is provided, should contain the boolean vectors for
         `stimuli`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,
         will be set to `Stimuli` by default.
-    responses : str | np.ndarray | None
+    responses :
         If a string is provided, should be the name of the column used as `responses`.
         If a list or an array is provided, should contain the boolean vector for
         `responses`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,
         will be set to `Responses` by default.
-    nRatings : int | None
+    accuracy :
+        If a string is provided, should be the name of the column used as `accuracy`.
+        If a list or an array is provided, should contain the boolean vector for
+        `accuracy`. If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,
+        will be set to `Accuracy` by default. This parameter is optional if `stimuli`
+        and `responses` are known.
+    confidence :
+        If a string is provided, should be the name of the column used as `confidence`.
+        If a list or an array is provided, should contain the confidence ratings,
+        matching the number of discret ratings provided in the `nRatings` parameter.
+        If `None` (default) and `data` is a :py:class:`pandas.DataFrame`,
+        will be set to `Confidence` by default.
+    nRatings :
         Total of available subjective ratings available for the subject. e.g. if subject
         can rate confidence on a scale of 1-4, then nRatings = 4. Default is `None`.
-    nR_S1 : list | np.ndarray | None
+    nR_S1 :
         Confience ratings (stimuli 1).
-    nR_S2 : list | np.ndarray | None
+    nR_S2 :
         Confidence ratings (stimuli 2).
 
     Returns
     -------
-    auc : float
+    auc :
         Area under the type 2 ROC curve.
 
     Examples

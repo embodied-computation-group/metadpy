@@ -107,58 +107,57 @@ def hmetad(
     num_chains: int = 4,
     **kwargs
 ):
-    """Estimate parameters of the Bayesian meta-d' model with hyperparametes at the
-    group level.
+    """Bayesian meta-d' model with hyperparametes at the group level.
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` | None
+    data :
         Dataframe. Note that this function can also directly be used as a Pandas
         method, in which case this argument is no longer needed.
-    nR_S1 : 1d array-like, list, string | None
+    nR_S1 :
         Confience ratings (stimuli 1, correct and incorrect).
-    nR_S2 : 1d array-like, list, string | None
+    nR_S2 :
         Confience ratings (stimuli 2, correct and incorrect).
-    stimuli : string | None
+    stimuli :
         Name of the column containing the stimuli.
-    accuracy : string | None
+    accuracy :
         Name of the columns containing the accuracy.
-    confidence : string | None
+    confidence :
         Name of the column containing the confidence ratings.
-    nRatings : int | None
+    nRatings :
         Number of discrete ratings. If a continuous rating scale was used, and
         the number of unique ratings does not match `nRatings`, will convert to
         discrete ratings using :py:func:`metadpy.utils.discreteRatings`.
-    within : string | None
+    within :
         Name of column containing the within factor (condition comparison).
-    between : string | None
+    between :
         Name of column containing the between subject factor (group
         comparison).
-    subject : string | None
+    subject :
         Name of column containing the subject identifier (only required if a
         within-subject or a between-subject factor is provided).
-    nbins : int
+    nbins :
         If a continuous rating scale was using, `nbins` define the number of
         discrete ratings when converting using
         :py:func:`metadpy.utils.discreteRatings`. The default value is `4`.
-    padding : boolean
+    padding :
         If `True`, each response count in the output has the value of padAmount
         added to it. Padding cells is desirable if trial counts of 0 interfere
         with model fitting. If False, trial counts are not manipulated and 0s
         may be present in the response count output. Default value for padding
         is `False`.
-    padAmount : float or None
+    padAmount :
         The value to add to each response count if padCells is set to 1.
         Default value is 1/(2*nRatings)
-    sample_model : boolean
+    sample_model :
         If `False`, only the model is returned without sampling.
-    output : str
+    output :
         The kind of outpute expected. If `"model"`, will return the model function and
         the traces. If `"dataframe"`, will return a dataframe containing `d` (dprime),
         `c` (criterion), `meta_d` (the meta-d prime) and `m_ratio` (`meta_d/d`).
-    num_samples : int
+    num_samples :
         The number of samples per chains to draw (defaults to `1000`).
-    num_chains : int
+    num_chains :
         The number of chains (defaults to `4`).
     **kwargs : keyword arguments
         All keyword arguments are passed to `func::pymc.sampling.sample`.
@@ -167,16 +166,15 @@ def hmetad(
     -------
     If `output="model"`:
 
-    model : :py:class:`pymc.Model` instance
+    model :
         The model PyMC as a :py:class:`pymc.Model`.
-    traces : :py:class:`pymc.backends.base.MultiTrace` |
-        :py:class:`arviz.InferenceData` | None
+    traces :
         A `MultiTrace` or `ArviZ InferenceData` object that contains the samples. Only
         returned if `sample_model` is set to `True`, otherwise set to None.
 
     or
 
-    results : pd.DataFrame
+    results :
         If `output="dataframe"`, :py:class:`pandas.DataFrame` containing the values for
         the following variables:
 
@@ -327,26 +325,27 @@ def extractParameters(
 
     Parameters
     ----------
-    nR_S1, nR_S2 : 1d array-like or list
+    nR_S1, nR_S2 :
         Total number of responses in each response category, conditional on
         presentation of S1 and S2. e.g. if `nR_S1 = [100 50 20 10 5 1]`, then
         when stimulus S1 was presented, the subject had the following response
         counts:
-            * responded S1, rating=3 : 100 times
-            * responded S1, rating=2 : 50 times
-            * responded S1, rating=1 : 20 times
-            * responded S2, rating=1 : 10 times
-            * responded S2, rating=2 : 5 times
-            * responded S2, rating=3 : 1 time
+        * responded S1, rating=3 : 100 times
+        * responded S1, rating=2 : 50 times
+        * responded S1, rating=1 : 20 times
+        * responded S2, rating=1 : 10 times
+        * responded S2, rating=2 : 5 times
+        * responded S2, rating=3 : 1 time
 
     Return
     ------
-    data : dict
+    data :
         Dictionary of rates and task parameters.
 
-    See also
+    See Also
     --------
     hmetad
+
     """
     if isinstance(nR_S1, list):
         nR_S1 = np.array(nR_S1, dtype=float)

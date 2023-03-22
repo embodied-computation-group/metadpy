@@ -56,40 +56,40 @@ def trials2counts(
 
     Parameters
     ----------
-    data : :py:class:`pandas.DataFrame` | None
+    data :
         Dataframe containing stimuli, accuracy and confidence ratings.
-    stimuli : list, 1d array-like or string
+    stimuli :
         Stimuli ID (0 or 1). If a dataframe is provided, should be the name of
         the column containing the stimuli ID. Default is `'Stimuli'`.
-    responses : list | np.ndarray | string
+    responses :
         Response (0 or 1). If a dataframe is provided, should be the
         name of the column containing the response accuracy. Default is
         `'Responses'`.
-    accuracy : list | np.ndarray | string
+    accuracy :
         Response accuracy (0 or 1). If a dataframe is provided, should be the
         name of the column containing the response accuracy. Default is
         `'Accuracy'`.
-    confidence : list | np.ndarray
+    confidence :
         Confidence ratings. If a dataframe is provided, should be the name of
         the column containing the confidence ratings. Default is
         `'Confidence'`.
-    nRatings : int
+    nRatings :
         Total of available subjective ratings available for the subject. e.g.
         if subject can rate confidence on a scale of 1-4, then nRatings = 4.
         Default is `4`.
-    padding : boolean
+    padding :
         If `True`, each response count in the output has the value of padAmount
         added to it. Padding cells is desirable if trial counts of 0 interfere
         with model fitting. If False, trial counts are not manipulated and 0s
         may be present in the response count output. Default value for padding
         is 0.
-    padAmount : float
+    padAmount :
         The value to add to each response count if padding is set to 1.
         Default value is 1/(2*nRatings)
 
     Returns
     -------
-    nR_S1, nR_S2 : np.ndarray
+    nR_S1, nR_S2 :
         Vectors containing the total number of responses in each accuracy
         category, conditional on presentation of S1 and S2.
 
@@ -278,7 +278,6 @@ def discreteRatings(
     {'confBins': array([ 0., 20., 35., 60., 98.]), 'rebin': 0, 'binCount': 21})
 
     """
-
     out, temp = {}, []
     confBins = np.quantile(ratings, np.linspace(0, 1, nbins + 1))
     if (confBins[0] == confBins[1]) & (confBins[nbins - 1] == confBins[nbins]):
@@ -362,7 +361,7 @@ def trialSimulation(
     This function is adapted from the Matlab `cpc_metad_sim` function from:
     https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
 
-    See also
+    See Also
     --------
     ratings2df
 
@@ -442,27 +441,26 @@ def responseSimulation(
     nTrials: int = 500,
     nSubjects: int = 1,
 ) -> pd.DataFrame:
-    """Simulate response and confidence ratings at the trial level for one
-    or a group of participants.
+    """Simulate response and confidence ratings for one or a group of participants.
 
     Parameters
     ----------
-    d : float
+    d :
         Type 1 task performance (d prime).
     metad : float
         Type 2 sensitivity in units of type 1 dprime.
-    c : float
+    c :
         Type 1 task bias (criterion).
-    nRatings : int
+    nRatings :
         Number of ratings.
-    nTrials : int
+    nTrials :
         Set the number of trials performed.
-    nSubjects : int
+    nSubjects :
         Specify the number of subject who performed the task.
 
     Returns
     -------
-    output_df : :py:class:`pandas.DataFrame`
+    output_df :
         A DataFrame (nRows==`nTrials`) containing the responses and
         confidence rating for one or many participants given the provided
         parameters.
@@ -472,7 +470,7 @@ def responseSimulation(
     This function is adapted from the Matlab `cpc_metad_sim` function from:
     https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
 
-    See also
+    See Also
     --------
     ratings2df
 
@@ -504,36 +502,35 @@ def pairedResponseSimulation(
     nTrials: int = 500,
     nSubjects: int = 20,
 ) -> pd.DataFrame:
-    """Simulate response and confidence ratings at the trial level for a group of
-    `nSubjects` participants with 2 experimental conditions.
+    """Simulate response and confidence ratings a group with 2 experimental conditions.
 
     Parameters
     ----------
-    d : float
+    d :
         Type 1 task performance (d prime).
-    d_sigma : float
+    d_sigma :
         Include some between-subject variability for d prime.
-    mRatio : list
+    mRatio :
         Specify Mratio (meta-d/d'). If `len(mRatio)>1`, mRatios are assumed to be drawn
         from a repeated measures design.
-    mRatio_sigma : float
+    mRatio_sigma :
         Include some variability in the mRatio scores.
-    mRatio_rho : float
+    mRatio_rho :
         Specify the correlation between the two Mratios.
-    c : float
+    c :
         Type 1 task bias (criterion).
-    c_sigma : float
+    c_sigma :
         Include some between-subject variability for criterion.
-    nRatings : int
+    nRatings :
         Number of ratings.
-    nTrials : int
+    nTrials :
         Set the number of trials performed.
-    nSubjects : int
+    nSubjects :
         Specify the number of subject who performed the task. Defaults to `20`.
 
     Returns
     -------
-    output_df : :py:class:`pandas.DataFrame`
+    output_df :
         A DataFrame (nRows==`nTrials` * `nSubjects`) containing the
         responses and confidence rating for one or many participants
         given the provided parameters.
@@ -543,9 +540,11 @@ def pairedResponseSimulation(
     This function is adapted from the Matlab `cpc_metad_sim` function from:
     https://github.com/metacoglab/HMeta-d/blob/master/CPC_metacog_tutorial/cpc_metacog_utils/cpc_metad_sim.m
 
-    See also
+    See Also
     --------
-    ratings2df"""
+    ratings2df
+
+    """
     # Create covariance matrix for the two mRatios
     covMatrix = np.array(
         [
@@ -595,28 +594,29 @@ def type2_SDT_simuation(
 
     Parameters
     ----------
-    d : float
+    d :
         Type 1 dprime.
-    noise : float or list
+    noise :
         Standard deviation of noise to be added to type 1 internal response for
         type 2 judgment. If noise is a 1 x 2 vector then this will simulate
         response-conditional type 2 data where
         `noise = [sigma_rS1, sigma_rS2]`.
-    c : float
+    c :
         Type 1 criterion.
-    c1 : float
+    c1 :
         Type 2 criteria for S1 response.
-    c2 : float
+    c2 :
         Type 2 criteria for S2 response.
-    nRatings : int
+    nRatings :
         Number of ratings.
-    nTrials : int
+    nTrials :
         Number of trials to simulate.
 
     Returns
     -------
     nR_S1, nR_S2 : 1d array-like
         nR_S1 and nR_S2 response counts.
+
     """
     # Specify the confidence criterions based on the number of ratings
     c1 = c + np.linspace(-1.5, -0.5, (nRatings - 1))
@@ -688,18 +688,18 @@ def ratings2df(nR_S1: np.ndarray, nR_S2: np.ndarray) -> pd.DataFrame:
 
     Parameters
     ----------
-    nR_S1 : np.ndarray | list | string
+    nR_S1 :
         Confience ratings (stimuli 1, correct and incorrect).
-    nR_S2 : np.ndarray | list | string
+    nR_S2 :
         Confience ratings (stimuli 2, correct and incorrect).
 
     Returns
     -------
-    df : :py:class:`pandas.DataFrame`
+    df :
          A DataFrame (nRows==`nTrials`) containing the responses, accuracy and
          confidence rating for one participant given `nR_s1` and `nR_S2`.
 
-    See also
+    See Also
     --------
     responseSimulation, trials2counts
 

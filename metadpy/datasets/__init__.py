@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def load_dataset(dataset):
-    """Load simulated dataset
+    """Load simulated dataset.
 
     Parameters
     ----------
@@ -15,6 +15,7 @@ def load_dataset(dataset):
     -------
     df : :py:class:`pandas.DataFrame`
         Pandas dataframe.
+
     """
     return pd.read_csv(
         (
