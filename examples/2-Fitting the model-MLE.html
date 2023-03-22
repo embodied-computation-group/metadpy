@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Fitting the model &#8212; metadpy 0.1.0 documentation</title>
+    <title>Fitting the model &#8212; metadpy 0.1.1 documentation</title>
   
   
   
@@ -510,7 +510,7 @@ if &#39;google.colab&#39; in sys.modules:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/083e8b6e9e003ecfdc1e63ed964fbd168cf0ffa821ba4a4948b7912692026002.png" src="../_images/083e8b6e9e003ecfdc1e63ed964fbd168cf0ffa821ba4a4948b7912692026002.png" />
+<img alt="../_images/ca716036f22f38c4c9d2698a4bd90e7d1703c3713b00717781afefe44253ea6d.png" src="../_images/ca716036f22f38c4c9d2698a4bd90e7d1703c3713b00717781afefe44253ea6d.png" />
 </div>
 </div>
 </section>
@@ -529,7 +529,7 @@ if &#39;google.colab&#39; in sys.modules:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1125e2cf3e51cf305c63a5d096af41d801215f4752bba18928ea9efd42209e5e.png" src="../_images/1125e2cf3e51cf305c63a5d096af41d801215f4752bba18928ea9efd42209e5e.png" />
+<img alt="../_images/76cf54caefcc4c955ef931440f2ecd64391c52a9cc43e96ee49971f2e0e1ac73.png" src="../_images/76cf54caefcc4c955ef931440f2ecd64391c52a9cc43e96ee49971f2e0e1ac73.png" />
 </div>
 </div>
 <div class="admonition hint">
@@ -545,8 +545,8 @@ if &#39;google.colab&#39; in sys.modules:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.77967930506993
-High confidence AUC: 0.6668731778425656
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Low confidence AUC: 0.7817041303837033
+High confidence AUC: 0.6343286257079359
 </pre></div>
 </div>
 </div>
@@ -628,9 +628,9 @@ High confidence AUC: 0.6668731778425656
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">fitLowNoise</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span><span class="n">low_noise_nR_S1</span><span class="p">,</span> <span class="n">low_noise_nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">fitHighNoise</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span><span class="n">high_noise_nR_S1</span><span class="p">,</span> <span class="n">high_noise_nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">fitLowNoise</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span><span class="n">low_noise_nR_S1</span><span class="p">,</span> <span class="n">low_noise_nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">fitHighNoise</span> <span class="o">=</span> <span class="n">fit_metad</span><span class="p">(</span><span class="n">high_noise_nR_S1</span><span class="p">,</span> <span class="n">high_noise_nR_S2</span><span class="p">,</span> <span class="n">nRatings</span><span class="o">=</span><span class="n">nRatings</span><span class="p">)</span>
 
 <span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/metadpy/mle.py:753,</span> in <span class="ni">fit_metad</span><span class="nt">(nR_S1, nR_S2, nRatings, nCriteria, s, verbose, fninv, fncdf)</span>
 <span class="g g-Whitespace">    </span><span class="mi">750</span> <span class="n">linear_constraint</span> <span class="o">=</span> <span class="n">LinearConstraint</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">lb</span><span class="p">,</span> <span class="n">ub</span><span class="p">)</span>

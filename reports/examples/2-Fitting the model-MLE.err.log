@@ -23,9 +23,9 @@ fitHighNoise = fit_metad(high_noise_nR_S1, high_noise_nR_S2, nRatings=nRatings)
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mValueError[0m                                Traceback (most recent call last)
-Cell [0;32mIn[11], line 2[0m
-[1;32m      1[0m fitLowNoise [38;5;241m=[39m fit_metad(low_noise_nR_S1, low_noise_nR_S2, nRatings[38;5;241m=[39mnRatings)
-[0;32m----> 2[0m fitHighNoise [38;5;241m=[39m [43mfit_metad[49m[43m([49m[43mhigh_noise_nR_S1[49m[43m,[49m[43m [49m[43mhigh_noise_nR_S2[49m[43m,[49m[43m [49m[43mnRatings[49m[38;5;241;43m=[39;49m[43mnRatings[49m[43m)[49m
+Cell [0;32mIn[11], line 1[0m
+[0;32m----> 1[0m fitLowNoise [38;5;241m=[39m [43mfit_metad[49m[43m([49m[43mlow_noise_nR_S1[49m[43m,[49m[43m [49m[43mlow_noise_nR_S2[49m[43m,[49m[43m [49m[43mnRatings[49m[38;5;241;43m=[39;49m[43mnRatings[49m[43m)[49m
+[1;32m      2[0m fitHighNoise [38;5;241m=[39m fit_metad(high_noise_nR_S1, high_noise_nR_S2, nRatings[38;5;241m=[39mnRatings)
 
 File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/metadpy/mle.py:753[0m, in [0;36mfit_metad[0;34m(nR_S1, nR_S2, nRatings, nCriteria, s, verbose, fninv, fncdf)[0m
 [1;32m    750[0m linear_constraint [38;5;241m=[39m LinearConstraint(A, lb, ub)
