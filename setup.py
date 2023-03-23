@@ -1,14 +1,17 @@
 # Copyright (C) 2019 Nicolas Legrand
-import os
 import codecs
+import os
+
 from setuptools import setup
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 REQUIREMENTS_FILE = os.path.join(PROJECT_ROOT, "requirements.txt")
 
+
 def get_requirements():
     with codecs.open(REQUIREMENTS_FILE) as buff:
         return buff.read().splitlines()
+
 
 # Get the package's version number of the __init__.py file
 def read(rel_path):
@@ -16,6 +19,7 @@ def read(rel_path):
     here = os.path.abspath(os.path.dirname(__file__))
     with codecs.open(os.path.join(here, rel_path), "r") as fp:
         return fp.read()
+
 
 def get_version(rel_path):
     """Get the package's version number.
@@ -50,7 +54,7 @@ if __name__ == "__main__":
         maintainer=MAINTAINER,
         maintainer_email=MAINTAINER_EMAIL,
         description=DESCRIPTION,
-        long_description=open("README.md", encoding='utf-8').read(),
+        long_description=open("README.md", encoding="utf-8").read(),
         long_description_content_type="text/markdown",
         license="GPL-3.0",
         version=get_version("metadpy/__init__.py"),
