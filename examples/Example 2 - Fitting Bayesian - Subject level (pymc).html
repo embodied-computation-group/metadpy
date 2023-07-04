@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -34,8 +34,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -497,7 +497,7 @@ if &#39;google.colab&#39; in sys.modules:
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:10&lt;00:00 Sampling chain 0, 0 divergences]
+      100.00% [2000/2000 00:12&lt;00:00 Sampling chain 0, 0 divergences]
     </div>
     </div><div class="output text_html">
 <style>
@@ -518,7 +518,7 @@ if &#39;google.colab&#39; in sys.modules:
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:10&lt;00:00 Sampling chain 1, 0 divergences]
+      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 1, 0 divergences]
     </div>
     </div><div class="output text_html">
 <style>
@@ -539,7 +539,7 @@ if &#39;google.colab&#39; in sys.modules:
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:10&lt;00:00 Sampling chain 2, 0 divergences]
+      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 2, 0 divergences]
     </div>
     </div><div class="output text_html">
 <style>
@@ -560,9 +560,13 @@ if &#39;google.colab&#39; in sys.modules:
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:10&lt;00:00 Sampling chain 3, 0 divergences]
+      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 3, 0 divergences]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 42 seconds.
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 47 seconds.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/arviz/utils.py:184: NumbaDeprecationWarning: The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  numba_fn = numba.jit(**self.kwargs)(self.function)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
@@ -580,7 +584,11 @@ if &#39;google.colab&#39; in sys.modules:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f2eeec3ba4e1f24e410fe2c35490bd7ee1103bb343560e1e3a30d6330ba06a56.png" src="../_images/f2eeec3ba4e1f24e410fe2c35490bd7ee1103bb343560e1e3a30d6330ba06a56.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/arviz/utils.py:184: NumbaDeprecationWarning: The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  numba_fn = numba.jit(**self.kwargs)(self.function)
+</pre></div>
+</div>
+<img alt="../_images/29c664f0c53cde31440e7e6954e385e67da7a0a4cbe22977ad78fa871d818cbb.png" src="../_images/29c664f0c53cde31440e7e6954e385e67da7a0a4cbe22977ad78fa871d818cbb.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -622,110 +630,110 @@ if &#39;google.colab&#39; in sys.modules:
   <tbody>
     <tr>
       <th>c1</th>
-      <td>-0.007</td>
-      <td>0.068</td>
-      <td>-0.125</td>
-      <td>0.130</td>
+      <td>-0.005</td>
+      <td>0.067</td>
+      <td>-0.136</td>
+      <td>0.114</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>2755.0</td>
-      <td>3004.0</td>
+      <td>2827.0</td>
+      <td>2970.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>d1</th>
-      <td>1.534</td>
-      <td>0.133</td>
-      <td>1.282</td>
-      <td>1.775</td>
+      <td>1.536</td>
+      <td>0.141</td>
+      <td>1.265</td>
+      <td>1.796</td>
       <td>0.002</td>
       <td>0.001</td>
-      <td>4677.0</td>
-      <td>2882.0</td>
+      <td>5204.0</td>
+      <td>3194.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>meta_d</th>
-      <td>1.569</td>
-      <td>0.199</td>
-      <td>1.205</td>
-      <td>1.953</td>
+      <td>1.574</td>
+      <td>0.201</td>
+      <td>1.208</td>
+      <td>1.959</td>
       <td>0.004</td>
       <td>0.003</td>
-      <td>2469.0</td>
-      <td>2820.0</td>
+      <td>2722.0</td>
+      <td>2932.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS1[0]</th>
-      <td>-1.421</td>
+      <td>-1.424</td>
       <td>0.099</td>
-      <td>-1.610</td>
+      <td>-1.609</td>
       <td>-1.237</td>
       <td>0.002</td>
       <td>0.001</td>
-      <td>2773.0</td>
-      <td>2767.0</td>
+      <td>3070.0</td>
+      <td>3170.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS1[1]</th>
-      <td>-0.971</td>
+      <td>-0.973</td>
       <td>0.084</td>
-      <td>-1.117</td>
-      <td>-0.803</td>
-      <td>0.002</td>
+      <td>-1.129</td>
+      <td>-0.815</td>
       <td>0.001</td>
-      <td>3007.0</td>
-      <td>3071.0</td>
+      <td>0.001</td>
+      <td>3208.0</td>
+      <td>3455.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS1[2]</th>
       <td>-0.499</td>
-      <td>0.073</td>
-      <td>-0.631</td>
-      <td>-0.357</td>
+      <td>0.072</td>
+      <td>-0.628</td>
+      <td>-0.361</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>3576.0</td>
-      <td>3593.0</td>
+      <td>3968.0</td>
+      <td>3215.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS2[0]</th>
-      <td>0.497</td>
-      <td>0.072</td>
-      <td>0.363</td>
-      <td>0.633</td>
+      <td>0.500</td>
+      <td>0.075</td>
+      <td>0.365</td>
+      <td>0.649</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>4207.0</td>
-      <td>3161.0</td>
+      <td>4283.0</td>
+      <td>3359.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS2[1]</th>
-      <td>0.979</td>
-      <td>0.084</td>
-      <td>0.822</td>
-      <td>1.134</td>
+      <td>0.983</td>
+      <td>0.086</td>
+      <td>0.828</td>
+      <td>1.144</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>3571.0</td>
-      <td>3208.0</td>
+      <td>3860.0</td>
+      <td>3537.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS2[2]</th>
-      <td>1.527</td>
-      <td>0.103</td>
-      <td>1.336</td>
+      <td>1.532</td>
+      <td>0.101</td>
+      <td>1.341</td>
       <td>1.722</td>
       <td>0.002</td>
       <td>0.001</td>
-      <td>3428.0</td>
-      <td>3142.0</td>
+      <td>3183.0</td>
+      <td>3101.0</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -743,22 +751,22 @@ if &#39;google.colab&#39; in sys.modules:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Thu Mar 23 2023
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Last updated: Tue Jul 04 2023
 
 Python implementation: CPython
-Python version       : 3.9.16
-IPython version      : 8.11.0
+Python version       : 3.9.17
+IPython version      : 8.14.0
 
 metadpy : 0.1.1
-pytensor: 2.10.1
-pymc    : 5.1.2
+pytensor: 2.12.3
+pymc    : 5.6.0
 
-sys  : 3.9.16 (main, Dec  8 2022, 11:01:53) 
-[GCC 11.3.0]
 arviz: 0.15.1
-numpy: 1.23.5
+sys  : 3.9.17 (main, Jun  7 2023, 12:34:12) 
+[GCC 11.3.0]
+numpy: 1.24.4
 
-Watermark: 2.3.1
+Watermark: 2.4.3
 </pre></div>
 </div>
 </div>
@@ -772,7 +780,10 @@ Watermark: 2.3.1
               
               
                 <footer class="bd-footer-article">
-                  <!-- Previous / next buttons -->
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="Example%201%20-%20Fitting%20MLE%20-%20Subject%20and%20group%20level.html"
@@ -792,7 +803,10 @@ Watermark: 2.3.1
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
+</div></div>
+  
 </div>
+
                 </footer>
               
             </div>
@@ -825,7 +839,7 @@ Watermark: 2.3.1
             
           </div>
           <footer class="bd-footer-content">
-            <div class="bd-footer-content__inner"></div>
+            
           </footer>
         
       </main>
@@ -833,8 +847,8 @@ Watermark: 2.3.1
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -852,7 +866,7 @@ Watermark: 2.3.1
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://sphinx-doc.org/">Sphinx</a> 5.3.0.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
     <br/>
   </p>
 </div>
@@ -863,7 +877,7 @@ Watermark: 2.3.1
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
 </p></div>
       
     </div>
