@@ -19,8 +19,8 @@ import metadpy
 # -- Project information -----------------------------------------------------
 
 project = "metadpy"
-copyright = "2022-{}, Nicolas Legrand".format(time.strftime("%Y"))
-author = "Nicolas Legrand"
+copyright = "2022-{}, Micah Allen".format(time.strftime("%Y"))
+author = "Micah Allen"
 release = metadpy.__version__
 
 nb_execution_timeout = 300
