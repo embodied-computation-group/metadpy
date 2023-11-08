@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Installation &#8212; metadpy 0.1.1 documentation</title>
   
@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -34,8 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -58,6 +59,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -98,7 +108,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -108,13 +119,14 @@
   
   
   
+  
     
     
       
     
     
-    <img src="_static/logo.svg" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/logo.svg" class="logo__image only-light" alt=""/>
+    <script>document.write(`<img src="_static/logo.svg" class="logo__image only-dark" alt=""/>`);</script>
   
   
     <p class="title logo__title">metadpy</p>
@@ -122,7 +134,6 @@
 </a></div>
     
   </div>
-  
   
   <div class="col-lg-9 navbar-header-items">
     
@@ -174,23 +185,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -206,8 +219,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -218,8 +231,8 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square"></i></span>
-            <label class="sr-only">Twitter</label></a>
+          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
           
@@ -230,8 +243,8 @@ document.write(`
           
           
           
-          <a href="https://pypi.org/project/metadpy/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-box"></i></span>
-            <label class="sr-only">Pypi</label></a>
+          <a href="https://pypi.org/project/metadpy/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Pypi</span></a>
         </li>
 </ul></div>
       
@@ -241,18 +254,20 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
       <span class="fa-solid fa-outdent"></span>
     </label>
   
@@ -320,10 +335,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -339,8 +354,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/embodied-computation-group/metadpy" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
           
@@ -351,8 +366,8 @@ document.write(`
           
           
           
-          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square"></i></span>
-            <label class="sr-only">Twitter</label></a>
+          <a href="https://twitter.com/visceral_mind" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
         </li>
         <li class="nav-item">
           
@@ -363,8 +378,8 @@ document.write(`
           
           
           
-          <a href="https://pypi.org/project/metadpy/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-box"></i></span>
-            <label class="sr-only">Pypi</label></a>
+          <a href="https://pypi.org/project/metadpy/" title="Pypi" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fas fa-box fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Pypi</span></a>
         </li>
 </ul></div>
         
@@ -480,19 +495,19 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
-      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
-      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
     </tr>
@@ -501,7 +516,7 @@ document.write(`
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>3</td>
+      <td>1</td>
       <td>2</td>
       <td>0</td>
     </tr>
@@ -510,16 +525,16 @@ document.write(`
       <td>1</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>3</td>
       <td>3</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0</td>
-      <td>0</td>
       <td>1</td>
       <td>1</td>
+      <td>1</td>
+      <td>3</td>
       <td>4</td>
       <td>0</td>
     </tr>
@@ -549,8 +564,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([640, 426, 371, 292, 452, 221,  77,  21]),
- array([ 41,  77, 198, 455, 313, 379, 397, 640]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([656, 385, 385, 303, 432, 211,  87,  41]),
+ array([ 44,  78, 213, 436, 320, 409, 397, 603]))
 </pre></div>
 </div>
 </div>
@@ -580,7 +595,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/23652483ba39ee8dfa20cdc591b7ca0ceaea0596ee30e6cce8e1ff41011d83b5.png" src="_images/23652483ba39ee8dfa20cdc591b7ca0ceaea0596ee30e6cce8e1ff41011d83b5.png" />
+<img alt="_images/0ac446fa8e8233b8da60cb286082f4eb96cdb225685d7dffcb9284028b6952f2.png" src="_images/0ac446fa8e8233b8da60cb286082f4eb96cdb225685d7dffcb9284028b6952f2.png" />
 </div>
 </div>
 </section>
@@ -631,7 +646,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7871356767207524
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7665729304225586
 </pre></div>
 </div>
 </div>
@@ -696,9 +711,9 @@ document.write(`
     <tr>
       <th>0</th>
       <td>0.999911</td>
-      <td>2.050077</td>
-      <td>2.050259</td>
-      <td>1.050165</td>
+      <td>1.867707</td>
+      <td>1.867873</td>
+      <td>0.867796</td>
     </tr>
   </tbody>
 </table>
@@ -760,7 +775,7 @@ document.write(`
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 0, 0 divergences]
+      100.00% [2000/2000 00:17&lt;00:00 Sampling chain 0, 0 divergences]
     </div>
     </div><div class="output text_html">
 <style>
@@ -781,7 +796,7 @@ document.write(`
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 1, 0 divergences]
+      100.00% [2000/2000 00:16&lt;00:00 Sampling chain 1, 0 divergences]
     </div>
     </div><div class="output text_html">
 <style>
@@ -802,7 +817,7 @@ document.write(`
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 2, 0 divergences]
+      100.00% [2000/2000 00:17&lt;00:00 Sampling chain 2, 0 divergences]
     </div>
     </div><div class="output text_html">
 <style>
@@ -823,13 +838,9 @@ document.write(`
 </div><div class="output text_html">
     <div>
       <progress value='2000' class='' max='2000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-      100.00% [2000/2000 00:11&lt;00:00 Sampling chain 3, 0 divergences]
+      100.00% [2000/2000 00:16&lt;00:00 Sampling chain 3, 0 divergences]
     </div>
-    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 46 seconds.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/arviz/utils.py:184: NumbaDeprecationWarning: The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
-  numba_fn = numba.jit(**self.kwargs)(self.function)
+    </div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 68 seconds.
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
@@ -847,11 +858,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.17/x64/lib/python3.9/site-packages/arviz/utils.py:184: NumbaDeprecationWarning: The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
-  numba_fn = numba.jit(**self.kwargs)(self.function)
-</pre></div>
-</div>
-<img alt="_images/f5c71801300cc5bc8c4abd1623d5dea1c4a356ed8992fbb31826e6cff9c07a6a.png" src="_images/f5c71801300cc5bc8c4abd1623d5dea1c4a356ed8992fbb31826e6cff9c07a6a.png" />
+<img alt="_images/b7c0dccc8b540004f90af463b2ae59e28e0175ad90a8f80d098d57d427d3c642.png" src="_images/b7c0dccc8b540004f90af463b2ae59e28e0175ad90a8f80d098d57d427d3c642.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -893,86 +900,86 @@ document.write(`
   <tbody>
     <tr>
       <th>meta_d</th>
-      <td>2.043</td>
-      <td>0.054</td>
-      <td>1.949</td>
-      <td>2.147</td>
+      <td>1.861</td>
+      <td>0.055</td>
+      <td>1.756</td>
+      <td>1.964</td>
       <td>0.001</td>
       <td>0.001</td>
-      <td>3348.0</td>
-      <td>3157.0</td>
+      <td>3333.0</td>
+      <td>3376.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS2[0]</th>
-      <td>0.508</td>
+      <td>0.492</td>
       <td>0.020</td>
-      <td>0.472</td>
-      <td>0.546</td>
+      <td>0.456</td>
+      <td>0.528</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>4971.0</td>
-      <td>3572.0</td>
+      <td>4512.0</td>
+      <td>3308.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS2[1]</th>
-      <td>1.008</td>
-      <td>0.024</td>
-      <td>0.962</td>
-      <td>1.050</td>
+      <td>0.983</td>
+      <td>0.023</td>
+      <td>0.942</td>
+      <td>1.027</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>4101.0</td>
-      <td>3504.0</td>
+      <td>3573.0</td>
+      <td>3462.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS2[2]</th>
-      <td>1.520</td>
-      <td>0.029</td>
-      <td>1.467</td>
-      <td>1.575</td>
+      <td>1.479</td>
+      <td>0.028</td>
+      <td>1.426</td>
+      <td>1.532</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>3499.0</td>
-      <td>3216.0</td>
+      <td>3637.0</td>
+      <td>3117.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS1[0]</th>
-      <td>-1.491</td>
-      <td>0.028</td>
-      <td>-1.545</td>
-      <td>-1.438</td>
+      <td>-1.419</td>
+      <td>0.027</td>
+      <td>-1.475</td>
+      <td>-1.371</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>3888.0</td>
-      <td>3156.0</td>
+      <td>3354.0</td>
+      <td>3625.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS1[1]</th>
-      <td>-0.970</td>
+      <td>-0.954</td>
       <td>0.023</td>
-      <td>-1.014</td>
-      <td>-0.927</td>
+      <td>-0.995</td>
+      <td>-0.910</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>3778.0</td>
-      <td>3358.0</td>
+      <td>3787.0</td>
+      <td>3508.0</td>
       <td>1.0</td>
     </tr>
     <tr>
       <th>cS1[2]</th>
-      <td>-0.499</td>
-      <td>0.020</td>
-      <td>-0.537</td>
-      <td>-0.462</td>
+      <td>-0.478</td>
+      <td>0.019</td>
+      <td>-0.513</td>
+      <td>-0.441</td>
       <td>0.000</td>
       <td>0.000</td>
-      <td>4285.0</td>
-      <td>2925.0</td>
+      <td>4608.0</td>
+      <td>3184.0</td>
       <td>1.0</td>
     </tr>
   </tbody>
@@ -990,11 +997,10 @@ document.write(`
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="right-next"
        href="api.html"
@@ -1005,10 +1011,7 @@ document.write(`
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -1060,8 +1063,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1071,7 +1074,7 @@ document.write(`
         <div class="footer-item">
   <p class="copyright">
     
-      © Copyright 2022-2023, Nicolas Legrand.
+      © Copyright 2022-2023, Micah Allen.
       <br/>
     
   </p>
@@ -1087,10 +1090,11 @@ document.write(`
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.3.
 </p></div>
       
     </div>
